@@ -1,0 +1,16 @@
+<div class="article-grid-item {{ classes }} {% for tag in tags %}blogs--{{ tag | handleize }}{% endfor %}">
+    <div class="article-grid-item__inner">
+        <div class="article-grid-item__tag">
+            {% comment %} Only get the first tag {% endcomment %}
+            {{ article.tags[0] }}
+        </div>
+        <div class="article-grid-item__image">
+            {% if article.image != blank %}
+                {{ article.image | image_url: width: 800 | image_tag }}
+            {% endif %}
+        </div>
+        <div class="article-grid-item__title">
+            <span>{{ article.title }}</span>
+        </div>
+    </div>
+</div>

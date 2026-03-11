@@ -1,0 +1,121 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+.mfr-search__results {
+  .section-content {
+    margin-bottom: rem-calc(20px);
+  }
+
+  .search-results {
+    &__status {
+      text-align: center;
+      margin: rem-calc(20px) 0;
+    }
+
+    &__results {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: stretch;
+      list-style: none;
+
+      @include breakpoint(large up) {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      li {
+        position: relative;
+        padding: rem-calc(30px) rem-calc(15px);
+        width: 100%;
+
+        @include breakpoint(large up) {
+          width: 50%;
+        }
+
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: rem-calc(1px);
+          background-color: currentColor;
+        }
+
+        .search__item {
+          &-card {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: rem-calc(15px);
+            text-align: center;
+
+            @include breakpoint(large up) {
+              gap: rem-calc(15px) rem-calc(30px);
+            }
+
+            @include breakpoint(large up) {
+              justify-content: flex-start;
+              align-items: center;
+              flex-direction: row;
+              text-align: left;
+            }
+
+            &.is-page {
+              text-align: left;
+              align-items: stretch;
+            }
+          }
+
+          &-image {
+            position: relative;
+            width: calc(40% - 10px);
+            aspect-ratio: 1/1;
+            margin-right: rem-calc(10px);
+            border-radius: rem-calc(15px);
+            overflow: hidden;
+            @include drop-shadow(black, 7);
+
+            @include breakpoint(large up) {
+              width: rem-calc(150px);
+            }
+
+            img {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
+
+          &-info {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            width: 60%;
+          }
+
+          &-title {
+            margin-bottom: rem-calc(10px);
+            font-weight: 700;
+            font-family: $custom-font-name-1;
+          }
+
+          &-description {
+            text-align: left;
+            margin-bottom: rem-calc(10px);
+          }
+
+          &-price {
+            @include opacity(0.8);
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+}

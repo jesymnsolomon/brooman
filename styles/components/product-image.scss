@@ -1,0 +1,157 @@
+
+.product-image-component {
+  width: 100%;
+  position: relative;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @include breakpoint( medium down ) {
+    @include transform( translateY( rem-calc( -30px ) ) );
+  }
+
+  .image {
+    position: relative;
+    z-index: 2;
+
+    &.glow:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: rem-calc( 491px );
+      height: rem-calc( 634px );
+      background: radial-gradient(#fff 0,rgba(255,255,255,.873676) 5%,rgba(255,255,255,0) 50%);
+      pointer-events: none;
+      @include transform( translate(-50%,-50%) scale( 0 ) );
+      @include transition( $global-transition );
+
+      @include breakpoint( large up ) {
+        background: radial-gradient(#fff 0,rgba(255,255,255,.873676) 5%,rgba(255,255,255,0) 70%);
+      }
+    }
+
+    > img {
+      display: block;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      @include transition( $global-transition );
+      z-index: 1;
+    }
+
+    .shadow {
+      @include opacity(.3);
+      filter: blur(.2rem) grayscale(1) brightness(0); 
+      @include transform(translate(-50%,0));
+      @include border-radius(50%);
+      @include transition( $global-transition );
+      overflow: hidden;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      z-index: -1;
+      width: 64px;
+      height: 10px;
+      background-color: #000;
+      
+      @include breakpoint (large up) {
+        width: 100px;
+        height: 15.68px;
+      }
+    }
+
+    .image-accents {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        object-fit: contain;
+        @include transition( $global-transition );
+        will-change: width, top, left;
+      }
+    }
+
+  }
+}
+
+// Hover effects
+@mixin product-image-hover {
+  .product-image-component .image.glow::before {
+    @include transform( translate( -50%, -50% ) scale( 1 ) );
+  }
+  .image-accents {
+    img {
+      @include transition( $global-transition );
+      @include breakpoint( small only ) {
+        @include transition-delay( .4s );
+      }
+    }
+    .image_1 {
+      width: var(--image_1_width);
+      top: var(--image_1_top_position);
+      left: var(--image_1_left_position);
+    }
+    .image_2 {
+      width: var(--image_2_width);
+      top: var(--image_2_top_position);
+      left: var(--image_2_left_position);
+    }
+    .image_3 {
+      width: var(--image_3_width);
+      top: var(--image_3_top_position);
+      left: var(--image_3_left_position);
+    }
+  }
+}
+
+// Hover effect instances
+.product-card:hover {
+  @include product-image-hover;
+}
+.product-carousel__item {
+  &:hover {
+    @include product-image-hover;
+  }
+  &.is-selected {
+    @include breakpoint( medium down ) {
+      @include product-image-hover;
+    }
+  }
+}
+
+
+// Static effects
+.product-top__image .product-image-component .image .image-accents img {
+  @include transition-delay( 1s );
+}
+.product-top__image.is-selected .product-image-component .image {
+  .image-accents {
+    .image_1 {
+      width: var(--image_1_width);
+      top: var(--image_1_top_position);
+      left: var(--image_1_left_position);
+    }
+    .image_2 {
+      width: var(--image_2_width);
+      top: var(--image_2_top_position);
+      left: var(--image_2_left_position);
+    }
+    .image_3 {
+      width: var(--image_3_width);
+      top: var(--image_3_top_position);
+      left: var(--image_3_left_position);
+    }
+  }
+}

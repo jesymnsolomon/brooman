@@ -1,0 +1,30 @@
+{%- comment -%}
+  COMPONENT: Carousel
+  ----------------------------------------------------------------------------
+  USAGE:
+    {% render 'mfr-component__carousel-marquee',
+      settings: '{
+        pauseOnDrag: true,
+        renderAutoScrollOn: "both|mobile|desktop"
+      }',
+      class: "example-class",
+      content: content
+    %}
+
+  CONTENT EXAMPLE:
+    <div class="any-class">Slide/Image/Icon 1</div>
+    <div class="any-class">Slide/Image/Icon 2</div>
+    <div class="any-class">Slide/Image/Icon 3</div>
+
+  NOTES:
+    - 'settings' accepts a JSON string with carousel configuration
+    - 'content' should be a group of slide elements (not wrapped)
+{%- endcomment -%}
+<div class="mfr-carousel-marquee {{ class }}"
+  x-data='MFRCarouselMarquee({{- settings -}})'
+  {% if innerItem != blank %}
+    data-stagger-inview="{{- innerItem -}}"
+  {% endif %}>
+  {{- content -}}
+</div>
+{% render 'script__section', file: "MFRCarouselMarquee.js" %}

@@ -1,0 +1,948 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "hide_page_title": true,
+        "text_alignment": "",
+        "container_width": "full",
+        "max_width": 0,
+        "grid_gutter": "grid-gutter",
+        "color_scheme": "",
+        "top_spacing_mobile": 30,
+        "bottom_spacing_mobile": 80,
+        "top_spacing_desktop": 50,
+        "bottom_spacing_desktop": 100,
+        "bg_color": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    },
+    "mfr_core_image_video_text_section_6EwteG": {
+      "type": "mfr-core__image-video-text-section",
+      "blocks": {
+        "image-video-text-carousel": {
+          "type": "_image-video-text__carousel",
+          "static": true,
+          "settings": {
+            "autoplay_timing": 0,
+            "wrap_around": false,
+            "prev_next_buttons": true,
+            "page_dots": true,
+            "border_radius": 0,
+            "width_mobile": 98,
+            "unit_mobile": "%",
+            "width_desktop": 70,
+            "unit_desktop": "%",
+            "aspect_ratio_mobile": "10/6",
+            "aspect_ratio_desktop": "10/6"
+          },
+          "blocks": {
+            "image_video_text_image_slide_FbnXgG": {
+              "type": "_image-video-text__image-slide",
+              "settings": {
+                "image_mobile": "shopify://shop_images/BPBR2_2x_b2c9d957-f55f-4219-ac0f-d5f5c69d3798.png",
+                "image_desktop": "shopify://shop_images/BPBR2_2x_b2c9d957-f55f-4219-ac0f-d5f5c69d3798.png",
+                "lazyload": true,
+                "image_fit": "contain",
+                "scale_mobile": 0,
+                "scale_desktop": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "image_video_text_image_slide_FbnXgG"
+          ]
+        },
+        "section-content": {
+          "type": "_section-content",
+          "static": true,
+          "settings": {
+            "mobile_alignment": "",
+            "desktop_alignment": "",
+            "text_alignment_desktop": "center",
+            "text_alignment_mobile": "center",
+            "max_width_mobile": 0,
+            "max_width_desktop": 0
+          },
+          "blocks": {
+            "section_content_title_UEK8wW": {
+              "type": "_section-content__title",
+              "settings": {
+                "heading": "BIG POTATO'S BIGGER REWARDS",
+                "disable_animation": false,
+                "header_style": "h1 xl-title",
+                "header_tag": "h2",
+                "font_family": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 842,
+                "margin_bottom": 0
+              },
+              "blocks": {}
+            },
+            "section_content_text_rqdgNK": {
+              "type": "_section-content__text",
+              "settings": {
+                "text": "<p>Welcome to our Loyalty Program, where every game you buy helps you unlock, you guessed it, tasty perks.</p>",
+                "visibility": "",
+                "disable_animation": false,
+                "text_style": "regular",
+                "font_family": "",
+                "color": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 708,
+                "margin_bottom": 10
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "section_content_title_UEK8wW",
+            "section_content_text_rqdgNK"
+          ]
+        },
+        "accent-graphics": {
+          "type": "_accent-graphics",
+          "static": true,
+          "settings": {},
+          "blocks": {
+            "accent_graphic_kRgMxQ": {
+              "type": "_accent-graphic",
+              "name": "Accent Graphic",
+              "settings": {
+                "icon": "shopify://shop_images/star-bitmap.png",
+                "svg_code": "",
+                "visibility": "always",
+                "value_type": "%",
+                "x_setting": "left",
+                "y_setting": "top",
+                "width_large": 110,
+                "position_x_large": 14,
+                "position_y_large": 42,
+                "width_small": 80,
+                "position_x_small": 4,
+                "position_y_small": 66,
+                "animation": "none",
+                "rotate": 0,
+                "flip": false,
+                "custom_class": ""
+              },
+              "blocks": {}
+            },
+            "accent_graphic_kHMgjt": {
+              "type": "_accent-graphic",
+              "name": "Accent Graphic",
+              "settings": {
+                "icon": "shopify://shop_images/star-bitmap.png",
+                "svg_code": "",
+                "visibility": "always",
+                "value_type": "%",
+                "x_setting": "right",
+                "y_setting": "bottom",
+                "width_large": 110,
+                "position_x_large": 12,
+                "position_y_large": 2,
+                "width_small": 80,
+                "position_x_small": -2,
+                "position_y_small": 2,
+                "animation": "none",
+                "rotate": 72,
+                "flip": false,
+                "custom_class": ""
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "accent_graphic_kRgMxQ",
+            "accent_graphic_kHMgjt"
+          ]
+        }
+      },
+      "name": "Image/Video Text Section",
+      "settings": {
+        "media_column_size": "whole",
+        "text_side_desktop": "text-top",
+        "text_side_mobile": "text-top",
+        "vertical_alignment": "center",
+        "enable_sticky": false,
+        "mobile_alignment": "center",
+        "desktop_alignment": "center",
+        "container_width": "full",
+        "max_width": 0,
+        "grid_gutter": "",
+        "color_scheme": "",
+        "top_spacing_mobile": 80,
+        "bottom_spacing_mobile": 80,
+        "top_spacing_desktop": 80,
+        "bottom_spacing_desktop": 80,
+        "bg_color": "",
+        "section_divider_top": "",
+        "section_divider_bottom": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    },
+    "mfr_core_two_column_content_f4bagD": {
+      "type": "mfr-core__two-column-content",
+      "blocks": {
+        "column_pGr8yt": {
+          "type": "_column",
+          "name": "Column",
+          "settings": {
+            "mobile_alignment": "center",
+            "desktop_alignment": "center"
+          },
+          "blocks": {
+            "section-content": {
+              "type": "_section-content",
+              "static": true,
+              "settings": {
+                "mobile_alignment": "",
+                "desktop_alignment": "",
+                "text_alignment_desktop": "center",
+                "text_alignment_mobile": "center",
+                "max_width_mobile": 0,
+                "max_width_desktop": 0
+              },
+              "blocks": {
+                "section_content_title_abcPXC": {
+                  "type": "_section-content__title",
+                  "name": "Section Title",
+                  "settings": {
+                    "heading": "How It Started.  How It’s Going.",
+                    "disable_animation": false,
+                    "header_style": "h3",
+                    "header_tag": "h2",
+                    "font_family": "",
+                    "highlight_color": "",
+                    "underline_color": "",
+                    "max_width_mobile": 583,
+                    "max_width_desktop": 583
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "section_content_title_abcPXC"
+              ]
+            }
+          },
+          "block_order": []
+        },
+        "column_V4nPhp": {
+          "type": "_column",
+          "name": "Column",
+          "settings": {
+            "mobile_alignment": "left",
+            "desktop_alignment": "left"
+          },
+          "blocks": {
+            "section-content": {
+              "type": "_section-content",
+              "disabled": true,
+              "static": true,
+              "settings": {
+                "mobile_alignment": "",
+                "desktop_alignment": "",
+                "text_alignment_desktop": "center",
+                "text_alignment_mobile": "center",
+                "max_width_mobile": 0,
+                "max_width_desktop": 0
+              },
+              "blocks": {
+                "section_content_text_Xyz64R": {
+                  "type": "_section-content__text",
+                  "name": "Section Text",
+                  "settings": {
+                    "text": "<p>Along the way they embark on a series of adventures:</p><p>🥔 Launch the world’s first board game vending machine. </p><p>🥔 Patent MOOP® technology, turning reclaimed ocean plastic into game cards. </p><p>🥔 Bring board games to festivals, to work dos with our Hosted Game Nights, and to schools with The Big Inventor Challenge. </p><p>🥔 Become one of the first companies in the UK to adopt a four-day working week, making Thursday the new Friday. </p><p>🥔Are awarded B-Corp certification, meaning they’re internationally recognised for reaching the highest standards of environmental and social impact.</p><p>The whole potato empire runs under the watchful eye of Spudley, their new CEO.</p><p></p>",
+                    "visibility": "",
+                    "disable_animation": false,
+                    "text_style": "regular",
+                    "font_family": "",
+                    "color": "",
+                    "highlight_color": "",
+                    "underline_color": "",
+                    "max_width_mobile": 0,
+                    "max_width_desktop": 511
+                  },
+                  "blocks": {}
+                },
+                "section_content_icon_WMD4Uy": {
+                  "type": "_section-content__icon",
+                  "name": "Section Icon",
+                  "disabled": true,
+                  "settings": {
+                    "icon": "shopify://shop_images/Founders_Signatures.png",
+                    "file_lottie_url": "",
+                    "max_width_mobile": 180,
+                    "max_width_desktop": 280
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "section_content_text_Xyz64R",
+                "section_content_icon_WMD4Uy"
+              ]
+            }
+          },
+          "block_order": []
+        },
+        "section-content": {
+          "type": "_section-content",
+          "static": true,
+          "settings": {
+            "mobile_alignment": "",
+            "desktop_alignment": "",
+            "text_alignment_desktop": "center",
+            "text_alignment_mobile": "center",
+            "max_width_mobile": 0,
+            "max_width_desktop": 0
+          },
+          "blocks": {
+            "section_content_title_Ub76M8": {
+              "type": "_section-content__title",
+              "settings": {
+                "heading": "Heading Text",
+                "disable_animation": false,
+                "header_style": "h1",
+                "header_tag": "h2",
+                "font_family": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 0
+              },
+              "blocks": {}
+            },
+            "section_content_text_TCrbbV": {
+              "type": "_section-content__text",
+              "settings": {
+                "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vel metus auctor.</p>",
+                "visibility": "",
+                "disable_animation": false,
+                "text_style": "regular",
+                "font_family": "",
+                "color": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 0
+              },
+              "blocks": {}
+            },
+            "section_content_button_g7kFTg": {
+              "type": "_section-content__button",
+              "settings": {
+                "button_label": "Button label",
+                "button_link": "",
+                "color_theme": "primary"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "section_content_title_Ub76M8",
+            "section_content_text_TCrbbV",
+            "section_content_button_g7kFTg"
+          ]
+        },
+        "accent-graphics": {
+          "type": "_accent-graphics",
+          "static": true,
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "column_pGr8yt",
+        "column_V4nPhp"
+      ],
+      "disabled": true,
+      "name": "Two Column Section",
+      "settings": {
+        "text_side_desktop": "text-left",
+        "text_side_mobile": "text-bottom",
+        "vertical_alignment": "flex-start",
+        "enable_sticky": false,
+        "mobile_alignment": "left",
+        "desktop_alignment": "left",
+        "container_width": "",
+        "max_width": 0,
+        "grid_gutter": "",
+        "color_scheme": "",
+        "top_spacing_mobile": 50,
+        "bottom_spacing_mobile": 100,
+        "top_spacing_desktop": 100,
+        "bottom_spacing_desktop": 100,
+        "bg_color": "",
+        "section_divider_top": "divider_1",
+        "section_divider_bottom": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    },
+    "mfr_core_stacked_cards_N3t4wh": {
+      "type": "mfr-core__stacked-cards",
+      "blocks": {
+        "section_content_33ig8N": {
+          "type": "_section-content",
+          "name": "Section Content",
+          "settings": {
+            "mobile_alignment": "",
+            "desktop_alignment": "center",
+            "text_alignment_desktop": "center",
+            "text_alignment_mobile": "center",
+            "max_width_mobile": 0,
+            "max_width_desktop": 0
+          },
+          "blocks": {
+            "section_content_title_hf4nPA": {
+              "type": "_section-content__title",
+              "settings": {
+                "heading": "<strong>Our Values</strong>",
+                "disable_animation": false,
+                "header_style": "h3",
+                "header_tag": "h2",
+                "font_family": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 0,
+                "margin_top": 20
+              },
+              "blocks": {}
+            },
+            "section_content_text_jrEJa4": {
+              "type": "_section-content__text",
+              "name": "Section Text",
+              "settings": {
+                "text": "",
+                "visibility": "",
+                "disable_animation": false,
+                "text_style": "large",
+                "font_family": "",
+                "color": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 400,
+                "max_width_desktop": 420,
+                "margin_top": 30,
+                "margin_bottom": 50
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "section_content_title_hf4nPA",
+            "section_content_text_jrEJa4"
+          ]
+        },
+        "section-content": {
+          "type": "_section-content",
+          "static": true,
+          "settings": {
+            "mobile_alignment": "",
+            "desktop_alignment": "",
+            "text_alignment_desktop": "center",
+            "text_alignment_mobile": "center",
+            "max_width_mobile": 0,
+            "max_width_desktop": 0
+          },
+          "blocks": {
+            "section_content_title_WQWexh": {
+              "type": "_section-content__title",
+              "settings": {
+                "heading": "OUR TIERS",
+                "disable_animation": false,
+                "header_style": "h1",
+                "header_tag": "h2",
+                "font_family": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "section_content_title_WQWexh"
+          ]
+        },
+        "stacked-cards": {
+          "type": "_stacked-cards",
+          "static": true,
+          "settings": {
+            "metaobject_instructions": [],
+            "metaobject_selling_points": [],
+            "enable_stack": "both",
+            "start_offset": 150,
+            "end_offset": 120,
+            "card_layout": "default",
+            "is_skewed": "",
+            "max_width": 85,
+            "width_value_type": "%",
+            "aspect_ratio": "480/178",
+            "max_width_mobile": 100,
+            "width_value_type_mobile": "%",
+            "aspect_ratio_mobile": "388/180"
+          },
+          "blocks": {
+            "stacked_card_cx8x69": {
+              "type": "_stacked-card",
+              "settings": {
+                "icon": "shopify://shop_images/mission_copy.png",
+                "title": "Mission",
+                "description": "To lighten up the moments that friends and family spend together.",
+                "color": "#ffea39"
+              },
+              "blocks": {}
+            },
+            "stacked_card_JnCtFk": {
+              "type": "_stacked-card",
+              "settings": {
+                "icon": "shopify://shop_images/people_copy.png",
+                "title": "People",
+                "description": "To look after the people who work here, the people who stock the games and everyone who buys them.",
+                "color": "#ff9ace"
+              },
+              "blocks": {}
+            },
+            "stacked_card_AUYDNC": {
+              "type": "_stacked-card",
+              "settings": {
+                "icon": "shopify://shop_images/environment_copy.png",
+                "title": "Environment",
+                "description": "To make games people love without giving the planet a kicking.",
+                "color": "#b6e7f9"
+              },
+              "blocks": {}
+            },
+            "stacked_card_ajccCy": {
+              "type": "_stacked-card",
+              "settings": {
+                "icon": "shopify://shop_images/games.png",
+                "title": "Games",
+                "description": "To make games that are easy to learn, quick to play and hard to put down, so that even people who think they don’t like games, will love them.",
+                "color": "#ffaa35"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "stacked_card_cx8x69",
+            "stacked_card_JnCtFk",
+            "stacked_card_AUYDNC",
+            "stacked_card_ajccCy"
+          ]
+        },
+        "accent-graphics": {
+          "type": "_accent-graphics",
+          "static": true,
+          "settings": {},
+          "blocks": {
+            "accent_graphic_GNJKLw": {
+              "type": "_accent-graphic",
+              "name": "Accent Graphic",
+              "disabled": true,
+              "settings": {
+                "icon": "shopify://shop_images/world_8906718d-edf2-4064-bae4-c9ef69434a5e.png",
+                "svg_code": "",
+                "visibility": "always",
+                "value_type": "%",
+                "x_setting": "center",
+                "y_setting": "top",
+                "width_large": 600,
+                "position_x_large": 0,
+                "position_y_large": -12,
+                "width_small": 480,
+                "position_x_small": 0,
+                "position_y_small": -8,
+                "animation": "floating",
+                "rotate": 0,
+                "flip": false,
+                "custom_class": "earth"
+              },
+              "blocks": {}
+            },
+            "accent_graphic_CwGRxn": {
+              "type": "_accent-graphic",
+              "name": "Accent Graphic",
+              "settings": {
+                "icon": "shopify://shop_images/cloud.png",
+                "svg_code": "",
+                "visibility": "always",
+                "value_type": "%",
+                "x_setting": "left",
+                "y_setting": "top",
+                "width_large": 346,
+                "position_x_large": 18,
+                "position_y_large": -2,
+                "width_small": 230,
+                "position_x_small": -38,
+                "position_y_small": 8,
+                "animation": "floating",
+                "rotate": 0,
+                "flip": false,
+                "custom_class": ""
+              },
+              "blocks": {}
+            },
+            "accent_graphic_yGk6NX": {
+              "type": "_accent-graphic",
+              "name": "Accent Graphic",
+              "settings": {
+                "icon": "shopify://shop_images/cloud.png",
+                "svg_code": "",
+                "visibility": "always",
+                "value_type": "%",
+                "x_setting": "right",
+                "y_setting": "top",
+                "width_large": 346,
+                "position_x_large": 18,
+                "position_y_large": 6,
+                "width_small": 230,
+                "position_x_small": -30,
+                "position_y_small": 6,
+                "animation": "floating",
+                "rotate": 0,
+                "flip": false,
+                "custom_class": ""
+              },
+              "blocks": {}
+            },
+            "accent_graphic_cAiFGF": {
+              "type": "_accent-graphic",
+              "name": "Accent Graphic",
+              "disabled": true,
+              "settings": {
+                "icon": "shopify://shop_images/potato_7c335552-e11d-41c5-9711-d5483a37a29b.png",
+                "svg_code": "",
+                "visibility": "always",
+                "value_type": "%",
+                "x_setting": "left",
+                "y_setting": "top",
+                "width_large": 61,
+                "position_x_large": 34,
+                "position_y_large": -6,
+                "width_small": 40,
+                "position_x_small": 10,
+                "position_y_small": -2,
+                "animation": "floating",
+                "rotate": 0,
+                "flip": true,
+                "custom_class": ""
+              },
+              "blocks": {}
+            },
+            "accent_graphic_z7Mdkz": {
+              "type": "_accent-graphic",
+              "name": "Accent Graphic",
+              "disabled": true,
+              "settings": {
+                "icon": "shopify://shop_images/potato_7c335552-e11d-41c5-9711-d5483a37a29b.png",
+                "svg_code": "",
+                "visibility": "always",
+                "value_type": "%",
+                "x_setting": "right",
+                "y_setting": "top",
+                "width_large": 60,
+                "position_x_large": 32,
+                "position_y_large": -4,
+                "width_small": 40,
+                "position_x_small": 10,
+                "position_y_small": -2,
+                "animation": "floating",
+                "rotate": 0,
+                "flip": false,
+                "custom_class": ""
+              },
+              "blocks": {}
+            },
+            "accent_graphic_pb7QBT": {
+              "type": "_accent-graphic",
+              "name": "Accent Graphic",
+              "disabled": true,
+              "settings": {
+                "icon": "shopify://shop_images/potato_7c335552-e11d-41c5-9711-d5483a37a29b.png",
+                "svg_code": "",
+                "visibility": "always",
+                "value_type": "%",
+                "x_setting": "left",
+                "y_setting": "top",
+                "width_large": 60,
+                "position_x_large": 42,
+                "position_y_large": 8,
+                "width_small": 40,
+                "position_x_small": 18,
+                "position_y_small": 6,
+                "animation": "floating",
+                "rotate": 0,
+                "flip": true,
+                "custom_class": ""
+              },
+              "blocks": {}
+            },
+            "accent_graphic_Rx8DCf": {
+              "type": "_accent-graphic",
+              "name": "Accent Graphic",
+              "disabled": true,
+              "settings": {
+                "icon": "shopify://shop_images/potato_copy_3.png",
+                "svg_code": "",
+                "visibility": "always",
+                "value_type": "%",
+                "x_setting": "right",
+                "y_setting": "top",
+                "width_large": 60,
+                "position_x_large": 36,
+                "position_y_large": 0,
+                "width_small": 40,
+                "position_x_small": 16,
+                "position_y_small": 2,
+                "animation": "floating",
+                "rotate": 0,
+                "flip": false,
+                "custom_class": ""
+              },
+              "blocks": {}
+            },
+            "accent_graphic_AHjBMg": {
+              "type": "_accent-graphic",
+              "name": "Accent Graphic",
+              "disabled": true,
+              "settings": {
+                "icon": "shopify://shop_images/potato_copy_3.png",
+                "svg_code": "",
+                "visibility": "always",
+                "value_type": "%",
+                "x_setting": "left",
+                "y_setting": "top",
+                "width_large": 60,
+                "position_x_large": 42,
+                "position_y_large": 4,
+                "width_small": 40,
+                "position_x_small": 28,
+                "position_y_small": 4,
+                "animation": "floating",
+                "rotate": 0,
+                "flip": false,
+                "custom_class": ""
+              },
+              "blocks": {}
+            },
+            "accent_graphic_He6Dyb": {
+              "type": "_accent-graphic",
+              "name": "Accent Graphic",
+              "disabled": true,
+              "settings": {
+                "icon": "shopify://shop_images/potato_7c335552-e11d-41c5-9711-d5483a37a29b.png",
+                "svg_code": "",
+                "visibility": "always",
+                "value_type": "%",
+                "x_setting": "right",
+                "y_setting": "top",
+                "width_large": 60,
+                "position_x_large": 30,
+                "position_y_large": 2,
+                "width_small": 40,
+                "position_x_small": 2,
+                "position_y_small": 4,
+                "animation": "floating",
+                "rotate": 0,
+                "flip": false,
+                "custom_class": ""
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "accent_graphic_GNJKLw",
+            "accent_graphic_CwGRxn",
+            "accent_graphic_yGk6NX",
+            "accent_graphic_cAiFGF",
+            "accent_graphic_z7Mdkz",
+            "accent_graphic_pb7QBT",
+            "accent_graphic_Rx8DCf",
+            "accent_graphic_AHjBMg",
+            "accent_graphic_He6Dyb"
+          ]
+        }
+      },
+      "block_order": [
+        "section_content_33ig8N"
+      ],
+      "name": "Stacking Cards",
+      "settings": {
+        "content": "selling_point",
+        "layout": "layout_3",
+        "desktop_content_position": "left-content-position",
+        "mobile_content_position": "top-content-position",
+        "container_width": "",
+        "max_width": 85,
+        "grid_gutter": "",
+        "mobile_alignment": "center",
+        "desktop_alignment": "center",
+        "color_scheme": "scheme-b8da0b5e-d4d6-4b9e-bc64-091b090bb8e2",
+        "top_spacing_mobile": 350,
+        "bottom_spacing_mobile": 60,
+        "top_spacing_desktop": 400,
+        "bottom_spacing_desktop": 130,
+        "custom_bg_color": "",
+        "bg_color": "",
+        "section_divider_top": "",
+        "section_divider_bottom": "",
+        "custom_class": "about-us",
+        "custom_id": ""
+      }
+    },
+    "mfr_core_text_section_A6xijX": {
+      "type": "mfr-core__text-section",
+      "blocks": {
+        "section-content": {
+          "type": "_section-content",
+          "static": true,
+          "settings": {
+            "mobile_alignment": "",
+            "desktop_alignment": "",
+            "text_alignment_desktop": "center",
+            "text_alignment_mobile": "center",
+            "max_width_mobile": 0,
+            "max_width_desktop": 0
+          },
+          "blocks": {
+            "section_content_title_YayYpj": {
+              "type": "_section-content__title",
+              "settings": {
+                "heading": "<strong>Now That You Know Us, Let’s Play!</strong>",
+                "disable_animation": false,
+                "header_style": "h3",
+                "header_tag": "h2",
+                "font_family": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 900,
+                "margin_bottom": 40
+              },
+              "blocks": {}
+            },
+            "section_content_button_Vha74T": {
+              "type": "_section-content__button",
+              "settings": {
+                "button_label": "Explore Our Games",
+                "button_link": "shopify://pages/board-games-shop",
+                "color_theme": "secondary",
+                "button_max_width": 270
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "section_content_title_YayYpj",
+            "section_content_button_Vha74T"
+          ]
+        },
+        "accent-graphics": {
+          "type": "_accent-graphics",
+          "static": true,
+          "settings": {},
+          "blocks": {
+            "accent_graphic_XAycjW": {
+              "type": "_accent-graphic",
+              "name": "Accent Graphic",
+              "settings": {
+                "icon": "shopify://shop_images/Bitmap_2x_1.png",
+                "svg_code": "",
+                "visibility": "always",
+                "value_type": "%",
+                "x_setting": "right",
+                "y_setting": "top",
+                "width_large": 200,
+                "position_x_large": -36,
+                "position_y_large": -18,
+                "width_small": 180,
+                "position_x_small": -42,
+                "position_y_small": -18,
+                "animation": "none",
+                "rotate": 0,
+                "flip": false,
+                "custom_class": ""
+              },
+              "blocks": {}
+            },
+            "accent_graphic_GgFkmR": {
+              "type": "_accent-graphic",
+              "name": "Accent Graphic",
+              "settings": {
+                "icon": "shopify://shop_images/dice_1.png",
+                "svg_code": "",
+                "visibility": "always",
+                "value_type": "%",
+                "x_setting": "left",
+                "y_setting": "bottom",
+                "width_large": 100,
+                "position_x_large": -16,
+                "position_y_large": 16,
+                "width_small": 90,
+                "position_x_small": -24,
+                "position_y_small": 2,
+                "animation": "none",
+                "rotate": 0,
+                "flip": false,
+                "custom_class": ""
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "accent_graphic_XAycjW",
+            "accent_graphic_GgFkmR"
+          ]
+        }
+      },
+      "name": "Text Section",
+      "settings": {
+        "container_width": "full",
+        "max_width": 0,
+        "grid_gutter": "",
+        "mobile_alignment": "center",
+        "desktop_alignment": "center",
+        "color_scheme": "",
+        "top_spacing_mobile": 100,
+        "bottom_spacing_mobile": 100,
+        "top_spacing_desktop": 100,
+        "bottom_spacing_desktop": 100,
+        "bg_color": "",
+        "section_divider_top": "divider_1",
+        "section_divider_bottom": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "mfr_core_image_video_text_section_6EwteG",
+    "mfr_core_two_column_content_f4bagD",
+    "mfr_core_stacked_cards_N3t4wh",
+    "mfr_core_text_section_A6xijX"
+  ]
+}

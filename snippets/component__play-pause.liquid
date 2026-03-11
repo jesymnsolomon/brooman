@@ -1,0 +1,11 @@
+<button class="play-pause-button {{ initial_state | default: 'play' }} {{ class }}">
+  {%- capture play_icon -%}{%- render 'icon__play' -%}{%- endcapture -%}
+  {%- capture pause_icon -%}{%- render 'icon__pause' -%}{%- endcapture -%}
+    
+  <span class="play-pause-button__icon play">
+    {% render 'component__svg-encoder', svg_code: play_icon, alt: "play icon" %}
+  </span>
+  <span class="play-pause-button__icon pause">
+    {% render 'component__svg-encoder', svg_code: pause_icon, alt: "pause icon" %}
+  </span>
+</button>

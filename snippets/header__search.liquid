@@ -1,0 +1,22 @@
+<script src="{{ 'html-element__details-modal.js' | asset_url }}" defer></script>
+<script src="{{ 'html-element__search-form.js' | asset_url }}" defer></script>
+<script src="{{ 'html-element__predictive-search.js' | asset_url }}" defer></script>
+
+<details-modal class="header__search-inner">
+  <details>
+    <summary class="header__search-trigger" aria-haspopup="dialog" aria-label="Search" role="button">
+      {% render 'icon__search' %}
+      <span class="visually-hidden">Search</span>
+    </summary>
+
+    <div class="search-modal modal__content" role="dialog" aria-modal="true" aria-label="Search">
+      <div class="modal-overlay"></div>
+      <div class="search-modal__content search-modal__content-bottom" tabindex="-1">
+        {% render 'search__form', predictive: true, search_icon: true %}
+        <button type="button" class="search-modal__close-button modal__close-button link link--text focus-inset" aria-label="Close">
+          {% render 'icon__close' %}
+        </button>
+      </div>
+    </div>
+  </details>
+</details-modal>

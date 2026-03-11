@@ -1,0 +1,37 @@
+/* Reveal Modal
+=============================
+=============================*/
+.reveal {
+	background-color: $off-white;
+}
+
+html.is-reveal-open,
+html.is-reveal-open body
+	{
+	width: 100%;
+}
+
+html.is-reveal-open body {
+	overflow: visible;
+}
+
+.reveal {
+	.close-button {
+		// width: 2rem;
+		// top: 1rem;
+	}
+}
+
+.reveal.nutrition-panel {
+	width: 20rem;
+	max-width: 90%;
+	max-height: 95%;
+	overflow: visible;
+	.reveal__inner {
+		height: 100%;
+	}
+	.close-button {
+		left: -1rem;
+		top: -1rem;	
+	}
+}

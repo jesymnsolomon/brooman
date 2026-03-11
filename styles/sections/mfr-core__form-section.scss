@@ -1,0 +1,282 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+@mixin field-styling {
+	@include regular;
+	height: rem-calc(53px);
+	width: 100%;
+	padding: rem-calc(18px) rem-calc(24px) rem-calc(15px);
+	margin-bottom: 0;
+	border: solid $global-border-width var(--section-text);
+	box-shadow: none;
+	background-color: transparent;
+	font-weight: 500;
+	@include border-radius($global-border-radius);
+
+	&::placeholder {
+		color: var(--section-text);
+	}
+
+	&::-ms-input-placeholder {
+		color: var(--section-text);
+	}
+}
+
+.mfr-core__form-section {
+	position: relative;
+
+	.section-content {
+		.section-title {
+			&:not(:last-child) {
+				margin-bottom: rem-calc(20px);
+			}
+		}
+
+		&:not(:last-child) {
+			margin-bottom: rem-calc(30px);
+
+			@include breakpoint(large up) {
+				margin-bottom: rem-calc(40px);
+			}
+		}
+	}
+
+	.form-section {
+		max-width: rem-calc(739px); //506px
+		width: 100%;
+		margin: 0 auto;
+
+		// Globo forms
+		.globo-formbuilder,
+		.globo-form-app {
+			margin-top: 0;
+			box-shadow: none;
+			border: 0;
+		}
+
+		.globo-form-app .g-container {
+			padding: 0;
+			background-color: transparent;
+			box-shadow: none;
+			border: 0;
+		}
+
+		.globo-form-control {
+			position: relative;
+			margin-bottom: rem-calc(14px);
+
+			label {
+				color: var(--section-text) !important;
+				display: none;
+
+				> * {
+					color: var(--section-text) !important;
+				}
+
+				&[for*="file"] {
+					display: block !important;
+					@include field-styling();
+
+					span {
+						height: rem-calc(21px);
+						overflow: hidden;
+						display: block;
+						width: 90%;
+					}
+
+					&::before {
+						content: '';
+						display: block;
+						width: rem-calc(26px);
+						height: rem-calc(26px);
+						position: absolute;
+						right: rem-calc(18px);
+						top: 50%;
+						@include transform( translateY(-50%) );
+						background-image: url("data:image/svg+xml,%3Csvg width='26px' height='26px' viewBox='0 0 26 26' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cg id='R5' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='Become-a-Retailer' transform='translate(-1227, -1875)'%3E%3Cg id='Group-29-Copy-4' transform='translate(1227, 1875)'%3E%3Ccircle id='Oval' fill='%230059B2' cx='13' cy='13' r='13'%3E%3C/circle%3E%3Cg id='icon/plus' transform='translate(6, 6)' stroke='%23FFFFFF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'%3E%3Cline x1='8.8817842e-16' y1='7' x2='13.5333333' y2='7' id='Path-4-Copy'%3E%3C/line%3E%3Cline x1='7' y1='8.8817842e-16' x2='7' y2='13.5333333' id='Path-4-Copy-2'%3E%3C/line%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+						background-position: center;
+						background-repeat: no-repeat;
+						background-size: contain;
+					}
+				}
+			}
+
+			hr {
+				@include breakpoint(large up) {
+					margin: rem-calc(35px) 0;
+				}
+			}
+
+			.globo-paragraph {
+				@include large;
+
+				* {
+					color: var(--section-text) !important;
+				}
+			}
+		}
+
+		.gfb__footer {
+			margin-top: rem-calc(33px);
+		}
+
+		input[type="text"],
+		input[type="email"],
+		input[type="file"],
+		input[type="number"],
+		select,
+		textarea {
+			@include field-styling();
+			@include transition($global-transition );
+		}
+
+		select {
+			color: var(--section-text);
+		}
+
+		input[type="file"] {
+			display: none;
+		}
+
+		textarea {
+			height: rem-calc(150px);
+		}
+
+		button {
+			@include regular;
+			min-width: rem-calc(199px);
+			max-width: rem-calc(199px);
+			margin: 0 auto;
+			display: block;
+			width: 100%;
+			height: rem-calc(53px);
+			min-height: rem-calc(53px);
+			font-weight: 500;
+			@include transition($global-transition );
+			@include border-radius($global-border-radius);
+			background-color: var(--section-primary-button-bg);
+			border-color: var(--section-primary-button-bg) !important;
+			padding: rem-calc(14px) rem-calc(22px) rem-calc(11px);
+		}
+
+		.form__select {
+			position: relative;
+
+			select {
+				padding-top: rem-calc(10px);
+				padding-bottom: rem-calc(10px);
+				-webkit-appearance: none;
+				-moz-appearance: none;
+				text-indent: 1px;
+				text-overflow: '';
+				margin: 0;
+				background-image: none;
+
+				&:not(.has-selection) {
+					color: var(--section-text-alpha);
+				}
+			}
+
+			svg {
+				width: rem-calc(14px);
+				height: rem-calc(8px);
+				position: absolute;
+				top: 50%;
+				right: rem-calc(20px);
+				@include transform(translateY(-50%));
+			}
+		}
+
+		.multi-steps-forms-container {
+			$off-gray: #D9E6F1;
+
+			.globo-form-app {
+				padding: rem-calc(32px) rem-calc(16px);
+				background-color: $off-white;
+				@include border-radius(rem-calc(10px));
+
+				@include breakpoint(large up) {
+					padding: rem-calc(32px);
+				}
+
+				.line {
+					&.-background {
+						background: $off-gray !important;
+						background-color: $off-gray !important;
+					}
+
+					&.-start {
+						background-color: var(--section-primary-button-bg);
+						background: var(--section-primary-button-bg);
+					}
+
+					&.-progress {
+						background-color: var(--section-primary-button-bg) !important;
+						background: var(--section-primary-button-bg) !important;
+					}
+				}
+
+				.step__number {
+					background-color: $off-gray !important;
+					border-color: $off-gray !important;
+				}
+
+				.step.-completed .step__number {
+					background-color: var(--section-primary-button-bg);
+				}
+
+				.checkmark__circle, .checkmark__check {
+					stroke: var(--section-primary-button-bg);
+					fill: var(--section-primary-button-bg);
+				}
+
+				.globo-form-control {
+
+					hr {
+						@include breakpoint(large up) {
+							margin: rem-calc(5px) 0 !important;
+						}
+					}
+
+					.globo-paragraph {
+						@include regular;
+						padding: rem-calc(10px);
+						@include border-radius(rem-calc(10px));
+						background-color: transparent !important;
+						background: transparent !important;
+
+						* {
+							background-color: transparent !important;
+							background: transparent !important;
+							color: var(--section-text) !important;
+						}
+					}
+
+					label.globo-label {
+						display: block !important;
+					}
+				}
+
+				.gfb__footer {
+					display: flex;
+					align-items: center;
+					margin-top: 0 !important;
+
+					.action {
+						margin-left: 0;
+						margin-right: 0;
+
+						@include breakpoint(small down) {
+							max-width: rem-calc(145px);
+							min-width: rem-calc(145px);
+						}
+					}
+
+					.previous {
+						margin-right: rem-calc(15px);
+					}
+				}
+			}
+		}
+	}
+}

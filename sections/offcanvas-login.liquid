@@ -1,0 +1,32 @@
+<div id="panel-wrapper" style="background: {{ section.settings.panel_bg_color }};">
+  <button class="close" aria-label="Close menu" type="button" data-close>
+    <div class="icon">{%- render 'icon__arrows', position: 'left' -%}</div>
+    Close
+  </button>
+
+  <div class="inner">
+    <div class="panel__form">{% render 'partial__account-login' %}</div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Login Panel",
+    "class": "off-canvas__wrapper",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Sign In"
+      },
+      {
+        "type": "color_background",
+        "id": "panel_bg_color",
+        "label": "Background",
+        "default": "#000"
+      }
+    ]
+  }
+
+{% endschema %}

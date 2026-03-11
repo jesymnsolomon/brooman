@@ -1,0 +1,364 @@
+{%- assign icon = block.settings.icon -%}
+{%- assign title = block.settings.title -%}
+{%- assign text = block.settings.text -%}
+{%- assign bg_color = block.settings.bg_color -%}
+{%- assign padding = block.settings.padding -%}
+{%- assign border_radius = block.settings.border_radius -%}
+{%- assign rotate = block.settings.rotate -%}
+{%- assign text_color = block.settings.text_color -%}
+{%- assign title_style = block.settings.title_style -%}
+{%- assign text_style = block.settings.text_style -%}
+{%- assign title_width = block.settings.title_width -%}
+{%- assign text_width = block.settings.text_width -%}
+{% assign item_max_width_mobile = block.settings.item_max_width_mobile %}
+{% assign item_max_width_desktop = block.settings.item_max_width_desktop %}
+{% assign icon_render_width = block.settings.item_max_width_mobile %}
+{% assign icon_width_mobile = block.settings.icon_width_mobile %}
+{% assign icon_height_mobile = block.settings.icon_height_mobile %}
+{% assign icon_width_desktop = block.settings.icon_width_desktop %}
+{% assign icon_height_desktop = block.settings.icon_height_desktop %}
+{% assign layout = block.settings.layout %}
+{% assign title_font_family = block.settings.font_family %}
+{% assign text_font_family = block.settings.font_family_2 %}
+{% assign title_text_transform = block.settings.title_text_transform %}
+{% assign text_text_transform = block.settings.text_text_transform %}
+
+{% if block.settings.item_max_width_desktop > block.settings.item_max_width_mobile %}
+  {% assign icon_render_width = block.settings.item_max_width_desktop %}
+{% endif %}
+
+{%- if title != blank or text != blank -%}
+  <style>
+    #shopify-block-{{ block.id }} {
+      --title-width: {{ title_width }}%;
+      --text-width: {{ text_width }}%;
+      --background: {{ bg_color }};
+      --padding: {{ padding }}px;
+      --border-radius: {{ border_radius }}px;
+      --rotate: {{ rotate }}deg;
+      --text-color: {{ text_color }};
+      {% if item_max_width_mobile != blank and item_max_width_mobile != 0 %}
+        --item-max-width-mobile: {{ item_max_width_mobile }}px;
+      {% endif %}
+      {% if item_max_width_desktop != blank and item_max_width_desktop != 0 %}
+        --item-max-width-desktop: {{ item_max_width_desktop }}px;
+      {% endif %}
+      --icon-width-mobile: {{ icon_width_mobile | default: 45 }}px;
+      --icon-height-mobile: {{ icon_height_mobile | default: 45 }}px;
+      --icon-width-desktop: {{ icon_width_desktop | default: 90 }}px;
+      --icon-height-desktop: {{ icon_height_desktop | default: 90 }}px;
+
+      {% if layout == "icon-left" %}
+        --flex-direction: row;
+        --align-items: center;
+        --justify-content: stretch;
+        --text-align: left;
+      {%- else -%}
+        --flex-direction: column;
+        --align-items: center;
+        --justify-content: flex-start;
+        --text-align: center;
+      {% endif %}
+      {% if title_font_family != blank %}
+        --title-font-family: {{ title_font_family }}
+      {% endif %}
+
+       {% if text_font_family != blank %}
+        --text-font-family: {{ text_font_family }}
+      {% endif %}
+
+      {% if title_text_transform != blank %}
+        --title-text-transform: {{ title_text_transform }}
+      {% endif %}
+
+       {% if text_font_family != blank %}
+        --text-text-transform: {{ text_text_transform }}
+      {% endif %}
+    }
+  </style>
+  <div class="section-icon-text__item-icon">
+    {% assign alt = icon.alt |  default: "decorative image" %}
+
+    {% render 'component__lazyload-image',
+      image: icon,
+      alt: alt,
+      width: icon_render_width %}
+  </div>
+  <div class="section-icon-text__item-inner">
+    {% if title != blank %}
+      <p class="section-icon-text__item-title {{ title_style }}">
+        {{ title }}
+      </p>
+    {% endif %}
+    {% if text != blank %}
+      <p class="section-icon-text__item-text {{ text_style }}">
+        {{ text }}
+      </p>
+    {% endif %}
+  </div>
+{%- endif -%}
+
+{%- schema -%}
+  {
+    "name": "Section Icon Text Item",
+    "class": "section-icon-text__item",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Icon Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon",
+        "label": "Icon"
+      },
+      {
+        "type": "number",
+        "id": "icon_height_mobile",
+        "label": "Icon Height - Mobile",
+        "default": 45
+      },
+      {
+        "type": "number",
+        "id": "icon_width_mobile",
+        "label": "Icon Width - Mobile",
+        "default": 45
+      },
+      {
+        "type": "number",
+        "id": "icon_height_desktop",
+        "label": "Icon Height - Desktop",
+        "default": 90
+      },
+      {
+        "type": "number",
+        "id": "icon_width_desktop",
+        "label": "Icon Width - Desktop",
+        "default": 90
+      },
+      {
+        "type": "header",
+        "content": "Title Settings"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Icon Title"
+      },
+      {
+        "type":"select",
+        "id":"title_style",
+        "options":[
+          { "value":"", "label":"Default" },
+          { "value":"xsmall", "label":"xSmall" },
+          { "value":"small", "label":"Small" },
+          { "value":"regular", "label":"Regular" },
+          { "value":"large", "label":"Large" },
+          { "value":"xlarge", "label":"xLarge" }
+        ],
+        "label":"Title Style",
+        "default":"regular"
+      },
+      {
+        "type": "select",
+        "id": "font_family",
+        "label": "Custom Font Family",
+        "options": [
+          {
+            "value": "",
+            "label": "Use Theme Settings"
+          },
+          {
+            "value": "custom-font-name-1",
+            "label": "Custom Font 1"
+          },
+          {
+            "value": "custom-font-name-2",
+            "label": "Custom Font 2"
+          },
+          {
+            "value": "custom-font-name-3",
+            "label": "Custom Font 3"
+          },
+          {
+            "value": "custom-font-name-4",
+            "label": "Custom Font 4"
+          }
+        ],
+        "default": ""
+      },
+      {
+        "type": "select",
+        "id": "title_text_transform",
+        "label": "Text Transform",
+        "options": [
+          { "value": "", "label": "Normal"},
+          { "value": "uppercase", "label": "Uppercase"},
+          { "value": "lowercase", "label": "Lowercase"}
+        ]
+      },
+      {
+        "type": "range",
+        "id": "title_width",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "label": "Title Width",
+        "default": 100
+      },
+      {
+        "type": "header",
+        "content": "Text Settings"
+      },
+      {
+        "type": "textarea",
+        "id": "text",
+        "label": "Text",
+        "default": "Lorem ipsum, dolor sit amet consectetur adipisicing elit."
+      },
+      {
+        "type":"select",
+        "id":"text_style",
+        "options":[
+          { "value":"", "label":"Default" },
+          { "value":"xsmall", "label":"xSmall" },
+          { "value":"small", "label":"Small" },
+          { "value":"regular", "label":"Regular" },
+          { "value":"large", "label":"Large" },
+          { "value":"xlarge", "label":"xLarge" }
+        ],
+        "label":"Text Style",
+        "default":"regular"
+      },
+      {
+        "type": "select",
+        "id": "font_family_2",
+        "label": "Custom Font Family",
+        "options": [
+          {
+            "value": "",
+            "label": "Use Theme Settings"
+          },
+          {
+            "value": "custom-font-name-1",
+            "label": "Custom Font 1"
+          },
+          {
+            "value": "custom-font-name-2",
+            "label": "Custom Font 2"
+          },
+          {
+            "value": "custom-font-name-3",
+            "label": "Custom Font 3"
+          },
+          {
+            "value": "custom-font-name-4",
+            "label": "Custom Font 4"
+          }
+        ],
+        "default": ""
+      },
+      {
+        "type": "select",
+        "id": "text_text_transform",
+        "label": "Text Transform",
+        "options": [
+          { "value": "", "label": "Normal"},
+          { "value": "uppercase", "label": "Uppercase"},
+          { "value": "lowercase", "label": "Lowercase"}
+        ]
+      },
+      {
+        "type": "range",
+        "id": "text_width",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "label": "Title Width",
+        "default": 100
+      },
+      {
+        "type": "header",
+        "content": "Item Settings"
+      },
+      {
+        "type": "number",
+        "id": "item_max_width_mobile",
+        "label": "Item Max Width - Mobile",
+        "default": 187,
+        "info": "in pixels"
+      },
+      {
+        "type": "number",
+        "id": "item_max_width_desktop",
+        "label": "Item Max Width - Desktop",
+        "default": 187,
+        "info": "in pixels"
+      },
+      {
+        "type": "select",
+        "id": "layout",
+        "label": "Layout",
+        "default": "icon-above",
+        "options": [
+          {
+            "value": "icon-above",
+            "label": "Icon Above Text"
+          },
+          {
+            "value": "icon-left",
+            "label": "Icon Left of Text"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "border_radius",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Border Radius",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "rotate",
+        "min": -50,
+        "max": 50,
+        "step": 1,
+        "unit": "deg",
+        "label": "Rotate",
+        "default": 0
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Section Icon Text Item"
+      }
+    ]
+  }
+{%- endschema -%}

@@ -1,0 +1,151 @@
+{%- if block.settings.image_mobile != blank and block.settings.image_desktop != blank -%}
+  <div class="animated-text-banner__banner"
+    style="
+      --aspect-ratio-mobile: {{ block.settings.aspect_ratio_mobile | default: "428/715" }};
+      --aspect-ratio-desktop: {{ block.settings.aspect_ratio_desktop | default: "1440/715" }};
+    "
+    x-data='{
+      splitText() {
+        const split = new SplitText($refs.bannerText, { type: "words" });
+        const words = split.words; // Get all words
+              
+        // Calculate split point (ensuring second half gets more if odd)
+        const wordCount = words.length;
+        const firstHalfCount = Math.floor(wordCount / 2);
+        const secondHalfCount = wordCount - firstHalfCount;
+  
+        // Assign words to halves
+        const firstHalf = words.slice(0, firstHalfCount);
+        const secondHalf = words.slice(firstHalfCount); // Second half always gets more if odd
+  
+        // Initial Positions
+        this.setPositions(firstHalf, secondHalf);
+  
+        gsap.to(words, {
+          y: 0,
+          scrollTrigger: {
+            trigger: $el,
+            start: `top top+=60px`,
+            end: `+=${ window.innerHeight }px`,
+            scrub: true,
+          }
+        })
+      },
+      setPositions(firstHalf, secondHalf) {
+        // Position first half at (80px or 60px) + half word height FROM the top
+        firstHalf.forEach(word => {
+            gsap.set(word, { y: () => {
+              const wrapperHalfHeight = $el.offsetHeight / 2;
+              const wordHeight = word.offsetHeight / 2;
+              const offsetY = window.innerWidth <= 768 ? 60 : 80;
+              return `-${ wrapperHalfHeight - offsetY - wordHeight }`
+            } });
+        });
+  
+        // Position second half at (80px or 60px) + half word height FROM the bottom
+        secondHalf.forEach(word => {
+            const wordHeight = word.offsetHeight / 2;
+            gsap.set(word, { y: () => {
+              const wrapperHalfHeight = $el.offsetHeight / 2;
+              const wordHeight = word.offsetHeight / 2;
+              const offsetY = window.innerWidth <= 768 ? 60 : 80;
+              return `${ wrapperHalfHeight - offsetY - wordHeight }`
+            } });
+        });
+      },
+      initSticky() {
+        ScrollTrigger.create( {
+          trigger: $el,
+          start: `top top+=60px`,
+          end: `+=${ window.innerHeight }px`,
+          pin: true
+        } );
+      }
+    }'
+    x-init='
+      $nextTick( () => {
+        splitText();
+        initSticky();
+        if( ScrollTrigger && ScrollTrigger.refresh ) ScrollTrigger.refresh();
+      } );
+    '>
+    <div class="animated-text-banner__banner-image">
+      {% render 'component__responsive-image-v2',
+        image_mobile: block.settings.image_mobile,
+        image_desktop: block.settings.image_desktop %}
+    </div>
+    {%- if block.settings.text != blank -%}
+      <div class="animated-text-banner__banner-text"
+        x-ref="bannerText">
+        <p class="{{ block.settings.header_style }}">{{ block.settings.text }}</p>
+      </div>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Animated Text Banner",
+    "class": "animated-text-banner",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Block Settings"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_mobile",
+        "label": "Aspect Ratio - Mobile",
+        "default": "428/715"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_desktop",
+        "label": "Aspect Ratio - Desktop",
+        "default": "1440/715"
+      },
+      {
+        "type": "header",
+        "content": "Image Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_mobile",
+        "label": "Image - Mobile"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_desktop",
+        "label": "Image - Desktop"
+      },
+      {
+        "type": "header",
+        "content": "Text Settings"
+      },
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Text",
+        "default": "Lorem ipsum dolor sit amet"
+      },
+      {
+        "type": "select",
+        "id": "header_style",
+        "options": [
+          { "value": "h1", "label": "H1"},
+          { "value": "h2", "label": "H2"},
+          { "value": "h3", "label": "H3"},
+          { "value": "h4", "label": "H4"},
+          { "value": "h5", "label": "H5"},
+          { "value": "h6", "label": "H6"}
+        ],
+        "label": "Header Style",
+        "default": "h1"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Animated Text Banner"
+      }
+    ]
+  }
+{% endschema %}

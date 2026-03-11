@@ -1,0 +1,91 @@
+<style>
+  #shopify-block-{{ block.id }} {
+    --width-mobile: {{ block.settings.width_mobile }}px;
+    --height-mobile: {%- if block.settings.height_mobile != blank and block.settings.height_mobile != 0 -%}{{ block.settings.height_mobile }}px{%- else -%}auto{%- endif -%};
+    --width-desktop: {{ block.settings.width_desktop }}px;
+    --height-desktop: {%- if block.settings.height_desktop != blank and block.settings.height_desktop != 0 -%}{{ block.settings.height_desktop }}px{%- else -%}auto{%- endif -%};
+  }
+</style>
+{%- if block.settings.icon != blank -%}
+  {% assign alt = block.settings.icon.alt |  default: "icon or logo image" %}
+  {% render 'component__lazyload-image',
+    image: block.settings.icon,
+    alt: alt,
+    width: block.settings.width_desktop %}
+{%- endif -%}
+<p class="{{ block.settings.text_style }}">{{- block.settings.text -}}</p>
+
+{%- schema -%}
+  {
+    "name": "Item",
+    "class": "scrolling-bar__icon-text-item scrolling-bar__item",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Icon Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon",
+        "label": "Icon"
+      },
+      {
+        "type": "number",
+        "id": "width_mobile",
+        "label": "Width - Mobile",
+        "default": 30,
+        "info": "in pixels"
+      },
+      {
+        "type": "number",
+        "id": "height_mobile",
+        "label": "Height - Mobile",
+        "default": 30,
+        "info": "in pixels"
+      },
+      {
+        "type": "number",
+        "id": "width_desktop",
+        "label": "Width - Desktop",
+        "default": 50,
+        "info": "in pixels"
+      },
+      {
+        "type": "number",
+        "id": "height_desktop",
+        "label": "Height - Desktop",
+        "default": 50,
+        "info": "in pixels"
+      },
+      {
+        "type": "header",
+        "content": "Text Settings"
+      },
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Text",
+        "default": "Lorem ipsum dolor sit amet."
+      },
+      {
+        "type":"select",
+        "id":"text_style",
+        "options":[
+          { "value":"", "label":"Default" },
+          { "value":"xsmall", "label":"xSmall" },
+          { "value":"small", "label":"Small" },
+          { "value":"regular", "label":"Regular" },
+          { "value":"large", "label":"Large" },
+          { "value":"xlarge", "label":"xLarge" }
+        ],
+        "label":"Style",
+        "default":"regular"
+      },
+    ],
+    "presets": [
+      {
+        "name": "Item"
+      }
+    ]
+  }
+{%- endschema -%}

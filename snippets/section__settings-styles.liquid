@@ -1,0 +1,40 @@
+{% if section.settings.mobile_alignment == "left" %}
+  {%- assign justify_content_mobile = "flex-start" -%}
+  {%- assign text_align_mobile = "left" -%}
+{%- elsif section.settings.mobile_alignment == "right" -%}
+  {%- assign justify_content_mobile = "flex-end" -%}
+  {%- assign text_align_mobile = "right" -%}
+{%- else -%}
+  {%- assign justify_content_mobile = "center" -%}
+  {%- assign text_align_mobile = "center" -%}
+{% endif %}
+
+{% if section.settings.desktop_alignment == "left" %}
+  {%- assign justify_content_desktop = "flex-start" -%}
+  {%- assign text_align_desktop = "left" -%}
+{%- elsif section.settings.desktop_alignment == "right" -%}
+  {%- assign justify_content_desktop = "flex-end" -%}
+  {%- assign text_align_desktop = "right" -%}
+{%- else -%}
+  {%- assign justify_content_desktop = "center" -%}
+  {%- assign text_align_desktop = "center" -%}
+{%- endif -%}
+
+<style>
+  {%- if section.settings.desktop_alignment != blank -%}
+    @media (min-width: 1024px) {
+      #shopify-section-{{ section.id }} .alignment-helper {
+        --justify-content-desktop: {{ justify_content_desktop }};
+        --text-align-desktop: {{ text_align_desktop }};
+      }
+    }
+  {%- endif -%}
+  {%- if section.settings.mobile_alignment != blank -%}
+    @media (max-width: 1023px) {
+      #shopify-section-{{ section.id }} .alignment-helper {
+        --justify-content-mobile: {{ justify_content_mobile }};
+        --text-align-mobile: {{ text_align_mobile }};
+      }
+    }
+  {%- endif -%}
+</style>

@@ -1,0 +1,226 @@
+.mfr-accounts__addresses {
+  .section-content {
+    text-align: center;
+    margin: 0 0 rem-calc(35px);
+
+    @include breakpoint(large up) {
+      margin: 0 0 rem-calc(50px);
+    }
+
+    .section-title {
+      margin: 0 0 rem-calc(25px);
+    }
+
+    .section-link {
+      @include xsmall;
+      font-weight: 700;
+      text-transform: uppercase;
+      border-bottom: $global-border-width solid currentColor;
+      display: inline-block;
+      min-width: auto;
+      margin: 0 auto rem-calc(10px);
+
+      @include hover {
+        @include transform(scale(.97));
+      }
+    }
+  }
+
+  .section-addresses {
+    ul {
+      @include clear-list;
+      max-width: rem-calc(1024px);
+      margin-left: auto;
+      margin-right: auto;
+
+      li {
+        display: flex;
+        align-items: center;
+        padding-bottom: rem-calc(20px);
+        margin-bottom: rem-calc(20px);
+        border-bottom: $global-border-width solid $black;
+      }
+    }
+
+    .default-address {
+      @include xsmall;
+      font-weight: 600;
+      color: $white;
+      text-transform: uppercase;
+      padding: rem-calc(5px) rem-calc(10px);
+      margin-bottom: rem-calc(10px);
+      display: inline-block;
+      background-color: $black;
+      @include border-radius(rem-calc(5px));
+    }
+  }
+
+  .section-form {
+    margin: auto;
+    padding: rem-calc(40px) 0;
+
+    @include breakpoint(large up) {
+      padding: rem-calc(50px);
+    }
+
+    .section-title {
+      margin: 0 0 rem-calc(20px);
+
+      @include breakpoint(large up) {
+        margin: 0 0 rem-calc(40px);
+      }
+    }
+
+    .form-submit {
+      margin-bottom: 0;
+
+      .link {
+        min-height: auto;
+        @include border-radius(0);
+      }
+    }
+  }
+
+  .section-modal {
+    max-width: rem-calc(1024px);
+    width: 100%;
+    margin-bottom: 0 !important;
+
+    .section-form {
+      padding-bottom: 0;
+    }
+
+    form {
+      margin: rem-calc(35px) 0 0;
+
+      .form-submit {
+        .link {
+          min-height: auto;
+          @include border-radius(0);
+        }
+      }
+    }
+  }
+
+  .form-grid {
+    width: 100%;
+
+    @include breakpoint(large up) {
+      display: grid;
+      gap: rem-calc(16px);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .form-address {
+      text-align: left;
+    }
+
+    .form-submit {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin: rem-calc(15px) 0 0;
+
+      @include breakpoint(large up) {
+        justify-content: flex-end;
+        margin: 0;
+      }
+
+      .button {
+        min-width: rem-calc(100px);
+        height: rem-calc(42px);
+        min-height: rem-calc(42px);
+        padding: rem-calc(10px) rem-calc(20px);
+
+        &:first-child {
+          margin-right: rem-calc(10px);
+        }
+      }
+    }
+  }
+
+  .form-field {
+    position: relative;
+    margin-bottom: rem-calc(15px);
+
+    label {
+      @include small;
+      font-weight: 600;
+      text-align: left;
+      margin-bottom: rem-calc(5px);
+    }
+
+    input:not([type="submit"]),
+    input:not([type="checkbox"]),
+    input:not([type="radio"]) {
+      @include border-radius(rem-calc(12px));
+    }
+
+    select {
+      @include border-radius(rem-calc(12px));
+    }
+
+    .password-visibility {
+      position: absolute;
+      right: rem-calc(20px);
+      bottom: rem-calc(18px);
+    }
+  }
+
+  .form-checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    label {
+      margin-bottom: 0;
+    }
+
+    input {
+      width: rem-calc(20px);
+      height: rem-calc(20px);
+      min-height: rem-calc(20px);
+    }
+  }
+
+  .form-submit {
+    text-align: center;
+    margin-top: rem-calc(25px);
+    margin-bottom: rem-calc(35px);
+
+    @include breakpoint(large up) {
+      margin-top: rem-calc(35px);
+    }
+
+    .button {
+      font-size: $button-font-size-mobile;
+      font-weight: 700;
+      min-height: rem-calc(70px);
+      @include border-radius(rem-calc(16px));
+
+      @include breakpoint(large up) {
+        font-size: $button-font-size;
+      }
+    }
+
+    .link {
+      @include small;
+      font-weight: 700;
+      text-transform: uppercase;
+      border: 0;
+      display: block;
+      min-width: auto;
+      margin: rem-calc(30px) auto rem-calc(10px);
+
+      @include hover {
+        @include transform(scale(.97));
+      }
+    }
+  }
+
+  .form-errors {
+    font-weight: 700;
+    font-style: italic;
+    color: red;
+  }
+}

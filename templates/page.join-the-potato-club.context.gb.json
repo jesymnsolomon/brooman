@@ -1,0 +1,32 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "parent": "page.join-the-potato-club.json",
+  "context": {
+    "market": "gb"
+  },
+  "sections": {
+    "mfr_bpg_embed_form_tfC69C": {
+      "settings": {},
+      "blocks": {
+        "icon-text-wrapper": {
+          "blocks": {
+            "section_content_icon_text_item_Umi8i9": {
+              "settings": {
+                "title": "15% off first order"
+              }
+            }
+          },
+          "settings": {}
+        }
+      }
+    }
+  }
+}

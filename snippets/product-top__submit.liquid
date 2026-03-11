@@ -1,0 +1,73 @@
+{% assign quantity_selector = section.blocks | where: 'type', 'quantity_selector' | first %}
+
+{% if product.available %}
+  {%- assign open_off_canvas = '
+      x-data
+      x-on:click="$store[`offCanvasCart`].openOffcanvas()"
+    ' -%}
+{% else %}
+  {%- assign open_off_canvas = '' -%}
+{% endif %}
+
+<div
+  class="product-top__actions"
+  x-ref="productTopActions"
+>
+  {% if quantity_selector != blank and product.selected_or_first_available_variant.available %}
+    <div class="product-top__quantity-selector">
+      {%- render 'component__quantity-selector-v2',
+        name: 'quantity',
+        min: 1,
+        max: product.selected_or_first_available_variant.inventory_quantity
+      -%}
+    </div>
+  {% endif %}
+  <div
+    class="product-top__submit"
+    x-ref="productTopSubmit"
+  >
+    <button
+      class="button add-to-cart primary"
+      data-inview
+      data-open="offCanvasCart"
+      {% unless product.selected_or_first_available_variant.available %}
+        disabled
+      {% endunless %}
+      {{ open_off_canvas }}
+    >
+      {% if product.selected_or_first_available_variant.available %}
+        <span>{{ block.settings.label | replace: '--', '&mdash;' }}</span>
+        {% if block.settings.show_price %}
+          <span
+            class="price"
+            x-text='sellingPlanType == "one-time" ? Shopify.formatMoney(basePrice * currentQuantity) : Shopify.formatMoney((basePrice - (basePrice * discountPercentage)) * currentQuantity)'
+          >
+            {{- product.selected_or_first_available_variant.price | money_without_trailing_zeros -}}
+          </span>
+        {% endif %}
+
+        <template x-if="!$store.pdp.stickyATC && $store.pdp.addOnsArray.length > 0">
+          <span class="addons-indicator" x-text="`(+${$store.pdp.addOnsArray.length} addons)`"></span>
+        </template>
+      {% else %}
+        <span>{{ 'products.product.sold_out' | t }}</span>
+      {% endif %}
+    </button>
+  </div>
+
+  {% if block.settings.bottom_caption != blank %}
+    <div class="product-top__submit-caption">
+      {{ block.settings.bottom_caption }}
+    </div>
+  {% endif %}
+</div>
+
+<div
+  class="product-top__actions--sticky"
+  x-init='
+    const productTopActions = $refs["productTopActions"];
+    [...productTopActions.children].forEach(child => {
+      $el.appendChild(child.cloneNode(true));
+    });
+  '
+></div>

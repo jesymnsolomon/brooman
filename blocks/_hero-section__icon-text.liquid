@@ -1,0 +1,41 @@
+{% if block.settings.icon != blank %}
+  <div class="hero-section__icon-text-icon scrolling-icon-text__icon-text-icon">
+    {% assign default_alt = "maybe an image about " | append: block.settings.text %}
+    {% assign alt = block.settings.image | default: default_alt %}
+    {% render 'component__lazyload-image',
+      image: block.settings.icon,
+      width: 144,
+      alt: alt %}
+  </div>
+{% endif %}
+
+{% if block.settings.text != blank %}
+  <p class="hero-section__icon-text-text scrolling-icon-text__icon-text-text">
+    {{ block.settings.text }}
+  </p>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Icon Text",
+    "class": "hero-section__icon-text scrolling-icon-text__icon-text",
+    "settings": [
+      {
+        "type":"image_picker",
+        "id":"icon",
+        "label":"Icon"
+      },
+      {
+        "type":"text",
+        "id":"text",
+        "default":"Text",
+        "label":"Text"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Icon Text"
+      }
+    ]
+  }
+{% endschema %}

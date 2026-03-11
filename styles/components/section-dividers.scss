@@ -1,0 +1,75 @@
+.section-divider {
+  pointer-events: none;
+
+  &__top {
+    position: absolute;
+    top: rem-calc( 10px );
+    left: 0;
+    height: rem-calc(40px);
+    width: 100%;
+    z-index: 2;
+    @include transform( translateY( -100% ) );
+
+    @include breakpoint( large up ) {
+      top: rem-calc( 20px );
+    }
+
+    img,
+    lottie-player {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+
+      svg path {
+        fill: var(--divider-color, var(--section-background, var(--footer-background)));
+      }
+    }
+
+    &.divider-1 {
+      transform: translateY( -100% ) scaleX(-1);
+    }
+  }
+
+  &__bottom {
+    position: absolute;
+    bottom: rem-calc( 4px );
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    @include transform( translateY( 100% ) );
+
+    @include breakpoint( large up ) {
+      bottom: rem-calc( 20px );
+    }
+
+    img,
+    lottie-player {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+
+      svg path {
+        fill: var(--divider-color, var(--section-background, var(--footer-background)));
+      }
+    }
+  }
+
+  &__top,
+  &__bottom {
+    overflow: hidden;
+
+    svg, path, g {
+        fill: var(--divider-color, var(--section-background, var(--footer-background)));
+    }
+
+    &.divider-1 svg {
+      @include breakpoint(medium down) {
+        transform: translateY(80%) scaleX(-1) scale(2.5);
+      }
+    }
+  }
+}

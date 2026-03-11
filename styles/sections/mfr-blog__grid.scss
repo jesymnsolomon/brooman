@@ -1,0 +1,188 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+.mfr-blog__grid {
+  .blog-grid {
+    &__filters {
+      display: flex;
+      flex-direction: column;
+      justify-content: stretch;
+      align-items: stretch;
+      gap: rem-calc(12px);
+      
+      @include breakpoint(large up) {
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: rem-calc(30px);
+
+        @include breakpoint(large up) {
+          margin-bottom: rem-calc(50px);
+        }
+      }
+
+      &-inner {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: rem-calc(10px);
+        list-style: none;
+        max-width: 100%;
+        overflow: auto;
+        margin: 0;
+
+        &::-webkit-scrollbar {
+          -webkit-appearance: none;
+        }
+
+        &::-webkit-scrollbar:vertical {
+          width: 3px;
+        }
+
+        &::-webkit-scrollbar:horizontal {
+          height: 3px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: $black;
+          @include border-radius(rem-calc(10px));
+          border: none;
+        }
+
+        &::-webkit-scrollbar-track {
+          @include border-radius(rem-calc(10px));
+          background-color: transparent;
+        }
+
+        &.with-scroll {
+          justify-content: flex-start;
+          
+          @include breakpoint(medium down) {
+            padding-bottom: rem-calc(10px);
+            margin-top: rem-cacl(20px);
+          }
+        }
+
+        li {
+          display: inline-block;
+          overflow: hidden;
+          flex-shrink: 0;
+
+          button {
+            @include small;
+            line-height: 1.8em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: rem-calc(0.29px);
+            padding: rem-calc(4px) rem-calc(15px);
+            @include border-radius(rem-calc(22px));
+            @include transition($global-transition );
+
+            &.is-active {
+              background-color: $color-accent-2;
+            }
+
+            @include hover {
+              background-color: $color-accent-2;
+            }
+
+            @include enter-animation {
+              @include transform(translateY($enter-transform-value));
+              @include opacity(0);
+            }
+          }
+        }
+      }
+    }
+
+    &__search {
+      position: relative;
+      flex-shrink: 0;
+      @include transition($global-transition );
+
+      @include enter-animation {
+        @include transform(translateY($enter-transform-value));
+        @include opacity(0);
+      }
+
+      img {
+        position: absolute;
+        top: 50%;
+        right: rem-calc(23px);
+        width: rem-calc(15px);
+        @include transform(translateY(-50%) scaleX(-1));
+      }
+
+      input {
+        @include small;
+        font-weight: 600;
+        margin: 0;
+        padding: rem-calc(6px) rem-calc(13px);
+        padding-right: rem-calc(45px);
+        @include border-radius(rem-calc(20px));
+        @include transition($global-transition);
+
+        @include breakpoint(large up) {
+          width: rem-calc(250px);
+        }
+
+        @include placeholder {
+          color: currentColor;
+          @include opacity(0.6);
+        }
+      }
+    }
+
+    &__inner {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: rem-calc(19px);
+      row-gap: rem-calc(26px);
+
+      @include breakpoint(medium up) {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      @include breakpoint(large up) {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        column-gap: rem-calc(21px);
+        row-gap: rem-calc(50px);
+      }
+    }
+
+    &__load-more {
+      grid-column: span 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: rem-calc(16px);
+
+      @include breakpoint(medium up) {
+        grid-column: span 3;
+      }
+
+      @include breakpoint(large up) {
+        grid-column: span 4;
+        margin-top: rem-calc(20px);
+      }
+
+      .button {
+        width: 100%;
+        padding: rem-calc(8px);
+        min-height: rem-calc(60px);
+        max-width: rem-calc(210px);
+      }
+    }
+
+    &__empty {
+      @include large;
+      font-weight: 700;
+      margin-top: rem-calc(20px);
+    }
+  }
+}

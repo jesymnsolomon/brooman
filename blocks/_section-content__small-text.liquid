@@ -1,0 +1,87 @@
+{% assign text = block.settings %}
+  {% assign block_id = block.id %}
+  {% assign text = block.settings.text %}
+  {% assign color = block.settings.small_text_color %}
+  {% assign text_transform = block.settings.text_transform %}
+  {% assign font_weight = block.settings.font_weight %}
+{% if text != blank %}
+
+
+  {% if color != "" and color != "rgba(0,0,0,0)" %}
+      {%- capture color_style -%}
+        --small-text-color: {{ color }};
+        --small-text-color-2: white;
+      {%- endcapture -%}
+  {% else %}
+      {% assign color_style = "" %}
+  {% endif %}
+
+  {% if text_transform != blank or font_weight != blank%}
+    {%- capture styling -%}
+      --text-transform: {{ text_transform }};
+      --font-weight: {{ font_weight }};
+    {%- endcapture -%}
+  {% endif %}
+
+
+  <div {% if block_id != blank %}id="block--{{ block_id }}"{% endif %}
+      class="small-title color_theme_text"
+      style="{{ color_style }}{{ styling }}"
+      data-inview>
+      <span>{{ text
+        | replace: "[text-gradient]", "<span class='text-gradient'>"
+        | replace: "[/text-gradient]", "</span>" }}</span>
+  </div>
+
+
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Section Small Text",
+    "class": "small-title__wrapper",
+    "settings": [
+      {
+        "type":"text",
+        "id":"text",
+        "default":"Accent Text",
+        "label":"Text"
+      },
+      {
+        "type": "color",
+        "id": "small_text_color",
+        "label": "Color"
+      },
+      {
+        "type": "select",
+        "id": "text_transform",
+        "label": "Text Transform",
+        "default": "",
+        "options": [
+          { "value": "", "label": "Normal"},
+          { "value": "uppercase", "label": "Uppercase"},
+          { "value": "lowercase", "label": "Lowercase"}
+        ]
+      },
+       {
+        "type": "select",
+        "id": "font_weight",
+        "label": "Font Weight",
+        "default": "400",
+        "options": [
+          { "value": "400", "label": "400"},
+          { "value": "500", "label": "500"},
+          { "value": "600", "label": "600"},
+          { "value": "700", "label": "700"},
+          { "value": "800", "label": "800"},
+          { "value": "900", "label": "900"}
+        ]
+      },
+    ],
+    "presets": [
+      {
+        "name": "Section Small Text"
+      }
+    ]
+  }
+{% endschema %}

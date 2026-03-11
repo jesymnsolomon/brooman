@@ -1,0 +1,93 @@
+{% assign link = block.settings.button_link %}
+{% assign color_theme = block.settings.color_theme %}
+{% assign label = block.settings.button_label %}
+{% assign width = block.settings.max_width %}
+{% assign custom_id = block.settings.custom_id %}
+{% assign custom_class = block.settings.custom_class %}
+{% assign custom_code = block.settings.custom_code %}
+
+<div class="mfr-card__button-inner {{ custom_class }}" {% if width != blank %}style="--max-width: {{ width }}px"{% endif %}>
+  <a href="{{ link | default: '#' }}"
+    {% if custom_id != blank %}id="{{ custom_id }}"{% endif %}
+    class="button section-button {{ color_theme | default: '' }}"
+    {% if custom_code != blank %}{{ custom_code }}{% endif %}
+    {% if link == blank %}
+      aria-disabled="true"
+    {% endif %}
+    {{ block.shopify_attributes }}>
+    <span class="text">{{ label | escape }}</span>
+  </a>
+</div>
+{% schema %}
+  {
+    "name": "Button",
+    "class": "mfr-card__button",
+    "settings": [
+      {
+        "type":"text",
+        "id":"button_label",
+        "default":"Button label",
+        "label":"Button Label",
+        "info":"Leave the label blank to hide the button."
+      },
+      {
+        "type":"url",
+        "id":"button_link",
+        "label":"Button Link"
+      },
+      {
+        "type": "select",
+        "id": "color_theme",
+        "label": "Color Theme",
+        "options": [
+          {
+            "value": "primary",
+            "label": "Primary"
+          },
+          {
+            "value": "secondary",
+            "label": "Secondary"
+          },
+          {
+            "value": "tertiary",
+            "label": "Tertiary"
+          },
+          {
+            "value": "underlined-cta",
+            "label": "Underline"
+          }
+        ],
+        "default": "underlined-cta"
+      },
+      {
+        "type":"number",
+        "id":"max_width",
+        "label":"Max Width"
+      },
+      {
+        "type": "header",
+        "content": "Customizations"
+      },
+      {
+        "type":"textarea",
+        "id":"custom_code",
+        "label":"Custom Code"
+      },
+      {
+        "type":"text",
+        "id":"custom_class",
+        "label":"Custom Class"
+      },
+      {
+        "type":"text",
+        "id":"custom_id",
+        "label":"Custom ID"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Button"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,226 @@
+.subscription-selector {
+  width: 100%;
+  border: solid rem-calc( 1.5px ) currentColor;
+  @include border-radius( rem-calc( 20px ) );
+
+  &__options {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+
+    &-indicator {
+      position: relative;
+      width: rem-calc( 20px );
+      height: rem-calc( 20px );
+      padding: rem-calc( 2.7px );
+      border: solid rem-calc( 1.5px ) currentColor;
+      flex-shrink: 0;
+      display: block;
+      @include border-radius( 50% );
+  
+      @include breakpoint( large up ) {
+        width: rem-calc( 23px );
+        height: rem-calc( 23px );
+        padding: rem-calc( 3.3px );
+      }
+  
+      &::before {
+        content: '';
+        width: 100%;
+        height: 100%;
+        display: block;
+        background-color: $black;
+        @include border-radius( 50% );
+        @include opacity( 0 );
+        @include transition( $global-transition );
+      }
+  
+      &.is-active {
+        &:before {
+          @include opacity( 1 );
+        }
+      }
+    }
+
+    &-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: stretch;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    &-head {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: rem-calc( 10px );
+
+      @include breakpoint( large up ) {
+        gap: rem-calc( 12px );
+      }
+    }
+
+    &-frequencies {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: rem-calc(15px) rem-calc(-5px) 0;
+
+      label {
+        flex: 1 1 0px;
+        text-align: center;
+
+        input {
+          display: none;
+
+          &:checked ~ span {
+            color: $white;
+            background-color: $black;
+          }
+
+          &:disabled ~ span {
+            cursor: not-allowed;
+            @include opacity(0.6);
+          }
+        }
+
+        span {
+          @include small;
+          text-transform: uppercase;
+          display: block;
+          padding: rem-calc(10px);
+          margin: 0 rem-calc(5px);
+          border: $global-border-width solid $black;
+          @include border-radius(rem-calc(15px));
+        }
+      }
+    }
+
+    &-label {
+      @include large;
+      line-height: 1.333;
+      font-weight: 400;
+      letter-spacing: rem-calc( -0.09px );
+
+      @include breakpoint( large up ) {
+        font-size: rem-calc( 20px );
+        line-height: 1.25em;
+        letter-spacing: rem-calc( -0.1px );
+      }
+    }
+
+    &-prices {
+      margin-left: auto;
+      @include large;
+      line-height: 1.333;
+      font-weight: 400;
+      letter-spacing: rem-calc( -0.09px );
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: rem-calc( 12px );
+
+      @include breakpoint( large up ) {
+        font-size: rem-calc( 20px );
+        line-height: 1.25em;
+        letter-spacing: rem-calc( -0.1px );
+      }
+
+      .daily {
+        font-size: rem-calc( 14px );
+        line-height: 1.429em;
+        font-weight: 500;
+        letter-spacing: rem-calc( -0.06px );
+        @include opacity( 0.5 );
+      }
+    }
+
+    &-wrapper {
+      padding: rem-calc( 18px ) rem-calc( 20px ) rem-calc( 18px ) rem-calc( 15px );
+      @include transition( $global-transition );
+    }
+
+    &-content {
+      padding-left: rem-calc( 27px );
+
+      @include breakpoint( large up ) {
+        padding-left: rem-calc( 34px );
+      }
+
+      .subscription-sub-label {
+        font-size: rem-calc( 14px );
+        line-height: 1.429em;
+        font-weight: 500;
+        letter-spacing: rem-calc( -0.06px );
+        &:not(:last-child) {
+          margin-bottom: rem-cacl( 13px );
+
+          @include breakpoint( large up ) {
+            margin-bottom: rem-calc( 8px );
+          }
+        }
+      }
+
+      * {
+        font-size: rem-calc( 14px );
+        line-height: 1.143em;
+        font-weight: 500;
+        letter-spacing: rem-calc( -0.06px );
+      }
+
+      ul {
+        list-style: none;
+        margin: 0;
+
+        &:not(:last-child) {
+          margin-bottom: 1rem;
+        }
+
+        li {
+          position: relative;
+          display: flex;
+          justify-content: flex-start;
+          align-items: flex-start;
+          gap: rem-calc( 10px );
+
+          &:not(:last-child) {
+            margin-bottom: rem-calc( 4px );
+          }
+
+          &::before {
+            content: '';
+            position: relative;
+            top: rem-calc( 5px );
+            width: rem-calc( 13.2px );
+            height: rem-calc( 8.25px );
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='17' height='12'%3E%3Cpath fill='none' stroke='%232B3990' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' transform='translate(1.10938 1.11377)' d='M0 3.96L3.96 8.25L13.2 0' fill-rule='evenodd'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+          }
+        }
+      }
+    }
+  }
+
+  label {
+    color: currentColor;
+
+    &:first-child {
+      .subscription-selector__options-wrapper {
+        padding-bottom: 0; 
+        border-top-left-radius: rem-calc( 20px );
+        border-top-right-radius: rem-calc( 20px );
+      }
+    }
+
+    &:last-child {
+      .subscription-selector__options-wrapper {
+        border-bottom-left-radius: rem-calc( 20px );
+        border-bottom-right-radius: rem-calc( 20px );
+      }
+    }
+  }
+}

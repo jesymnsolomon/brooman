@@ -1,0 +1,216 @@
+<style>
+  :root {
+    --grid-width: {{ section.settings.grid_width | default: '1000px' }};
+  }
+
+  .reveal-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    width: var(--grid-width);
+    max-width: 100%;
+    margin: 20px auto;
+  }
+
+  .reveal-box {
+    position: relative;
+    padding: 16px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    min-height: 80px;
+  }
+
+  .reveal-box:hover {
+    background-color: #eaeaea;
+  }
+
+  .hidden-text {
+    display: none;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .reveal-box.open .hidden-text {
+    display: block;
+  }
+
+  .reveal-controls {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  #toggleAllBoxes-{{ section.id }} {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  #toggleAllBoxes-{{ section.id }}:hover {
+    background-color: #555;
+  }
+</style>
+
+{% if section.settings.show_reveal_all_button %}
+  <div class="reveal-controls">
+    <button id="toggleAllBoxes-{{ section.id }}" type="button">
+      {{ section.settings.reveal_all_button_label | default: 'Reveal All Boxes' }}
+    </button>
+  </div>
+{% endif %}
+
+<div class="reveal-grid" id="revealGrid-{{ section.id }}">
+  {% for block in section.blocks %}
+    <div class="reveal-box">
+      <strong>{{ block.settings.title | default: "Box Title" }}</strong>
+      <div class="hidden-text">
+        {{ block.settings.content | default: "This is the hidden text" }}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const gridId = 'revealGrid-{{ section.id }}';
+    const buttonId = 'toggleAllBoxes-{{ section.id }}';
+    const revealLabel = '{{ section.settings.reveal_all_button_label | escape }}';
+
+    const grid = document.getElementById(gridId);
+    const button = document.getElementById(buttonId);
+
+    if (grid) {
+      const boxes = grid.querySelectorAll('.reveal-box');
+      let allOpen = false;
+
+      // Toggle individual boxes on click
+      grid.addEventListener('click', function (e) {
+        const box = e.target.closest('.reveal-box');
+        if (box && grid.contains(box)) {
+          box.classList.toggle('open');
+        }
+      });
+
+      // "Reveal All" button
+      if (button) {
+        button.addEventListener('click', function () {
+          allOpen = !allOpen;
+          boxes.forEach(box => {
+            box.classList.toggle('open', allOpen);
+          });
+          button.textContent = allOpen ? 'Hide All Boxes' : revealLabel;
+        });
+      }
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Custom Reveal Grid",
+  "max_blocks": 50,
+  "settings": [
+    {
+      "type": "text",
+      "id": "grid_width",
+      "label": "Grid Width (e.g. 1000px or 90%)",
+      "default": "1000px"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reveal_all_button",
+      "label": "Show 'Reveal All Boxes' Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "reveal_all_button_label",
+      "label": "Reveal All Button Text",
+      "default": "Reveal All Boxes"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "reveal_box",
+      "name": "Reveal Box",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Box Title",
+          "default": "Box Title"
+        },
+        {
+          "type": "textarea",
+          "id": "content",
+          "label": "Hidden Text",
+          "default": "This is the hidden text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Reveal Grid",
+      "category": "Custom",
+      "blocks": [
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" },
+        { "type": "reveal_box" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,39 @@
+<div class="icon-text-slide__inner">
+  {% if block.settings.text != blank %}
+    <p class="icon-text-slide__text">
+      {{ block.settings.text }}
+    </p>
+  {% endif %}
+  <div class="icon-text-slide__icon hidden">
+    {% assign default_alt = "maybe an image about " | append: block.settings.text %}
+    {% assign alt = block.settings.icon.alt | default: default_alt %}
+    {% render 'component__lazyload-image',
+      image: block.settings.icon,
+      width: 144,
+      alt: alt %}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Icon Text Slide",
+    "class": "icon-text-slide carousel__item",
+    "settings": [
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Text",
+        "default": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur, perferendis."
+      },
+      {
+        "type": "image_picker",
+        "id": "icon",
+        "label": "Icon"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Icon Text Slide"
+      }
+    ]
+  }
+{% endschema %}

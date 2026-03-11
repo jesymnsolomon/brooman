@@ -1,0 +1,67 @@
+{% if predictive %}
+  <predictive-search>
+  {% assign input_id = "Search-In-Modal" | append: custom_id%}
+{% endif %}
+
+{% if main_search %}
+  <main-search>
+  {% assign input_id = "Search-In-Template" %}
+{% endif %}
+
+  <form action="{{ routes.search_url }}" method="get" role="search" class="search__form">
+    <input
+      class="search__input field__input"
+      id="{{ input_id }}"
+      type="search"
+      name="q"
+      value="{{ search.terms | escape }}"
+      placeholder="{{ 'general.search.search' | t }}"
+      {%- if predictive -%}
+        role="combobox"
+        aria-expanded="false"
+        aria-owns="predictive-search-results"
+        aria-controls="predictive-search-results"
+        aria-haspopup="listbox"
+        aria-autocomplete="list"
+        autocorrect="off"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+      {%- endif -%}
+    >
+    <input name="options[prefix]" type="hidden" value="last">
+
+    {% if predictive %}
+      <div class="predictive-search predictive-search--search-template" tabindex="-1" data-predictive-search>
+        {%- render 'icon__loading-spinner', class: 'predictive-search__loading-state' -%}
+      </div>
+
+      <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
+    {% endif %}
+
+    <button
+      type="reset"
+      class="reset__button field__button {% if search.terms == blank %}hidden{% endif %}"
+      aria-label="Reset"
+    >
+      {% render 'icon__close' %}
+      <span class="visually-hidden">Reset</span>
+    </button>
+
+    <button type="submit" class="search__button field__button" aria-label="Search">
+      {% if search_icon %}
+        {% render 'icon__search' %}
+        <span class="visually-hidden">Search</span>
+      {% else %}
+        <span>Search</span>
+      {% endif %}
+    </button>
+  </form>
+
+{% if main_search %}
+  </main-search>
+{% endif %}
+
+{% if predictive %}
+  </predictive-search>
+{% endif %}

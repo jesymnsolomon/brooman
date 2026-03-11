@@ -1,0 +1,15 @@
+{% comment %}
+    Attributes
+
+    - block
+{% endcomment %}
+
+{% render "block__small-text",
+    block_id: block.id,
+    text: block.settings.text,
+    underline: block.settings.add_underline,
+    text_style: block.settings.text_style,
+    color: block.settings.small_text_color,
+    shine_color: block.settings.shine_color,
+    hide_on_desktop: block.settings.hide_on_desktop,
+    disable_inview: block.settings.disable_animation %}

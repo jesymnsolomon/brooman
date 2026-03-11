@@ -1,0 +1,210 @@
+{% comment %} {% assign variant = product.selected_variant %}
+{% assign variant_media = variant.metafields.mfr_fields.featured_media.value %}
+
+{% if variant != blank and variant_media != blank %}
+  {% assign product_media = variant_media %}
+{% endif %} {% endcomment %}
+
+{% assign metafields = product.metafields.mfr_fields %}
+{% assign metaobject = metafields.section_product_top.value %}
+{% assign product_media = product.media %}
+{% assign nice_image = metafields.nice_image | default: product.featured_image | default: product_media[0] %}
+
+{% comment %} For selected variants  {% endcomment %}
+{% assign variant = product.selected_or_first_available_variant %}
+{% assign variant_media = variant.metafields.mfr_fields.featured_media.value %}
+{% assign variant_image = variant.image %}
+
+{% if variant != blank and variant_media != blank %}
+  {% assign product_media = variant_media %}
+{% endif %}
+
+{% if variant != blank and variant_image != blank %}
+  {% assign nice_image = variant_image %}
+{% endif %}
+
+<div class="product-top__media-inner" data-mfr-sticky>
+  <div class="product-top__media-carousel carousel__slides"
+    x-ref='pdpImageCarousel'
+    style="--bg-color: {{ metafields.product_card_accent_color | default: '#E50695' }};">
+
+    {% if nice_image != blank %}
+      <div class="product-top__media-item carousel__item main">
+      {% comment %} Background Image {% endcomment %}
+      {% if metaobject.background_media != blank %}
+        <div class="product-top__background">
+          {% if metaobject.background_media != blank %}
+            {% assign height = 100 | divided_by: metaobject.background_media.aspect_ratio %}
+            {{ metaobject.background_media | image_url: width: 900 | image_tag: width: 900, alt: product.title, height: height }}
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% comment %} Accent Image {% endcomment %}
+        {% if metafields.section_product_top.value.icon != blank %}
+          {% assign alt = metafields.section_product_top.value.icon.alt | default: product.title %}
+
+          <div class="product-top__media-item-icon" data-inview>
+            {% render 'component__lazyload-image',
+              image: metafields.section_product_top.value.icon,
+              width: 300,
+              widths: "420,480,600,720",
+              alt: alt %}
+          </div>
+        {% endif %}
+
+        {% comment %} Main Product Image {% endcomment %}
+        <div class="product-top__media-item-image">
+          {% assign alt = nice_image.alt | default: product.title %}
+          {% render 'component__lazyload-image',
+            image: nice_image,
+            width: 900,
+            widths: "420,480,600,720,900",
+            alt: alt %}
+        </div>
+
+        {% comment %} Specifications {% endcomment %}
+        {% if metafields.specifications.value != blank %}
+            {% render 'product-top__specifications', product: product, block: block %}
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% for image in carousel_images %}
+      {% if image.settings.image != blank %}
+        <div class="product-top__media-item carousel__item">
+          <div class="product-top__media-item-image">
+            {% assign alt = image.settings.image.alt |  default: "Product image thumbnail" %}
+            {% render 'component__lazyload-image',
+              image: image.settings.image,
+              width: 900,
+              widths: "420,480,600,720,900",
+              alt: alt %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    {% for media in product_media %}
+      {% if variant_media == blank and forloop.first and nice_image != blank %}
+          {% continue %}
+      {% endif %}
+      <div class="product-top__media-item carousel__item {{ media.media_type }} {% if nice_image == blank and forloop.first %}main{% endif %}">
+        <div class="product-top__media-item-image">
+          {% if media.media_type == "image" %}
+            {%- assign default_alt = "maybe an image about the product: " | append: product.title -%}
+            {%- assign alt = media.alt | default: default_alt -%}
+            {% if forloop.first and carousel_images == blank %}
+              {% assign image_width = media.width | times: 1.00 %}
+              {% assign image_height = media.height | times: 1.00 %}
+              {% assign aspect_ratio = image_width | divided_by: image_height %}
+              {% assign height = 900 | divided_by: aspect_ratio | round: 2 %}
+              {{ media
+                | image_url: width: 900
+                | image_tag: width: 900,
+                  width: 900,
+                  height: height,
+                  widths: "420,480,600,720,900",
+                  alt: alt }}
+            {% else %}
+              {% render 'component__lazyload-image',
+                image: media,
+                width: 900,
+                widths: "420,480,600,720,900",
+                alt: alt %}
+            {% endif %}
+          {% elsif media.media_type == "video" %}
+            {% assign video_ref = "video" | append: "-" | append: entry.id | replace: "_", "-" | replace: "-", "" %}
+            {% render 'component__video',
+              video: media,
+              poster_size: 420,
+              autoplay: false,
+              loop: true,
+              controls: false,
+              playsinline: true,
+              muted: false,
+              video_ref: video_ref %}
+          {% elsif media.media_type == "external_video" %}
+            {% if media.host == 'youtube' %}
+              {{ media | external_video_url: color: 'white' | external_video_tag }}
+            {% elsif media.host == 'vimeo' %}
+              {{ media | external_video_url: loop: '1', muted: '1' | external_video_tag }}
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="product-top__media-thumbnails">
+    {% if nice_image != blank %}
+      <div class="product-top__media-thumbnails-item">
+        {%- assign default_alt = "maybe an image about the product: " | append: product.title -%}
+        {%- assign alt = nice_image.alt |  default:  default_alt -%}
+        <button aria-label="{{ product.title }} thumbnail">
+          {% render 'component__lazyload-image',
+            image: nice_image,
+            width: 900,
+            widths: "420,480,600,720,900",
+            alt: alt %}
+        </button>
+      </div>
+    {% endif %}
+
+    {% for image in carousel_images %}
+      {% if image.settings.image != blank %}
+        <div class="product-top__media-thumbnails-item">
+          {%- assign default_alt = "maybe an image thumbnail about the product: " | append: product.title -%}
+          {%- assign alt = image.settings.image.alt |  default:  default_alt -%}
+
+          <button aria-label="{{ product.title }} thumbnail">
+            {% render 'component__lazyload-image',
+              image: image.settings.image,
+              width: 900,
+              widths: "420,480,600,720,900",
+              alt: alt %}
+          </button>
+        </div>
+      {% endif %}
+    {% endfor %}
+    {% for media in product_media %}
+      {% if variant_media == blank and forloop.first and nice_image != blank %}
+          {% continue %}
+      {% endif %}
+
+      <div class="product-top__media-thumbnails-item">
+        <button aria-label="{{ product.title }} thumbnail">
+          {% if media.media_type == "image" or media.media_type == "video" %}
+            {%- assign default_alt = "maybe an image thumbnail about the product: " | append: product.title -%}
+            {%- assign alt = media.alt | default: default_alt -%}
+            {% if forloop.first and carousel_images == blank %}
+              {% assign image_width = media.width | times: 1.00 %}
+              {% assign image_height = media.height | times: 1.00 %}
+              {% assign aspect_ratio = image_width | divided_by: image_height %}
+              {% assign height = 900 | divided_by: aspect_ratio | round: 2 %}
+              {{ media
+                | image_url: width: 900
+                | image_tag: width: 900,
+                  width: 900,
+                  height: height,
+                  widths: "420,480,600,720,900",
+                  alt: alt }}
+            {% else %}
+              {% render 'component__lazyload-image',
+                image: media,
+                width: 900,
+                widths: "420,480,600,720,900",
+                alt: alt %}
+            {% endif %}
+          {% elsif media.media_type == "external_video" %}
+            {% if media.host == 'youtube' %}
+              {{ media | external_video_url: color: 'white' | external_video_tag }}
+            {% elsif media.host == 'vimeo' %}
+              {{ media | external_video_url: loop: '1', muted: '1' | external_video_tag }}
+            {% endif %}
+          {% endif %}
+        </button>
+      </div>
+    {% endfor %}
+  </div>
+</div>

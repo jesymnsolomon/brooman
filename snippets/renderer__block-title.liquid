@@ -1,0 +1,24 @@
+{% comment %}
+Attributes
+- block
+- custom_text
+{% endcomment %}
+
+{% assign text = custom_text | default: block.settings.heading %}
+
+{% render "block__title",
+	block_id: block.id,
+	text: text,
+	header_style: block.settings.header_style,
+	make_xl: block.settings.make_xl,
+	color: block.settings.color,
+	highlight_color: block.settings.highlight_color,
+	underline_color: block.settings.underline_color,
+	max_width: block.settings.max_width,
+	with_line: block.settings.with_line,
+	accent_graphic: block.settings.accent_graphic,
+	accent_graphic_position: block.settings.accent_graphic_position,
+	accent_graphic_position_mobile: block.settings.accent_graphic_position_mobile,
+	accent_graphic_color: block.settings.accent_graphic_color,
+	disable_animation: block.settings.disable_animation
+%}

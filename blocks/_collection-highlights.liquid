@@ -1,0 +1,102 @@
+{%- if block.settings.product_highlights != blank -%}
+  <div class="collection-highlight__inner carousel"
+    data-stagger-inview=".collection-highlight__entry"
+    data-mfr-carousel="
+    {
+      prevNextButtons: false,
+      contain: true,
+      cellAlign: 'center',
+      pageDots: true,
+      wrapAround: false,
+      groupCells: false,
+      carouselOn: 'mobile'
+    }
+  ">
+    <div class="collection-highlight__carousel carousel__slides">
+      {% for entry in block.settings.product_highlights %}
+        <div class="collection-highlight__entry carousel__item">
+          <div class="collection-highlight__entry-inner">
+            {% if entry.image != blank %}
+              <div class="collection-highlight__entry-image" data-image-parallax>
+                {% assign default_alt = "maybe an image about " | append: entry.title %}
+                {% assign alt = entry.image.alt | default: default_alt %}
+                {% render 'component__lazyload-image',
+                  image: entry.image,
+                  width: 720,
+                  widths: "420,480,600,720",
+                  alt: alt %}
+              </div>
+            {% endif %}
+
+            {% if entry.title != blank %}
+              <p class="collection-highlight__entry-title">
+                {{ entry.title }}
+              </p>
+            {% endif %}
+            {% if entry.caption != blank %}
+              <p class="collection-highlight__entry-caption">
+                {{ entry.caption }}
+              </p>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{%- elsif request.design_mode -%}
+  <div class="collection-highlight__inner carousel"
+    data-stagger-inview=".collection-highlight__entry"
+    data-mfr-carousel="
+    {
+      prevNextButtons: false,
+      contain: true,
+      cellAlign: 'center',
+      pageDots: true,
+      wrapAround: false,
+      groupCells: false,
+      carouselOn: 'mobile'
+    }
+  ">
+    <div class="collection-highlight__carousel carousel__slides">
+      {% for entry in (1..3) %}
+        <div class="collection-highlight__entry carousel__item">
+          <div class="collection-highlight__entry-inner">
+            <div class="collection-highlight__entry-image">
+              {% render 'component__lazyload-image',
+                image: false,
+                width: 720,
+                widths: "420,480,600,720",
+                alt: alt %}
+            </div>
+
+            <p class="collection-highlight__entry-title">
+              Lorem, ipsum dolor.
+            </p>
+            <p class="collection-highlight__entry-caption">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, rerum.
+            </p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{%- endif -%}
+{%- schema -%}
+  {
+    "name": "Collection Highlight",
+    "class": "collection-highlight",
+    "settings": [
+      {
+        "type": "metaobject_list",
+        "id": "product_highlights",
+        "label": "Product Highlight",
+        "metaobject_type": "product_highlights"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Highlight"
+      }
+    ]
+  }
+{%- endschema -%}

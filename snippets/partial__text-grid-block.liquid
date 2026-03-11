@@ -1,0 +1,38 @@
+
+{%- assign title = block.settings.title -%}
+{%- assign text = block.settings.text -%}
+{%- assign svg_code = block.settings.svg_code -%}
+{%- assign image = block.settings.image -%}
+{%- assign block_style = section.settings.block_style -%}
+{% assign subtitle = block.settings.subtitle %}
+
+<div class="cell text-grid__block to-slider {{ block_style }}" 
+  data-slider-id="aoc-mobile-slider--{{ section.id }}">
+  {% if svg_code != blank %}
+    <div class="block-image svg" data-inview>{{ svg_code }}</div>
+  {% elsif image and svg_code == blank %}
+    <div class="block-image img">
+      <img loading="lazy" src="{{ image | img_url: '200x' }}"
+    srcset="{{ image | img_url: '200x' }} 1x, {{ image | img_url: '200x', scale: 2 }} 2x"
+    alt="{{ image.alt }}" data-flickity-lazyload="{{ image | img_url: '200x' }}">
+    </div>
+  {% endif %}
+
+  <div class="text-grid__block-texts">
+    {%- if title != blank -%}
+      <h3 class="h5 title">{{ title }}</h3>
+    {%- endif -%}
+
+    {% if subtitle != blank %}
+      <span class="small">{{ subtitle }}</span>
+    {% endif %}
+
+    {%- if text  != blank -%}
+      <div class="section-text large color_theme_text">{{ text }}</div>
+    {%- endif -%}
+  </div>
+</div>
+
+
+
+

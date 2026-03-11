@@ -1,0 +1,185 @@
+{%- if block.blocks.size > 0 -%}
+  {% if block.settings.mobile_alignment == "left" %}
+    {%- assign justify_content = "flex-start" -%}
+  {%- elsif block.settings.mobile_alignment == "center" -%}
+    {%- assign justify_content = "center" -%}
+  {%- elsif block.settings.mobile_alignment == "right" -%}
+    {%- assign justify_content = "flex-end" -%}
+  {% endif %}
+  {%- assign text_align_mobile = block.settings.text_alignment_mobile -%}
+
+  {% if block.settings.desktop_alignment == "left" %}
+    {%- assign justify_content_desktop = "flex-start" -%}
+  {%- elsif block.settings.desktop_alignment == "center" -%}
+    {%- assign justify_content_desktop = "center" -%}
+  {%- elsif block.settings.desktop_alignment == "right" -%}
+    {%- assign justify_content_desktop = "flex-end" -%}
+  {%- endif -%}
+  {%- assign text_align_desktop = block.settings.text_alignment_desktop -%}
+
+  <style>
+    #shopify-block-{{ block.id }} {
+      {%- if block.settings.max_width_mobile != 0 and block.settings.max_width_mobile != blank -%}
+        --max-width-mobile: {{- block.settings.max_width_mobile -}}px;
+      {%- endif -%}
+      {%- if block.settings.max_width_desktop != 0 and block.settings.max_width_desktop != blank -%}
+        --max-width-desktop: {{- block.settings.max_width_desktop -}}px;
+      {%- endif -%}
+    }
+
+    {%- if block.settings.mobile_alignment != blank -%}
+      @media (max-width: 1023px) {
+        #shopify-block-{{ block.id }} {
+          justify-content: {{ justify_content }};
+          text-align: {{ text_align_mobile }};
+        }
+      }
+    {%- endif -%}
+
+    {%- if block.settings.desktop_alignment != blank -%}
+      @media (min-width: 1024px) {
+        #shopify-block-{{ block.id }} {
+          justify-content: {{ justify_content_desktop }};
+          text-align: {{ text_align_desktop }};
+        }
+      }
+    {%- endif -%}
+  </style>
+
+  {%- content_for "blocks" -%}
+{%- else -%}
+
+{%- endif -%}
+{%- schema -%}
+  {
+    "name": "Section Content",
+    "class": "section-content__inner",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Alignment Settings"
+      },
+      {
+        "type": "select",
+        "id": "mobile_alignment",
+        "label": "Content Alignment - Mobile",
+        "options": [
+          {
+            "value": "",
+            "label": "Use Section Settings"
+          },
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": ""
+      },
+      {
+        "type": "select",
+        "id": "desktop_alignment",
+        "label": "Content Alignment - Desktop",
+        "options": [
+          {
+            "value": "",
+            "label": "Use Section Settings"
+          },
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": ""
+      },
+        {
+        "type": "select",
+        "id": "text_alignment_desktop",
+        "label": "Text Alignment - Desktop",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "center"
+      },
+      {
+        "type": "select",
+        "id": "text_alignment_mobile",
+        "label": "Text Alignment - Mobile",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "center"
+      },
+      {
+        "type": "header",
+        "content": "Max Width Settings"
+      },
+      {
+        "type": "number",
+        "id": "max_width_mobile",
+        "label": "Max Width - Mobile",
+        "default": 0
+      },
+      {
+        "type": "number",
+        "id": "max_width_desktop",
+        "label": "Max Width - Desktop",
+        "default": 0
+      }
+    ],
+    "blocks": [
+      { "type": "_section-content__icon" },
+      { "type": "_section-content__small-text" },
+      { "type": "_section-content__title" },
+      { "type": "_section-content__text" },
+      { "type": "_section-content__button" },
+      { "type": "_section-content__spacer" },
+      { "type": "_section-content__icon-text-wrapper" }
+    ],
+    "presets": [
+      {
+        "name": "Section Content",
+        "blocks": [
+          { "type": "_section-content__title" }
+        ]
+      }
+    ]
+  }
+{%- endschema -%}

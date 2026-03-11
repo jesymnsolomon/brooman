@@ -1,0 +1,90 @@
+{% assign text_style = block.settings.text_style %}
+{% assign custom_font = block.settings.font_family %}
+
+<div class="section-text {{ text_style }} {{ custom_font }}"
+    data-inview
+    data-stagger-inview="> *">
+
+    {% case block.settings.policy %}
+      {% when "privacy-policy" %}
+        {% assign content = shop.privacy_policy.body %}
+      {% when "terms-of-service" %}
+        {% assign content = shop.terms_of_service.body %}
+      {% when "shipping_policy" %}
+        {% assign content = shop.shipping_policy.body %}
+      {% when "refund_policy" %}
+        {% assign content = shop.refund_policy.body %}
+      {% else %}
+    {% endcase %}
+
+    {% render 'shortcode-renderer', text: content %}
+</div>
+
+{%- schema -%}
+{
+    "name": "Privacy Policy",
+    "class": "policy",
+    "settings": [
+      {
+        "type":"select",
+        "id":"policy",
+        "options":[
+          { "value":"privacy-policy", "label":"Privacy Policy" },
+          { "value":"terms-of-service", "label":"Terms of Service" },
+          { "value":"shipping_policy", "label":"Shipping Policy" },
+          { "value":"refund_policy", "label":"Refund Policy" }
+        ],
+        "label":"Policy"
+      },
+      {
+        "type":"select",
+        "id":"text_style",
+        "options":[
+          { "value":"", "label":"Default" },
+          { "value":"xsmall", "label":"xSmall" },
+          { "value":"small", "label":"Small" },
+          { "value":"regular", "label":"Regular" },
+          { "value":"large", "label":"Large" },
+          { "value":"xlarge", "label":"xLarge" }
+        ],
+        "label":"Style",
+        "default":"regular"
+      },
+      {
+        "type": "select",
+        "id": "font_family",
+        "label": "Custom Font Family",
+        "options": [
+          {
+            "value": "",
+            "label": "Use Theme Settings"
+          },
+          {
+            "value": "custom-font-name-1",
+            "label": "Custom Font 1"
+          },
+          {
+            "value": "custom-font-name-2",
+            "label": "Custom Font 2"
+          },
+          {
+            "value": "custom-font-name-3",
+            "label": "Custom Font 3"
+          },
+          {
+            "value": "custom-font-name-4",
+            "label": "Custom Font 4"
+          }
+        ],
+        "default": ""
+      }
+    ],
+    "presets": [
+      {
+        "name": "Privacy Policy",
+        "blocks": [
+        ]
+      }
+    ]
+}
+{%- endschema -%}

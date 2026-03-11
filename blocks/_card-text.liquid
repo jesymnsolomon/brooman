@@ -1,0 +1,38 @@
+<div class="mfr-card__text-inner {{ block.settings.text_style }}">
+  <p>
+    {{ block.settings.text }}
+  </p>
+</div>
+{% schema %}
+  {
+    "name": "Text",
+    "class": "mfr-card__text",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "text",
+        "default": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. In dolorum magnam dolores, consequuntur velit blanditiis repudiandae inventore, quos laboriosam.",
+        "label": "Text"
+      },
+      {
+        "type":"select",
+        "id":"text_style",
+        "options":[
+          { "value":"", "label":"Default" },
+          { "value":"xsmall", "label":"xSmall" },
+          { "value":"small", "label":"Small" },
+          { "value":"regular", "label":"Regular" },
+          { "value":"large", "label":"Large" },
+          { "value":"xlarge", "label":"xLarge" }
+        ],
+        "label":"Style",
+        "default":"regular"
+      },
+    ],
+    "presets": [
+      {
+        "name": "Text"
+      }
+    ]
+  }
+{% endschema %}

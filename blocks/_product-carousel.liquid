@@ -1,0 +1,193 @@
+{% capture slides_content %}
+  {%- if block.settings.collections != blank or block.settings.product_list != blank -%}
+    {%- for collection in block.settings.collections -%}
+      {%- for product_in_loop in collection.products -%}
+          {%- unless product_in_loop.id == product.id or product_in_loop.available == false -%}
+          <div class="product-carousel__item mfr-carousel__item">
+            {% render 'partial__product-card',
+              product: product_in_loop %}
+          </div>
+
+        {% if block.settings.include_variants and product_in_loop.variants.size != 1 %}
+            {% for variant in product_in_loop.variants %}
+              {% unless forloop.first %}
+                {% if variant.available %}
+                  <div class="product-carousel__item mfr-carousel__item">
+                    {% render 'partial__product-card', product: product_in_loop, variant: variant %}
+                  </div>
+                {% endif %}
+              {% endunless %}
+            {% endfor %}
+        {% endif %}
+
+        {%- endunless -%}
+      {%- endfor -%}
+    {%- endfor -%}
+
+    {%- for product_in_loop in block.settings.product_list  -%}
+      {%- unless product_in_loop.id == product.id or product_in_loop.available == false -%}
+        <div class="product-carousel__item mfr-carousel__item">
+          {% render 'partial__product-card',
+            product: product_in_loop %}
+        </div>
+
+         {% if block.settings.include_variants and product_in_loop.variants.size != 1 %}
+            {% for variant in product_in_loop.variants %}
+              {% unless forloop.first %}
+                <div class="product-carousel__item mfr-carousel__item">
+                  {% render 'partial__product-card', product: product_in_loop, variant: variant %}
+                </div>
+              {% endunless %}
+            {% endfor %}
+        {% endif %}
+      {%- endunless -%}
+    {%- endfor -%}
+  {%- else -%}
+    {%- if request.design_mode -%}
+    {%- endif -%}
+  {%- endif -%}
+{% endcapture %}
+
+{% capture carousel_settings %}
+  {
+    contain: true,
+    groupCells: true,
+    wrapAround: {{ block.settings.wrap_around }},
+    autoPlay: {{ block.settings.autoplay_timing | times: 1000 | default: 0 }},
+    prevNextButtons: {{ block.settings.prev_next_buttons }},
+    pageDots: {{ block.settings.page_dots }},
+    mobileSettings: {
+      cellAlign: "center",
+      contain: true
+    }
+  }
+{% endcapture %}
+
+{% if block.settings.collections != blank or block.settings.product_list != blank %}
+  {% render 'mfr-component__carousel',
+    settings: carousel_settings,
+    class: 'product-carousel__carousel-inner',
+    content: slides_content
+  %}
+{% endif %}
+
+{%- schema -%}
+  {
+    "name": "Product Carousel",
+    "class": "product-carousel__carousel section-carousel carousel__slides",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Product List",
+        "info": "Products can be selected manually or by choosing a collection."
+      },
+      {
+        "type": "checkbox",
+        "id": "include_variants",
+        "label": "Include Variants",
+        "info": "Product Variants will be displayed as separate products cards",
+        "default": true
+      },
+      {
+        "type": "product_list",
+        "id": "product_list",
+        "label": "Product List"
+      },
+      {
+        "type": "collection_list",
+        "id": "collections",
+        "label": "Collections"
+      },
+      {
+        "type": "header",
+        "content": "Carousel Settings"
+      },
+      {
+        "type": "number",
+        "id": "autoplay_timing",
+        "label": "Autoplay Timing",
+        "default": 5,
+        "info": "In seconds"
+      },
+      {
+        "type": "checkbox",
+        "id": "wrap_around",
+        "label": "Wrap Around?",
+        "default": false,
+        "info": "At the end of cells, wrap-around to the other end for infinite scrolling."
+      },
+      {
+        "type": "checkbox",
+        "id": "prev_next_buttons",
+        "label": "Previous/Next Buttons",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "page_dots",
+        "label": "Page Dots",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Size Settings",
+      },
+      {
+        "type": "number",
+        "id": "width_mobile",
+        "label": "Width_mobile - Mobile",
+        "default": 450
+      },
+      {
+        "type": "select",
+        "id": "unit_mobile",
+        "label": "Unit - Mobile",
+        "options": [
+          {
+            "value": "px",
+            "label": "px"
+          },
+          {
+            "value": "%",
+            "label": "%"
+          }
+        ],
+        "default": "px"
+      },
+      {
+        "type": "number",
+        "id": "width_desktop",
+        "label": "Width - Desktop",
+        "default": 750
+      },
+      {
+        "type": "select",
+        "id": "unit_desktop",
+        "label": "Unit - Desktop",
+        "options": [
+          {
+            "value": "px",
+            "label": "px"
+          },
+          {
+            "value": "%",
+            "label": "%"
+          }
+        ],
+        "default": "px"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_mobile",
+        "label": "Aspect Ratio - Mobile",
+        "default": "1/1"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_desktop",
+        "label": "Aspect Ratio - Desktop",
+        "default": "1/1"
+      },
+    ]
+  }
+{%- endschema -%}

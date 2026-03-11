@@ -1,0 +1,53 @@
+{% comment %}
+	Variables
+	`show` variable is a boolean that will be the condition if the notification will be shown
+	`type` variable can be `neutral`,`success`, and `error`
+	`title` variable is the title of the notification
+	`description` variable is the description of the notification
+	`errors` variable is an array list of texts (possibly errors) of the notification
+{% endcomment %}
+
+{%- liquid
+	assign type = type | default: "neutral"
+	assign type_class = "mfr-notification--" | append: type
+-%}
+
+{% if show %}
+	<div id="{{ id }}" class="mfr-notification {{ type_class }}" style="display: none;">
+		<div class="mfr-notification__inner">
+			{% if title != blank %}
+				<div class="mfr-notification__title">
+					{{ title }}
+				</div>
+			{% endif %}
+
+			{% if description != blank %}
+				<div class="mfr-notification__desc">
+					{{ description }}
+				</div>
+			{% endif %}
+
+			{% if errors != blank %}
+				<div class="mfr-notification__errors">
+					{{ errors | default_errors }}
+				</div>
+			{% endif %}
+		</div>
+
+		<script>
+			registerFunction(() => {
+				$("#{{ id }}").prependTo($("body"));
+
+				$(window).on("load", function () {
+					$("#{{ id }}").show();
+					setTimeout(function () {
+						$("#{{ id }}").addClass("mfr-notification--showing");
+						setTimeout(function () {
+							$("#{{ id }}").removeClass("mfr-notification--showing");
+						}, 2500);
+					}, 500);
+				});
+			})
+		</script>
+	</div>
+{% endif %}

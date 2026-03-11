@@ -1,0 +1,51 @@
+
+
+{% if url %}
+  {% case size %}
+    {% when "hero" %}
+      {{ "PlaceholderImage-Hero.jpg" 
+        | asset_img_url: 'master' }}
+    {% when "small" %}
+      {{ "PlaceholderImage-Small.jpg" 
+        | asset_img_url: 'master' }}
+    {% when "square" %}
+      {{ "PlaceholderImage-Square.jpg" 
+        | asset_img_url: 'master' }}
+    {% when "tall" %}
+      {{ "PlaceholderImage-Tall.jpg" 
+        | asset_img_url: 'master'}}
+    {% when "wide" %}
+      {{ "PlaceholderImage-Tall.jpg" 
+        | asset_img_url: 'master' }}
+    {% else %}
+      {{ "PlaceholderImage-RegBlock.jpg" 
+        | asset_img_url: 'master'}}
+  {% endcase %}
+{% else %}
+  {% case size %}
+    {% when "hero" %}
+      {{ "PlaceholderImage-Hero.jpg" 
+        | asset_img_url: 'master'
+        | img_tag: "Manufactur Placeholder Image", "", "1800x" }}
+    {% when "small" %}
+      {{ "PlaceholderImage-Small.jpg" 
+        | asset_img_url: 'master'
+        | img_tag: "Manufactur Placeholder Image", "", "720x" }}
+    {% when "square" %}
+      {{ "PlaceholderImage-Square.jpg" 
+        | asset_img_url: 'master'
+        | img_tag: "Manufactur Placeholder Image", "", "1080x1080" }}
+    {% when "tall" %}
+      {{ "PlaceholderImage-Tall.jpg" 
+        | asset_img_url: 'master'
+        | img_tag: "Manufactur Placeholder Image", "", "720x" }}
+    {% when "wide" %}
+      {{ "PlaceholderImage-Tall.jpg" 
+        | asset_img_url: 'master'
+        | img_tag: "Manufactur Placeholder Image", "", "1080x" }}
+    {% else %}
+      {{ "PlaceholderImage-RegBlock.jpg" 
+        | asset_img_url: 'master'
+        | img_tag: "Manufactur Placeholder Image", "", "1800x" }}
+  {% endcase %}
+{% endif %}

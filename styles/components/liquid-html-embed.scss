@@ -1,0 +1,47 @@
+.liquid-html-embed {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: inherit;
+  align-items: inherit;
+
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+
+  &:empty { display: none; }
+
+  .text-center & {
+    justify-content: center;
+  }
+
+  &__inner {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+    height: auto;
+    @include border-radius( rem-calc( 30px ) );
+
+    @include breakpoint( medium down ) {
+      max-width: var(--max-width-mobile);
+      height: var(--height-mobile);
+    }
+
+    @include breakpoint( large up ) {
+      max-width: var(--max-width-desktop);
+      height: var(--height-desktop);
+    }
+
+    &.preview {
+      @include h3;
+      width: 720px;
+      aspect-ratio: 16/9;
+      background-color: rgb(224, 224, 224);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

@@ -1,0 +1,185 @@
+/* PRODUCT FILTERS */
+.product-filters {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center !important;
+  flex-wrap: wrap;
+  // overflow: auto;
+  width: 100%;
+
+  @include breakpoint( medium up ) {
+    justify-content: center !important;
+    flex-wrap: unset;
+    overflow: unset;
+    width: unset;
+  }
+
+  @include breakpoint( large up ) {
+    justify-content: flex-end !important;
+  }
+}
+
+.product-filters__item {
+  cursor: pointer;
+  flex-basis: unset;
+  flex-grow: 1;
+  flex-shrink: 1;
+  text-align: center;
+  width: calc(25% - 1.5rem);
+  min-width: auto;
+  max-width: 3.3rem;
+  margin: 0 .7rem .7rem;
+  display: flex;
+  flex-basis: unset;
+  flex-direction: column;
+
+  @include breakpoint( medium up ) {
+    flex-grow: 0;
+    max-width: none;
+    width: rem-calc( 80px );
+    margin:  rem-calc( 10px );
+  }
+
+  @include breakpoint( large up ) {
+    // flex-basis: rem-calc( 87px );
+    padding: 0;
+    margin: rem-calc( 15px );
+    &:hover {
+      // .icon {
+      //   @include scale(1.05);
+      //   background: $white;
+      // }
+      a div.icon {
+        border: 4px solid $theme-color-black;
+        background-color: $color-accent;
+        .caret {
+          bottom: -0.95rem;
+        }
+      }
+    }
+  }
+
+  .product-filters__inner {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    > .product-filters__icon {
+      @include transition(.2s all $smooth_ease);
+      height: rem-calc( 60px );
+      width: rem-calc( 60px );
+      border: 2px solid $theme-color-black;
+
+      @include breakpoint( medium up ) {
+        // border: none;
+        height: rem-calc( 80px );
+        width: rem-calc( 80px );
+        &:hover {
+          background-color: $color-accent;
+          @include transform(scale(1.1));
+        }
+      }
+    }
+  }
+  .product-filters__icon {
+    @include transition(.2s all);
+    @include border-radius(50rem);
+    width: 5rem;
+    height: 5rem;
+    margin: 0 0 rem-calc( 8px );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    position: relative;
+  }
+
+  .product-filters__checkbox:checked + .product-filters__inner .product-filters__icon {
+    background-color: $color-accent;
+    border: 2px solid $theme-color-black;
+
+    @include breakpoint( medium up ) {
+      background-color: $color-accent;
+    }
+  }
+  span {
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: rem-calc( 12px );
+
+    @include breakpoint( medium up ) {
+      font-size: rem-calc(14);
+      letter-spacing: 1px;
+    }
+  }
+}
+
+
+.product-filters__checkbox {
+  position: absolute;
+  visibility: hidden;
+
+  // &:checked ~ .product-filters__icon {
+  //   border-color: currentColor;
+  // }
+
+  // &:checked ~ .product-filters__text {
+  //   background-color: $black;
+  //   color: $white;
+  // }
+}
+
+.product-filters__icon {
+  background-color: $white;
+  color: inherit;
+  display: flex;
+  position: relative;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  @include breakpoint(medium up) {
+    width: rem-calc( 87px );
+    border: 4px solid transparent;
+  }
+  
+
+  // &::before {
+  //   content: '';
+  //   width: 100%;
+  //   display: block;
+  //   padding-top: 100%;
+  // }
+
+  svg {
+    max-width: rem-calc( 48px );
+    max-height: rem-calc( 48px );
+    width: 70%;
+    height: 70%;
+
+    @include breakpoint(medium up) {
+      max-width: rem-calc( 58px );
+      max-height: rem-calc( 58px );
+    }
+  }
+}
+
+.product-filters__text {
+  display: inline-block;
+  font-weight: 800;
+  padding: rem-calc( 2px ) rem-calc( 2px );
+  border-radius: rem-calc( 8px );
+  text-transform: uppercase;
+  font-size: rem-calc( 11px );
+  line-height: 1;
+  letter-spacing: .4px;
+  margin-top: rem-calc( 0px );
+  @include breakpoint(medium up) {
+    padding: rem-calc( 2px ) rem-calc( 14px );
+    border-radius: rem-calc( 10px );
+  }
+}

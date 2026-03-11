@@ -1,0 +1,331 @@
+{%- liquid
+	assign product_add_ons_title = addons_title
+	assign product_add_ons = product.metafields.mfr_fields.product_addons.value
+	assign product_add_ons_size = product_add_ons | size 
+-%}
+
+<div class="product-top__addon" x-data="{
+	addOnsTotalPrice: 0,
+  
+	init() {
+		this.checkCurrentSelectedProductPrice()
+		
+		setTimeout(() => {
+			$el.style.height = 'auto'
+		}, 1000)
+	},
+
+	addAddonToSelection(data, parseable) {
+		const addonData = parseable ? JSON.parse(data.innerText) : data
+
+		$store.pdp.addOnsArray.push(addonData)
+		this.updateTotalAddonsCounter()
+		this.calculateRunningTotal()
+	},
+
+	removeAddonToSelection(id) {
+		const findIndex = $store.pdp.addOnsArray.findIndex(addon => addon.id === id)
+
+		if (findIndex !== -1) {
+			$store.pdp.addOnsArray.splice(findIndex, 1)
+			this.updateTotalAddonsCounter()
+			this.calculateRunningTotal()
+			this.displayData()
+		}
+	},
+
+	calculateRunningTotal() {
+		if ($store.pdp.addOnsArray.length <= 0) {
+			this.addOnsTotalPrice = 0
+			$store.pdp.runningTotal = $store.pdp.currentPrice
+			return
+		}
+
+		this.addOnsTotalPrice = 0
+
+		$store.pdp.addOnsArray.map(addon => {
+			this.addOnsTotalPrice += Number(addon.current_price)
+		})
+
+		$store.pdp.runningTotal = this.addOnsTotalPrice + $store.pdp.currentPrice
+		$store.pdp.addOnsTotalPrice = this.addOnsTotalPrice
+		this.displayData()
+	},
+
+	checkCurrentSelectedProductPrice() {
+		this.$watch('$store.pdp.currentPrice', value => {
+			$store.pdp.currentPrice = value
+			this.calculateRunningTotal()
+			this.displayData()
+		})
+	},
+
+	updateTotalAddonsCounter() {
+		$store.pdp.addonCounter = $store.pdp.addOnsArray.length
+
+		if ($store.pdp.addonCounter > 0) {
+			$store.pdp.addonCounter = $store.pdp.addOnsArray.length
+		} else {
+		 	$store.pdp.addonCounter = 0
+		}
+	},
+
+	displayData() {
+		console.table({
+			addOnsArray: $store.pdp.addOnsArray,
+			addOnsTotalPrice: this.addOnsTotalPrice,
+			currentSelectedProductPrice: $store.pdp.currentPrice,
+			runningTotalPrice: $store.pdp.runningTotal,
+			totalAddonsInSelection: $store.pdp.addonCounter
+		})
+	}
+}">
+	<div class="product-top__addon--inner">
+		{% if product_add_ons_size > 0 %}
+			<div class="product-top__addon--title">{{ product_add_ons_title }}</div>
+		{% endif %}
+
+		{%- for product in product_add_ons -%}
+			{% if product.available %}
+				{% assign variant = product.selected_or_first_available_variant %}
+				{% assign variant_size = product.variants | size %}
+
+				<div class="product-top__addon--product" x-data="{
+					addonsVariantsExpanded: false,
+					addonsAddedToSelection: false,
+					{% if variant_size >= 1 %}addonsSelectedVariantsId: '',{% endif %}
+
+					init() {
+						this.resetSelection()
+					},
+
+					addVariant(data, parseable) {
+						this.$data.addAddonToSelection(data, parseable)
+						this.addonsAddedToSelection = true
+					},
+
+					removeVariant(id, options) {
+						this.$data.removeAddonToSelection(id)
+						this.addonsAddedToSelection = false
+
+						if (!options) return
+
+						if (!options.disabled) {
+							const targets = Array.from(document.querySelector('.multi-select-options').querySelectorAll('li.is-selected'))
+
+							this.addonsVariantsExpanded = false
+
+							if (targets.length <= 0) return
+							targets.forEach(target => target.classList.remove('is-selected'))
+						}
+					},
+
+					resetSelection() {
+						this.$watch('$store.pdp.dataReset', resetState => {
+							if (resetState) {
+								this.addonsVariantsExpanded = false
+								this.addonsAddedToSelection = false
+								this.addonsSelectedVariantsId = ''
+							}
+						})
+					}
+				}"> 
+					<div class="product-top__addon--product-inner">
+						<div class="product-top__addon--product-left">
+							<div class="product-top__addon--product-image" style="background-color: {{ product.metafields.mfr_fields.product_card_background_color | default: '#dedede' }}">
+								{% assign image = product.metafields.mfr_fields.temporary_product_hero_image | default: product.media[0] %}
+								{% if image != blank %}
+									{% assign height = 100 | divided_by: image.aspect_ratio %}
+									{{ image | image_url: width: 100 | image_tag: width: 100, alt: product.title, height: 100 }}
+								{% endif %}
+							</div>
+							<div class="product-top__addon--product-title">
+								{{ product.title }} <span x-show="addonsAddedToSelection">(Added!)</span>
+							</div>
+						</div>
+
+						<div class="product-top__addon--product-right">
+							<div class="product-top__addon--product-price">
+								{% if product.metafields.mfr_fields.product_add_ons_discount != blank %}
+									<span class="price old">{{ variant.price | money }}</span>
+								{% else %}
+									{% if variant.compare_at_price != blank %}
+										<span class="price old">{{ variant.compare_at_price | money }}</span>
+									{% endif %}
+								{% endif %}
+
+								{% if product.metafields.mfr_fields.product_add_ons_discount != blank %}
+									<span class="price">{{ product.metafields.mfr_fields.product_add_ons_discount }}</span>
+								{% else %}
+									<span class="price">{{ variant.price | money }}</span>
+								{% endif %}
+							</div>
+
+							<div class="product-top__addon--product-ctas">
+								{% if variant_size <= 1 %}
+									{% comment %} Addon without variants {% endcomment %}
+									<template x-if="!addonsAddedToSelection">
+										<button 
+											type="button" 
+											role="button" 
+											aria-label="Add {{ product.title }} to selection"
+											@click.debounce.150ms="addVariant($refs.addonsData, true)">
+											<span class="icon-plus">{% render 'icon__plus' %}</span>
+										</button>
+									</template>
+									<template x-if="addonsAddedToSelection">
+										<button 
+											type="button" 
+											role="button" 
+											aria-label="Remove {{ product.title }} to selection" 
+											class="is-added"
+											@click.debounce.150ms="removeVariant({{ variant.id }})">
+											<span class="icon-minus">{% render 'icon__minus' %}</span>
+										</button>
+									</template>
+								{% else %}
+									{% comment %} Addon with variants {% endcomment %}
+
+									<template x-if="!addonsVariantsExpanded">
+										<button 
+											type="button" 
+											role="button" 
+											aria-label="Add {{ product.title }} to selection" 
+											@click.debounce.150ms="addonsVariantsExpanded = !addonsVariantsExpanded">
+											<span class="icon-plus">{% render 'icon__plus' %}</span>
+										</button>
+									</template>
+
+									<template x-if="addonsVariantsExpanded">
+										<button 
+											type="button" 
+											role="button" 
+											aria-label="Add {{ product.title }} to selection" 
+											@click.debounce.150ms="removeVariant(addonsSelectedVariantsId, { disabled: false })">
+											<span class="icon-minus">{% render 'icon__minus' %}</span>
+										</button>
+									</template>
+								{% endif %}
+							</div>
+						</div>
+
+						<script type="application/json" class="addons-data" x-ref="addonsData">
+							{
+								"id": {{ variant.id }},
+								"quantity": 1, 
+								"current_price": {{ variant.price }},
+								"properties": {
+									"_added_by": "MFR Addons",
+									"_current_price": {{ variant.price }},
+									"_addon_parent_product": {{ product.id }}
+								}
+							}
+						</script>
+					</div>
+
+					{% comment %} Only show if addon has variants {% endcomment %}
+					{% if variant_size > 1 %}
+						<div class="product-top__addon--product-variants--inner" x-show="addonsVariantsExpanded" x-collapse>
+							{%- assign form_id = "product_form_" | append: product.id -%}
+
+							<div class="product-top__addon--product-variants" x-data='{
+								productOptions: [
+									{%- for option in product.options -%}
+										{
+											index: {{ forloop.index }},
+											name: "{{ option }}",
+											values: {% if forloop.index == 1 %}
+																{{ product.variants | map: "option1" | uniq | json }}
+															{% elsif forloop.index == 2 %}
+																{{ product.variants | map: "option2" | uniq | json }}
+															{% elsif forloop.index == 3 %}
+																{{ product.variants | map: "option3" | uniq | json }}
+															{% endif %}
+										}{% unless forloop.last %},{% endunless %}
+									{%- endfor -%}
+								],
+								selectedOptions: {},
+								variants: {{ product.variants | json }},
+								selectedVariantId: "",
+								selectedVariantObject: {},
+						
+								selectOption(optionIndex, value) {
+									this.selectedOptions[optionIndex] = value
+									this.updateVariant()
+									this.changeSelectedVariant()
+								},
+
+								changeSelectedVariant() {
+									const parentProductId = this.selectedVariantObject.properties._addon_parent_product
+									const isVariantExist = $store.pdp.addOnsArray.some(item => item.properties._addon_parent_product == parentProductId)
+
+									if (isVariantExist) {
+										let variantToRemove = $store.pdp.addOnsArray.findIndex(item => item.properties._addon_parent_product === parentProductId)
+
+										if (variantToRemove !== -1) {
+											$store.pdp.addOnsArray.splice(variantToRemove, 1)
+										}
+									}
+
+									$data.addVariant(this.selectedVariantObject, false)
+								},
+						
+								isSelected(optionIndex, value) {
+									return this.selectedOptions[optionIndex] === value
+								},
+						
+								updateVariant() {
+									let matchingVariant = this.variants.find((variant) => {
+										return variant.options.every((optionValue, index) => {
+											let key = index + 1
+											if (this.selectedOptions[key]) {
+												return optionValue === this.selectedOptions[key]
+											}
+											return true
+										})
+									})
+									
+									if (matchingVariant) {
+										this.selectedVariantId = matchingVariant.id
+										$data.addonsSelectedVariantsId = matchingVariant.id
+
+										this.selectedVariantObject = {
+											"id": matchingVariant.id,
+											"quantity": 1, 
+											"title": matchingVariant.title,
+											"current_price": matchingVariant.price,
+											"properties": {
+												"_added_by": "MFR Addons",
+												"_current_price": matchingVariant.price,
+												"_addon_parent_product": {{ product.id }}
+											}
+										}
+									} else {
+										this.selectedVariantId = ""
+										this.addonsSelectedVariantsId = ""
+										this.selectedVariantObject = {}
+									}
+								}
+							}'>
+								<div class="variant-selector__options multi-select-options {% if use_variant_name %}variant-name-selectors{% endif %}">
+									<template x-for="option in productOptions" :key="option.index">
+										<div class="variant-selector__options-option" :data-option-index="option.index">
+											<h6 x-text="option.name"></h6>
+											<ul class="option-values" :class="{'option-smaller': option.name == 'Size' && option.values.length > 3}" role="menu">
+												<template x-for="value in option.values" :key="value">
+													<li @click="selectOption(option.index, value)" x-text="value.replace('|', '&')" :class="{'is-selected': isSelected(option.index, value)}" role="menuitem"></li>
+												</template>
+											</ul>
+										</div>
+									</template>	
+
+									<input type="hidden" name="id" id="selected-variant-id" x-model="selectedVariantId">
+								</div>
+							</div>
+						</div>
+					{% endif %}
+				</div>
+			{% endif %}
+		{%- endfor -%}
+	</div>
+</div>

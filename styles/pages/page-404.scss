@@ -1,0 +1,61 @@
+.page-404 {
+  padding-top: unset !important;
+
+  .page-404__wrapper {
+    width: 100%;
+    margin: 0 auto;
+    color: $white;
+  }
+
+  &__title {
+    background-color: $brand-color;
+    color: $white;
+    width: 100%;
+    padding: rem-calc(160px) rem-calc(15px) rem-calc(60px);
+
+    @include breakpoint(large up) {
+      padding: rem-calc(240px) rem-calc(15px) rem-calc(130px);
+    }
+  }
+
+  &__body {
+    margin: 0 auto;
+    width: 100%;
+    max-width: rem-calc(720px);
+    padding: rem-calc(80px) rem-calc(15px) rem-calc(60px);
+    color: $black;
+
+    @include breakpoint(large up) {
+      padding: rem-calc(100px) rem-calc(15px) rem-calc(140px);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      margin-bottom: rem-calc(16px);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    p {
+      @include regular;
+      max-width: rem-calc(400px);
+      margin-left: auto;
+      margin-right: auto;
+
+      @include breakpoint(small only) {
+        @include regular;
+      }
+    }
+
+    .button {
+      color: $white !important;
+      min-width: rem-calc(210px);
+      background-color: $black !important;
+      border-color: $black !important;
+    }
+  }
+}

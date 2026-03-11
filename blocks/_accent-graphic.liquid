@@ -1,0 +1,288 @@
+{% assign alpine_attributes = "" %}
+
+<div class="accent-graphic visible__{{ block.settings.visibility }} {% if block.settings.custom_class != blank %}{{  block.settings.custom_class }}{% endif %}" id="{{ block.id }}">
+  <style>
+    {% if block.settings.value_type == "px" %}
+      {% assign position_y_small = block.settings.position_y_small | times: 5 %}
+      {% assign position_y_large = block.settings.position_y_large | times: 5 %}
+    {% else %}
+      {% assign position_y_small = block.settings.position_y_small %}
+      {% assign position_y_large = block.settings.position_y_large %}
+    {% endif %}
+    #shopify-section-{{ section.id }} #{{- block.id }} {
+      {%- if block.settings.x_setting == 'center' -%}
+        left: calc(50% - {{ block.settings.width_small | divided_by: 2 }}px - {{ block.settings.position_x_small | times: 5 }}{{ block.settings.value_type }});
+        margin: auto;
+      {% else %}
+        {%- assign position_x_small = block.settings.position_x_small | times: 1.00 -%}
+        {%- if position_x_small >= 0 -%}
+          {{- block.settings.x_setting -}}: {{- position_x_small -}}{{- block.settings.value_type -}};
+          transform: translateX( 0 );
+        {%- else -%}
+          {{- block.settings.x_setting -}}: 0;
+          {%- if block.settings.x_setting == "left" -%}
+            transform: translateX( {{ position_x_small }}% );
+          {%- else -%}
+            transform: translateX( {{ position_x_small | abs }}% );
+          {%- endif -%}
+        {%- endif -%}
+      {%- endif -%}
+      {{ block.settings.y_setting }}: {{ position_y_small }}{{ block.settings.value_type }};
+      width: {{ block.settings.width_small }}px;
+    }
+    @media print, screen and (min-width: 64em) {
+      #shopify-section-{{ section.id }} #{{- block.id }} {
+        {%- if block.settings.x_setting == 'center' -%}
+          left: calc(50% - {{ block.settings.width_large | divided_by: 2 }}px - {{ block.settings.position_x_large | times: 5 }}{{ block.settings.value_type }});
+          margin: auto;
+        {% else %}
+          {%- assign position_x_large = block.settings.position_x_large | times: 1.00 -%}
+          {%- if position_x_large >= 0 -%}
+            {{- block.settings.x_setting -}}: {{- position_x_large -}}{{- block.settings.value_type -}};
+            transform: translateX( 0 );
+          {%- else -%}
+            {{- block.settings.x_setting -}}: 0;
+            {%- if block.settings.x_setting == "left" -%}
+              transform: translateX( {{ position_x_large }}% );
+            {%- else -%}
+              transform: translateX( {{ position_x_large | abs }}% );
+            {%- endif -%}
+          {%- endif -%}
+        {%- endif -%}
+        {{ block.settings.y_setting }}: {{ block.settings.position_y_large }}{{ block.settings.value_type }};
+        width: {{ block.settings.width_large }}px;
+      }
+    }
+
+    @media print, screen and (min-width: 120em) {
+      #shopify-section-{{ section.id }} #{{- block.id }} {
+        {%- if block.settings.x_setting == 'center' -%}
+          left: calc(50% - {{ block.settings.width_large | times: 1.35 |  divided_by: 2 }}px - {{ block.settings.position_x_large | times: 5 }}{{ block.settings.value_type }});
+          margin: auto;
+          {%  assign excess_y = block.settings.position_y_large |  times: 0.35 %}
+          {{ block.settings.y_setting }}: {{ block.settings.position_y_large |  plus: excess_y }}{{ block.settings.value_type }};
+          width: {{ block.settings.width_large |  times: 1.35 }}px;
+        {%- else -%}
+          width: {{ block.settings.width_large |  times: 1.25 }}px;
+        {% endif %}
+      }
+    }
+    #shopify-section-{{ section.id }} #{{- block.id }} .flip-rotation-helper {
+      -moz-transform: {% if block.settings.flip %}scaleX(-1){% endif %} rotate( {{ block.settings.rotate }}deg );
+      -o-transform: {% if block.settings.flip %}scaleX(-1){% endif %} rotate( {{ block.settings.rotate }}deg );
+      -ms-transform: {% if block.settings.flip %}scaleX(-1){% endif %} rotate( {{ block.settings.rotate }}deg );
+      -webkit-transform: {% if block.settings.flip %}scaleX(-1){% endif %} rotate( {{ block.settings.rotate }}deg );
+      transform: {% if block.settings.flip %}scaleX(-1){% endif %} rotate( {{ block.settings.rotate }}deg );
+    }
+  </style>
+
+  <div class="accent-graphic__inner" data-inview>
+    <div class="parallax-helper">
+      <div class="{{ block.settings.animation }}">
+        <div class="flip-rotation-helper">
+          <div class="alpine-helper" {{ alpine_attributes }}>
+            {% assign accent_graphic_width = block.settings.width_large | times: 1.75 %}
+            {% if block.settings.icon != blank %}
+              {%- capture sizes -%}
+                {{ block.settings.width_small }}px,
+                (min-width: 1024px) {{ block.settings.width_large }}px
+              {%- endcapture -%}
+              {% assign alt = block.settings.icon.alt |  default: "decorative image" %}
+              {% render 'component__lazyload-image',
+                image: block.settings.icon,
+                width: accent_graphic_width,
+                alt: alt,
+                sizes: sizes %}
+            {% elsif block.settings.svg_code != blank %}
+              {{ block.settings.svg_code }}
+            {% else %}
+              {% if request.design_mode %}
+                <div class="shopify-placeholder-image">
+                  {%- capture svg_code -%}{{- 'image' | placeholder_svg_tag -}}{%- endcapture -%}
+                  {% render 'component__svg-encoder', svg_code: svg_code, alt: "placeholder image" %}
+                </div>
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Accent Graphic",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "icon",
+        "label": "Icon"
+      },
+      {
+        "type":"html",
+        "id":"svg_code",
+        "label":"Graphic SVG Code",
+        "info":"Paste SVG code for vector graphic"
+      },
+      {
+        "type":"header",
+        "content":"Visibility"
+      },
+      {
+        "type": "select",
+        "id": "visibility",
+        "options": [
+          { "value": "always", "label": "Always" },
+          { "value": "desktop_only", "label": "Desktop Only" },
+          { "value": "mobile_only", "label": "Mobile Only" }
+        ],
+        "label": "Show on..",
+        "default": "always"
+      },
+      {
+        "type":"header",
+        "content":"Value Type"
+      },
+      {
+        "type": "select",
+        "id": "value_type",
+        "options": [
+          { "value": "px", "label": "Pixels" },
+          { "value": "%", "label": "Percentage" }
+        ],
+        "label": "Position Value Type",
+        "default": "%",
+        "info": "Pixel values are multiplied by 5"
+      },
+      {
+        "type":"header",
+        "content":"Position"
+      },
+      {
+        "type": "select",
+        "id": "x_setting",
+        "options": [
+          { "value": "left", "label": "Left" },
+          { "value": "center", "label": "Center" },
+          { "value": "right", "label": "Right" }
+        ],
+        "label": "X Position",
+        "default": "left"
+      },
+      {
+        "type": "select",
+        "id": "y_setting",
+        "options": [
+          { "value": "top", "label": "Top" },
+          { "value": "bottom", "label": "Bottom" }
+        ],
+        "label": "Y Position",
+        "default": "top"
+      },
+      {
+        "type":"header",
+        "content":"Large Screen Settings"
+      },
+      {
+        "type": "number",
+        "id": "width_large",
+        "label": "Graphic Width",
+        "default": 150
+      },
+      {
+        "type": "range",
+        "id": "position_x_large",
+        "min": -100,
+        "max": 100,
+        "step": 2,
+        "label": "X Position",
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "position_y_large",
+        "min": -100,
+        "max": 100,
+        "step": 2,
+        "label": "Y Position",
+        "default": 10
+      },
+      {
+        "type":"header",
+        "content":"Small Screen Settings"
+      },
+      {
+        "type": "number",
+        "id": "width_small",
+        "label": "Graphic Width",
+        "default": 150
+      },
+      {
+        "type": "range",
+        "id": "position_x_small",
+        "min": -100,
+        "max": 100,
+        "step": 2,
+        "label": "X Position",
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "position_y_small",
+        "min": -100,
+        "max": 100,
+        "step": 2,
+        "label": "Y Position",
+        "default": 10
+      },
+      {
+        "type":"header",
+        "content":"Animation Settings"
+      },
+      {
+        "type": "select",
+        "id": "animation",
+        "options": [
+          { "value": "none", "label": "None" },
+          { "value": "rotating", "label": "Rotate" },
+          { "value": "floating", "label": "Float" },
+          { "value": "spark", "label": "Spark" }
+        ],
+        "label": "Animation",
+        "default": "none"
+      },
+      {
+        "type":"header",
+        "content":"Appearance Settings"
+      },
+      {
+        "type": "range",
+        "id": "rotate",
+        "min": 0,
+        "max": 360,
+        "step": 36,
+        "unit": "%",
+        "label": "Rotate",
+        "default": 0
+      },
+      {
+        "type": "checkbox",
+        "id": "flip",
+        "label": "Flip Graphics?",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "custom_class",
+        "label": "Custom Class",
+        "info": "For section specific styling"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Accent Graphic"
+      }
+    ]
+  }
+{% endschema %}

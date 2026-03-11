@@ -1,0 +1,112 @@
+.mega-menu {
+  // position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  display: flex !important;
+  justify-content: stretch;
+  align-items: stretch;
+  pointer-events: none;
+  padding-top: rem-calc( 2px );
+  margin-top: rem-calc( 30px );
+  @include transition( $global-transition );
+
+  &__trigger:not(:hover):not(:focus-within):not(:focus) & {
+    visibility: hidden;
+    @include opacity( 0 );
+  }
+
+  &__inner {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: auto;
+    min-height: rem-calc( 341px );
+    max-height: rem-calc( 80vh );
+    pointer-events: all;
+    @include border-radius( rem-calc( 14px ) );
+  }
+
+  &__image-links {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: rem-calc( 11px );
+    width: 100%;
+
+    a {
+      position: relative;
+      max-width: calc( (100% - #{ rem-calc( 11px ) * 3 }) / 4  );
+      aspect-ratio: 330/280;
+      flex-grow: 1;
+      background-color: var(--bg-color);
+      overflow: hidden;
+      padding: rem-calc( 27px ) rem-calc( 25px );
+      @include opacity( 0.9999999 );
+      @include border-radius( rem-calc( 14px ) );
+      @include drop-shadow;
+
+      @include hover {
+        .indicator {
+          background-color: $black;
+          border-color: transparent;
+
+          img {
+            @include filter( invert(1) );
+          }
+        }
+      }
+
+      .label {
+        font-size: rem-calc( 24px );
+        line-height: 1.083em;
+        font-weight: 600;
+        letter-spacing: rem-calc( -0.36 );
+        color: currentColor;
+        width: calc( 100% - #{ rem-calc( 46px ) } );
+        display: block;
+      }
+
+      .indicator {
+        position: absolute;
+        top: rem-calc( 27px );
+        right: rem-calc( 25px );
+        width: rem-calc( 36px );
+        height: rem-calc( 36px );
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: solid rem-calc( 1.5px ) currentColor;
+        @include border-radius( 50% );
+        @include transition( $global-transition );
+
+        img {
+          width: rem-calc( 7px );
+          height: auto;
+          display: block;
+          @include transition( $global-transition );
+        }
+      }
+
+      > img {
+        position: absolute;
+        top: 38.57%;
+        right: 0;
+        width: 64.24%;
+        height: 66%;
+        object-fit: cover;
+        object-position: top left;
+        @include transition( $global-transition );
+        @include transform-origin( bottom right );
+      }
+
+      @include hover {
+        > img {
+          @include transform( scale( 1.05 ) );
+        }
+      }
+    }
+  }
+}

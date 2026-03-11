@@ -1,0 +1,89 @@
+{% if block.settings.aspect_ratio_desktop != blank or block.settings.aspect_ratio_mobile != blank%}
+<style>
+  #shopify-block-{{ block.id }} .card-collection {
+    --aspect-ratio-desktop: {{ block.settings.aspect_ratio_desktop }};
+    --aspect-ratio-mobile: {{ block.settings.aspect_ratio_mobile }};
+    --width-desktop: {{ block.settings.width_desktop }}{{ block.settings.width_value_type }};
+    --width-mobile: {{ block.settings.width_mobile }}{{ block.settings.width_value_type_mobile }};
+  }
+</style>
+
+{% endif %}
+
+<div class="card-collection" data-stagger-inview=".card-collection__item-wrapper">
+    {%- content_for "blocks" -%}
+</div>
+
+{% schema %}
+  {
+    "name": "Card Collection",
+    "class": "card-collection",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Card Settings"
+      },
+      {
+        "type": "number",
+        "id": "width_desktop",
+        "label": "Width - Desktop",
+        "default": 169
+      },
+      {
+        "type": "select",
+        "id": "width_value_type",
+        "options": [
+          { "value": "px", "label": "Pixels" },
+          { "value": "%", "label": "Percentage" }
+        ],
+        "label": "Position Value Type",
+        "default": "px"
+      },
+      {
+        "type": "text",
+        "label": "Aspect Ratio - Mobile",
+        "id": "aspect_ratio_mobile",
+        "default": "169/215"
+      },
+      {
+        "type": "number",
+        "id": "width_mobile",
+        "label": "Width - Mobile",
+        "default": 169
+      },
+      {
+        "type": "select",
+        "id": "width_value_type_mobile",
+        "options": [
+          { "value": "px", "label": "Pixels" },
+          { "value": "%", "label": "Percentage" }
+        ],
+        "label": "Position Value Type",
+        "default": "px"
+      },
+      {
+        "type": "text",
+        "label": "Aspect Ratio - Desktop",
+        "id": "aspect_ratio_desktop",
+        "default": "169/215"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "_card-collection__item"
+      }
+    ],
+    "presets": [
+    {
+      "name": "Card Collection",
+      "blocks": [
+        {
+          "type": "_card-collection__item",
+          "id": "card-collection-item",
+          "static": true
+        }
+      ]
+    }
+  ]
+  }
+{% endschema %}

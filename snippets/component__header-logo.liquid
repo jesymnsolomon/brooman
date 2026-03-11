@@ -1,0 +1,54 @@
+{% if section.settings.logo_icon != blank %}
+  <a href="/" itemprop="url" 
+    class="header__logo header__logo-icon show-for-large">
+    {% assign image_width = section.settings.logo_icon.width | times: 1.00 %}
+    {% assign image_height = section.settings.logo_icon.height | times: 1.00 %}
+    {% assign aspect_ratio = image_width | divided_by: image_height %}
+    {% assign height = 420 | divided_by: aspect_ratio | round: 2 %}
+    {% render 'component__lazyload-image',
+      image: section.settings.logo_icon,
+      width: 420,
+      widths: "300,360,420",
+      alt: shop.name %}
+  </a>
+{% endif %}
+<a href="/" itemprop="url" 
+  class="header__logo header-logo 
+  {% if section.settings.logo_sticky != blank or section.settings.logo_svg_sticky != blank %}
+   has-sticky-logo
+  {% endif %}">
+    {% if section.settings.logo_lottie_url != blank %}
+    <lottie-player src="{{ section.settings.logo_lottie_url }}"  
+      background="transparent"  
+      speed="1"
+      autoplay
+      loop>
+
+      {% assign image_width = section.settings.logo.width | times: 1.00 %}
+      {% assign image_height = section.settings.logo.height | times: 1.00 %}
+      {% assign aspect_ratio = image_width | divided_by: image_height %}
+      {% assign height = 420 | divided_by: aspect_ratio | round: 2 %}
+      {% if section.settings.logo != blank %}
+        {{ section.settings.logo
+            | image_url: width: 420
+            | image_tag: width: 420,
+              height: height,
+              widths: "300,360,420",
+              alt: shop.name,
+              class: "" }}
+      {% endif %}
+    </lottie-player>
+  {% elsif section.settings.logo != blank %}
+      {% assign image_width = section.settings.logo.width | times: 1.00 %}
+      {% assign image_height = section.settings.logo.height | times: 1.00 %}
+      {% assign aspect_ratio = image_width | divided_by: image_height %}
+      {% assign height = 420 | divided_by: aspect_ratio | round: 2 %}
+      {{ section.settings.logo
+          | image_url: width: 420
+          | image_tag: width: 420,
+            height: height,
+            widths: "300,360,420",
+            alt: shop.name,
+            class: "" }}
+    {% endif %}
+</a>

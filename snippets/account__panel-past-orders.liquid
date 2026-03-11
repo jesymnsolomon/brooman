@@ -1,0 +1,81 @@
+<div class="inner grid-x grid-margin-x">
+  <div class="cell small-12">
+    {% if customer.orders.size == 0 %}
+      <div class="content-margin">
+        <h2 class="h2">You've got no orders yet</h2>
+      </div>
+      <div class="button-set">
+        <a href="/collections/all" class="button tertiary color-accent-1">
+          <span>Start here!</span>
+        </a>
+      </div>
+    {% endif %}
+
+    {% if customer.orders.size != 0 %}
+      {% for order in customer.orders %}
+        <div class="order__wrapper">
+          <div class="order__info">
+            <div class="meta-label grey">order number</div>
+            <h2 class="h3 content-margin-small" data-label="{{ 'customer.orders.order_number' | t }}">{{ order.name }}</h2>
+            <p class="underline" data-label="{{ 'customer.orders.order_number'}}">{{ 'View receipt' | link_to: order.customer_url }}</p>
+          </div>
+
+          <div class="grid-x grid-margin-x">
+            {% for item in order.line_items %}
+              <div class="order__product small-12 medium-6 large-4 cell content-margin">
+
+                <div class="order__product-image">
+                  {% if item.product.featured_image %}
+                      <div class="content-margin-small">
+                        <img src="{{ item | img_url: '200x' }}" alt="{{ item.image.title | escape }}">
+                      </div>
+                  {% endif %}
+                  {% if item.product.available %}
+                  <form method="post" class="reorder-form" action="/cart/add" data-cart-submit data-productid={{item.product.selected_or_first_available_variant.id}}>
+                    <input type="hidden" name="id" value="{{ item.product.selected_or_first_available_variant.id }}" />
+                    <input min="1" type="hidden" id="quantity" name="quantity" value="{{ item.quantity }}"/>
+
+                    <div class="button-set">
+                      <button class="button small primary rounded" type="submit" name="add"
+                      data-cart-submit
+                      data-open="offCanvasCart"
+                      data-submit-button
+                      {% unless item.product.available %}disabled="disabled" {% endunless %} {% if section_onboarding %}disabled="disabled" {% endif %}>
+                          <div class="collection__button-status">
+                              <!-- {{ 'products.product.add_to_cart' | t }} -->
+                              <span>Reorder</span>
+                          </div>
+                      </button>
+                    </div>
+                  </form>
+                  {% endif %}
+                </div>
+
+
+                <div class="order__item-info">
+                  <!-- <h4>{{ item.title }}</h4> -->
+                  <div class="meta-label">{{ item.title }}</div>
+
+                  {%comment%} {% assign current_variant = item.product.selected_or_first_available_variant %}
+                  <p class="variant-sku">#{{ current_variant.sku }}</p>
+                  {%endcomment%}
+
+                  <div class="">
+                    <p>Quantity: {{ item.quantity }}</p>
+                    <div class="product-info__price">
+                      <p class="" data-product-price>
+                          {{ item.price | money }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <hr class="content-margin"> 
+      {% endfor %} 
+    {% endif %}
+  </div>
+</div>

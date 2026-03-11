@@ -1,0 +1,38 @@
+{%- comment -%}
+  COMPONENT: Carousel
+  ----------------------------------------------------------------------------
+  USAGE:
+    {% render 'mfr-component__carousel',
+      settings: '{
+        contain: true,
+        wrapAround: true,
+      }',
+      class: "example-class",
+      content: content
+    %}
+
+  CONTENT EXAMPLE:
+    <div class="mfr-carousel__item">Slide 1</div>
+    <div class="mfr-carousel__item">Slide 2</div>
+    <div class="mfr-carousel__item">Slide 3</div>
+
+  REQUIREMENTS:
+    - Each slide must include the class: .mfr-carousel__item
+
+  NOTES:
+    - 'settings' accepts a JSON string with carousel configuration
+    - 'content' should be a group of slide elements (not wrapped)
+{%- endcomment -%}
+{% unless request.visual_preview_mode %}
+  {% render 'script__section', file: "MFRCarousel.js" %}
+{% endunless %}
+{% if settings != blank %}
+  {%- assign settings = settings -%}
+{% else %}
+  {%- assign settings = "{}" -%}
+{% endif %}
+<div class="mfr-carousel {{ class }}"
+  x-data='MFRCarousel({{- settings -}})'
+  data-stagger-inview="{{- innerItem | default: '.mfr-carousel__item > *' -}}">
+  {{- content -}}
+</div>

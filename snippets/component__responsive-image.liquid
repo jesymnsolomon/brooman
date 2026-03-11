@@ -1,0 +1,146 @@
+{%- comment -%}
+    Attributes
+    - mobile_image
+    - desktop_image
+    - max_width
+    - widths
+    - loading_lazy
+{%- endcomment -%}
+{% assign widths = widths | default: "480,600,720,900,1080,1260,1440,1800,2160,2520,2880,3240,3600,3960,4320,4680,5120" %}
+{% assign widths = widths | strip  | split: "," %}
+{% assign widths_mobile = "420,480,600,720,900,1080" | strip  | split: "," %}
+
+{% assign file_type = desktop_image.src | split: "." | last %}
+{% assign file_type_mobile = mobile_image.src | split: "." | last %}
+{% assign src = desktop_image | image_url %}
+{% assign srcset = "" %}
+{% assign src_mobile = mobile_image | image_url %}
+{% assign srcset_mobile = "" %}
+
+{% assign image_width_mobile = mobile_image.width | times: 1.00 %}
+{% assign image_height_mobile = mobile_image.height | times: 1.00 %}
+{% assign aspect_ratio_mobile = image_width_mobile | divided_by: image_height_mobile %}
+{% assign intrinsic_height_mobile = max_width | divided_by: aspect_ratio_mobile | round: 2 %}
+
+{% assign image_width_desktop = desktop_image.width | times: 1.00 %}
+{% assign image_height_desktop = desktop_image.height | times: 1.00 %}
+{% assign aspect_ratio_desktop = image_width_desktop | divided_by: image_height_desktop %}
+{% assign intrinsic_height_desktop = max_width | divided_by: aspect_ratio_desktop | round: 2 %}
+
+{% for width_inner in widths %}
+    {% assign condition1 = width_inner | times: 1 %}
+    {% assign condition2 = max_width | times: 1 %}
+    {% assign width_inner_2x = width_inner | times: 1 | round %}
+    {% if double_rendering_size %}
+      {% assign width_inner_2x = width_inner | times: 1.25 | round %}
+    {% endif %}
+    {% if condition1 <= condition2 %}
+        {% assign srcset = srcset | append: src | append: "&width=" | append: width_inner_2x | append: " " | append: width_inner | append: "w" %}
+        {% unless condition1 == condition2 %}
+            {% assign srcset = srcset | append: "," %}
+        {% endunless %}
+    {% endif %}
+{% endfor %}
+
+{% for width_inner in widths_mobile %}
+    {% assign condition1 = width_inner | times: 1 %}
+    {% assign condition2 = max_width | times: 1 %}
+    {% assign width_inner_2x = width_inner | times: 1 | round %}
+    {% if condition1 <= condition2 %}
+        {% assign srcset_mobile = srcset_mobile | append: src_mobile | append: "&width=" | append: width_inner_2x | append: " " | append: width_inner | append: "w" %}
+        {% unless condition1 == condition2 %}
+            {% assign srcset_mobile = srcset_mobile | append: "," %}
+        {% endunless %}
+    {% endif %}
+{% endfor %}
+
+{% if file_type == "png" or file_type_mobile == "png" %}
+    {% assign is_png = "is-png" %}
+{% else %}
+    {% assign is_png = "" %}
+{% endif %}
+
+{% if loading_lazy %}
+    {% assign loading = "lazy" %}
+    {% comment %} {% assign image_tag = "<img>" %} {% endcomment %}
+    {% capture picture_attributes %}
+        class="lozad mfr-responsive-image {{ is_png }}" data-iesrc="{{ desktop_image | image_url: width: max_width }}" data-alt="{{ desktop_image.alt | default: mobile_image.alt }}"
+    {% endcapture %}
+    {% capture image_tag %}
+      <img 
+        data-src="{{ desktop_image | image_url: width: 15 }}"
+        width="{{ max_width }}"
+        height="{{ intrinsic_height_desktop }}"
+        style="
+          --aspect-ratio-mobile: {{ max_width }}/{{ intrinsic_height_mobile }};
+          --aspect-ratio-desktop: {{ max_width }}/{{ intrinsic_height_desktop }};
+        ">
+    {% endcapture %}
+{% else %}
+    {% assign loading = "eager" %}
+    {% assign picture_attributes = "class='mfr-responsive-image " | append: is_png | append: "'" %}
+    {% capture image_tag %}
+      <img 
+        src="" 
+        height="{{ max_width | divided_by: desktop_image.aspect_ratio | round: 2 }}" 
+        width="{{ max_width }}" 
+        alt="{{ mobile_image.alt | default: desktop_image.alt }}" 
+        alt="{{ alt }}" 
+        fetchpriority="high">
+    {% endcapture %}
+{% endif %}
+{% capture mobile_obj_position %}
+    {% if mobile_image.presentation != blank %}
+        --mobile-obj-position: {{ mobile_image.presentation.focal_point.x }}% {{ mobile_image.presentation.focal_point.y }}%;
+    {% else %}
+        --mobile-obj-position: center;
+    {% endif %}
+    {% if desktop_image.presentation != blank %}
+        --desktop-obj-position: {{ desktop_image.presentation.focal_point.x }}% {{ desktop_image.presentation.focal_point.y }}%;
+    {% else %}
+        --desktop-obj-position: center;
+    {% endif %}
+{% endcapture %}
+
+{%- capture picture_tag_id -%}picture-{{ 'now' | date: '%s' }}-{{ content_for_header | size }}{%- endcapture -%}
+{%- capture aspect_ratio_style -%}
+  --aspect-ratio-mobile: {{ render_width_mobile }}/{{ render_height_mobile }};
+  --aspect-ratio-desktop: {{ render_width_desktop }}/{{ render_height_desktop }};
+{%- endcapture -%}
+{%- capture temp_image_style -%}
+    --temp-image-mobile: url({{ mobile_image | image_url: width: 15 }});
+    --temp-image-desktop: url({{ desktop_image | image_url: width: 15 }});
+{%- endcapture -%}
+<picture id="{{ picture_tag_id }}" {{ picture_attributes }}
+    style="
+      {{ mobile_obj_position }}
+      {{ aspect_ratio_style }}
+      {{ temp_image_style }}
+    ">
+    {%- if mobile_image -%}
+        <source media="(max-width: 1023px)"
+          {% if loading_lazy %}
+            data-srcset="{{ srcset_mobile }}"
+          {% else %}
+            srcset="{{ srcset_mobile }}"
+          {% endif %}
+          width="{{ max_width }}"
+          height="{{ intrinsic_height_mobile }}"
+          {% if mobile_sizes != blank %}
+            sizes="{{ mobile_sizes }}"
+          {% endif %}>
+    {%- endif -%}
+    <source media="(min-width: 1024px)" 
+      {% if loading_lazy %}
+        data-srcset="{{ srcset }}"
+      {% else %}
+        srcset="{{ srcset }}"
+      {% endif %}
+      width="{{ max_width }}"
+      height="{{ intrinsic_height_desktop }}"
+      {% if desktop_sizes != blank %}
+        sizes="{{ desktop_sizes }}"
+      {% endif %}>
+    {{ image_tag }}
+    <noscript><img></noscript>
+</picture>

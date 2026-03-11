@@ -1,0 +1,158 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+.mfr-bpg__card-collection {
+  .section-content {
+    .inner {
+      @include breakpoint(medium down) {
+        align-items: center;
+        text-align: center;
+      }
+    }
+
+    &:not(:last-child) {
+      margin-bottom: rem-calc(22px);
+
+      @include breakpoint(large up) {
+        margin-bottom: rem-calc(52px);
+      }
+    }
+
+    .small-title span {
+      font-family: $custom-font-name-3;
+    }
+  }
+
+  .contain {
+    @include breakpoint(medium down) {
+      .card-collection {
+        min-width: fit-content;
+        flex-wrap: nowrap;
+        overflow: visible;
+        min-height: rem-calc(280px);
+        padding: rem-calc(20px);
+
+        &__item {
+          transform: rotate(var(--rotate));
+
+          &-wrapper {
+            &:nth-of-type(odd) {
+              transform: translate(0, -50px);
+              margin-right: 0;
+            }
+          }
+        }
+
+      }
+    }
+  }
+
+  .card-collection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: rem-calc(20px);
+    margin-top: rem-calc(30px);
+    position: relative;
+    min-height: rem-calc(265px);
+    width: 100%;
+
+    @include breakpoint(medium down) {
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+      margin-top: rem-calc(20px);
+      min-height: rem-calc(690px);
+    }
+
+    &__item {
+      width: var(--width-mobile, rem-calc(169px));
+      aspect-ratio: var(--aspect-ratio-mobile, 169/215);
+      border-radius: rem-calc( 20px );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: rem-calc(10px);
+      background: var(--background, $color-accent);
+      overflow: hidden;
+      position: relative;
+      @include drop-shadow(rgba(0, 0, 0, 0.215), 7);
+
+      @include breakpoint(large up) {
+        width: var(--width-desktop, rem-calc(169px));
+        aspect-ratio: var(--aspect-ratio-desktop, 169/215);
+        transform: rotate(var(--rotate));
+      }
+
+      &[href=""] {
+        pointer-events: none;
+      }
+
+      &-wrapper {
+        margin-bottom: rem-calc(15px);
+        border-radius: 20px;
+        position: unset;
+        transition: $global-transition;
+        opacity: 1;
+
+        @include enter-animation {
+          opacity: 0;
+          position: absolute;
+          transform: none;
+          transition: $global-transition;
+        }
+
+        @include breakpoint(large up) {
+          margin: 0;
+        }
+
+        &:nth-of-type(odd) {
+          margin-right: rem-calc(15px);
+
+          @include breakpoint(large up) {
+            transform: translateY(-40px);
+            margin: 0;
+          }
+        }
+
+        @include hover() {
+          .card-collection__item:not(.no-hover) {
+            @include drop-shadow($black, 7);
+          }
+        }
+      }
+
+      &-icon {
+        width: 90%;
+        max-width: rem-calc( 100px );
+      }
+
+      &-title {
+        font-size: rem-calc(44px);
+        line-height: rem-calc(37px);
+        letter-spacing: 0.2px;
+        text-transform: uppercase;
+        font-family: $custom-font-name-1;
+        margin: 0 0 rem-calc(10px);
+        word-wrap: break-word;
+        word-break: break-word;
+      }
+
+      &-image {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+
+        img {
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+    }
+  }
+}
+

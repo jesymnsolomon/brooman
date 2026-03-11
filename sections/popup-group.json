@@ -1,0 +1,41 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "custom.popups",
+  "name": "Popups",
+  "sections": {
+    "popup_c7zYTc": {
+      "type": "popup",
+      "blocks": {
+        "popup_ewNkz3": {
+          "type": "popup",
+          "settings": {
+            "form_id": "SngKpW"
+          }
+        },
+        "popup_YTBiKi": {
+          "type": "popup",
+          "settings": {
+            "form_id": "SS9BqH"
+          }
+        }
+      },
+      "block_order": [
+        "popup_ewNkz3",
+        "popup_YTBiKi"
+      ],
+      "name": "Popup",
+      "settings": {}
+    }
+  },
+  "order": [
+    "popup_c7zYTc"
+  ]
+}

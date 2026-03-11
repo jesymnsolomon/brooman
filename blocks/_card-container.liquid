@@ -1,0 +1,56 @@
+{%- capture styling -%}
+  {% if block.settings.alignment != blank %}
+    --alignment: {{ block.settings.alignment }}
+  {% endif %}
+{%- endcapture -%}
+
+<div class="mfr-card__container" style="{{- styling -}}" data-stagger-inview=".mfr-card__inner">
+  {%- content_for "blocks" -%}
+</div>
+
+{% schema %}
+  {
+    "name": "Card Container",
+    "class": "mfr-card mfr-carousel__item",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content Alignment Settings"
+      },
+      {
+        "type": "select",
+        "id": "alignment",
+        "label": "Content Alignment",
+        "options": [
+            {
+              "value": "",
+              "label": "Use section settings"
+            },
+            {
+              "value": "flex-start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "flex-end",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+      },
+    ],
+    "blocks": [
+      {
+        "type": "_card"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Card Container"
+      }
+    ]
+  }
+{% endschema %}

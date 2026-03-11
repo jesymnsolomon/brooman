@@ -1,0 +1,98 @@
+{%- if block.settings.image_mobile != blank and block.settings.image_desktop != blank and block.settings.content != blank -%}
+  <style>
+    #shopify-block-{{ block.id }} {
+      {%- if block.settings.light_color != blank -%}
+        --light-color: {{ block.settings.light_color }};
+      {%- endif -%}
+      {%- if block.settings.dark_color != blank -%}
+        --dark-color: {{ block.settings.dark_color }};
+      {%- endif -%}
+    }
+  </style>
+  <div class="product-specifications__inner">
+    {% if block.settings.content != blank %}
+      <div class="product-specifications__caption"
+        data-stagger-inview="*">
+        {{ block.settings.content }}
+      </div>
+    {% endif %}
+    {% if block.settings.image_mobile != blank and block.settings.image_desktop != blank %}
+      <div class="product-specifications__image"
+        data-image-parallax="reverse"
+        data-inview>
+        <div class="product-specifications__image-inner"
+          data-image-parallax-element>
+          {% render 'component__responsive-image-v2',
+            image_mobile: block.settings.image_mobile,
+            width_mobile: 480,
+            widths_mobile: "360,420,480",
+            sizes_mobile: "480px",
+            image_desktop: block.settings.image_mobile,
+            width_desktop: 1080,
+            widths_desktop: "480,600,720,900,1080",
+            sizes_desktop: "50vw" %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+{%- else -%}
+  {%- if request.design_mode -%}
+    <style>
+      #shopify-block-{{ block.id }} {
+        --light-color: {{ block.settings.light_color }};
+        --dark-color: {{ block.settings.dark_color }};
+      }
+    </style>
+    <div class="product-specifications__inner">
+      <div class="product-specifications__caption"
+        data-stagger-inview="*">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum distinctio eligendi saepe recusandae, iure sit laboriosam quibusdam ducimus! Nam, quos.
+      </div>
+      <div class="product-specifications__image"
+        data-inview>
+        {% render 'component__lazyload-image',
+          image: false %}
+      </div>
+    </div>
+
+  {%- endif -%}
+{%- endif -%}
+{%- schema -%}
+  {
+    "name": "Product Specifications",
+    "class": "product-specifications",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_mobile",
+        "label": "Image - Mobile"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_desktop",
+        "label": "Image - Desktop"
+      },
+      {
+        "type": "richtext",
+        "id": "content",
+        "label": "Content"
+      },
+      {
+        "type": "color",
+        "id": "light_color",
+        "label": "Light Color",
+        "default": "#FFCFA9",
+      },
+      {
+        "type": "color",
+        "id": "dark_color",
+        "label": "Dark Color",
+        "default": "#FF712A",
+      },
+    ]
+  }
+{%- endschema -%}

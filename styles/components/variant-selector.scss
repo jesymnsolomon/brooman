@@ -1,0 +1,99 @@
+.variant-selectors {
+  &-s {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: rem-calc( 3px );
+  }
+
+  &__selectors {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: rem-calc( 8px );
+
+    @include breakpoint( large up ) {
+      gap: rem-calc( 10px );
+      flex-wrap: wrap;
+    }
+
+    .flickity-viewport {
+      overflow: visible;
+    }
+
+    &-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      align-items: stretch;
+      gap: rem-calc( 8px );
+      margin-bottom: rem-calc(15px);
+
+      @include breakpoint( large up ) {
+        gap: rem-calc( 10px );
+      }
+    }
+
+    &-image {
+      border: 2px solid $black;
+      border-radius: rem-calc(15px);
+      overflow: hidden;
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      transition: $global-transition;
+
+      img {
+        border-radius: rem-calc(15px);
+      }
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      width: calc( ( 100% - #{ rem-calc( 16px ) } ) / 3 );
+
+      @include breakpoint( large up ) {
+        width: min(calc( ( 100% - #{ rem-calc( 30px ) } ) / 4 ), #{ rem-calc( 127px ) } );
+      }
+
+      // input:disabled + .variant-selectors__selectors-image {
+      //   opacity: 0.6;
+      // }
+
+      &:hover input:not(:disabled) + .variant-selectors__selectors-image,
+      input[type="radio"]:checked + .variant-selectors__selectors-image {
+        @include drop-shadow($black, 7);
+        opacity: 1;
+        transition: $global-transition;
+      }
+
+      &:has(input:disabled) {
+        display: none;
+      }
+    }
+  }
+
+  &__selector-label {
+    font-size: rem-calc( 20px );
+    line-height: 1.048em;
+    font-weight: 700;
+    width: 100%;
+    height: auto;
+    padding: rem-calc( 5px );
+    margin-top: rem-calc(10px);
+    color: $font-body-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    max-width: rem-calc(127px);
+    text-align: center;
+    @include border-radius( rem-calc( 15px ) );
+    @include transition( $global-transition );
+  }
+}

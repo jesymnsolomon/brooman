@@ -1,0 +1,80 @@
+{%- assign entry = block -%}
+<div class="customer-testimonials__entry-inner customer-testimonials__entry-v1-inner">
+  <div class="customer-testimonials__entry-v1-image">
+    {% assign default_alt = "maybe an image of " | append: entry.settings.name %}
+    {% assign alt = entry.settings.alt | default: default_alt %}
+    {% render 'component__lazyload-image',
+      image: entry.settings.image,
+      width: 240,
+      alt: alt %}
+  </div>
+  {% if entry.settings.testimony != blank %}
+    <p class="customer-testimonials__entry-v1-testimony">
+      {{ entry.settings.testimony }}
+    </p>
+  {% endif %}
+  <div class="customer-testimonials__entry-v1-footer">
+    <div class="customer-testimonials__entry-v1-footer-icon">
+      {% assign default_alt = "maybe an icon about this testimony" %}
+      {% assign alt = entry.settings.alt | default: default_alt %}
+      {% render 'component__lazyload-image',
+        image: entry.settings.icon,
+        width: 144,
+        alt: alt %}
+    </div>
+    <div class="customer-testimonials__entry-v1-footer-texts">
+      {% if entry.settings.name != blank %}
+        <p>{{ entry.settings.name }}</p>
+      {% endif %}
+      {% if entry.settings.subtitle != blank %}
+        <span>{{ entry.settings.subtitle }}</span>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Testimonial - Type 1",
+    "class": "customer-testimonials__entry customer-testimonials__entry-v1 mfr-carousel__item",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "richtext",
+        "id": "testimony",
+        "label": "Testimonial",
+        "default": "<p>“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at justo vitae lorem molestie euismod.“</p>"
+      },
+      {
+        "type": "header",
+        "content": "Author Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "name",
+        "label": "Name",
+        "default": "John Doe"
+      },
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Sub Title",
+        "default": "A Person"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Testimonial - Type 1"
+      }
+    ]
+  }
+{% endschema %}

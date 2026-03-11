@@ -1,0 +1,22 @@
+<div class="timeline" data-stagger-inview=".timeline-item__wrapper">
+    {%- content_for "blocks" -%}
+</div>
+
+{% schema %}
+  {
+    "name": "Timeline",
+    "class": "card-collection",
+    "settings": [
+    ],
+    "blocks": [
+      {
+        "type": "_timeline-item"
+      }
+    ],
+    "presets": [
+    {
+      "name": "Timeline"
+    }
+  ]
+  }
+{% endschema %}

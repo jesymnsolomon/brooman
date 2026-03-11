@@ -1,0 +1,161 @@
+{%- liquid
+  assign selling_plan_groups = product.selling_plan_groups[block.settings.index]
+  assign selling_plans = selling_plan_groups.selling_plans
+  assign variant_price = product.selected_or_first_available_variant.price
+
+  assign show_daily_price = block.settings.show_subscription_breakdown
+-%}
+
+{% if selling_plan_groups != blank %}
+  <div class="subscription-selector"
+    x-ref='subscriptionSelector' 
+    x-data='{
+      sellingPlanId: 0,
+      sellingPlanType: "one-time",
+      discountPercentage: 0.0,
+
+      init() {
+        this.sellingPlanId = {{ selling_plan_groups.selling_plans[0].id | default: 0 }}
+        this.sellingPlanType = "{%- if selling_plan_groups != blank -%}subscription{%- endif -%}"
+        this.discountPercentage = {{ selling_plan_groups.selling_plans[0].price_adjustments[0].value | divided_by: 100.00 }}
+      },
+
+      setInitialSubscription(element, discountText, discountTextVisibility) {
+        if (element.checked) {
+          discountLabel = discountText
+          showDiscountLabel = discountTextVisibility
+        }
+      },
+
+      onSubscriptionChange(planType, discountText, discountTextVisibility) {
+        this.sellingPlanType = planType
+        discountLabel = discountText
+        showDiscountLabel = discountTextVisibility
+        currentSellingPlanId = null
+      },
+
+      updateCurrentSellingPlanId(id) {
+        this.sellingPlanId = id
+        currentSellingPlanId = id
+      }
+    }'>
+
+    <input type="hidden" name="selling_plan" :value='sellingPlanId' :disabled='sellingPlanType == "one-time"'>
+
+    <div class="subscription-selector__options">
+      {% comment %} Subscription Options {% endcomment %}
+      {% if selling_plan_groups != blank %}
+        {%- liquid
+          assign original_price = product.selected_or_first_available_variant.price
+          assign discount_percentage = selling_plan_groups.selling_plans[0].price_adjustments[0].value
+          assign discount_decimal = discount_percentage | divided_by: 100.00
+          assign discounted_amount = original_price | times: discount_decimal
+          assign discounted_price = original_price | minus: discounted_amount
+          assign discounted_price_money = discounted_price | money
+          assign daily_price = discounted_price | divided_by: 30.00 | money
+        -%}
+
+        <label for="subscription-{{- block.id -}}">
+          <span class="discount-label" x-text="discountLabel" x-show="discountLabel"></span>
+          <input
+            type="radio"
+            id="subscription-{{- block.id -}}"
+            class="visually-hidden"
+            name="purchase_selector"
+            value="subscription"
+            data-caption="Save {{ discount_percentage }}%" 
+            :checked='sellingPlanType == "subscription"'
+            @change='onSubscriptionChange($el.value, $el.dataset.caption, true)'
+            x-init='setInitialSubscription($el, $el.dataset.caption, true)'
+          >
+
+          <div class="subscription-selector__options-wrapper">
+            <div class="subscription-selector__options-head">
+              <span class="subscription-selector__options-indicator" :class='sellingPlanType == "subscription" && "is-active"'></span>
+
+              <span class="subscription-selector__options-label">
+                {{- block.settings.subscription_label -}}
+              </span>
+
+              <span class="subscription-selector__options-prices">
+                {% if show_daily_price %}
+                  <span class="daily" x-text='$store.cart.formatMoney(((basePrice - (basePrice * discountPercentage)) / 30) * currentQuantity) + "/day"'>
+                    {{ daily_price }}/day
+                  </span>
+                {% endif %}
+                
+                <span class="price-value" x-text='$store.cart.formatMoney((basePrice - (basePrice * discountPercentage)) * currentQuantity)'>
+                  {{ discounted_price_money }}
+                </span>
+              </span>
+            </div>
+
+            {% if block.settings.subscription_sub_label != blank %}
+              <div class="subscription-selector__options-content">
+                <span class="subscription-sub-label">
+                  {{- block.settings.subscription_sub_label -}}
+                </span>
+              </div>
+            {% endif %}
+
+            {% assign frequencies_size = selling_plan_groups.selling_plans | size %}
+            <div
+              class="subscription-selector__options-frequencies {% if frequencies_size <= 1 %}visually-hidden{% endif %}"
+              x-ref="frequencies"
+            >
+              {%- for plan in selling_plan_groups.selling_plans -%}
+                <label for="{{ plan.name | handleize }}">
+                  <input
+                    type="radio" 
+                    name="selling_plan_id" 
+                    id="{{ plan.name | handleize }}" 
+                    value="{{- plan.id -}}" 
+                    :disabled='sellingPlanType != "subscription"' 
+                    {% if forloop.first %}checked{% endif %} 
+                    :checked='sellingPlanId == {{ plan.id }}' 
+                    x-init='if ($el.checked) sellingPlanId = $el.value'
+                    @change='updateCurrentSellingPlanId($el.value)'>
+                  <span>{{ plan.name }}</span>
+                </label>
+              {%- endfor -%}
+            </div>
+          </div>
+        </label>
+      {% endif %}
+      
+      {% comment %} Single Option {% endcomment %}
+      {%- liquid
+        assign original_price = product.selected_or_first_available_variant.price
+        assign original_price_money = original_price | money
+        assign daily_price = original_price | divided_by: 30.00 | money
+      -%}
+
+      <label for="one-time-selector-{{ block.id }}">
+        <input 
+          type="radio"
+          id="one-time-selector-{{ block.id }}"
+          class="visually-hidden"
+          name="purchase_selector"
+          value="one-time"
+          :checked='sellingPlanType == "one-time"'
+          @change='onSubscriptionChange($el.value, "", false)'
+        >
+
+        <div class="subscription-selector__options-wrapper">
+          <div class="subscription-selector__options-head">
+            <span class="subscription-selector__options-indicator" :class='sellingPlanType == "one-time" && "is-active"'></span>
+            <span class="subscription-selector__options-label">
+              {{- block.settings.one_time_label -}}
+            </span>
+            <span class="subscription-selector__options-prices">
+              {% if show_daily_price %}
+                <span class="daily" x-text='`${$store.cart.formatMoney((basePrice / 30) * currentQuantity)}/day`'>{{ daily_price }}/day</span>
+              {% endif %}
+              <span class="price-value" x-text='$store.cart.formatMoney(basePrice * currentQuantity)'>{{ discounted_price_money }}</span>
+            </span>
+          </div>
+        </div>
+      </label>
+    </div>
+  </div>
+{% endif %}

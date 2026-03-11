@@ -1,0 +1,18 @@
+{% comment %}
+    Attributes
+
+    - block
+{% endcomment %}
+
+{% if request.design_mode or block.settings.button_label != blank %}
+  {% render 'component__button',
+    label: block.settings.button_label,
+    link: block.settings.button_link,
+    icon: block.settings.icon,
+    color_theme: block.settings.color_theme,
+    add_to_cart: add_to_cart,
+    button_has_arrow: block.settings.button_has_arrow,
+    selected_variant: selected_variant,
+    button_width: block.settings.button_width
+  %}
+{% endif %}

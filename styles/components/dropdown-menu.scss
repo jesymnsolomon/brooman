@@ -1,0 +1,72 @@
+.dropdown-menu {
+    &[data-dropdown-menu] {
+      $mega-menu-bg-color: #FCD7DF;
+      background-color: $mega-menu-bg-color;
+      min-height: rem-calc( 427px );
+      color: $header-text-color;
+      display: none;
+      position: absolute;
+      left: 50%;
+      width: 100%;
+      overflow: hidden;
+      padding: calc( #{ $header-height } / 2 ) 0 0;
+      transform-origin: top center;
+      @include border-radius( 0 0 rem-calc( 26px ) rem-calc( 26px ) );
+      @include transform( translateX( -50% ) scaleY(0) );
+  
+      @include breakpoint( large up ) {
+        display: flex;
+        justify-content: stretch;
+        align-items: stretch;
+      }
+
+      .header--sticky & {
+        padding: calc( #{ $header-height-sticky } / 2 ) 0 0;
+      }
+    }
+
+    &__inner {
+      display: flex;
+      width: 100%;
+      justify-content: stretch;
+      align-items: stretch;
+      padding: rem-calc( 20px );
+
+      > a {
+        font-family: $custom-font-name-1;
+        position: relative;
+        flex: 1;
+        margin: 0 rem-calc( 12.5px );
+        overflow: hidden;
+        padding: rem-calc( 25px );
+        font-size: rem-calc( 50px );
+        line-height: rem-calc( 50px );
+        letter-spacing: rem-calc( -2.2px );
+        color: $white;
+        text-transform: uppercase;
+        @include opacity( 0.9999999 );
+        @include border-radius( rem-calc( 15px ) );
+
+        &:first-child{ margin-left: 0; }
+        &:last-child{ margin-right: 0; }
+
+        img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          z-index: -1;
+          @include transition( $global-transition );
+        }
+
+        @include hover {
+          color: $white;
+          img {
+            @include transform( scale( 1.1 ) );
+          }
+        }
+      }
+    }
+}

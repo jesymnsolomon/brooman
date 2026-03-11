@@ -1,0 +1,19 @@
+{% if products != blank %}
+	<div class="product-top__contained-products" data-inview data-stagger-inview=".contained-products__product">
+		{% for product in products %}
+			<div class="contained-products__product">
+				<div class="contained-products__product-image">
+					{% assign image = product.metafields.product_card_image | default: product.media[0] %}
+					{{ image
+					| image_url: width: 50
+					| image_tag: width: 50,
+					widths: "50",
+					alt: image.alt }}
+				</div>
+				<div class="contained-products__product-title">
+					{{ product.title }}
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+{% endif %}

@@ -1,0 +1,28 @@
+{% assign media = media.value %}
+
+{% if media.media_type == 'image' %}
+  {% render 'component__responsive-image-v2',
+      image_mobile: media,
+      image_desktop: media,
+      lazyload: true,
+      width_mobile: 500,
+      width_desktop: 500,
+      sizes_mobile: 1,
+      sizes_desktop: 1 %}
+{% elsif media.media_type == 'video' %}
+  <div class="mfr-video-with-controls__inner">
+    {%- render 'component__video-with-controls'
+      block_id: id,
+      video: media,
+      poster_size: 370,
+      autoplay: false,
+      loop: true,
+      controls: true,
+      muted: false,
+      poster: image,
+      show_play_button: true,
+      show_speaker_button: true,
+      without_wrapper: false
+     -%}
+  </div>
+{% endif %}

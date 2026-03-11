@@ -1,0 +1,64 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+.mfr-article__header {
+  .section-spacer {
+    position: relative;
+    overflow: visible;
+
+    .back-button {
+      position: absolute;
+      left: rem-calc(20px);
+      top: 0;
+      background-color: #f44f6e;
+      color: $white;
+      width: unset;
+      min-height: rem-calc(43px);
+      @include border-radius(rem-calc(23px));
+      @include animateFadeFromLeft;
+
+      svg {
+        width: rem-calc(30px);
+        margin-right: rem-calc(10px);
+        @include transform(rotate(180deg));
+      }
+    }
+  }
+
+  .section-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .article-header {
+    &__media {
+      width: var(--width-mobile);
+      margin-bottom: var(--bottom-offset-mobile);
+      display: flex;
+      align-items: stretch;
+      justify-content: stretch;
+      overflow: hidden;
+      @include border-radius( rem-calc( 30px ) );
+
+      @include breakpoint( large up ) {
+        width: var(--width-desktop);
+        margin-bottom: var(--bottom-offset);
+      }
+
+      &-inner {
+        width: 100%;
+        height: auto;
+        max-height: 100%;
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+      }
+    }
+  }
+}

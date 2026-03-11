@@ -1,0 +1,83 @@
+{% layout none %}
+
+{% paginate search.results by 1000 %}
+  {% assign products = search.results | where: 'object_type', 'product' %}
+  {% assign articles = search.results | where: 'object_type', 'article' %}
+
+  {% assign search_terms = search.terms | replace: '&amp;', '&' | url_param_escape %}
+
+  
+  <div class="search-results__grid">
+    <div class="search-results__left">
+      <div class="search-results__heading">
+        <h4>
+          Products
+          <span id="search-count-products">
+            ({{ products.size }})
+          </span> 
+        </h4>
+
+        {% comment %} {% if products.size >= 3 %}
+          <a class="link__underline" href="/search?q={{ search_terms }}&type=product&options[unavailable_products]=hide&options[prefix]=last">View all</a>
+        {% endif %} {% endcomment %}
+      </div>
+      <div class="search-results__products">
+        
+        {%- for product in products  -%}
+          {% comment %} {% render 'product-card', product: product %} {% endcomment %}
+          <div class="media-object">
+            <div class="media-object-section">
+              <a class="media-object-link-overlay" href="{{ product.url }}"></a>
+              <div class="thumbnail">
+                <img src="{{ product.featured_image | image_url: width: 150 }}" alt="{{ product.title }}" >
+              </div>
+            </div>
+            <div class="media-object-section">
+              <p>{{ product.title }}</p>
+            </div>
+          </div>
+        {%- endfor -%}
+
+      </div>
+    </div>
+    <div class="search-results__right">
+      
+      <div class="search-results__heading">
+        <h4>Articles
+          <span id="search-count-articles">
+            ({{ articles.size }})
+          </span> 
+        </h4>
+
+        {% if articles.size >= 3 %}
+          {% comment %} <a class="link__underline" href="/search?q={{ search_terms }}&type=article">View all</a> {% endcomment %}
+        {% endif %}
+      </div>
+
+      <div class="search-results__articles">
+    
+        {%- for article in articles limit: 3 -%}
+
+          <div class="media-object">
+            <div class="media-object-section">
+              <a class="media-object-link-overlay" href="{{ article.url }}"></a>
+              <div class="thumbnail">
+                <img src="{{ article.image | image_url: width: 150 }}" alt="{{ product.title }}" >
+              </div>
+            </div>
+            <div class="media-object-section">
+              <h5>{{ article.title }}</h5>
+              <p>{{ article.excerpt_or_content | strip_html | strip_newlines | truncatewords: 20, '...'}}</p>
+            </div>
+          </div>
+        {%- endfor -%}
+    
+      </div>
+    </div>
+
+    <div class="search-results__view-all">
+      <a class="link__underline link__view-all" href="/search?q={{ search_terms }}">View all</a>
+    </div>
+  </div>
+
+{% endpaginate %}

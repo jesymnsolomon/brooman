@@ -1,0 +1,170 @@
+{% assign menu_images = section.blocks | where: "type", "menu_image" %}
+<div class="mobile-menu">
+    <div class="mobile-menu__inner">
+        <ul class="mobile-menu__accordion" data-accordion id="deeplinked-accordion" data-allow-all-closed="true">
+            {% for menu in section.settings.menu.links %}
+                {% if menu.links != blank %}
+                    {% assign attribute = "data-accordion-item" %}
+                    {% assign url = "#mobile-menu-accordion-" | append: forloop.index0 %}
+                    {% assign id = "mobile-menu-accordion-" | append: forloop.index0 %}
+                    {% assign content_attribute = "data-tab-content" %}
+                {% else %}
+                    {% assign attribute = "" %}
+                    {% assign url = menu.url %}
+                {% endif %}
+                <li class="mobile-menu__accordion-item" {{ attribute }}>
+                    <a href="{{ url }}" class="mobile-menu__accordion-title">
+                        {{ menu.title }}
+
+                        {% if menu.links != blank %}
+                            {%- render 'icon__carets', position: 'right' -%}
+                        {% endif %}
+                    </a>
+                    {% if menu.links != blank %}
+                        <div class="mobile-menu__accordion-content" {{ content_attribute }} id="{{ id }}">
+                            <div class="mobile-menu__accordion-content-inner">
+                                {% for child_link in menu.links %}
+                                    {% for menu_image in menu_images %}
+                                        {% assign menu_name_1 = menu_image.settings.menu_name | handleize %}
+                                        {% assign menu_name_2 = child_link.handle %}
+                                        {% if menu_name_1 == menu_name_2 %}
+                                            {% assign menuImageClass = "mobile-menu__accordion-menu--" | append: menu_image.settings.type %}
+                                            {% assign has_image = true %}
+                                            {% assign image = menu_image.settings.image %}
+                                            {% assign color_style = "--bg-color:" | append: menu_image.settings.color %}
+                                            {% assign width = 420 %}
+                                            {% assign widths = "420" %}
+                                            {% if menu_image.settings.type == "type-1" %}
+                                                {% assign width = 80 %}
+                                                {% assign widths = "80" %}
+                                            {% endif %}
+                                            {% break %}
+                                        {% else %}
+                                            {% assign menuImageClass = "" %}
+                                            {% assign has_image = false %}
+                                            {% assign image = "" %}
+                                            {% assign color_style = "" %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    <a class="mobile-menu__accordion-menu {{ menuImageClass }}" 
+                                        href="{{ child_link.url }}"
+                                        style="{{ color_style }}">
+                                        <span class="mobile-menu__accordion-menu-inner">
+                                            <span class="mobile-menu__accordion-menu-inner-label">{{ child_link.title }}</span>
+                                            {% if has_image and image != blank %}
+                                                <span class="mobile-menu__accordion-menu-inner-image">
+                                                    {% comment %} {{ image 
+                                                        | image_url: width: width
+                                                        | image_tag: width: width,
+                                                            widths: widths,
+                                                            alt: child_link.title }} {% endcomment %}
+                                                    {% render "component__lazyload-image", 
+                                                        image: image,
+                                                        width: width,
+                                                        widths: widths,
+                                                        alt: child_link.title %}
+                                                </span>
+                                            {% endif %}
+                                        </span>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        {% if section.settings.url != blank %}
+            <div class="mobile-menu__cta">
+                <a class="" href="{{ section.settings.url }}">
+                    <span>{{ section.settings.label }}</span>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% schema %}
+{
+    "name":"Mobile Menu",
+    "limit": 1,
+    "enabled_on": {
+      "groups": ["custom.offcanvas"]
+    },
+    "settings": [
+        {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Menu"
+        },
+
+        {
+            "type": "header",
+            "content": "CTA Settings"
+        },
+        {
+            "type": "url",
+            "id": "url",
+            "label": "Url"
+        },
+        {
+            "type": "text",
+            "id": "label",
+            "label": "Label"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "menu_image",
+            "name": "Menu Image",
+            "settings": [
+                {
+                    "type": "select",
+                    "id": "type",
+                    "label": "Type",
+                    "options": [
+                        {
+                            "value": "type-1",
+                            "label": "Type 1"
+                        },
+                        {
+                            "value": "type-2",
+                            "label": "Type 2"
+                        },
+                        {
+                            "value": "type-3",
+                            "label": "Type 3"
+                        }
+                    ],
+                    "default": "type-1"
+                },
+                {
+                    "type": "header",
+                    "content": "Menu Settings"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "menu_name",
+                    "label": "Menu Name"
+                },
+
+                {
+                    "type": "header",
+                    "content": "Color Settings"
+                },
+                {
+                    "type": "color",
+                    "id": "color",
+                    "label": "Color",
+                    "default": "#fff"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

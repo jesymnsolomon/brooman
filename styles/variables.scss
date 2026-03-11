@@ -1,0 +1,350 @@
+// Text colors
+$color-body-text: var(--color-body-text);
+$color-body-text-alpha: var(--color-body-text-alpha);
+
+// Background colors
+$color-body: var(--color-main-background);
+$color-overlay: var(--overlay-color);
+$color-overlay-alpha: var(--overlay-color-alpha);
+
+// Colors
+$brand-color: var(--brand-color);
+$color-accent: var(--color-accent);
+$color-accent-alpha: var(--color-accent-alpha);
+$color-accent-hover: var(--color-accent-hover);
+$color-accent-2: var(--color-accent-2);
+$color-accent-2-hover: var(--color-accent-2-darker);
+$color-accent-3: var(--color-accent-3);
+$color-accent-3-hover: var(--color-accent-3-darker);
+$color-accent-4: var(--color-accent-4);
+$color-accent-4-hover: var(--color-accent-4-darker);
+$color-border: var(--color-border);
+$theme-color-white: var(--color-white);
+$theme-color-black: var(--color-black);
+$off-white: var(--color-off-white);
+$off-black: var(--color-off-black);
+
+$white: $theme-color-white;
+$black: $theme-color-black;
+
+$color-theme__dark: var(--color-theme-dark);
+$color-theme__light: var(--color-theme-light);
+
+// Header
+$announcement-bar-bg-color: var(--announcement-bar-background);
+$announcement-bar-text-color: var(--announcement-bar-text);
+
+// Helper colors for form error states
+$color-disabled: #000000;
+$color-disabled-border: #000000;
+$color-error: #ff6d6d;
+$color-error-bg: #ffffff;
+$color-success: #000000;
+$color-success-bg: #000000;
+
+// Curves
+$sharp_ease: cubic-bezier(0.83, 0, 0.17, 1);
+$smooth_ease: cubic-bezier(0.5,0,0,1);
+
+$h1-font-case: var(--h1-font-case);
+$font-heading-h1: var(--font-heading-h1);
+$font-heading-h1-alt: var(--font-heading-h1);
+$font-heading-h1-weight: var(--font-heading-h1-weight);
+$font-heading-h1-size-mobile: var(--font-heading-h1-size-mobile);
+$font-heading-h1-line-height-mobile: var(--font-heading-h1-line-height-mobile);
+$font-heading-h1-spacing-mobile: var(--font-heading-h1-spacing-mobile);
+$font-heading-h1-size: var(--font-heading-h1-size);
+$font-heading-h1-line-height: var(--font-heading-h1-line-height);
+$font-heading-h1-spacing: var(--font-heading-h1-spacing);
+$font-heading-h1-xl-size-mobile: var(--font-heading-h1-xl-size-mobile);
+$font-heading-h1-xl-size: var(--font-heading-h1-xl-size);
+
+$h2-font-case: var(--h2-font-case);
+$font-heading-h2: var(--font-heading-h2);
+$font-heading-h2-weight: var(--font-heading-h2-weight);
+$font-heading-h2-size-mobile: var(--font-heading-h2-size-mobile);
+$font-heading-h2-line-height-mobile: var(--font-heading-h2-line-height-mobile);
+$font-heading-h2-spacing-mobile: var(--font-heading-h2-spacing-mobile);
+$font-heading-h2-size: var(--font-heading-h2-size);
+$font-heading-h2-line-height: var(--font-heading-h2-line-height);
+$font-heading-h2-spacing: var(--font-heading-h2-spacing);
+
+$h3-font-case: var(--h3-font-case);
+$font-heading-h3: var(--font-heading-h3);
+$font-heading-h3-weight: var(--font-heading-h3-weight);
+$font-heading-h3-size-mobile: var(--font-heading-h3-size-mobile);
+$font-heading-h3-line-height-mobile: var(--font-heading-h3-line-height-mobile);
+$font-heading-h3-spacing-mobile: var(--font-heading-h3-spacing-mobile);
+$font-heading-h3-size: var(--font-heading-h3-size);
+$font-heading-h3-line-height: var(--font-heading-h3-line-height);
+$font-heading-h3-spacing: var(--font-heading-h3-spacing);
+
+$h4-font-case: var(--h4-font-case);
+$font-heading-h4: var(--font-heading-h4);
+$font-heading-h4-weight: var(--font-heading-h4-weight);
+$font-heading-h4-size-mobile: var(--font-heading-h4-size-mobile);
+$font-heading-h4-line-height-mobile: var(--font-heading-h4-line-height-mobile);
+$font-heading-h4-spacing-mobile: var(--font-heading-h4-spacing-mobile);
+$font-heading-h4-size: var(--font-heading-h4-size);
+$font-heading-h4-line-height: var(--font-heading-h4-line-height);
+$font-heading-h4-spacing: var(--font-heading-h4-spacing);
+
+$h5-font-case: var(--h5-font-case);
+$font-heading-h5: var(--font-heading-h5);
+$font-heading-h5-weight: var(--font-heading-h5-weight);
+$font-heading-h5-size-mobile: var(--font-heading-h5-size-mobile);
+$font-heading-h5-line-height-mobile: var(--font-heading-h5-line-height-mobile);
+$font-heading-h5-spacing-mobile: var(--font-heading-h5-spacing-mobile);
+$font-heading-h5-size: var(--font-heading-h5-size);
+$font-heading-h5-line-height: var(--font-heading-h5-line-height);
+$font-heading-h5-spacing: var(--font-heading-h5-spacing);
+
+$h6-font-case: var(--h6-font-case);
+$font-heading-h6: var(--font-heading-h6);
+$font-heading-h6-weight: var(--font-heading-h6-weight);
+$font-heading-h6-size-mobile: var(--font-heading-h6-size-mobile);
+$font-heading-h6-line-height-mobile: var(--font-heading-h6-line-height-mobile);
+$font-heading-h6-spacing-mobile: var(--font-heading-h6-spacing-mobile);
+$font-heading-h6-size: var(--font-heading-h6-size);
+$font-heading-h6-line-height: var(--font-heading-h6-line-height);
+$font-heading-h6-spacing: var(--font-heading-h6-spacing);
+
+$small_title-font-case: var(--small_title-font-case);
+$font-heading-small-title: var(--font-heading-small-title);
+$font-heading-small-title-weight: var(--font-heading-small-title-weight);
+$font-heading-small-title-size-mobile: var(--font-heading-small-title-size-mobile);
+$font-heading-small-title-size: var(--font-heading-small-title-size);
+$font-heading-small-title-spacing: var(--font-heading-small-title-spacing);
+
+$font-menu: var(--font-menu);
+$font-menu-custom-url: var(--font-menu-custom-url);
+$font-menu-spacing: var(--font-menu-spacing);
+$font-menu-weight: var(--font-menu-weight);
+$font-menu-size: var(--font-menu-size);
+
+$font-footer-menu: var(--font-footer-menu);
+$font-footer-menu-custom-url: var(--font-footer-menu-custom-url);
+$font-footer-menu-spacing: var(--font-footer-menu-spacing);
+$font-footer-menu-weight: var(--font-footer-menu-weight);
+$font-footer-menu-size: var(--font-footer-menu-size);
+
+// Sizes
+$font-body: var(--font-body);
+$font-body-custom-url: var(--font-body-custom-url);
+$font-body-color: var(--font-body-color);
+$font-body-size-xsmall: var(--font-body-size-xsmall);
+
+$font-body-size-small: var(--font-body-size-small);
+$font-body-size-small-mobile: var(--font-body-size-small-mobile);
+
+$font-body-size-regular: var(--font-body-size-regular);
+$font-body-size-regular-mobile: var(--font-body-size-regular-mobile);
+
+$font-body-size-large: var(--font-body-size-large);
+$font-body-size-large-mobile: var(--font-body-size-large-mobile);
+
+$font-body-size-xlarge: var(--font-body-size-xlarge);
+$font-body-size-xlarge-mobile: var(--font-body-size-xlarge-mobile);
+
+// Body
+$body-font-family: $font-body;
+$body-font-color: $color-body-text;
+$body-background: $white;
+
+// Paragraphs
+$paragraph-line-height: var(--paragraph-line-height);
+$paragraph-letter-spacing: var(--paragraph-letter-spacing);
+$paragraph-font-weight: var(--paragraph-font-weight);
+
+// Custom Font Names
+$custom-font-name-1: var(--custom-font-name-1);
+$custom-font-name-2: var(--custom-font-name-2);
+$custom-font-name-3: var(--custom-font-name-3);
+$custom-font-name-4: var(--custom-font-name-4);
+
+// General Settings
+$global-border-radius: var(--global-border-radius);
+$global-border-width: var(--global-border-width);
+$body-background-image: var(--image-main-background);
+
+// Header
+$header-font-family: var(--header-font-family);
+$header-font-case: var(--header-font-case);
+$header-font-weight: var(--header-font-weight);
+$header-font-size-mobile: var(--header-font-size-mobile);
+$header-line-height-mobile: var(--header-line-height-mobile);
+$header-letter-spacing-mobile: var(--header-letter-spacing-mobile);
+$header-font-size-desktop: var(--header-font-size);
+$header-line-height-desktop: var(--header-line-height);
+$header-letter-spacing-desktop: var(--header-letter-spacing);
+
+$header-height: var( --header-height );
+$header-height-sticky: var( --header-height-sticky );
+$header-height-mobile: var( --header-height-mobile );
+$header-height-mobile-sticky: var( --header-height-mobile-sticky );
+
+$header-bg-color: var( --header-background );
+$header-text-color: var( --header-text );
+$header-bg-color-sticky: var( --header-background );
+$header-text-color-sticky: var( --header-text );
+
+// Footer
+$footer-font-family: var(--footer-font-family);
+$footer-font-case: var(--footer-font-case);
+$footer-font-weight: var(--footer-font-weight);
+$footer-font-size-mobile: var(--footer-font-size-mobile);
+$footer-line-height-mobile: var(--footer-line-height-mobile);
+$footer-letter-spacing-mobile: var(--footer-letter-spacing-mobile);
+$footer-font-size: var(--footer-font-size);
+$footer-line-height: var(--footer-line-height);
+$footer-letter-spacing: var(--footer-letter-spacing);
+
+$footer-bg-color: var(--footer-background);
+$footer-text-color: var(--footer-links);
+$footer-text-color-hover: var(--footer-links-hover);
+
+$socket-bg-color: var( --footer-socket-background );
+$socket-text-color: var( --footer-socket-links );
+
+// Off Canvas
+$offcanvas-font-family: var(--offcanvas-font-family);
+$offcanvas-font-case: var(--offcanvas-font-case);
+$offcanvas-font-weight: var(--offcanvas-font-weight);
+$offcanvas-font-size-mobile: var(--offcanvas-font-size-mobile);
+$offcanvas-line-height-mobile: var(--offcanvas-line-height-mobile);
+$offcanvas-letter-spacing-mobile: var(--offcanvas-letter-spacing-mobile);
+$offcanvas-font-size: var(--offcanvas-font-size);
+$offcanvas-line-height: var(--offcanvas-line-height);
+$offcanvas-letter-spacing: var(--offcanvas-letter-spacing);
+
+$offcanvas-offset-mobile: var(--offcanvas-offset-mobile);
+$offcanvas-offset-desktop: var(--offcanvas-offset-desktop);
+$offcanvas-border-radius-mobile: var(--offcanvas-border-radius-mobile);
+$offcanvas-border-radius-desktop: var(--offcanvas-border-radius-desktop);
+
+$offcanvas-bg-color: var(--offcanvas-panel-bg-color);
+$offcanvas-text-color: var(--offcanvas-panel-menu-color);
+
+// Product Grid/Carousel Item
+$banner-height-small: var(--carousel-banner-height-small);
+$banner-height-medium: var(--carousel-banner-height-medium);
+$banner-height-large: var(--carousel-banner-height-large);
+
+// Product Badges Color
+$badge_color_new: var(--badge-color-new);
+$badge_bg_color_new: var(--badge-bg-color-new);
+$badge_color_bestseller: var(--badge-color-bestseller);
+$badge_bg_color_bestseller: var(--badge-bg-color-bestseller);
+$badge_color_lowstock: var(--badge-color-lowstock);
+$badge_bg_color_lowstock: var(--badge-bg-color-lowstock);
+$badge_color_comingsoon: var(--badge-color-comingsoon);
+$badge_bg_color_comingsoon: var(--badge-bg-color-comingsoon);
+
+// Carousel Banner Height Settings
+$product-preview-bg-color: var(--product-preview-bg-color);
+$product-preview-button-color: var(--product-preview-button-color);
+$product-preview-button-hover-color: var(--product-preview-button-hover);
+
+// Cart Slideout Settings
+$cart-body-bg-color: var(--cart-body-bg-color);
+$cart-footer-bg-color: var(--cart-footer-bg-color);
+$cart-footer-text-color: var(--cart-footer-text-color);
+$cart-divider-colors: var(--cart-divider-colors);
+$cart-checkout-button-color: var(--cart-checkout-button-color);
+$cart-checkout-button-hover-color: var(--cart-checkout-button-hover-color);
+
+$cart-product-name-case: var(--cart-product-name-case);
+$cart-product-name-weight: var(--cart-product-name-weight);
+$cart-product-name-spacing: var(--cart-product-name-spacing);
+$cart-product-name-size: var(--cart-product-name-size);
+
+$cart-variant-color: var(--cart-product-variant-color);
+$cart-body-text-color: var(--cart-item-text-color);
+$cart-price-color: var(--cart-price-color);
+
+// Buttons
+$button-font-family: var(--button-font-family);
+$button-font-case: var(--button-font-case);
+$button-font-weight: var(--button-font-weight);
+$button-font-size: var(--button-font-size);
+$button-line-height: var(--button-line-height);
+$button-letter-spacing: var(--button-letter-spacing);
+$button-font-size-mobile: var(--button-font-size-mobile);
+$button-line-height-mobile: var(--button-line-height-mobile);
+$button-letter-spacing-mobile: var(--button-letter-spacing-mobile);
+$button-border-width: var(--button-border-width);
+$button-border-radius: var(--button-border-radius);
+
+$primary-button-bg-color: var(--primary-button-bg-color);
+$primary-button-bg-gradient: var(--primary-button-bg-gradient);
+$primary-button-text-color: var(--primary-button-text-color);
+$primary-button-border-color: var(--primary-button-border-color);
+$primary-button-hover-bg-color: var(--primary-button-hover-bg-color);
+$primary-button-hover-bg-gradient: var(--primary-button-hover-bg-gradient);
+$primary-button-hover-text-color: var(--primary-button-hover-text-color);
+$primary-button-border-color-hover: var(--primary-button-border-color-hover);
+
+$secondary-button-bg-color: var(--secondary-button-bg-color);
+$secondary-button-text-color: var(--secondary-button-text-color);
+$secondary-button-border-color: var(--secondary-button-border-color);
+$secondary-button-hover-bg-color: var(--secondary-button-hover-bg-color);
+$secondary-button-hover-text-color: var(--secondary-button-hover-text-color);
+$secondary-button-border-color-hover: var(--secondary-button-border-color-hover);
+
+$tertiary-button-bg-color: var(--tertiary-button-bg-color);
+$tertiary-button-text-color: var(--tertiary-button-text-color);
+$tertiary-button-border-color: var(--tertiary-button-border-color);
+$tertiary-button-hover-bg-color: var(--tertiary-button-hover-bg-color);
+$tertiary-button-hover-text-color: var(--tertiary-button-hover-text-color);
+$tertiary-button-border-color-hover: var(--tertiary-button-border-color-hover);
+
+// Transitions
+$transition-duration: 250ms;
+$transition-timing: ease-in-out;
+
+// Breakpoints
+$breakpoints: (
+  small: 0,
+  medium: 640px,
+  large: 1024px,
+  xlarge: 1440px,
+  xxlarge: 1600px
+);
+
+$print-breakpoint: large;
+$breakpoint-classes: (small medium large xlarge xxlarge);
+
+// Grid
+$grid-row-width: 1600px;
+$grid-column-count: 12;
+$grid-column-gutter: (
+  small: 20px,
+  medium: 30px,
+  large: 60px
+);
+
+$grid-column-align-edge: true;
+$grid-column-alias: 'columns';
+$block-grid-max: 8;
+
+$grid-max-width: 73.75em;
+$grid-gutter: 0.9375rem;
+$grid-gutter-medium: 0.5375rem;
+$grid-gutter-large: 1.75rem;
+$grid-gutter-xlarge: 3.75rem;
+$inner-padding: 4.1875rem;
+$inner-padding-mobile: 1.0625rem;
+
+$global-margin: 1rem;
+$global-padding: 1rem;
+$global-position: 1rem;
+$global-weight-normal: normal;
+$global-weight-bold: bold;
+$global-border: solid $global-border-width $brand-color;
+
+// General Transition
+$global-transition: all 0.2s $smooth_ease;
+$global-transition-sharp: all 0.2s $sharp_ease;
+$global-transition-slow: all 0.8s $smooth_ease;
+
+$enter-transform-value: min(100%, 80px );

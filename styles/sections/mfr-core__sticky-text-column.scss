@@ -1,0 +1,163 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+.mfr-core__sticky-text-column   {
+    .section-spacer {
+        overflow: unset;
+    }
+
+    .section-content {
+        &:not(:last-child) {
+            padding: 0 rem-calc( 15px );
+            margin-bottom: rem-calc( 75px );
+
+            @include breakpoint( large up ) {
+                padding: 0 rem-calc( 30px );
+                margin-bottom: rem-calc( 150px );
+            }
+        }
+    }
+
+    .fading-text {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        max-width: rem-calc(1200);
+        margin: 0 auto;
+
+        @include breakpoint( large up ) {
+            flex-direction: row;
+            align-items: stretch;
+            justify-content: stretch;
+        }
+
+        &__image {
+            display: flex;
+            justify-content: center;
+            margin-bottom: rem-calc( 30px );
+            padding: 0 rem-calc( 15px );
+            @include breakpoint( large up ) {
+                margin: 0;
+                width: 50%;
+                padding: 0 rem-calc( 30px );
+                flex-shrink: 0;
+                align-items: flex-start;
+            }
+
+            &-inner {
+                position: relative;
+                width: 100%;
+                overflow: hidden;
+                max-width: rem-calc( 450px );
+                width: 100%;
+                @include opacity( 0.9999999 );
+                @include border-radius( rem-calc( 20px ) );
+
+                @include breakpoint( large up ) {
+                    max-width: rem-calc( 750px );
+                    max-height: calc(100vh - #{ 66px } - #{ 30px } ) !important;
+                }
+
+                &:before {
+                    content: '';
+                    padding-top: 120.48%;
+                    display: block;
+                }
+
+                img {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    @include transition( $global-transition );
+
+                    &:not(.is-active) {
+                        //@include opacity( 0 );
+                    }
+                }
+                .shopify-placeholder-image {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    svg {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                    }
+                }
+            }
+        }
+
+        &__entries {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 rem-calc( 15px );
+            width: 100%;
+
+            @include breakpoint( large up ) {
+                padding: rem-calc( 200px ) rem-calc( 30px ) rem-calc( 200px );
+                width: 50%;
+            }
+        }
+
+        &__entry {
+            width: 100%;
+            max-width: rem-calc( 437px );
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            padding-bottom: rem-calc( 60px );
+        
+            @include breakpoint( large up ) {
+                padding-bottom: rem-calc( 220px );
+            }
+
+            &:first-child {
+                @include opacity( 1 );
+            }
+            &:nth-child(2) {
+                @include opacity( 0.6 );
+            }
+            &:nth-child(3) {
+                @include opacity( 0.3 );
+            }
+            &:last-child {
+                @include breakpoint( large up ) {
+                    .fading-text__desc {
+                        //padding-bottom: rem-calc( 134px );
+                    }
+                }
+            }
+        }
+        &__buttons {
+            width: 100%;
+            max-width: rem-calc( 437px );
+            .button {
+                width: 100%;
+            }    
+        }
+
+        &__small-text {
+            //@include highlight-text;
+            margin: 0 0 rem-calc( 10px );
+        }
+
+        &__heading {
+            margin: 0 0 rem-calc( 16px );
+        }
+
+        &__icon {
+            max-width: rem-calc( 52px );
+            margin: 0 0 rem-calc( 16px );
+        }
+
+        &__desc {
+            @include small;
+            margin: 0 0 rem-calc( 16px );
+        }
+    }
+}

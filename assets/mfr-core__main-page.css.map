@@ -1,0 +1,1 @@
+{"version":3,"sources":["mfr-core__main-page.scss"],"names":[],"mappings":"AACE,sCACE,QAAA,KACA,gBAAA","file":"mfr-core__main-page.css","sourcesContent":[".mfr-core__main-page {\n  .section-content {\n    display: flex;\n    justify-content: center;\n  }\n}"]}

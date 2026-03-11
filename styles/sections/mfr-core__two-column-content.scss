@@ -1,0 +1,10 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+.mfr-core__two-column-content {
+  .column {
+    width: 100%;
+    display: flex;
+  }
+}

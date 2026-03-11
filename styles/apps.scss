@@ -1,0 +1,329 @@
+// Project Specific
+.klaviyo-form {
+  form[data-testid]{
+    padding: 0 !important;
+
+    & > .needsclick {
+      min-height: unset !important;
+    }
+
+    [data-testid="form-row"]:first-of-type {
+      @include breakpoint(medium down) {
+        // border: 0 !important;
+
+        .needsclick {
+          padding: 0 !important;
+        }
+      }
+    }
+
+    [data-testid="form-row"]:nth-of-type(2) [data-testid="form-component"] {
+      padding-bottom: 0 !important;
+      padding-top: rem-calc(15px) !important;
+    }
+
+    [data-testid="form-row"]:last-of-type .needsclick {
+      justify-content: center !important;
+    }
+
+    & > .kl-private-reset-css-Xuajs1 {
+      justify-content: flex-start !important;
+      padding-top: rem-calc(5px) !important;
+
+      [data-testid="form-row"]:first-of-type {
+        border-radius: rem-calc(10px);
+        border: 1px dashed rgba(152, 149, 149, 0.652);
+
+        div,
+        fieldset,
+        label {
+          @include regular;
+          font-family: $custom-font-name-2 !important;
+          font-size: rem-calc(14px) !important;
+          line-height: rem-calc(17px) !important;
+        }
+
+        svg rect {
+          stroke-width: 0 !important;
+        }
+
+        .kl-private-reset-css-Xuajs1 {
+          margin-right: 0 !important;
+
+          &[role="group"] {
+            @include breakpoint(medium down) {
+              padding: rem-calc(7px) rem-calc(5px) !important;
+            }
+          }
+        }
+      }
+    }
+
+    .needsclick {
+      #downshift-0-input,
+      input[type="text"],
+      input[type="email"] {
+        border-radius: rem-calc(20px) !important;
+        border: 0 !important;
+        height: rem-calc(60px) !important;
+        font-family: $custom-font-name-2 !important;
+        @include drop-shadow(rgba(0, 0, 0, 0.159), 5);
+
+        &::placeholder {
+          color: rgb(50, 50, 50) !important;
+          font-family: $custom-font-name-2 !important;
+        }
+      }
+
+      #downshift-0-input {
+        box-shadow: none;
+      }
+
+      .needsclick.go4213795584.kl-private-reset-css-Xuajs1 {
+        border-radius: rem-calc(20px) !important;
+        border: 0 !important;
+        height: rem-calc(60px) !important;
+        @include drop-shadow(rgba(0, 0, 0, 0.159), 5);
+      }
+
+      button[type="button"].needsclick.go300628013:not(
+          [aria-label="Show Options"]
+        ) {
+        @include button;
+        font-family: $custom-font-name-2 !important;
+        border-radius: rem-calc(20px) !important;
+        font-size: rem-calc(22px) !important;
+        height: rem-calc(70px) !important;
+        min-height: rem-calc(70px) !important;
+        max-height: rem-calc(70px) !important;
+        width: rem-calc(221px) !important;
+        min-width: rem-calc(221px) !important;
+        margin-top: rem-calc(20px);
+      }
+    }
+  }
+}
+
+.liquid-html-embed__inner {
+  overflow: visible !important;
+}
+
+form.nf-form {
+  background: none !important;
+  max-width: 95% !important;
+
+  @include breakpoint(large up) {
+    max-width: var(--max-width) !important;
+  }
+
+  select,
+  input,
+  textarea {
+    border-radius: rem-calc(20px) !important;
+    @include drop-shadow(rgba(40, 40, 40, 0.172), 5);
+    font-weight: 400;
+    font-family: $custom-font-name-2;
+  }
+
+  .nf-file-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 2px dashed rgba(0, 0, 0, 0.57);
+    padding: rem-calc(5px);
+    border-radius: rem-calc(20px) !important;
+    background: rgba(163, 163, 163, 0.247) !important;
+
+    .nf-file-label-strong {
+      width: auto;
+      border: 0 !important;
+      background: none !important;
+      text-transform: uppercase;
+      font-size: rem-calc(20px);
+      color: $black !important;
+
+      i {
+        display: none;
+      }
+    }
+
+    .nf-file-label-span,
+    .nf-file-label-div {
+      // display: none;
+    }
+  }
+
+  button[type="submit"] {
+    border-radius: rem-calc(20px) !important;
+    width: 60%;
+    max-height: rem-calc(75px) !important;
+    font-size: rem-calc(24px) !important;
+    @include button;
+  }
+}
+
+.oke {
+  &Reviews[data-oke-container] {
+    width: 100% !important;
+    @include regular;
+    font-family: $custom-font-name-2 !important;
+
+    * {
+      @include regular;
+      font-family: $custom-font-name-2 !important;
+    }
+
+    @include breakpoint(large up) {
+      width: 60% !important;
+    }
+
+    .oke-w-reviews-list-item {
+      // border-top: 2px solid $black;
+      // border-bottom: 2px solid $black;
+      border: 0 !important;
+      @include border-top();
+      @include border-bottom();
+
+      &::after,
+      &::before {
+        height: 3px !important;
+        background-size: 100% !important;
+      }
+    }
+
+    .oke-button {
+      @include drop-shadow(black, 5);
+      transition: $global-transition;
+    }
+  }
+
+  &-w-reviews-head {
+    margin-top: rem-calc(20px);
+  }
+
+  &-w-ratingAverageModule {
+    margin-bottom: rem-calc(20px) !important;
+
+    &-count {
+      display: none !important;
+    }
+  }
+
+  &-reviewContent-title {
+    text-transform: uppercase !important;
+  }
+
+  &Reviews {
+    font-family: $custom-font-name-2;
+    width: 80%;
+  }
+
+  &-w-header-content-block {
+    &--oneThird,
+    &--twoThirds {
+      width: 100% !important;
+      margin: 0 !important;
+    }
+  }
+
+  &-w-header-content-module {
+    width: 100% !important;
+    justify-content: center !important;
+    margin: 0 !important;
+  }
+
+  &-w-breakdownModule--contain {
+    display: none !important;
+  }
+
+  &-w-review {
+    &-side {
+      padding: 0 rem-calc(10px) !important;
+      border: 0 !important;
+      background: none !important;
+
+      &-expandContent {
+        margin-top: rem-calc(5px);
+      }
+    }
+
+    &-recommendation {
+      margin-top: 0 !important;
+    }
+
+    &-helpful {
+      display: none !important;
+    }
+
+    &s-main {
+      border: 0 !important;
+    }
+
+    &s-list-item {
+      padding: rem-calc(33px) 0 rem-calc(25px) !important;
+    }
+  }
+
+  &-w-reviewer-avatar {
+    display: none !important;
+  }
+
+  &-w-mediaCarouselModule {
+    margin: rem-calc(20px) 0 rem-calc(5px);
+
+    .hooper-track {
+      .oke-mediaCarousel-slide {
+        overflow: visible;
+        padding: rem-calc(5px) !important;
+        width: rem-calc(120px) !important;
+        height: rem-calc(120px) !important;
+
+        // @include breakpoint(large up) {
+        //   width: rem-calc(100px) !important;
+        //   height: rem-calc(100px) !important;
+        // }
+
+        // @include breakpoint(medium down) {
+        //   width: rem-calc(80px) !important;
+        //   height: rem-calc(80px) !important;
+        // }
+
+        .oke-media {
+          border-radius: rem-calc(10px);
+          border: 2px solid $black;
+          overflow: hidden;
+          @include drop-shadow(rgba(0, 0, 0, 0.261), 6);
+        }
+      }
+    }
+  }
+
+  &-button {
+    @include drop-shadow(black, 5);
+  }
+
+  &-reviewsTab.oke-reviewsTab--small-top-left {
+    button.okendo-close-btn {
+      position: absolute;
+      top: -10px;
+      right: 10px;
+      z-index: 9999;
+      background-color: #fff !important;
+      line-height: 4px;
+      border: 1px solid $black;
+      border-radius: 20px;
+      font-size: 18px;
+      font-weight: 900;
+      cursor: pointer;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 20px;
+      width: 20px;
+      padding-bottom: rem-calc(2px);
+    }
+  }
+}
+

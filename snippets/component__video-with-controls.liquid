@@ -1,0 +1,131 @@
+{% unless without_wrapper %}
+  <div class="mfr-video-with-controls">
+{% endunless %}
+  <style>
+    #shopify-block-{{ block_id }} .mfr-video-with-controls__inner {
+      max-width: {{ block.settings.width_actual_mobile }}{{ block.settings.width_value_type }};
+      aspect-ratio: {{ block.settings.aspect_ratio_mobile }};
+    }
+    @media (min-width: 1024px) {
+      #shopify-block-{{ block_id }} .mfr-video-with-controls__inner {
+        max-width: {{ block.settings.width_actual_desktop }}{{ block.settings.width_value_type }};
+        aspect-ratio: {{ block.settings.aspect_ratio_desktop }};
+      }
+    }
+  </style>
+  {% assign video_ref = "video" | append: block_id %}
+  {% render 'component__video',
+    video: video,
+    poster_size: poster_size,
+    autoplay: autoplay,
+    loop: loop,
+    controls: controls,
+    playsinline: true,
+    muted: muted,
+    video_ref: video_ref,
+    poster_image: poster %}
+
+  <div class="mfr-video-with-controls__controls {% unless show_play_button %}hide-controls{% endunless %}">
+
+    <div class="mfr-video-with-controls__indicator"
+      x-data='{
+        paused: $refs["{{- video_ref -}}"].paused
+      }'
+      x-init='
+        const handleEvent = (event) => {
+          paused = $refs["{{- video_ref -}}"].paused;
+        };
+
+        // Add multiple event listeners using a loop
+        ["play", "pause"].forEach(event => {
+            $refs["{{- video_ref -}}"].addEventListener(event, handleEvent);
+        });
+      '
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-1"
+      x-transition:leave-start="opacity-1"
+      x-transition:leave-end="opacity-0"
+      x-show="paused">
+      {%- capture play_indicator -%}
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="72" height="72">
+          <path fill="white" d="M72 36Q72 36.883751 71.956635 37.766438Q71.913269 38.649124 71.826653 39.528622Q71.740028 40.408112 71.610352 41.282299Q71.480682 42.156479 71.308266 43.023251Q71.135849 43.890018 70.92112 44.747284Q70.70639 45.604553 70.449852 46.450249Q70.193314 47.295944 69.895584 48.128033Q69.597855 48.960121 69.259659 49.7766Q68.921455 50.593079 68.543602 51.391983Q68.165756 52.190884 67.749161 52.970284Q67.332565 53.74968 66.87822 54.507698Q66.423889 55.265717 65.932899 56.000526Q65.44191 56.735336 64.915459 57.445171Q64.389015 58.155006 63.828369 58.838158Q63.267723 59.521305 62.674232 60.176121Q62.080742 60.830933 61.455841 61.455841Q60.830933 62.080742 60.176121 62.674236Q59.521305 63.267723 58.838158 63.828373Q58.155006 64.389015 57.445171 64.915466Q56.735336 65.44191 56.000526 65.932899Q55.265717 66.423889 54.507698 66.87822Q53.74968 67.332565 52.97028 67.749161Q52.19088 68.165756 51.391979 68.543602Q50.593079 68.921455 49.776596 69.259659Q48.960117 69.597855 48.128029 69.895584Q47.295944 70.193314 46.450249 70.449852Q45.604553 70.70639 44.747284 70.921127Q43.890015 71.135857 43.023247 71.308273Q42.156479 71.480682 41.282295 71.610352Q40.408112 71.740028 39.528618 71.826653Q38.649124 71.913269 37.766438 71.956635Q36.883751 72 36 72Q35.116249 72 34.233566 71.956635Q33.350876 71.913269 32.471382 71.826653Q31.591887 71.740028 30.717703 71.610352Q29.843517 71.480682 28.976748 71.308266Q28.109978 71.135849 27.252712 70.92112Q26.395447 70.70639 25.549753 70.449852Q24.704056 70.193314 23.871965 69.895584Q23.039875 69.597855 22.223396 69.259659Q21.406918 68.921455 20.608015 68.543602Q19.809116 68.165756 19.029718 67.749161Q18.250319 67.332565 17.4923 66.87822Q16.734282 66.423889 15.99947 65.932899Q15.264658 65.44191 14.554824 64.915459Q13.844989 64.389015 13.16184 63.828369Q12.478693 63.267723 11.823877 62.674232Q11.169062 62.080742 10.544155 61.455841Q9.9192495 60.830933 9.3257589 60.176121Q8.7322693 59.521305 8.1716242 58.838158Q7.6109781 58.155006 7.0845284 57.445171Q6.5580788 56.735336 6.0670929 56.000526Q5.576108 55.265717 5.1217694 54.507698Q4.6674309 53.74968 4.250834 52.97028Q3.8342369 52.19088 3.4563847 51.391979Q3.0785329 50.593079 2.7403364 49.776596Q2.4021397 48.960117 2.1044133 48.128029Q1.8066869 47.295944 1.5501478 46.450249Q1.2936087 45.604553 1.0788748 44.747284Q0.86414099 43.890015 0.69172978 43.023247Q0.51931864 42.156479 0.38964558 41.282295Q0.25997251 40.408112 0.17334983 39.528618Q0.086727142 38.649124 0.043363571 37.766438Q0 36.883751 0 36Q0 35.116249 0.043363571 34.233566Q0.086727142 33.350876 0.17334983 32.471382Q0.25997251 31.591887 0.38964558 30.717703Q0.51931864 29.843517 0.69172978 28.976748Q0.86414099 28.109978 1.0788748 27.252712Q1.2936087 26.395447 1.5501478 25.549753Q1.8066869 24.704056 2.1044135 23.871965Q2.4021397 23.039875 2.7403364 22.223396Q3.0785329 21.406918 3.4563849 20.608015Q3.8342371 19.809116 4.2508345 19.029718Q4.6674314 18.250319 5.1217699 17.4923Q5.576108 16.734282 6.0670934 15.99947Q6.5580788 15.264658 7.084528 14.554824Q7.6109776 13.844989 8.1716232 13.16184Q8.7322683 12.478693 9.3257589 11.823877Q9.9192495 11.169062 10.544155 10.544155Q11.169062 9.9192495 11.823877 9.3257589Q12.478693 8.7322693 13.16184 8.1716242Q13.844989 7.6109781 14.554823 7.0845284Q15.264658 6.5580788 15.99947 6.0670929Q16.73428 5.576108 17.492298 5.1217694Q18.250317 4.6674309 19.029716 4.250834Q19.809113 3.8342369 20.608013 3.4563847Q21.406914 3.0785329 22.223394 2.7403364Q23.039873 2.4021397 23.871964 2.1044133Q24.704056 1.8066869 25.549753 1.5501478Q26.395447 1.2936087 27.252712 1.0788748Q28.109978 0.86414099 28.976748 0.69172978Q29.843517 0.51931864 30.717703 0.38964558Q31.591888 0.25997251 32.471386 0.17334983Q33.35088 0.086727142 34.233566 0.043363571Q35.116249 0 36 0Q36.883751 0 37.766438 0.043363571Q38.649124 0.086727142 39.528622 0.17334983Q40.408112 0.25997251 41.282299 0.38964558Q42.156479 0.51931864 43.023251 0.69172978Q43.890018 0.86414099 44.747284 1.0788748Q45.604553 1.2936087 46.450249 1.5501478Q47.295944 1.8066869 48.128033 2.1044135Q48.960121 2.4021397 49.7766 2.7403364Q50.593079 3.0785329 51.391983 3.4563849Q52.190884 3.8342371 52.970284 4.2508345Q53.74968 4.6674314 54.507698 5.1217699Q55.265717 5.576108 56.000526 6.0670934Q56.735336 6.5580788 57.445171 7.084528Q58.155006 7.6109776 58.838158 8.1716232Q59.521305 8.7322683 60.176121 9.3257589Q60.830933 9.9192495 61.455841 10.544155Q62.080742 11.169062 62.674236 11.823877Q63.267723 12.478693 63.828373 13.16184Q64.389015 13.844989 64.915466 14.554823Q65.44191 15.264658 65.932899 15.99947Q66.423889 16.73428 66.87822 17.492298Q67.332565 18.250317 67.749161 19.029716Q68.165756 19.809113 68.543602 20.608013Q68.921455 21.406914 69.259659 22.223394Q69.597855 23.039873 69.895584 23.871964Q70.193314 24.704056 70.449852 25.549753Q70.70639 26.395447 70.921127 27.252712Q71.135857 28.109978 71.308273 28.976748Q71.480682 29.843517 71.610352 30.717703Q71.740028 31.591888 71.826653 32.471386Q71.913269 33.35088 71.956635 34.233566Q72 35.116249 72 36Z"/>
+          <path fill="black" transform="translate(29 21)" d="M0 1.921928L2.220446e-16 28.035452C2.8967997e-16 28.587736 0.44771525 29.035452 1 29.035452C1.211452 29.035452 1.4174619 28.968424 1.5884309 28.844L19.867897 15.540883C20.314445 15.215902 20.412996 14.590453 20.088015 14.143905C20.023058 14.054651 19.943773 13.976768 19.853373 13.913415L1.5739067 1.1030074C1.1216292 0.78604746 0.49803922 0.89574397 0.1810793 1.3480214C0.063223414 1.5161927 -5.802605e-16 1.7165709 -5.5511151e-16 1.921928L0 1.921928Z" fill-rule="evenodd"/>
+        </svg>
+      {%- endcapture -%}
+      {% render 'component__svg-encoder',
+        svg_code: play_indicator,
+        width: 72,
+        height: 72,
+        alt: "play indicator" %}
+    </div>
+
+    {% if show_play_button != blank %}
+      <button class="play-pause-button"
+        x-data='{
+          paused: $refs["{{- video_ref -}}"].paused
+        }'
+        x-init='
+          const handleEvent = (event) => {
+            paused = $refs["{{- video_ref -}}"].paused;
+          };
+
+          // Add multiple event listeners using a loop
+          ["play", "pause"].forEach(event => {
+              $refs["{{- video_ref -}}"].addEventListener(event, handleEvent);
+          });
+        '
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-1"
+        x-transition:leave-start="opacity-1"
+        x-transition:leave-end="opacity-0"
+        :class='paused ? "play" : "pause"'
+        aria-label="Play/Pause"
+        @click="$refs['{{- video_ref -}}'].paused ? $refs['{{- video_ref -}}'].play() : $refs['{{- video_ref -}}'].pause()"
+        x-show="!paused">
+        {%- capture play_icon -%}{%- render 'icon__play' -%}{%- endcapture -%}
+        {%- capture pause_icon -%}{%- render 'icon__pause' -%}{%- endcapture -%}
+
+        <span class="play-pause-button__icon play">
+          {% render 'component__svg-encoder',
+            svg_code: play_icon,
+            width: 46,
+            height: 46,
+            alt: "pause icon" %}
+        </span>
+        <span class="play-pause-button__icon pause">
+          {% render 'component__svg-encoder',
+            svg_code: pause_icon,
+            width: 46,
+            height: 46,
+            alt: "pause icon" %}
+        </span>
+      </button>
+    {% endif %}
+
+    {% if show_speaker_button %}
+      <button class="speaker-button"
+        x-data='{
+          muted: $refs["{{- video_ref -}}"].muted
+        }'
+        x-init='
+          $refs["{{- video_ref -}}"].onvolumechange = () => {
+            muted = $refs["{{- video_ref -}}"].muted;
+          };
+        '
+        :class='muted ? "mute" : "speaker"'
+        @click="$refs['{{- video_ref -}}'].muted = !$refs['{{- video_ref -}}'].muted"
+        aria-label="Toggle Sound">
+        {%- capture speaker_icon -%}{%- render 'icon__speaker' -%}{%- endcapture -%}
+        {%- capture mute_icon -%}{%- render 'icon__mute' -%}{%- endcapture -%}
+        <span class="speaker-button__icon speaker">
+          {% render 'component__svg-encoder', svg_code: speaker_icon, alt: "speaker icon" %}
+        </span>
+        <span class="speaker-button__icon mute">
+          {% render 'component__svg-encoder', svg_code: mute_icon, alt: "mute icon" %}
+        </span>
+      </button>
+    {% endif %}
+  </div>
+{% unless without_wrapper %}
+</div>
+{% endunless %}

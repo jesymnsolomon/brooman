@@ -1,0 +1,21 @@
+<script>
+	let mfrPriorityFunctions = []
+	let mfrFunctions = []
+	let mfrComponents = []
+
+	function onReady(func, prio) {
+		if (prio) {
+			mfrPriorityFunctions.push(func)
+ 		} else {
+			mfrFunctions.push(func)
+		}
+	}
+
+	function initializeComponent(selector, component, options) {
+		mfrComponents.push({
+			selector: selector,
+			component: component,
+			options: options
+		})
+	}
+</script>

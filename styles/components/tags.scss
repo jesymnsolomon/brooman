@@ -1,0 +1,24 @@
+.tags-block {
+    display: inline-flex;
+    flex-direction: column;
+    z-index: 1;
+    align-items: flex-start;
+
+    &__tag {
+        font-size: rem-calc( 23px );
+        line-height: rem-calc( 25px );
+        letter-spacing: rem-calc( -0.33px );
+        padding: rem-calc( 1px ) rem-calc( 18px );
+        font-family: $custom-font-name-3;
+        margin: 0 0 rem-calc( 7px );
+        background-color: $color-accent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @include border-radius( rem-calc( 9px ) );
+        @include transform( translateY( rem-calc( -4px ) ) rotate( -10deg ) );
+        @include transform-origin( left center );
+
+        &:last-child { margin: 0; }
+    }
+}

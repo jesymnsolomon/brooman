@@ -1,0 +1,56 @@
+<script id="store-schema" type="application/ld+json">
+  {%- liquid
+    assign socials_array = "twitter,facebook,pinterest,instagram,tumblr,snapchat,youtube,vimeo" | split: ","
+    assign same_as_links = ""
+    assign separator = ""
+
+    for social in socials_array
+      assign key = "social_" | append: social | append: "_link"
+      assign url = settings[key]
+      if url != blank
+        assign same_as_links = same_as_links | append: separator  | append: '"'  | append: url | append: '"'
+        assign separator = ","
+      endif
+    endfor
+  -%}
+  {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "{{ shop.name | escape }}",
+    "description": "{{ shop.meta_description | escape }}",
+    "url": "https://{{ shop.domain }}",
+    "logo": "https:{{ 'logo.png' | asset_url }}",
+    "image": [
+      {%- if shop.images -%}
+        {%- for img in shop.images -%}
+          "https:{{ img | img_url: 'master' }}"{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      {%- else -%}
+        "https:{{ 'logo.png' | asset_url }}"
+      {%- endif -%}
+    ],
+    "telephone": "{{ shop.phone }}",
+    "priceRange": "{% assign prices = collections.all.products | map: 'price' | sort %}${{ prices.first | money_without_currency }} – {{ prices.last | money_without_currency }}",
+    "address" : {
+			"@type": "PostalAddress",
+			"streetAddress": "{{ shop.address.street }}",
+			"addressLocality": "{{ shop.address.city }}",
+			"addressRegion": "{{ shop.address.province_code }}",
+			"postalCode": "{{ shop.address.zip }}",
+			"addressCountry": "{{ shop.address.country_code }}"
+		},
+    {% if shop.metafields.company.lat and shop.metafields.company.lon %}
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": {{ shop.metafields.company.lat.value }},
+      "longitude": {{ shop.metafields.company.lon.value }}
+    },
+    {% endif %}
+    "sameAs": [{{ same_as_links }}],
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://{{ shop.domain }}/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+</script>

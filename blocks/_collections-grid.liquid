@@ -1,0 +1,50 @@
+{%- liquid
+  case block.settings.sort
+    when 'products_high' or 'products_low'
+      assign collections = collections | sort: 'all_products_count'
+    when 'date' or 'date_reversed'
+      assign collections = collections | sort: 'published_at'
+  endcase
+
+  if block.settings.sort == 'products_high' or block.settings.sort == 'date_reversed' or block.settings.sort == 'alphabetical_reversed'
+    assign collections = collections | reverse
+  endif
+-%}
+<div class="inner">
+  {%- for collection in collections -%}
+    {%- liquid
+      if collection.description != blank
+        assign card_aria_label = collection.description | strip_html | truncatewords: 20 | append: "Shop" | append: collection.title
+      else
+        assign card_aria_label = " Shop " | append: collection.title
+      endif
+    -%}
+
+    <a {% if collection.all_products_count > 0 %}href="{{ collection.url }}"{% endif %} class="card" aria-label="{{- card_aria_label -}}">
+      <div class="card-inner">
+        <div class="card-image">
+          {% render 'component__lazyload-image', image: collection.featured_image, width: 420, widths: "360,420", class: "image-cover", alt: collection.title %}
+        </div>
+        <div class="card-content">
+          <h3>{{- collection.title -}}</h3>
+          {%- if collection.description != blank -%}
+            <p>{{- collection.description | strip_html | truncatewords: 20 -}}</p>
+          {%- endif -%}
+          <div role="link" class="button primary" aria-label="{{- card_aria_label -}}">
+            <span>Shop Collection</span>
+          </div>
+        </div>
+      </div>
+    </a>
+  {%- endfor -%}
+</div>
+
+{% schema %}
+  {
+    "name": "Collections Grid",
+    "class": "section-collection",
+    "settings": [
+
+    ]
+  }
+{% endschema %}

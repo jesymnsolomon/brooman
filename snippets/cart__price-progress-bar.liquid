@@ -1,0 +1,91 @@
+{% render 'renderer__color-scheme', name: "section", color_scheme: block.settings.color_scheme_progress_bar, selector: ".price-progress-bar" %}
+
+{% if block.settings.price != 0 and block.settings.price != blank %}
+	{% assign priceSetting = block.settings.price | times: '100' %}
+
+	<div class="price-progress-bar" x-data="{
+		includeSubscription: false,
+		productIds: window.priceProgressBar.productIds,
+		requiredTotal: window.priceProgressBar.requiredTotal,
+		runningTotal: 0,
+		state: {
+			success: false,
+			percentage: 0,
+			remaining: window.priceProgressBar.requiredTotal
+		},
+
+		init() {
+			this.$watch('$store.cart.cartData.items', data => {
+				if (data !== null && data !== undefined) {
+					this.trackPriceProgress(data)
+					this.trackPriceProgressSuccess()
+					this.trackPriceProgressPercentage()
+					this.trackPriceProgressRemaining()
+				}
+			})
+		},
+
+		trackPriceProgress(items) {
+			let itemPrice = 0, total = 0
+
+			items.forEach((item, index) => {
+				if (this.includeSubscription) {
+					if (this.productIds.includes(item.product_id)) {
+						itemPrice = item.quantity * item.price
+						total += itemPrice
+					}
+				} else {
+					if (typeof item.selling_plan_allocation === 'undefined' && this.productIds.includes(item.product_id)) {
+						itemPrice = item.quantity * item.price
+						total += itemPrice
+					}
+				}
+			})
+
+			this.runningTotal = total
+		},
+
+		trackPriceProgressSuccess() {
+			this.runningTotal >= this.requiredTotal ? this.state.success = true : this.state.success = false
+		},
+
+		trackPriceProgressPercentage() {
+			this.state.percentage = `${(this.runningTotal / this.requiredTotal) * 100}%`
+		},
+
+		trackPriceProgressRemaining() {
+			this.state.remaining = (this.requiredTotal - this.runningTotal)
+			this.state.remaining = Shopify.formatMoney(this.state.remaining, Shopify.money_format);
+		}
+	}">
+		<div class="price-progress-bar__label" style="--progress-bar-track-color: {{ block.settings.track_color }}; --progress-bar-track-bg-color: {{ block.settings.track_bg_color }};">
+			<div class="price-progress-bar__label-success" x-show="state.success">
+				{{ block.settings.success_message }}
+			</div>
+
+			<div class="price-progress-bar__label-fail" x-show="!state.success">
+				{%- capture price_element -%}
+					<span class="quantity-progress-bar__quantity" x-text="state.remaining"></span>
+				{%- endcapture -%}
+
+				{{ block.settings.condition_label | replace: "[price]", price_element }}
+			</div>
+		</div>
+
+		<div class="price-progress-bar__progress progress-bar" style="--progress-bar-track-color: {{ block.settings.track_color }}; --progress-bar-track-bg-color: {{ block.settings.track_bg_color }};">
+			<div class="progress-bar__track"></div>
+			<div class="progress-bar__value" :class="state.success ? 'completed' : ''" :style="{ width: state.percentage}"></div>
+		</div>
+
+		<script>
+			window.priceProgressBar = window.cartCondition || {}
+			window.priceProgressBar.productIds = [
+				{%- for condition_product in block.settings.collection.products -%}
+					{{- condition_product.id -}}{% unless forloop.last %},{% endunless %}
+				{%- endfor -%}
+			]
+
+			window.priceProgressBar.requiredTotal = Number({{- priceSetting -}})
+		</script>
+	</div>
+{% endif %}

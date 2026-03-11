@@ -1,0 +1,19 @@
+{% assign metafields = product.metafields %}
+
+{% if variant != blank %}
+  {% assign product_id = variant.id %}
+  {% assign nice_title = variant.title %}
+{% endif %}
+
+{% assign product_id = product_id | default: product.selected_or_first_available_variant.id %}
+{% assign nice_title = nice_title |  default: metafields.mfr_fields.nice_title %}
+
+<input type="hidden" name="id" data-productid="{{ product.id }}" value="{{ product_id }}">
+
+{% if nice_title != blank %}
+  <input type="hidden" name="properties[_nice_title]" value="{{ nice_title }}">
+{% endif %}
+
+{% assign first_selling_plan_group = product.selling_plan_groups | first %}
+{% assign first_selling_plan = first_selling_plan_group.selling_plans | first %}
+{% assign first_selling_plan_id = first_selling_plan.id %}

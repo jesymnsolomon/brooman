@@ -1,0 +1,58 @@
+
+{% assign id = block.id | prepend: 'field' %}
+
+<label for="{{ id }}" class="sr-only">{{ block.settings.label | escape }}</label>
+{% if block.settings.type == 'input' %}
+  <input type="text"
+{% else %}
+  <textarea 
+{% endif %}
+    id="{{ id }}" name="contact[{{ block.settings.label | handleize }}]" 
+    placeholder="{{ block.settings.label | escape }}" 
+    autocorrect="off" autocapitalize="off" autocomplete="off" 
+    {% if block.settings.required -%} required {%- endif %}>
+{%- if block.settings.type == 'textarea' -%}
+  </textarea>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Field",
+    "class": "form-field",
+    "settings": [
+      {
+        "type": "text",
+        "id": "label",
+        "label": "Label",
+        "info": "Fields should have unique labels",
+        "default": "Field Name"
+      },
+      {
+        "type": "select",
+        "id": "type",
+        "label": "Type",
+        "options": [
+          {
+            "value": "input",
+            "label": "Single line"
+          },
+          {
+            "value": "textarea",
+            "label": "Multi line"
+          }
+        ],
+        "default": "input"
+      },
+      {
+        "type": "checkbox",
+        "id": "required",
+        "label": "Required"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Field"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,145 @@
+.icon-text {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+  gap: rem-calc( 8px );
+  width: 100%;
+
+  @include breakpoint( small down ) {
+    flex-wrap: wrap;
+    // justify-content: flex-start;
+    // overflow-x: auto;
+    // padding: 0 rem-calc( 16px );
+
+    // &.icon-text--1,
+    // &.icon-text--2,
+    // &.icon-text--3 {
+    //   justify-content: center;
+    // }
+    
+    // &::-webkit-scrollbar {
+    //   width: rem-calc( 3px );
+    //   height: rem-calc( 3px );
+    // }
+     
+    // &::-webkit-scrollbar-track {
+    //   background-color: #D7D7D730;
+    // }
+     
+    // &::-webkit-scrollbar-thumb {
+    //   background-color: #09707930;
+    // }
+  }
+
+  @include breakpoint( large up ) {
+    gap: rem-calc( 16px );
+  }
+
+  &__logo {
+    // @include border-radius( 50% );
+    // border: solid $global-border-width $color-accent;
+    width: 100%;
+    padding: rem-calc( 5px );
+    margin-bottom: rem-calc( 8px );
+    @include transition( $global-transition );
+
+    @include breakpoint( large up ) {
+      padding: rem-calc( 6px );
+      margin-bottom: rem-calc( 11px );
+    }
+
+    &-inner {
+      // @include border-radius( 50% );
+      overflow: hidden;
+      width: 100%;
+      // aspect-ratio: 1/1;
+    }
+
+    img {
+      height: 100%;
+      object-fit: contain;
+      // object-fit: cover;
+      object-position: center;
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+
+  &__item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: rem-calc( 100px ); 
+    flex-shrink: 0;
+    flex-grow: 1;
+    @include transition( $global-transition );
+    // @include animateFadeUp;
+
+    @include breakpoint( small only ) {
+      margin-bottom: rem-calc( 0px );
+    }
+
+    @include breakpoint(large up) {
+      max-width: rem-calc( 142px );
+    }
+
+    @include enter-animation {
+      @include transform( translateY( $enter-transform-value ) );
+      @include opacity( 0 );
+    }
+  }
+
+  &__text {
+    position: relative;
+    font-family: $custom-font-name-1;
+    font-size: rem-calc( 12px );
+    line-height: 1.667em;
+    letter-spacing: rem-calc( 0.48px );
+    font-weight: 400;
+    text-align: center;
+    text-transform: uppercase;
+    max-width: 100%;
+
+    @include breakpoint( small only ) {
+      position: absolute;
+      bottom: rem-calc( -8px );
+      left: 50%;
+      @include transform( translate( -50%, 100% ));
+    }
+
+    @include breakpoint(large up) {
+      font-size: rem-calc( 16px );
+      line-height: 1.25em;
+      letter-spacing: rem-calc( 0.64px );
+    }
+
+    .very-small-text {
+      display: inline;
+    }
+
+    &:after {
+      content: '';
+      height: $global-border-width;
+      background-color: currentColor;
+      width: 0;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      @include transform( translateX( -50% ) );
+      @include transition( $global-transition );
+    }
+  }
+
+  &__item {
+    @include hover {
+      .icon-text__logo {
+        border-color: currentColor;
+      }
+      .icon-text__text:after {
+        width: 100%;
+      }
+    }
+  }
+}

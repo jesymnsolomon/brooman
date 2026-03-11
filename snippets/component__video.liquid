@@ -1,0 +1,72 @@
+{% assign preload = preload | default: "none" %}
+{% assign default_video_ref = "video-" | append: video.id %}
+{% assign video_ref = video_ref | default: default_video_ref %}
+{% assign preview_image = poster_image | default: video.preview_image %}
+{{ play_with_others }}
+<video
+  {% if playsinline %}
+    playsinline
+  {% endif %}
+  {% if loop %}
+    loop
+  {% endif %}
+  {% if muted %}
+    muted
+  {% endif %}
+  {% if controls %}
+    controls
+  {% endif %}
+  preload="{{ preload }}"
+  {% if preview_image != blank %}
+    poster="{{ preview_image | image_url: width: poster_size }}"
+  {% endif %}
+  x-ref="{{- video_ref -}}"
+  {% if autoplay %}
+    x-intersect:enter='
+      {%- unless play_with_others -%}
+        document.querySelectorAll("video").forEach(video => {
+            video.pause();
+        });
+      {%- endunless -%}
+      $el.play();
+    '
+    x-intersect:leave='$el.pause();'
+    data-mfr-autoplay
+  {% endif %}
+  @click='
+    if( $el.paused ) {
+      {%- unless play_with_others -%}
+        document.querySelectorAll("video").forEach(video => {
+          if(video == $el) return;
+          video.pause();
+        });
+      {%- endunless -%}
+      $el.play()
+    }
+    else
+      $el.pause()
+  '
+  {% if x_effect != blank %}
+    x-effect='{{ x_effect }}'
+  {% endif %}
+  {% if onloadedmetadata != blank %}
+    @loadedmetadata='{{ onloadedmetadata }}'
+  {% endif %}>
+  {% for source in video.sources %}
+    <source 
+      src="{{ source.url }}" 
+      type="{{ source.mime_type }}">
+  {% endfor %}
+
+  {% assign width = poster_size | default: 420 %}
+  {% assign height = width | times: video.preview_image.aspect_ratio %}
+  {% if preview_image != blank %}
+    {{ preview_image
+      | image_url: width: poster_size
+      | image_tag: width: poster_size,
+        height: height,
+        widths: "420,480,600,720,900,1080,1260,1440,1800,2160, 2560",
+        alt: "maybe a poster image about the video",
+        loading: "lazy" }}
+  {% endif %}
+</video>

@@ -1,0 +1,78 @@
+{%-liquid
+  assign selected_variant = product.selected_variant
+%}
+
+{% if selected_variant != blank %}
+  {% assign product_metafield = product.metafields.mfr_fields %}
+  {% assign variant_metafield = selected_variant.metafields.mfr_fields %}
+  {% assign product_entry = product_metafield.pdp_features.value %}
+  {% assign entry = variant_metafield.section_features.value |  default: product_entry %}
+  {% assign alt = entry.media.alt |  default: "placeholder image" %}
+
+  <div class="section-box" data-inview>
+    {% render 'component__responsive-image-v2',
+      image_mobile: entry.media,
+      image_desktop: entry.media,
+      alt: alt,
+      lazyload: true,
+      width_mobile: 368,
+      width_desktop: 368,
+      sizes_mobile: 1,
+      sizes_desktop: 1 %}
+
+    {%- if entry.content != blank -%}
+      {% assign text = entry.content |  metafield_tag %}
+
+      <div
+        class="section-text regular"
+        data-inview
+        data-stagger-inview="> *">
+        {% render 'shortcode-renderer', text: text %}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="section-caption">
+    {{ entry.caption |  metafield_text }}
+  </div>
+{% else %}
+  {%- if block.blocks.size > 0 -%}
+    <div class="section-box" data-inview>
+      {%- content_for "blocks" -%}
+    </div>
+
+    {%- if block.settings.feature_caption != blank -%}
+      <div class="section-caption">
+        {{ block.settings.feature_caption }}
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+{% endif %}
+
+
+{%- schema -%}
+  {
+    "name": "Section Features",
+    "class": "section-features__inner",
+    "settings": [
+      {
+        "type": "richtext",
+        "id": "feature_caption",
+        "label": "Feature Caption"
+      }
+    ],
+    "blocks": [
+      { "type": "_image" },
+      { "type": "_section-content__text" }
+    ],
+    "presets": [
+      {
+        "name": "Section Features",
+        "blocks": [
+          { "type": "_image" },
+          { "type": "_section-content__text" }
+        ]
+      }
+    ]
+  }
+{%- endschema -%}

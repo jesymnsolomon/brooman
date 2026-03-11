@@ -1,0 +1,241 @@
+{% comment %} {% assign disable_animation = true %} {% endcomment %}
+{% comment %}
+    Attributes
+
+    - block_id
+    - text
+    - header_style
+    - bold_color
+    - underline_color
+    - max_width
+{% endcomment %}
+
+{% assign block_id = block.id %}
+{% assign header_style = block.settings.header_style %}
+{% assign highlight_color = block.settings.highlight_color %}
+{% assign underline_color = block.settings.underline_color %}
+{% assign disable_animation = block.settings.disable_animation %}
+{% assign custom_font = block.settings.font_family %}
+{% assign max_width_mobile = block.settings.max_width_mobile %}
+{% assign max_width_desktop = block.settings.max_width_desktop %}
+{% assign margin_top = block.settings.margin_top %}
+{% assign margin_bottom = block.settings.margin_bottom %}
+{% assign accent_graphics = block.settings.graphics %}
+
+{% if underline_color != "" and underline_color != "rgba(0,0,0,0)" %}
+  {% assign has_underline_class = "has-underline" %}
+{% else %}
+  {% assign has_underline_class = "" %}
+{% endif %}
+
+<style>
+  #shopify-block-{{ block.id }} {
+    --highlight-color: {{ highlight_color }};
+    {% if max_width_mobile != blank and max_width_mobile != 0 %}
+      --max-width-mobile: {{ max_width_mobile }}px;
+    {% endif %}
+    {% if max_width_desktop != blank and max_width_desktop != 0 %}
+      --max-width-desktop: {{ max_width_desktop }}px;
+    {% endif %}
+    {% if margin_top != blank %}
+      --margin-top: {{ margin_top }}px;
+    {% endif %}
+    {% if margin_bottom != blank %}
+      --margin-bottom: {{ margin_bottom }}px;
+    {% endif %}
+    {% if highlight_color != "" and highlight_color != "rgba(0,0,0,0)" %}
+      --underline-color: {{ underline_color }};
+    {% endif %}
+  }
+</style>
+
+{% assign title = collection.metafields.mfr_fields.nice_title |  default: collection.title %}
+
+<{{ block.settings.header_tag }}
+  id="block--{{ block_id }}"
+  class="collection-title section-title {% unless request.visual_preview_mode %}{{ header_style }}{% else %}h2{% endunless %} {{ has_underline_class }} {{ custom_font }}"
+  data-inview>
+  <span class="visually-hidden">{{ title }}</span>
+  <div class="section-title__inner"
+    {% unless disable_animation %}
+      data-split-text="fadeUp"
+    {% endunless %}>
+    {% render 'shortcode-renderer',
+      text: title %}
+  </div>
+  {% if accent_graphics != blank %}
+    <div class="accent-graphics {{ accent_graphics }}">
+      {% if accent_graphics == "left-right" %}
+        <div class="graphic-1">
+          {% assign alt = block.settings.graphic_1.alt |  default: "accent image" %}
+          {% render 'component__lazyload-image',
+                image: block.settings.graphic_1,
+                alt: alt,
+                width: 100 %}
+        </div>
+        <div class="graphic-2">
+          {% assign alt = block.settings.graphic_2.alt |  default: "accent image" %}
+          {% render 'component__lazyload-image',
+                image: block.settings.graphic_2,
+                alt: alt,
+                width: 100 %}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+</{{ block.settings.header_tag }}>
+
+{% schema %}
+  {
+    "name": "Collection Title",
+    "class": "section-title__wrapper",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "disable_animation",
+        "label": "Disable Animation",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "header_style",
+        "options": [
+          { "value": "h1 xl-title", "label": "H1 - Oversize"},
+          { "value": "h1", "label": "H1"},
+          { "value": "h2", "label": "H2"},
+          { "value": "h3", "label": "H3"},
+          { "value": "h4", "label": "H4"},
+          { "value": "h5", "label": "H5"},
+          { "value": "h6", "label": "H6"}
+        ],
+        "label": "Heading Style",
+        "default": "h1"
+      },
+      {
+        "type": "select",
+        "id": "header_tag",
+        "options": [
+          { "value": "h2", "label": "<h2></h2> (Default)"},
+          { "value": "h3", "label": "<h3></h3>"},
+          { "value": "h4", "label": "<h4></h4>"},
+          { "value": "h5", "label": "<h5></h5>"},
+          { "value": "h6", "label": "<h6></h6>"}
+        ],
+        "label": "Heading Tag",
+        "default": "h2",
+        "info": "This is for accessibility and SEO purposes. If you are not sure what to choose, select <h2></h2> (Default)."
+      },
+      {
+        "type": "select",
+        "id": "font_family",
+        "label": "Custom Font Family",
+        "options": [
+          {
+            "value": "",
+            "label": "Use Theme Settings"
+          },
+          {
+            "value": "custom-font-name-1",
+            "label": "Custom Font 1"
+          },
+          {
+            "value": "custom-font-name-2",
+            "label": "Custom Font 2"
+          },
+          {
+            "value": "custom-font-name-3",
+            "label": "Custom Font 3"
+          },
+          {
+            "value": "custom-font-name-4",
+            "label": "Custom Font 4"
+          }
+        ],
+        "default": ""
+      },
+      {
+        "type": "header",
+        "content": "Color Settings"
+      },
+      {
+        "type": "color",
+        "id": "highlight_color",
+        "label": "Highlight Color",
+        "info": "This will change the color of all bolded text."
+      },
+      {
+        "type": "color",
+        "id": "underline_color",
+        "label": "Underline Color",
+        "info": "This will add underline (with the set color) to all bolded text."
+      },
+
+      {
+        "type": "header",
+        "content": "Width Settings"
+      },
+      {
+        "type": "number",
+        "id": "max_width_mobile",
+        "label": "Max Width - Mobile",
+        "default": 0,
+        "info": "in pixels"
+      },
+      {
+        "type": "number",
+        "id": "max_width_desktop",
+        "label": "Max Width - Desktop",
+        "default": 0,
+        "info": "in pixels"
+      },
+      {
+        "type": "header",
+        "content": "Margin Settings"
+      },
+      {
+        "type": "number",
+        "id": "margin_top",
+        "label": "Margin Top",
+        "info": "Margin top in pixels"
+      },
+      {
+        "type": "number",
+        "id": "margin_bottom",
+        "label": "Margin Bottom",
+        "info": "Margin bottom in pixels"
+      },
+      {
+        "type": "header",
+        "content": "Accent Graphics"
+      },
+      {
+        "type": "image_picker",
+        "id": "graphic_1",
+        "label": "Accent Graphic 1"
+      },
+      {
+        "type": "image_picker",
+        "id": "graphic_2",
+        "label": "Accent Graphic 2"
+      },
+      {
+        "type": "select",
+        "id": "graphics",
+        "label": "Graphics Position",
+        "options": [
+          { "value": "", "label": "None" },
+          { "value": "left-right", "label": "Left and Right" },
+          { "value": "left", "label": "Left" },
+          { "value": "right", "label": "Right" }
+        ],
+        "default": ""
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Title",
+      }
+    ]
+  }
+{% endschema %}

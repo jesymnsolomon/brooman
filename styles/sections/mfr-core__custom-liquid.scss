@@ -1,0 +1,236 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+$fieldborder : 1px solid #979797;
+
+.mfr-core__custom-liquid {
+  position: relative;
+
+  .container {
+    position: relative;
+
+    @include breakpoint( large up ) {
+      padding-left: rem-calc( 50px );
+      padding-right: rem-calc( 50px );
+    }
+  }
+
+  .title_left-header {
+    @include breakpoint( medium up ) {
+      display: flex;
+      align-items: center;
+    }
+
+    .left-section {
+      flex-basis: auto;
+      flex-grow: 1;
+      flex-shrink: 1;
+      margin-bottom: 0;
+
+      @include breakpoint( medium up ) {
+        padding-right: rem-calc( 60px );
+      }
+
+      @include breakpoint( small down ) {
+        margin-bottom: rem-calc( 20px );
+        text-align: center;
+      }
+    }
+    .right-section {
+      flex-basis: rem-calc( 295px );
+      flex-grow: 0;
+      flex-shrink: 1;
+
+      @include breakpoint( large up ) {
+        flex-basis: rem-calc( 438px );
+      }
+
+      p {
+        margin-bottom: 0;
+        margin-top: 0;
+      }
+    }
+  }
+  .author__media-object {
+    max-width: 46.8rem;
+    margin: 3rem auto;
+    align-items: center;
+    .media-object-section {
+      &:first-child {
+        margin-right: 2.5rem;
+      }
+    }
+    .thumbnail {
+      @include border-radius(0);
+      @include shadow(none);
+      width: 19rem;
+      border: none;
+      position: relative;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .pink-dot {
+        @include border-radius(100rem);
+        background-color: $color-accent;
+        width: 3.75rem;
+        height: 3.75rem;
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+      }
+    }
+    .details {
+      h1, h2, h3, h4, h5 {
+        margin: 0;
+      }
+      h4 {
+        font-size: 2rem;
+      }
+      h5 {
+        font-size: .875rem;
+      }
+    }
+  }
+
+  
+  .section-content {
+    .section-title {
+      @include breakpoint( small only ) {
+        font-size: rem-calc( 40px );
+      }
+    }
+  }
+
+
+  //store rocket styling
+  #storerocket-widget {
+    @include border-radius( 9px );
+    overflow: hidden;
+    opacity: 0.999;
+    max-width: rem-calc( 1289px );
+    margin: 0 auto;
+    max-width: 100%;
+    position: relative;
+    z-index: 1;
+
+    @include breakpoint( medium up ) {
+      max-height: rem-calc( 645px );
+      max-width: 90%;
+    }
+
+    //border: 1px solid #979797;
+
+    // #storerocket-search {
+    //   background-color: #FAF8F3;
+    //   padding: rem-calc( 8px );
+    //   height: unset;
+    //   //border-bottom: $fieldborder;
+
+    //   @include breakpoint( medium up ) {
+    //     padding: rem-calc( 16px );
+    //   }
+
+    //   .storerocket-query,
+    //   .storerocket-radius,
+    //   .storerocket-filters {
+    //     @include border-radius( 9px );
+    //     //height: rem-calc( 56px );
+        
+    //   }
+
+    //   .storerocket-radius-button,
+    //   .storerocket-search-field,
+    //   .storerocket-filters-button {
+    //     @include border-radius( 9px );
+    //     //height: 100%;
+    //     //font-size: rem-calc( 20px );
+    //   }
+
+    //   .storerocket-query,
+    //   .storerocket-radius,
+    //   .storerocket-filters{
+    //     //border: $fieldborder
+    //   }
+
+    //   .storerocket-radius {
+    //     display: none;
+    //   }
+      
+    //   .storerocket-query {
+    //     width: 100%;
+    //   }
+
+    //   .storerocket-autocomplete-addresses {
+    //     height: rem-calc( 120px );
+    //     overflow: auto;
+    //   }
+
+    //   .storerocket-radius-button,
+    //   .storerocket-filters-button {
+    //     display: flex;
+    //     justify-content: center;
+    //     align-items: center;
+
+    //     svg {
+    //       margin-right: rem-calc( 18px );
+    //       // width: rem-calc( 17px ) !important;
+    //       // height: rem-calc( 24px ) !important;
+    //       display: block;
+          
+    //     }
+    //   }
+
+    //   // span.storerocket-search-icon {
+    //   //   left: rem-calc( 8px );
+    //   //   top: 50%;
+    //   //   @include translate( 0, -50% );
+
+    //   //   @include breakpoint( medium up ) {
+    //   //     left: rem-calc( 16px );
+    //   //   }
+
+    //   //   svg {
+    //   //     height: rem-calc( 15px ) !important;
+    //   //     width: rem-calc( 15px ) !important;
+
+    //   //     @include breakpoint( medium up ) {
+    //   //       height: rem-calc( 31px ) !important;
+    //   //       width: rem-calc( 31px ) !important;
+    //   //     }
+    //   //   }
+    //   // }
+
+    //   .storerocket-search-spinner {
+    //     left: rem-calc( 20px );
+    //   }
+
+    //   .storerocket-geolocation-spinner {
+    //     top: 50%;
+    //     right: rem-calc( 12px );
+    //     @include translate( 0, -50% );
+    //   }
+
+    //   .storerocket-search-field {
+    //     padding: 0 rem-calc( 25px ) 0 rem-calc( 30px );
+    //     margin-bottom: 0;
+
+    //     @include breakpoint( medium up ) {
+    //       padding: 0 rem-calc( 25px ) 0 rem-calc( 57px );
+    //     }
+    //   }
+    // }
+
+    // #storerocket-panel {
+    //   .storerocket-result-name,
+    //   .storerocket-result-address,
+    //   .storerocket-result-phone,
+    //   .storerocket-result-distance {
+    //     margin-top: 5px !important;
+    //   }
+
+    // }
+  }
+}

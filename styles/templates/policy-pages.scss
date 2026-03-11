@@ -1,0 +1,85 @@
+#terms-of-service,
+#privacy-policy,
+#refund-policy,
+#shipping-policy {
+  .shopify-policy__container {
+    max-width: 100%;
+    width: 100%;
+    min-height: 70vh;
+    padding: 0;
+  }
+
+  .shopify-policy__title {
+    color: $white;
+    width: 100%;
+    padding: rem-calc(160px) rem-calc(15px) rem-calc(60px);
+    background-color: $brand-color;
+
+    @include breakpoint(large up) {
+      padding: rem-calc(240px) rem-calc(15px) rem-calc(130px);
+    }
+
+    h1 {
+      @include h2;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .shopify-policy__body {
+    margin: 0 auto;
+    width: 100%;
+    max-width: rem-calc(720px);
+    padding: rem-calc(80px) rem-calc(15px) rem-calc(80px);
+    display: flex;
+    flex-direction: column;
+
+    @include breakpoint(large up) {
+      padding: rem-calc(100px) rem-calc(15px) rem-calc(200px);
+    }
+
+    >* {
+      @include regular;
+    }
+
+    >.rte {
+      display: flex;
+      flex-direction: column;
+    }
+
+    ul,
+    ol {
+      &:not(:last-child) {
+        margin-bottom: 1rem;
+      }
+
+      li {
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    p {
+      @include breakpoint(small only) {
+        @include regular;
+      }
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      @include h4;
+      margin-bottom: 1rem;
+
+      &:not(:first-child) {
+        margin-top: 1rem;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+.list-social {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem-calc( 10px );
+
+  &__item {
+    a {
+      display: block;
+      width: rem-calc(54px);
+      height: rem-calc(54px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      @include transition($global-transition);
+      @include border-radius( 50% );
+
+      @include hover {
+        @include transform( scale( 0.95 ) );
+      }
+
+      svg {
+        height: rem-calc( 28px );
+        width: auto;
+
+        path {
+          fill: currentColor;
+        }
+      }
+    }
+  }
+}

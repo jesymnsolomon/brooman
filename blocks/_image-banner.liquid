@@ -1,0 +1,126 @@
+{%- assign block_id = "#shopify-block-" | append: block.id -%}
+{% render 'renderer__color-scheme', name: "block", color_scheme: block.settings.color_scheme, selector: block_id %}
+<style>
+  {{ block_id }} {
+    --min-height-mobile: {{ block.settings.min_height_mobile }}px;
+    --min-height-desktop: {{ block.settings.min_height_desktop }}px;
+    background: {{ block.settings.background_color }};
+  }
+
+  {%- if block.settings.full_width_button_on_mobile -%}
+    @media (max-width: 1023px) {
+      {{ block_id }} .section-button__wrapper,
+      {{ block_id }} .section-button__wrapper .section-button {
+        width: 100%;
+      }
+    }
+  {%- endif -%}
+</style>
+{%- assign sizes_desktop = block.settings.desktop_sizes | default: "100vw" -%}
+{% if block.settings.image_mobile != blank and block.settings.image_desktop != blank %}
+  <div class="image-banner__background"
+    data-image-parallax>
+    {% render 'component__responsive-image-v2',
+      image_mobile: block.settings.image_mobile,
+      image_desktop: block.settings.image_desktop,
+      lazyload: block.settings.lazyload_image,
+      sizes_desktop: sizes_desktop %}
+  </div>
+{% endif %}
+{%- content_for "block", type: "_section-content", id: "section-content" -%}
+{% content_for "blocks" %}
+{% schema %}
+  {
+    "name": "Image Banner",
+    "class": "image-banner",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Image Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_mobile",
+        "label": "Image - Mobile"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_desktop",
+        "label": "Image - Desktop"
+      },
+      {
+        "type": "checkbox",
+        "id": "lazyload",
+        "label": "Lazyload?",
+        "default": true
+      },
+      {
+        "type": "color_background",
+        "id": "background_color",
+        "label": "Background Color"
+      },
+      {
+        "type": "header",
+        "content": "Button Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "full_width_button_on_mobile",
+        "label": "Full Width Button on Mobile",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Height Settings"
+      },
+      {
+        "type": "number",
+        "id": "min_height_mobile",
+        "label": "Min Height - Mobile",
+        "default": 551
+      },
+      {
+        "type": "number",
+        "id": "min_height_desktop",
+        "label": "Min Height - Desktop",
+        "default": 579
+      },
+      {
+        "type": "header",
+        "content": "Color Scheme Settings"
+      },
+      {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "default": "scheme_1",
+        "label": "Color Scheme",
+        "info": "This will be the color scheme of the header initially."
+      },
+      {
+        "type": "text",
+        "id": "desktop_sizes",
+        "label": "Desktop Size",
+        "info": "If you put 2 of this block, put 50vw. Otherwise, put 100vw."
+      }
+    ],
+    "blocks": [
+      { "type": "_section-content" },
+      { "type": "_icon-text-slides" }
+    ],
+    "presets": [
+      {
+        "name": "Image Banner",
+        "blocks": [
+          { 
+            "type": "_section-content",
+            "id": "section-content",
+            "static": true,
+            "blocks": [
+              { "type": "_section-content__title" }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

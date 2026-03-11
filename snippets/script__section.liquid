@@ -1,0 +1,2 @@
+{% assign new_file_name = file | remove: ".js" | append: ".min.js" | prepend: "mfr-component__" %}
+<script src="{{ new_file_name | asset_url }}" defer></script>

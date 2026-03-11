@@ -1,0 +1,34 @@
+{% comment %}
+    Attribute
+
+    - block,
+    - icon_blocks
+{% endcomment %}
+
+{% assign first_block = icon_blocks | first %}
+{% assign first_block_id = first_block.id %}
+
+{% if block.id == first_block_id %}
+    <div class="mfr-icon-set" data-scroll>
+        {% for icon_block in icon_blocks %}
+            <div class="mfr-icon-set__entry">
+                {% if icon_block.settings.icon != blank %}
+                    <div class="mfr-icon-set__icon" style="max-width: {{ block.settings.icon_width }}px;">
+                        {% assign icon_width = block.settings.icon_width | plus: 100 %}
+                        {{  icon_block.settings.icon
+                            | image_url: width: icon_width
+                            | image_tag: width: icon_width,
+                                widths: "144,192,240,300,360,420",
+                                alt: block.settings.label,
+                                loading: "lazy" }}
+                    </div>
+                {% endif %}
+                {% if icon_block.settings.label != blank %}
+                    <div class="mfr-icon-set__label">
+                        {{ icon_block.settings.label }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

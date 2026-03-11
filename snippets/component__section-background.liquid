@@ -1,0 +1,54 @@
+{%- if section.settings.bg_effects contains 'sparkles' -%}
+  <div class="background__sparkles">
+    <div class="svg">
+      {% render 'icon__sparkles' %}
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById("{{ section.id }}").querySelector(".background__sparkles");
+      const originalSVG = container.querySelector(".svg");
+      if (!originalSVG || !container) return;
+
+      const numCopies = 3;
+      const svgWidth = 30;
+      const svgHeight = 30;
+      const containerWidth = container.clientWidth;
+      const containerHeight = container.clientHeight;
+
+      for (let i = 0; i < numCopies; i++) {
+        const clone = originalSVG.cloneNode(true);
+        clone.removeAttribute('id'); // Prevent duplicate IDs
+        container.appendChild(clone);
+      }
+
+      const paths = container.querySelectorAll('path');
+
+      function sparkleRandomPaths() {
+        // Select 2 or 3 random paths
+        const count = Math.floor(Math.random() * 5) + 10;
+        const shuffled = Array.from(paths).sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, count);
+
+        // Add sparkle class
+        selected.forEach(path => {
+          const delay = (Math.random() * 1).toFixed(2); // random delay 0–0.8s
+          path.style.animationDelay = `${delay}s`;
+          path.classList.add('sparkle');
+
+          setTimeout(() => {
+            path.classList.remove('sparkle');
+          }, delay * 20000); // Slightly longer than animation
+        });
+
+        // Remove sparkle after animation ends (1.5s), then reschedule
+        setTimeout(() => {
+          sparkleRandomPaths(); // Repeat
+        }, 2000); // Slightly longer than animation
+      }
+
+      sparkleRandomPaths();
+    });
+  </script>
+{%- endif -%}

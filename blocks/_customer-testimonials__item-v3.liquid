@@ -1,0 +1,128 @@
+{%- assign entry = block -%}
+<style>
+  #shopify-block-{{ block.id }} {
+    --width-mobile: {{ block.settings.width_mobile }}px;
+    --width-desktop: {{ block.settings.width_desktop }}px;
+    --aspect-ratio-mobile: {{ block.settings.aspect_ratio_mobile }};
+    --aspect-ratio-desktop: {{ block.settings.aspect_ratio_desktop }};
+    --background-color: {{ block.settings.background_color }};
+    --text-color: {{ block.settings.text_color }};
+  }
+</style>
+<div class="customer-testimonials__entry-inner customer-testimonials__entry-v3-inner">
+  {% if entry.settings.initials != blank %}
+    <p class="customer-testimonials__entry-v3-initials">
+      {{ entry.settings.initials }}
+    </p>
+  {% endif %}
+  {% if entry.settings.name != blank %}
+    <p class="customer-testimonials__entry-v3-name">
+      {{ entry.settings.name }}
+    </p>
+  {% endif %}
+  {% if entry.settings.testimonial != blank %}
+    <div class="customer-testimonials__entry-v3-testimonial">
+      {{ entry.settings.testimonial }}
+    </div>
+  {% endif %}
+  <div class="customer-testimonials__entry-v3-star-rating">
+    {% assign star_rating = entry.settings.star_rating | times: 1 %}
+    {% if entry.settings.star_rating > 5 %}
+      {% assign star_rating = 5 %}
+    {%- elsif entry.settings.star_rating < 1 -%}
+      {% assign star_rating = 1 %}
+    {% endif %}
+    {% render 'icon__stars',
+      color: entry.settings.text_color,
+      count: star_rating %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Testimonial - Type 3",
+    "class": "customer-testimonials__entry customer-testimonials__entry-v3 mfr-carousel__item",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content Settings"
+      },
+      {
+        "type": "text",
+        "id": "initials",
+        "label": "Initials",
+        "default": "JD"
+      },
+      {
+        "type": "text",
+        "id": "name",
+        "label": "Name",
+        "default": "John D."
+      },
+      {
+        "type": "richtext",
+        "id": "testimonial",
+        "label": "Testimonial",
+        "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at justo vitae lorem molestie euismod. Aliquam vitae placerat eros. Cras tincidunt nunc id rhoncus.</p>"
+      },
+      {
+        "type": "number",
+        "id": "star_rating",
+        "label": "Star Rating",
+        "default": 5,
+        "info": "Choose from 1-5"
+      },
+      {
+        "type": "header",
+        "content": "Color Settings"
+      },
+      {
+        "type": "color_background",
+        "id": "background_color",
+        "label": "Background Color",
+        "default": "#3e52ce"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#fff"
+      },
+      {
+        "type": "header",
+        "content": "Sizing Settings"
+      },
+      {
+        "type": "number",
+        "id": "width_mobile",
+        "label": "Width - Mobile",
+        "default": 340,
+        "info": "in pixels"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_mobile",
+        "label": "Aspect Ratio - Mobile",
+        "default": "340/460"
+      },
+      {
+        "type": "number",
+        "id": "width_desktop",
+        "label": "Width - Desktop",
+        "default": 380,
+        "info": "in pixels"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_desktop",
+        "label": "Aspect Ratio - Desktop",
+        "default": "340/515"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Testimonial - Type 3"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,106 @@
+.product-hotspot.accent-graphic-wrapper {
+  pointer-events: fill;
+  .accent-graphic {
+  
+    .accent-graphic__inner {
+      @include border-radius( rem-calc(150) );
+      @include shadow( 0 8px 9px 0 rgba(0,0,0,0.50) );
+      @include transition( $global-transition );
+      border: rem-calc(1.5) solid $black;
+      width: rem-calc(45);
+      height: rem-calc(45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: $white;
+      z-index: 2;
+      position: relative;
+      line-height: 1;
+      cursor: pointer;
+
+      @include hover {
+        @include transform(translate(0, rem-calc(-4) ) scale(1.05));
+        background: $color-accent;
+      }
+      
+      .icon {
+        width: rem-calc(23);
+        display: flex;
+      }
+
+      &:hover .tooltip {
+        @include opacity( 1 );
+        @include transform(translate(-50%, 0));
+      }
+
+      .tooltip {
+        @include border-radius( rem-calc(10) );
+        @include transform(translate(-50%, -10px));
+        @include shadow( 0 8px 9px 0 rgba(0,0,0,0.50) );
+        @include transition( $global-transition );
+        @include opacity( 0 );
+        pointer-events: none;
+        position: absolute;
+        z-index: 100;
+        top: calc(-100% - 20px); // Adjust as necessary
+        left: 50%; // Center the tooltip
+        background: #ffffff;
+        border: 1px solid #cccccc;
+        padding: rem-calc(10);
+        max-height: rem-calc(70);
+        white-space: nowrap;
+        align-items: flex-start;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        padding-right: rem-calc(45);
+    
+        &:before {
+          content: "";
+          position: absolute;
+          bottom: -23px;
+          left: 50%;
+          transform: translateX(-50%);
+          border-width: 12px;
+          border-style: solid;
+          border-color: white transparent transparent transparent;
+        }
+
+        .tooltip-header {
+          color: $black;
+          letter-spacing: rem-calc(.6);
+          font-size: rem-calc(13);
+          text-transform: capitalize;
+          line-height: 1;
+          margin-bottom: rem-calc(6);
+          text-transform: uppercase;
+        }
+    
+        .tooltip-title {
+          color: $black;
+          font-family: $custom-font-name-1;
+          font-size: rem-calc(17);
+          line-height: 1;
+          text-transform: uppercase;
+        }
+
+        .arrow {
+          @include transform(translate(-15px, -50%) scaleX(-1));
+          position: absolute;
+          right: 0;
+          top: 50%;
+          width: rem-calc(11);
+        }
+
+      }
+    
+      &:hover {
+        .tooltip-content {
+          display: block;
+        }
+      }
+      
+      
+    }
+  }
+}

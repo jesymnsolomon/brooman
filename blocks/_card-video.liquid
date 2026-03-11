@@ -1,0 +1,129 @@
+<style>
+  #shopify-block-{{ block.id }} {
+    --aspect-ratio-mobile: {{ block.settings.aspect_ratio_mobile }};
+    --aspect-ratio-desktop: {{ block.settings.aspect_ratio_desktop }};
+    --border-radius-mobile: {{ block.settings.border_radius_mobile }}px;
+    --border-radius-desktop: {{ block.settings.border_radius_desktop }}px;
+    --object-fit: {{ block.settings.video_fit }};
+  }
+</style>
+
+{%- render 'component__video-with-controls'
+  block_id: block.id,
+  video: block.settings.video,
+  poster_size: 5120,
+  autoplay: block.settings.autoplay,
+  loop: block.settings.loop,
+  controls: block.settings.controls,
+  muted: block.settings.muted,
+  poster: block.settings.poster,
+  show_play_button: block.settings.show_play_button,
+  show_speaker_button: block.settings.show_speaker_button,
+  without_wrapper: false
+ -%}
+  
+{% schema %}
+  {
+    "name": "Video",
+    "class": "mfr-card__video",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Video Settings"
+      },
+      {
+        "type": "video",
+        "id": "video",
+        "label": "Video File"
+      },
+      {
+        "type": "image_picker",
+        "id": "poster",
+        "label": "Poster Image",
+      },
+      {
+        "type": "select",
+        "id": "video_fit",
+        "label": "Video Fit",
+        "options": [
+          { "label": "Crop to Fill", "value": "cover" },
+          { "label": "Fit Within Space", "value": "contain" }
+        ],
+        "default": "cover"
+      },
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Autoplay",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "loop",
+        "label": "Loop",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "controls",
+        "label": "Controls",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "muted",
+        "label": "Muted",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_play_button",
+        "label": "Show Play Button",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_speaker_button",
+        "label": "Show Speaker Button",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Aspect Ratio Settings"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_mobile",
+        "label": "Aspect Ratio - Mobile",
+        "default": "436/473"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_desktop",
+        "label": "Aspect Ratio - Desktop",
+        "default": "436/473"
+      },
+      {
+        "type": "header",
+        "content": "Border Radius Settings"
+      },
+      {
+        "type": "number",
+        "id": "border_radius_mobile",
+        "label": "Border Radius - Mobile",
+        "default": 0
+      },
+      {
+        "type": "number",
+        "id": "border_radius_desktop",
+        "label": "Border Radius - Desktop",
+        "default": 0
+      }
+    ],
+    "presets": [
+      {
+        "name": "Video"
+      }
+    ]
+  }
+{% endschema %}

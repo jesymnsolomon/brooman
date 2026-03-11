@@ -1,0 +1,36 @@
+{%- comment -%}
+  Attributes
+  - label
+  - link
+  - max_width
+
+  - text_color
+  - bg_color
+  - border_color
+
+  - text_color_hover
+  - bg_color_hover
+  - border_color_hover
+{%- endcomment -%}
+
+{% if link contains '#' %}
+  {% assign scroll_to_section_class = "scroll-to-section" %}
+{% else %}
+  {% assign scroll_to_section_class = "" %}
+{% endif %}
+
+<a 
+  {% if link != blank %}href="{{ link | default: '#' }}"{% endif %} 
+  class="button {{ color_theme | default: '' }} {{ button_width }}" 
+  {% if new_tab %}target="_blank"{% endif %} 
+  data-inview
+  {{ block.shopify_attributes }}
+>
+  {% if icon %}
+    <div class="icon">
+      {{ icon | image_url: width: '50px' | image_tag: alt: icon.alt, width: '50px' }}
+    </div>
+  {% endif %}
+
+  <span class="text">{{ label | escape }}</span>
+</a>

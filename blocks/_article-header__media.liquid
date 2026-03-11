@@ -1,0 +1,70 @@
+{%- if block.blocks.size -%}
+  {% if block.settings.width_mobile > block.settings.width_desktop %}
+    {% assign width = block.settings.width_mobile %}
+  {% else %}
+    {% assign width = block.settings.width_desktop %}
+  {% endif %}
+  {% assign default_alt = "maybe an image about the article " | append: article.title %}
+  {% assign alt = block.settings.image.alt | default: default_alt %}
+  {%- capture sizes -%}
+    min(100vw,{{- block.settings.width_mobile -}}px),
+    (min-width: 1024px) min( 100vw, {{- block.settings.width_desktop -}}px)
+  {%- endcapture -%}
+  <style>
+    #shopify-block-{{- block.id -}} {
+      --width-mobile: {{- block.settings.width_mobile -}}px;
+      --width-desktop: {{- block.settings.width_desktop -}}px;
+      --bottom-offset-mobile: {{- block.settings.bottom_offset_mobile | times: -1.0 -}}px;
+      --bottom-offset: {{- block.settings.bottom_offset | times: -1.0 -}}px;
+    }
+  </style>
+  <div class="article-header__media-inner"
+    data-image-parallax>
+    {% render 'component__lazyload-image',
+      image: block.settings.image,
+      width: width, 
+      alt: alt,
+      sizes: sizes %}
+  </div>
+{%- endif -%}
+{%- schema -%}
+  {
+    "name": "Media",
+    "class": "article-header__media",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "header",
+        "content": "Image Settings"
+      },
+      {
+        "type": "number",
+        "id": "width_mobile",
+        "label": "Width - Mobile",
+        "default": 450
+      },
+      {
+        "type": "number",
+        "id": "width_desktop",
+        "label": "Width - Desktop",
+        "default": 750
+      },
+      {
+        "type": "number",
+        "id": "bottom_offset_mobile",
+        "label": "Bottom Offset - Mobile",
+        "default": 150
+      },
+      {
+        "type": "number",
+        "id": "bottom_offset",
+        "label": "Bottom Offset - Desktop",
+        "default": 250
+      }
+    ]
+  }
+{%- endschema -%}

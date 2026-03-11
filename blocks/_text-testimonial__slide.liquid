@@ -1,0 +1,51 @@
+{% render 'component__text-slide', item: block.settings %}
+
+{% schema %}
+  {
+    "name": "Testimonial Slide",
+    "class": "text-testimonial__slide mfr-carousel__item",
+    "settings": [
+      {
+        "type": "metaobject_list",
+        "metaobject_type": "pdp_testimonials",
+        "id": "metaobject",
+        "label": "Metaobject"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon",
+        "label": "Icon"
+      },
+      {
+        "type": "richtext",
+        "id": "description",
+        "label": "Description"
+      },
+      {
+        "type": "text",
+        "id": "author",
+        "label": "Author"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "text",
+        "id": "cta_text",
+        "label": "CTA Text"
+      },
+      {
+        "type": "url",
+        "id": "cta_url",
+        "label": "CTA URL"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Testimonial Slide"
+      }
+    ]
+  }
+{% endschema %}

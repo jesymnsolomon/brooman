@@ -1,0 +1,144 @@
+<style>
+  #shopify-block-{{ block.id }} {
+    --width-mobile: 288px;
+    --width-desktop: 313px;
+    --aspect-ratio-mobile: 288/506;
+    --aspect-ratio-desktop: 313/550;
+  }
+</style>
+
+{%- if block.blocks.size > 0 or block.settings.customer_reviews != blank -%}
+  {%- capture slides_content -%}
+    {%- content_for "blocks" -%}
+
+    {% if block.settings.customer_reviews != blank %}
+      {% case block.settings.type %}
+        {% when "1" %}
+          {%- for entry in block.settings.customer_reviews -%}
+            {% render 'component__customer-testimonial__item-1', entry: entry %}
+          {% endfor %}
+        {% when "2" %}
+          {%- for entry in block.settings.customer_reviews -%}
+            {% render 'component__customer-testimonial__item-2', entry: entry %}
+          {% endfor %}
+        {% when "3" %}
+          {%- for entry in block.settings.customer_reviews -%}
+            {% render 'component__customer-testimonial__item-3', entry: entry %}
+          {% endfor %}
+      {% endcase %}
+    {% endif %}
+  {%- endcapture -%}
+
+  {% capture carousel_settings %}
+    {
+      contain: true,
+      groupCells: true,
+      wrapAround: {{ block.settings.wrap_around }},
+      autoPlay: {{ block.settings.autoplay_timing | times: 1000 | default: 0 }},
+      prevNextButtons: {{ block.settings.prev_next_buttons }},
+      pageDots: {{ block.settings.page_dots }},
+      mobileSettings: {
+        cellAlign: "left"
+      }
+    }
+  {% endcapture %}
+
+  {% render 'mfr-component__carousel',
+    settings: carousel_settings,
+    class: "customer-testimonials__carousel",
+    content: slides_content
+  %}
+
+{%- elsif request.design_mode -%}
+  <div class="customer-testimonials__carousel mfr-carousel">
+    {% for i in (1..6) %}
+      <div class="customer-testimonials__entry customer-testimonials__entry-v1 mfr-carousel__item">
+        <div class="customer-testimonials__entry-v1-inner">
+          <div class="customer-testimonials__entry-v1-image">
+            {% render 'component__lazyload-image',
+              image: false,
+              width: 240,
+              alt: alt %}
+          </div>
+          <p class="customer-testimonials__entry-v1-testimony">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque cumque, vero dolor eos nisi adipisci voluptatem labore quam facilis tenetur.
+          </p>
+          <div class="customer-testimonials__entry-v1-footer">
+            <div class="customer-testimonials__entry-v1-footer-icon">
+              {% render 'component__lazyload-image',
+                image: false,
+                width: 144,
+                alt: alt %}
+            </div>
+            <div class="customer-testimonials__entry-v1-footer-texts">
+              <p>Lorem ipsum</p>
+              <span>Dolor sit</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{%- endif -%}
+
+{%- schema -%}
+  {
+    "name": "Testimonials Carousel",
+    "class": "customer-testimonials section-carousel",
+    "settings": [
+      {
+        "type": "metaobject_list",
+        "id": "customer_reviews",
+        "label": "Customer Reviews",
+        "metaobject_type": "pdp_ugc_reviews",
+        "info": "This setting will pull data from Customer Reviews (handle: customer_reviews) metaobject."
+      },
+      {
+        "type": "select",
+        "id": "type",
+        "label": "Card Type",
+        "options": [
+          { "value": "1", "label": "Type 1"},
+          { "value": "2", "label": "Type 2"},
+          { "value": "3", "label": "Type 3"}
+        ]
+      },
+       {
+        "type": "header",
+        "content": "Carousel Settings"
+      },
+      {
+        "type": "number",
+        "id": "autoplay_timing",
+        "label": "Autoplay Timing",
+        "default": 5,
+        "info": "In seconds"
+      },
+      {
+        "type": "checkbox",
+        "id": "wrap_around",
+        "label": "Wrap Around?",
+        "default": false,
+        "info": "At the end of cells, wrap-around to the other end for infinite scrolling."
+      },
+      {
+        "type": "checkbox",
+        "id": "prev_next_buttons",
+        "label": "Previous/Next Buttons",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "page_dots",
+        "label": "Page Dots",
+        "default": true
+      }
+    ],
+    "blocks": [
+      { "type": "_customer-testimonials__item" },
+      { "type": "_customer-testimonials__item-v2" },
+      { "type": "_customer-testimonials__item-v3" },
+      { "type": "_card" }
+    ]
+  }
+{%- endschema -%}

@@ -1,0 +1,71 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+.mfr-product__faq {
+  .section-content {
+    flex-direction: column;
+    align-items: center;
+
+    &__inner:first-of-type {
+      @include breakpoint(medium down) {
+        margin-bottom: rem-calc(40px);
+      }
+    }
+
+    .small-title__wrapper {
+      @include breakpoint(large up) {
+        margin-bottom: 0;
+      }
+    }
+
+    .section-button {
+
+      &.underlined-cta {
+        @include regular;
+      }
+    }
+  }
+
+  .section-content {
+    & > .accordion__wrapper {
+      width: 90%;
+      margin-bottom: rem-calc(5px);
+
+      @include breakpoint(large up) {
+        width: 60%;
+      }
+    }
+  }
+
+  .section-accordion {
+    max-width: rem-calc(785px);
+    width: 100%;
+    margin: 0 auto rem-calc(25px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    @include breakpoint(medium down) {
+      padding: 0 rem-calc(20px);
+    }
+
+    .accordion__wrapper {
+      width: 100%;
+    }
+  }
+
+  .mfr-accordion__content {
+    font-size: rem-calc( 20px ) !important;
+    line-height: 1.25em;
+    font-weight: 500;
+
+    strong {
+      font-weight: inherit;
+      text-decoration: underline;
+    }
+  }
+}
+
+html:not(.design-mode) .template-product .mfr-product__faq:not(:has(.section-accordion > .mfr-accordion)) { display: none; }

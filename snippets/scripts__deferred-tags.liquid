@@ -1,0 +1,30 @@
+{% if position == "header" %}
+  <script src="{{ 'gsap.min.js' | asset_url }}" defer></script>
+  <script src="{{ 'flickity.pkgd.min.js' | asset_url }}" defer></script>
+  <script src="{{ 'lozad.min.js' | asset_url }}" defer></script>
+  <script src="{{ 'mfr-utils.min.js' | asset_url }}" defer></script>
+{% else %}
+  <script src="{{ 'axios.min.js' | asset_url }}" defer></script>
+  <script src="{{ 'mfr-gsap.js' | asset_url }}" defer></script>
+  <script src="{{ 'mfr-initialize-functions.min.js' | asset_url }}" defer></script>
+
+  {%- comment -%}Might be positioned to header {%- endcomment -%}
+  <script src="{{ 'flickity-imagesloaded.js' | asset_url }}" defer></script>
+  <script src="{{ 'flickity-sync.js' | asset_url }}" defer></script>
+
+  {%- comment -%}Third Parties{%- endcomment -%}
+  <script src="{{ 'lottie.js' | asset_url }}" async></script>
+  <script src="{{ 'option_selection.js' | asset_url }}" defer></script>
+  <script src="{{ 'quick-link.min.js' | asset_url }}" async></script>
+  
+  <script src="{{ 'mfr-cart.min.js' | asset_url }}" defer></script>
+  <script src="{{ 'mfr-alpine-functions.min.js' | asset_url }}" defer></script>
+  <script src="{{ 'mfr-alpine-global-states.min.js' | asset_url }}" defer></script>
+  <script src="{{ 'alpinejs-plugins.min.js' | asset_url }}" defer></script>
+  <script src="{{ 'alpinejs.min.js' | asset_url }}" defer></script>
+  
+  {%- comment -%}MFR Scripts{%- endcomment -%}
+  <script src="{{ 'mfr-gsap-scripts.min.js' | asset_url }}" defer></script>
+  <script src="{{ 'mfr-global.min.js' | asset_url }}" defer></script>
+  <script src="{{ 'mfr-custom-js.min.js' | asset_url }}" defer></script>
+{% endif %}

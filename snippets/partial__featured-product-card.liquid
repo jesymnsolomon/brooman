@@ -1,0 +1,45 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign price_per_piece = product.metafields.general.price_per_piece -%}
+{%- assign product_price = current_variant.price | money -%}
+{%- assign product_tags = product.tags | join: '~~~' | downcase | split: '~~~' -%}
+
+<div class="featured-product-card" data-title="{{ product.title }}">
+	<div class="featured-product-card__left">
+		<div class="featured-product-card__image" style="background-color: {{ product.metafields.mfr_fields.product_card_accent_color |  default: "#E50695" }};">
+			{% if product.metafields.mfr_fields.featured_product_image %}
+				{{ product.metafields.mfr_fields.featured_product_image | image_url: width: "1080px" | image_tag: alt: product.title, loading: "lazy" }}
+			{% else %}
+				{% assign image = product.featured_image %}
+				{% render 'component__lazyload-image',
+					image: image,
+					width: 150,
+					alt: card.settings.image.alt %}
+			{% endif %}
+		</div>
+		<div class="featured-product-card__details">
+			{% assign product_tags = product.tags %}
+
+			{% for tag in product_tags %}
+				<div class="featured-product-card__badge">
+					<span>{{ tag }}</span>
+				</div>
+			{% endfor %}
+
+			<div class="featured-product-card__title">
+				{{ product.title }}
+			</div>
+		</div>
+	</div>
+
+	<div class="featured-product-card__right">
+		<div class="featured-product-card__button">
+			{% assign price = price_per_piece | default: product_price %}
+			{% assign label = "Add - " |  append: price %}
+
+			{% render 'component__add-to-cart-button',
+				product: product,
+				button_class: "primary",
+				button_label: label %}
+		</div>
+	</div>
+</div>

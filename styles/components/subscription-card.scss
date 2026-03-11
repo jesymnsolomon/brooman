@@ -1,0 +1,126 @@
+.subscription-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: $color-accent-2;
+    overflow: hidden;
+    color: $color-accent;
+    width: 100%;
+    @include opacity( 0.9999999 );
+    @include border-radius( rem-calc( 26px ) );
+    @include animateFadeUp;
+
+    @include breakpoint( large up ) {
+        flex-direction: row;
+    }
+
+    &__accent-graphic {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: rem-calc( 52px );
+        z-index: 1;
+        @include transform( translate( -50%, -50% ) );
+
+        @include breakpoint( large up ) {
+            width: rem-calc( 92px );
+            @include transform( translate( -25%, -25% ) );
+        }
+
+        svg {
+            width: 100%;
+
+            g {
+                fill: $white;
+            }
+        }
+    }
+
+    &__wrapper {
+        position: relative;
+        width: 100%;
+        max-width: rem-calc( 450px );
+        margin: 0 auto;
+
+        @include breakpoint( large up ) {
+            max-width: rem-calc( 1150px );
+        }
+    }
+
+    &__image {
+        flex-shrink: 0;
+        width: 100%;
+
+        @include breakpoint( large up ) {
+            width: rem-calc( 290px );
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+    &__texts {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: rem-calc( 30px ) rem-calc( 15px );
+
+        @include breakpoint( medium up ) {
+            padding: rem-calc( 30px );
+        }
+
+        @include breakpoint( large up ) {
+            flex-direction: row;
+            padding: rem-calc( 46px ) rem-cacl( 60px );
+        }
+
+        &-inner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            margin: 0 0 rem-calc( 16px );
+
+            @include breakpoint( large up ) {
+                margin: 0 rem-calc( 85px ) 0 0;
+            }
+        }
+    }
+
+    &__title {
+        margin: 0 0 rem-calc( 12px );
+        max-width: rem-calc( 200px );
+
+        @include breakpoint( large up ) {
+            max-width: unset;
+            margin: 0 0 rem-calc( 9px );
+        }
+    }
+
+    &__desc {
+        @include small;
+        line-height: rem-calc( 22px );
+        font-weight: 400;
+    }
+
+    &__cta {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        flex-shrink: 0;
+
+        @include breakpoint( large up ) {
+            width: rem-calc( 215px );
+        }
+
+        .button {
+            width: 100%;
+        }
+    }
+}

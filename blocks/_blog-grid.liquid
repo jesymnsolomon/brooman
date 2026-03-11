@@ -1,0 +1,273 @@
+{%- capture articles_json_script -%}
+  {% assign articles = blog.articles %}
+  {% assign allArticlesCount = blog.articles_count %}
+  
+  {% paginate blog.articles by allArticlesCount %}
+    {% assign chunks = allArticlesCount | divided_by: 20.0 | ceil %}
+    {% for chunk in (1..chunks) %}
+      {% if forloop.first %}
+        {%- capture articles_json -%}
+          [
+            {%- for article in blog.articles limit: 20 -%}
+              {%- assign image = article.metafields.mfr_fields.blog_card_image | default: article.image -%}
+              {
+                "id": {{- article.id -}},
+                "title": "{{- article.title | escape -}}",
+                "image": "{%- if image != blank %}{{- image | image_url: width: 720 -}}{%- endif -%}",
+                "tag": {{- article.tags | json -}},
+                "url": "{{- article.url -}}",
+                "readingTime": "{{ article.content | strip_html | split: " " | size | divided_by: 200 | plus: 1 }} mins"
+              },
+            {%- endfor -%}
+          ]
+        {%- endcapture -%}
+      {% else %}
+        {%- capture articles_json -%}
+          [
+            {%- for article in blog.articles limit: 20 offset: continue -%}
+              {%- assign image = article.metafields.mfr_fields.blog_card_image | default: article.image -%}
+              {
+                "id": {{- article.id -}},
+                "title": "{{- article.title | escape -}}",
+                "image": "{%- if image != blank %}{{- image | image_url: width: 420 -}}{%- endif -%}",
+                "tag": {{- article.tags | json -}},
+                "url": "{{- article.url -}}",
+                "readingTime": "{{ article.content | strip_html | split: " " | size | divided_by: 200 | plus: 1 }} mins"
+              },
+            {%- endfor -%}
+          ]
+        {%- endcapture -%}
+      {% endif %}
+      <script
+        class="blog-grid__json"
+        type="application/json"
+        x-data>
+        {%- assign articles_json = articles_json | replace: ',}', '}' | replace: ',]', ']' -%}
+        {{- articles_json | newline_to_br | replace: "<br />", ""  | replace: "  ", "" | replace: "\n", "" }}
+      </script>
+    {% endfor %}
+  {% endpaginate %}
+{%- endcapture -%}
+
+<div class="blog-grid"
+  x-data='{
+    shownArticles:[],
+    postPerPage: 8,
+    currentPage: 1,
+    hasNextPage: false,
+    currentFilter: false,
+    searchFilter: false,
+
+    getArticles() {
+      const allArticles = []
+      const articles = Array.from(document.querySelectorAll(".blog-grid__json")).map((el) => {
+        try {
+          return JSON.parse(el.textContent)
+        } catch (error) {
+          console.error("Invalid JSON in script tag:", el, error)
+          return null
+        }
+      })
+
+      return articles.length ? articles.flat() : []
+    },
+
+    paginate(page_number, articles = false) {
+      this.articles = this.getArticles()
+      const page_size = this.postPerPage
+
+      // Filter articles based on currentFilter
+      if (this.currentFilter) {
+        this.articles = this.articles.filter(article => 
+          article.tag && article.tag?.includes(this.currentFilter)
+        )
+      }
+
+      // Filter articles by search term across all values
+      if (this.searchFilter) {
+        const searchTerm = this.searchFilter.toLowerCase()
+        const parser = new DOMParser()
+
+        this.articles = this.articles.filter(article => {
+          let decodedTitle = parser.parseFromString(article.title, "text/html").body.textContent
+          return decodedTitle.toLowerCase().includes(searchTerm)
+        })
+      }
+
+      // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
+      return this.articles.slice(
+        (page_number - 1) * page_size,
+        page_number * page_size
+      )
+    },
+
+    updateHasNextPage() {
+      this.hasNextPage = this.paginate(this.currentPage + 1).length
+    },
+
+    getFilterFromURL() {
+      const urlParams = new URLSearchParams(window.location.search)
+      const parser = new DOMParser()
+      return !urlParams.get("filter") ? false : parser.parseFromString(urlParams.get("filter"), "text/html").body.textContent
+    },
+
+    setFilterInURL() {
+      const url = new URL(window.location.href)
+
+      if (this.currentFilter) {
+        url.searchParams.set("filter", this.currentFilter)
+      } else {
+        url.searchParams.delete("filter")
+      }
+
+      window.history.replaceState(null, "", url)
+    }
+  }' 
+  x-init='
+    $watch("shownArticles", () => {
+      lozad("img.lozad").observe()
+      if(window.quickLinkListen) window.quickLinkListen()
+    })
+
+    currentFilter = getFilterFromURL()
+  '>
+
+  <div class="blog-grid__filters" data-stagger-inview=".blog-grid__filters-inner li button, .blog-grid__search">
+    <div class="blog-grid__search">
+      <input type="text" name="search" 
+        placeholder="SEARCH TOPICS"
+        @keyup='
+          searchFilter = $el.value != "" ? $el.value : false
+          currentPage = 1
+          shownArticles = paginate(currentPage)
+          updateHasNextPage()
+        '>
+
+      {%- capture search_svg -%}
+        {% render 'icon__search' %}
+      {%- endcapture -%}
+
+      {% render 'component__svg-encoder',
+        svg_code: search_svg,
+        width: 15,
+        alt: "search icon" %}
+    </div>
+
+    <ul class="blog-grid__filters-inner"
+      x-data='{
+        withScroll: $el.scrollWidth > $el.clientWidth,
+        setFilter(filter) {
+          currentFilter = filter
+          currentPage = 1
+          shownArticles = paginate(currentPage)
+          updateHasNextPage()
+          setFilterInURL()
+        }
+      }'
+      :class='withScroll ? "with-scroll" : ""'
+      x-resize='
+        withScroll = $el.scrollWidth > $el.clientWidth
+      '>
+      <li>
+        <button 
+          :class='!currentFilter ? "is-active" : ""'
+          @click='setFilter(false)'>All Posts</button>
+      </li>
+      {%- content_for "blocks" -%}
+    </ul>
+  </div>
+
+  <template x-if="shownArticles.length <= 0">
+    <div class="blog-grid__empty">
+      No match found.
+    </div>
+  </template>
+
+  <div class="blog-grid__inner"
+    x-init='
+      shownArticles = paginate(currentPage)
+      updateHasNextPage()
+    '>
+
+    <template x-for="(entry, index) in shownArticles">
+      <div class="blog-grid__entry">
+        <a class="blog-card"
+          :class='
+            entry.tag?.map((str) => {
+              return str.toLowerCase().replace(/\s+/g, "-")
+            }).join(" ")
+          ' 
+          :href="entry.url" 
+          :aria-label="entry.tag?.join(' ')+ ' ' + entry.title + ' Read: ' + entry.readingTime" 
+          >
+          <div class="blog-card__media">
+            <ul class="blog-card__tags"
+              x-show='entry.tag.length'
+              x-cloak>
+              <template x-for='tag in entry.tag'>
+                <li>
+                  <span x-text='tag'></span>
+                </li>
+              </template>
+            </ul>
+            <img 
+              class="lozad"
+              :src="entry.image" 
+              :alt='entry.title'
+              height="350px"
+              width="314px"
+              x-show='entry.image != ""'
+              x-cloak>
+          </div>
+          <div class="blog-card__info">
+            <span class="blog-card__title" 
+              x-text='
+                const parser = new DOMParser()
+                return parser.parseFromString(entry.title, "text/html").body.textContent
+              '></span>
+            <span class="blog-card__reading-time"
+              x-show='entry.readingTime != ""'
+              x-cloak>
+              Read: <span x-text='entry.readingTime'></span>
+            </span>
+          </div>
+        </a>
+      </div>
+    </template>
+
+    <div class="blog-grid__load-more" x-show='hasNextPage' x-cloak>
+      <button 
+        type="button" 
+        role="button" 
+        aria-label="Load More" 
+        class="button tertiary" 
+        x-data
+        @click='
+          currentPage = currentPage + 1
+          shownArticles = [
+            ...shownArticles,
+            ...paginate(currentPage)
+          ]
+          
+          updateHasNextPage()
+        '>
+        Load More
+      </button>
+    </div>
+  </div>
+
+  {{ articles_json_script }}
+</div>
+
+{% schema %}
+  {
+    "name": "Grid",
+    "class": "cell small-12 large-12 blog-grid__wrapper",
+    "settings": [
+    
+    ],
+    "blocks": [
+      { "type": "_blog-grid__filter" }
+    ]
+  }
+{% endschema %}

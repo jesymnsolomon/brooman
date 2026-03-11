@@ -1,0 +1,108 @@
+.mfr-accordion {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  border-bottom: solid rem-calc( 1px ) rgba(#8B93A7,0.4);
+  width: 100%;
+  @include transition( $global-transition );
+
+  &__trigger {
+    padding: rem-calc( 14px ) 0 rem-calc( 14px ) 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: rem-calc( 5px );
+    @include no-select;
+
+    &[aria-expanded=true] {
+      .mfr-accordion__indicator {
+        @include transform( rotate( 135deg ) );
+      }
+    }
+  }
+
+  &__content {
+    overflow: hidden;
+    @include transition( height 0.4s $smooth_ease );
+
+    &.transition-hide {
+      height: 0;
+      padding: 0;
+    }
+
+    &-inner {
+      padding-bottom: rem-calc( 14px );
+    }
+  }
+
+  &__indicator {
+    position: relative;
+    width: rem-calc( 12px );
+    aspect-ratio: 1/1;
+    @include border-radius( 50% );
+    @include transition( transform 0.4s $smooth_ease );
+
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: auto;
+      border: solid rem-calc( 1px ) $black;
+      @include border-radius( 10px );
+      @include transform( translate( -50%, -50% ) );
+    }
+
+    &:after {
+      @include transform( translate( -50%, -50% ) rotate(90deg) );
+    }
+  }
+}
+
+// Project Specific
+.mfr-accordion {
+  padding: rem-calc(4px) rem-calc(28px) rem-calc(4px);
+  margin-bottom: rem-calc(15px);
+  border-bottom: transparent;
+  background-color: $white;
+  @include drop-shadow(rgba(0, 0, 0, 0.168));
+  @include border-radius(rem-calc(20px));
+
+  @include breakpoint(large up) {
+    padding: rem-calc(23px) rem-calc(45px) rem-calc(23px);
+    margin-bottom: rem-calc(18px);
+  }
+
+  &__trigger {
+    font-family: $custom-font-name-2;
+    font-size: rem-calc(22px);
+    line-height: rem-calc(24px);
+    font-weight: 700;
+    text-align: left;
+  }
+
+  &__content {
+    @include regular;
+    line-height: rem-calc(25px) !important;
+    font-weight: 500;
+    text-align: left;
+    padding-top: rem-calc(10px);
+    padding-bottom: rem-calc(15px);
+
+    @include breakpoint(large up) {
+      padding-bottom: 0;
+    }
+
+
+    &-inner {
+      padding-bottom: rem-calc(2px);
+    }
+  }
+
+  &__indicator {
+    width: rem-calc(21px);
+  }
+}

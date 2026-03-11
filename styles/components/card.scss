@@ -1,0 +1,159 @@
+.mfr-card {
+  flex: 1;
+
+  &__container {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: rem-calc(40px);
+
+    @include breakpoint(medium down) {
+      flex-direction: column;
+    }
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: var(--vertical-alignment);
+    align-items: var(--horizontal-alignment);
+    overflow: hidden;
+    position: relative;
+    background-color: var(--background-color);
+    color: var(--color);
+
+    @if var(--horizontal-alignment) == center {
+      text-align: center;
+    }
+
+    @if var(--horizontal-alignment) == flex-start {
+      text-align: left;
+    }
+
+    @if var(--horizontal-alignment) == flex-end {
+      text-align: right;
+    }
+
+    @include breakpoint( medium down ) {
+      max-width: var(--max-width-mobile);
+      width: var(--width-mobile);
+      aspect-ratio: var(--aspect-ratio-mobile);
+      padding: var(--padding-mobile);
+      border-radius: var(--border-radius-mobile);
+    }
+
+    @include breakpoint( large up ) {
+      max-width: var(--max-width-desktop);
+      width: var(--width-desktop);
+      aspect-ratio: var(--aspect-ratio);
+      padding: var(--padding-desktop);
+      border-radius: var(--border-radius-desktop);
+    }
+  }
+
+  &__image,
+  &__video {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    z-index: 1;
+
+    &:not(:last-child) {
+      margin-bottom: rem-calc( 22px );
+
+      @include breakpoint( large up ) {
+        margin-bottom: rem-calc( 30px );
+      }
+    }
+
+    @include breakpoint( medium down ) {
+      aspect-ratio: var(--aspect-ratio-mobile);
+      border-radius: var(--border-radius-mobile);
+    }
+
+    @include breakpoint( large up ) {
+      aspect-ratio: var(--aspect-ratio-desktop);
+      border-radius: var(--border-radius-desktop);
+    }
+
+    img,
+    .mfr-video-with-controls video,
+    .mfr-video-with-controls {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: var(--object-fit);
+    }
+  }
+
+  &__title {
+    display: flex;
+    justify-content: var(--horizontal-alignment);
+    text-align: var(--horizontal-alignment);
+
+    @include breakpoint(medium down) {
+      justify-content: var(--horizontal-alignment-mobile);
+    }
+
+    &-inner {
+      max-width: var(--max-width);
+    }
+  }
+
+  &__title,
+  &__text,
+  &__button {
+    padding: 0 rem-calc( 24px );
+    width: 100%;
+    text-align: inherit;
+    z-index: 1;
+
+    &__inner {
+      width: 100%;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: rem-calc( 18px );
+
+      @include breakpoint( large up ) {
+        margin-bottom: rem-calc( 24px );
+      }
+    }
+
+    &:last-child {
+      padding-bottom: rem-calc( 27px );
+
+      @include breakpoint( large up ) {
+        padding-bottom: rem-calc( 37px );
+      }
+    }
+
+    @include breakpoint( large up ) {
+      padding: 0 rem-calc( 32px );
+    }
+  }
+
+  &__button {
+    width: auto;
+    min-width: fit-content;
+  }
+
+  .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+      object-position: center;
+    }
+  }
+}

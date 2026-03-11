@@ -1,0 +1,51 @@
+{%- comment -%}
+    Attribute
+    - image
+    - widths
+    - width
+    - alt
+    - class
+{%- endcomment -%}
+{% assign alt = alt | default: image.alt %}
+{% assign widths = widths | default: "144,192,240,300,360,420,480,600,720,900,1080,1260,1440,1800,2160" %}
+{% assign src = image | image_url %}
+{% assign srcset = "" %}
+{% assign image_width = image.width | times: 1.00 %}
+{% assign image_height = image.height | times: 1.00 %}
+{% assign aspect_ratio = image_width | divided_by: image_height %}
+{% assign height = width | divided_by: aspect_ratio | round: 2 %}
+{%- assign class = class | append: " lozad" -%}
+{% assign lowres_url = image | image_url: width: 15 %}
+{% assign loop_widths = widths | split: "," %}
+{% for width_inner in loop_widths %}
+    {% assign condition1 = width_inner | times: 1 %}
+    {% assign condition2 = width | times: 1 %}
+    {% assign render_width = width_inner | times: 1.25 %}
+    {% if condition1 <= condition2 %}
+        {% assign srcset = srcset | append: src | append: "&width=" | append: render_width | append: " " | append: width_inner | append: "w" | append: ","%}
+    {% endif %}
+{% endfor %}
+{%- capture styles -%}aspect-ratio: {{ width }}/{{ height }};{%- endcapture -%}
+
+{% if image != blank %}
+  {{ image
+    | image_url: width: width
+    | image_tag: class: class,
+      width: width,
+      height: auto,
+      alt: alt,
+      loading: "lazy",
+      data-index: index,
+      sizes: sizes,
+      data-low-res-src: lowres_url,
+      style: styles,
+      srcset: srcset,
+      x-effect: "if( window.loadLozadImages) window.loadLozadImages();"
+    | replace: "srcset", "data-srcset"
+    | replace: "src=", "data-src="
+    | replace: "data-low-res-data-src", "src"
+    }}
+{% else %}
+  {% render 'component__placeholder-image',
+      size: placeholder_size %}
+{% endif %}

@@ -1,0 +1,74 @@
+<style>
+  #shopify-block-{{ block.id }} {
+    --width-mobile: {{ block.settings.width_mobile }}px;
+    --height-mobile: {%- if block.settings.height_mobile != blank and block.settings.height_mobile != 0 -%}{{ block.settings.height_mobile }}px{%- else -%}auto{%- endif -%};
+    --width-desktop: {{ block.settings.width_desktop }}px;
+    --height-desktop: {%- if block.settings.height_desktop != blank and block.settings.height_desktop != 0 -%}{{ block.settings.height_desktop }}px{%- else -%}auto{%- endif -%};
+  }
+</style>
+
+{%- if block.settings.logo != blank -%}
+  {% assign rendered_width = block.settings.width_desktop | times: 1.5 %}
+  {% assign alt = block.settings.logo.alt | default: "a company logo" %}
+  {% render 'component__lazyload-image',
+    image: block.settings.logo,
+    alt: alt,
+    width: rendered_width %}
+{%- endif -%}
+
+{%- schema -%}
+  {
+    "name": "Logo Bar Item",
+    "class": "logo-bar__item",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Logo Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "text",
+        "id": "alt",
+        "label": "Alt attribute",
+        "info": "For web accessibility purposes"
+      },
+      {
+        "type": "number",
+        "id": "width_mobile",
+        "label": "Width - Mobile",
+        "default": 30,
+        "info": "in pixels"
+      },
+      {
+        "type": "number",
+        "id": "height_mobile",
+        "label": "Height - Mobile",
+        "default": 30,
+        "info": "in pixels"
+      },
+      {
+        "type": "number",
+        "id": "width_desktop",
+        "label": "Width - Desktop",
+        "default": 50,
+        "info": "in pixels"
+      },
+      {
+        "type": "number",
+        "id": "height_desktop",
+        "label": "Height - Desktop",
+        "default": 50,
+        "info": "in pixels"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Logo Bar Item"
+      }
+    ]
+  }
+{%- endschema -%}

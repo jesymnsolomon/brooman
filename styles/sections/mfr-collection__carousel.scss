@@ -1,0 +1,96 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+.mfr-collection__carousel {
+  .section-content {
+    &:not(:last-child) {
+      margin-bottom: rem-calc( 65px );
+
+      @include breakpoint( large up ) {
+        margin-bottom: rem-calc( 87px );
+      }
+    }
+
+    .small-title {
+      &:not(:last-child) {
+        margin-bottom: rem-calc( 18px );
+
+        @include breakpoint( large up ) {
+          margin-bottom: rem-calc( 10px );
+        }
+      }
+    }
+  }
+
+  .collection-carousel {
+    &__carousel {
+      padding: 0 rem-calc( 25px );
+      gap: rem-calc( 25px );
+
+      @include breakpoint( large up ) {
+        gap: unset;
+        padding: unset;
+      }
+
+      &:not(.flickity-enabled) {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        @include breakpoint( large up ) {
+          align-items: flex-start;
+          justify-content: center;
+          flex-wrap: nowrap;
+        }
+      }
+
+      &-item {
+        flex-shrink: 0;
+        width: 100%;
+        max-width: rem-calc( 450px );
+
+        @include breakpoint( large up ) {
+          padding: 0 rem-calc( 20px );
+          max-width: unset;
+          width: auto;
+        }
+
+        &:first-child {
+          @include breakpoint( large up ) {
+            padding-left: rem-calc( 60px );
+          }
+          @include breakpoint( xlarge up ) {
+            padding-left: rem-calc( 60px );
+          }
+        }
+
+        &:last-child {
+          @include breakpoint( large up ) {
+            padding-right: rem-calc( 60px );
+          }
+          @include breakpoint( xlarge up ) {
+            padding-right: rem-calc( 60px );
+          }
+        }
+
+        &-inner {
+          width: 100%;
+          padding-top: rem-calc( 20px );
+          @include transition( $global-transition );
+
+          @include enter-animation {
+            @include breakpoint( large up ) {
+              @include opacity( 0 );
+              @include transform( translateY( $enter-transform-value ) );
+            }
+          }
+
+          @include breakpoint( large up ) {
+            width: rem-calc( 482px );
+          }
+        }
+      }
+    }
+  }
+}

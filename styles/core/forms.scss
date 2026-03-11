@@ -1,0 +1,103 @@
+// General Settings
+form {
+  margin: 0;
+}
+
+a,
+area,
+button,
+[role='button'],
+input,
+label,
+select,
+summary,
+textarea {
+  touch-action: manipulation;
+}
+
+input,
+textarea,
+select {
+  font-size: rem-calc(25px);
+  max-width: 100%;
+  border-radius: 0;
+  border: none;
+
+  &[disabled] {
+    border-color: $color-disabled-border;
+    background-color: $color-disabled;
+    cursor: default;
+  }
+}
+input:not([type=checkbox]):not([type=radio]):not([type=submit]),
+select,
+textarea {
+  @include form-inputs;
+}
+
+button,
+input[type='submit'],
+label[for] {
+  cursor: pointer;
+}
+
+textarea {
+  min-height: 100px;
+}
+
+select {
+  @include appearance(none);
+
+  &::-ms-expand {
+    display: none;
+  }
+}
+
+// Force option color (affects IE only)
+option {
+  background-color: $color-body;
+  color: $font-body-color;
+}
+
+.input-error {
+  border-color: $color-error;
+  background-color: $color-error-bg;
+  color: $font-body-color;
+}
+
+$placeholder-color: $font-body-color;
+::-webkit-input-placeholder { color: $placeholder-color; }
+::-moz-placeholder { color: $placeholder-color; }
+:-ms-input-placeholder { color: $placeholder-color; }
+::-ms-input-placeholder { color: $placeholder-color; }
+::placeholder { color: $placeholder-color; }
+
+.form-section {
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+    gap: rem-calc( 7.5px );
+
+    @include breakpoint( large up ) {
+      gap: rem-calc( 15px );
+    }
+  }
+
+  .form-email-name {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+    gap: rem-calc( 7.5px );
+
+    @include breakpoint( large up ) {
+      gap: rem-calc( 15px );
+    }
+  }
+}
+
+#downshift-0-input {
+  padding: 0;
+}

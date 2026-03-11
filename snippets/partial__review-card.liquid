@@ -1,0 +1,36 @@
+<div class="review-card">
+	<div class="review-card__inner">
+		<div class="review-card__stars">
+			{% for i in (1..settings.rating) %}
+				{%- capture star_svg -%}
+					{%- render 'icon__star', color: section.settings.color_scheme.settings.background -%}
+				{%-endcapture -%}
+				{% render 'component__svg-encoder', svg_code: star_svg, alt: "star" %}
+			{% endfor %}
+		</div>
+
+		{% if settings.review != blank %}
+			<p class="review-card__review">
+				{{ settings.review }}
+			</p>
+		{% endif %}
+
+		<div class="review-card__footer">
+			{% if settings.reviewer_image != blank %}
+				{{ settings.reviewer_image
+				| image_url: width: 480
+				| image_tag: width: 480,
+				widths: "480",
+				alt: settings.reviewer_image.alt }}
+			{% endif %}
+
+			{% if settings.reviewer_name != blank %}
+				<p class="small">{{ settings.reviewer_name }}</p>
+			{% endif %}
+
+			{% if settings.reviewer_title != blank %}
+				<span class="xsmall">{{ settings.reviewer_title }}</span>
+			{% endif %}
+		</div>
+	</div>
+</div>

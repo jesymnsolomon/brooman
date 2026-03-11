@@ -1,0 +1,95 @@
+.play-pause-button {
+  position: relative;
+  width: rem-calc( 65px );
+  height: rem-calc( 65px );
+  border: 0;
+  will-change: transform;
+  @include transition( $global-transition );
+
+  @include breakpoint( large up ) {
+    width: rem-calc( 80px );
+    height: rem-calc( 80px );
+  }
+
+  @include hover {
+    @include transform( scale( 0.97 ) );
+  }
+
+  &__icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    @include transition( $global-transition );
+    @include opacity( 0 );
+    @include transform( translate( -50%, -50% ) );
+    color: $brand-color;
+
+    img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+    }
+  }
+
+  &.play {
+    .play {
+      @include opacity( 1 );
+    }
+  }
+
+  &.pause {
+    .pause {
+      @include opacity( 1 );
+    }
+  }
+}
+
+.speaker-button {
+  position: relative;
+  width: rem-calc( 32px );
+  height: rem-calc( 30px );
+  @include transition( $global-transition );
+
+  @include breakpoint( large up ) {
+    width: rem-calc( 28px );
+    height: rem-calc( 28px );
+  }
+
+  @include hover {
+    @include transform( scale( 0.97 ) );
+  }
+
+  &__icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    @include transition( $global-transition );
+    @include opacity( 0 );
+    @include transform( translate( -50%, -50% ) );
+    color: $brand-color;
+
+    img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+    }
+  }
+
+  &.speaker {
+    .speaker {
+      @include opacity( 1 );
+    }
+  }
+
+  &.mute {
+    .mute {
+      @include opacity( 1 );
+    }
+  }
+}

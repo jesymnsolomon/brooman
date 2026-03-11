@@ -1,0 +1,220 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+.accordion-section__section:has(.product-faqs:empty) { display: none; }
+
+.mfr-core__accordion-section {
+  &.grid-gutter {
+    .section-spacer {
+      @include border-radius( rem-calc( 15px ) );
+    }
+  }
+  .section-content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-left: rem-calc( 15px );
+    padding-right: rem-calc( 15px );
+
+    @include breakpoint( large up ) {
+      padding-left: rem-calc( 60px );
+      padding-right: rem-calc( 60px );
+    }
+
+    @include breakpoint(medium down) {
+      margin-bottom: rem-calc(10px);
+    }
+
+    &__inner {
+      padding: 0 !important;
+      max-width: unset !important;
+
+      @include breakpoint( medium down ) {
+        justify-content: center;
+        text-align: center;
+        margin-bottom: rem-calc( 37px );
+
+        .section-text__wrapper, .section-title__wrapper, .small-title__wrapper {
+          justify-content: center;
+        }
+      }
+
+      @include breakpoint( large up ) {
+        width: 50%;
+        margin: 0 !important;
+      }
+    }
+  }
+
+  .accordions {
+    width: 100%;
+    margin: 0;
+
+    @include breakpoint( large up ) {
+      width: 70%;
+      padding: 0 rem-calc( 27px );
+    }
+  }
+
+  .accordion__wrapper {
+    @include transition( $global-transition );
+
+    @include enter-animation {
+      @include opacity( 0 );
+      @include transform( translateY( $enter-transform-value ) );
+    }
+
+    &:not(:last-child) {
+      margin-bottom: rem-calc( 10px );
+    }
+
+    .mfr-accordion {
+      background-color: rgba(#fff,0.1);
+      padding: rem-calc(20px);
+      @include border-radius( rem-calc( 18px ) );
+
+      @include breakpoint(large up) {
+        padding: rem-calc(30px) rem-calc(35px);
+      }
+
+      &:not(.is-active) {
+        @include hover {
+          background-color: rgba(#fff,0.5);
+        }
+      }
+
+      &.is-active {
+        background-color: $white;
+
+        .mfr-accordion__trigger-label {
+
+          span {
+            display: block;
+            @include transform( rotate( 2deg ) );
+
+            @include breakpoint( large up ) {
+              @include transform( unset );
+            }
+          }
+
+          &::before {
+            width: 132%;
+
+            @include breakpoint( large up ) {
+              width: 118%;
+            }
+          }
+        }
+      }
+
+      &__trigger {
+        @include small;
+        font-weight: 500;
+        letter-spacing: rem-calc( -0.19px );
+        text-align: left;
+        padding: 0;
+        justify-content: flex-start;
+        @include transition( $global-transition );
+
+        @include breakpoint( large up ) {
+          font-size: rem-calc( 21px );
+          line-height: rem-calc(20px);
+          letter-spacing: rem-calc( -0.4px );
+        }
+
+        &[aria-expanded="true"] {
+          padding-bottom: rem-calc( 13px );
+        }
+
+        &-icon {
+          max-width: rem-calc(60px);
+          max-height: rem-calc(60px);
+          margin-right: rem-calc(20px);
+          z-index: 1;
+        }
+
+        &-label {
+          position: relative;
+          font-weight: 900;
+          text-transform: uppercase;
+          font-size: rem-calc(22px);
+          letter-spacing: 0;
+          display: flex;
+          align-items: center;
+
+          @include breakpoint(medium down) {
+            padding: rem-calc(5px) 0;
+          }
+
+          span {
+            z-index: 1;
+            position: relative;
+            @include transition( $global-transition );
+          }
+
+          &:before {
+            content: '';
+            height: 105%;
+            width: 0;
+            background-color: $brand-color;
+            position: absolute;
+            top: 50%;
+            right: rem-calc( -10px );
+            z-index: 0;
+            @include transition( $global-transition );
+            @include transform( rotate( 2deg ) translateY( -50% ));
+
+            @include breakpoint( large up ) {
+              right: unset;
+              left: rem-calc( -12px );
+              height: 150%;
+              @include transform( rotate( 1deg ) translateY( -50% ));
+            }
+          }
+        }
+
+        .mfr-accordion__indicator {
+          width: rem-calc( 28px );
+          height: rem-calc( 28px );
+          background: transparent;
+          margin-left: auto;
+          display: none;
+
+          &:before,
+          &:after {
+            width: 100%;
+          }
+        }
+      }
+
+      &__content {
+        text-align: left;
+        padding: 0;
+        @include opacity( 0.8 );
+
+        @include breakpoint( large up ) {
+          padding: 0 rem-calc( 10px ) rem-calc( 0px ) rem-calc( 85px );
+        }
+
+        &-inner {
+          font-size: rem-calc(20px);
+        }
+
+        * {
+          font-family: $custom-font-name-2;
+          font-size: rem-calc( 16px );
+          line-height: rem-calc( 16px );
+          font-weight: 600;
+
+          @include breakpoint(large up) {
+            font-size: rem-calc( 20px );
+            line-height: rem-calc( 20px );
+          }
+        }
+      }
+    }
+  }
+}

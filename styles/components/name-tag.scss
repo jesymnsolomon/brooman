@@ -1,0 +1,36 @@
+/* NAME TAG */
+.name-tag {
+  display: inline-block;
+  position: relative;
+  font-size: rem-calc( 11px );
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.75px;
+  line-height: 1.2727;
+  padding: rem-calc( 4px ) rem-calc( 20px ) rem-calc( 3px );
+  max-width: 100%;
+}
+
+.name-tag__background {
+  display: block;
+  fill: $black;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.name-tag__text {
+  position: relative;
+  letter-spacing: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: inherit;
+
+  span {
+    color: $white;
+  }
+}

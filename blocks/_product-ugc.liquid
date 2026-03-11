@@ -1,0 +1,94 @@
+{%- if block.settings.product_ugc != blank -%}
+  <div class="product-ugc__carousel carousel__slides"
+    data-stagger-inview=".product-ugc__item">
+    {%- for product_ugc in block.settings.product_ugc -%}
+      <div class="product-ugc__item carousel__item">
+        <div class="product-ugc__item-inner">
+          <div class="product-ugc__item-stars">
+            {%- capture stars_svg -%}
+              {%- assign color = section.settings.color_scheme.settings.icons -%}
+              {%- assign count = product_ugc.star_rating.value | split: "." | first | times: 1 -%}
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="128" height="24">
+                <path fill="{{ color | default: 'currentColor' }}" d="M12 18L4.9465771 21.708204L6.2936611 13.854102L0.58732182 8.2917957L8.4732885 7.1458979L12 0L15.526711 7.1458979L23.412678 8.2917957L17.706339 13.854102L19.053423 21.708204L12 18Z" fill-rule="evenodd"/>
+                <path
+                  {% if count >= 2 %}
+                    fill="{{ color | default: 'currentColor' }}"
+                  {% else %}
+                    fill="transparent"
+                    stroke="{{ color | default: 'currentColor' }}"
+                  {% endif %} 
+                  transform="translate(26 0)" d="M12 18L4.9465771 21.708204L6.2936611 13.854102L0.58732182 8.2917957L8.4732885 7.1458979L12 0L15.526711 7.1458979L23.412678 8.2917957L17.706339 13.854102L19.053423 21.708204L12 18Z" fill-rule="evenodd"/>
+                <path
+                  {% if count >= 3 %}
+                    fill="{{ color | default: 'currentColor' }}"
+                  {% else %}
+                    fill="transparent"
+                    stroke="{{ color | default: 'currentColor' }}"
+                  {% endif %} 
+                  transform="translate(52 0)" d="M12 18L4.9465771 21.708204L6.2936611 13.854102L0.58732182 8.2917957L8.4732885 7.1458979L12 0L15.526711 7.1458979L23.412678 8.2917957L17.706339 13.854102L19.053423 21.708204L12 18Z" fill-rule="evenodd"/>
+                <path
+                  {% if count >= 4 %}
+                    fill="{{ color | default: 'currentColor' }}"
+                  {% else %}
+                    fill="transparent"
+                    stroke="{{ color | default: 'currentColor' }}"
+                  {% endif %} 
+                  transform="translate(78 0)" d="M12 18L4.9465771 21.708204L6.2936611 13.854102L0.58732182 8.2917957L8.4732885 7.1458979L12 0L15.526711 7.1458979L23.412678 8.2917957L17.706339 13.854102L19.053423 21.708204L12 18Z" fill-rule="evenodd"/>
+                <path
+                  {% if count >= 5 %}
+                    fill="{{ color | default: 'currentColor' }}"
+                  {% else %}
+                    fill="transparent"
+                    stroke="{{ color | default: 'currentColor' }}"
+                  {% endif %} 
+                  transform="translate(104 0)" d="M12 18L4.9465771 21.708204L6.2936611 13.854102L0.58732182 8.2917957L8.4732885 7.1458979L12 0L15.526711 7.1458979L23.412678 8.2917957L17.706339 13.854102L19.053423 21.708204L12 18Z" fill-rule="evenodd"/>
+              </svg>
+            {%- endcapture -%}
+            {% render 'component__svg-encoder',
+              svg_code: stars_svg,
+              width: 128,
+              alt: "stars" %}
+          </div>
+          {% render 'component__video-with-controls'
+            block_id: product_ugc.system.id,
+            video: product_ugc.video.value,
+            poster_size: 420,
+            autoplay: false,
+            loop: true,
+            controls: false,
+            muted: false,
+            show_play_button: false,
+            show_speaker_button: false
+            %}
+        
+          <div class="product-ugc__item-content">
+            {% if product_ugc.review != blank %}
+              <p>{{ product_ugc.review }}</p>
+            {% endif %}
+            {% if product_ugc.reviewer != blank %}
+              <span>{{ product_ugc.reviewer }}</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+{%- else -%}
+  {%- if request.design_mode -%}
+    
+  {%- endif -%}
+{%- endif -%}
+{%- schema -%}
+  {
+    "name": "Product UGC",
+    "class": "product-ugc__inner",
+    "settings": [
+      {
+        "type": "metaobject_list",
+        "id": "product_ugc",
+        "label": "Product UGC",
+        "metaobject_type": "product_ugc"
+      }
+    ]
+  }
+{%- endschema -%}

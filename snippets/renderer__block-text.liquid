@@ -1,0 +1,29 @@
+{% comment %}
+    Attributes
+
+    - block
+{% endcomment %}
+{% if text != blank %}
+    {% assign text = text %}
+{% elsif replace_src != blank %}
+    {% assign text = block.settings.text | replace: replace_src, replace_value %}
+{% else %}
+    {% assign text = block.settings.text %}
+{% endif %}
+{% render "block__text",
+    block_id: block.id,
+    text: text,
+    color: block.settings.color,
+    custom_class: custom_class,
+    bold_color: block.settings.bold_color,
+    text_style: block.settings.text_style,
+    font_family: block.settings.font_family,
+    font_case: block.settings.font_case,
+    underline_color: block.settings.underline_color,
+    max_width: block.settings.max_width,
+    shopify_attributes: block.shopify_attributes,
+    font_size: block.settings.font_size,
+    centered_on_mobile: block.settings.centered_on_mobile,
+    disable_inview: block.settings.disable_animation,
+    device_visibility: block.settings.visibility,
+    truncate: truncate %}

@@ -1,0 +1,46 @@
+{% assign id = block.id | prepend: 'dropdown' %}
+{% assign options = block.settings.options | newline_to_br | strip_newlines | split: '<br />' %}
+
+<label for="{{ id }}" class="sr-only">{{ block.settings.label | escape }}</label>
+<div class="form__select">
+  <select id="{{ id }}" name="contact[{{ block.settings.label | handleize }}]" >
+    <option disabled selected>{{ block.settings.label | escape }}</option>
+    {% for option in options %}
+      <option value="{{ option }}">{{ option }}</option>
+    {% endfor %}
+  </select>
+  {%- render 'icon__carets', position: 'down' -%}
+</div>
+
+{% schema %}
+  {
+    "name": "Dropdown",
+    "class": "form-dropdown",
+    "settings": [
+      {
+        "type": "text",
+        "id": "label",
+        "label": "Label",
+        "info": "Fields should have unique labels",
+        "default": "Field Name"
+      },
+      {
+        "type": "textarea",
+        "id": "options",
+        "label": "Options",
+        "info": "Separated by new line",
+        "default": "Option 1"
+      },
+      {
+        "type": "checkbox",
+        "id": "required",
+        "label": "Required"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Dropdown"
+      }
+    ]
+  }
+{% endschema %}

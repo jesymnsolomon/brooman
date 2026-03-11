@@ -1,0 +1,95 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+.mfr-bpg__embed-form {
+  .section-content {
+    &.media-section {
+      @include breakpoint(medium down) {
+        margin-bottom: rem-calc(20px);
+      }
+    }
+
+    &:not(.media-section) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .section-icon-text__wrapper {
+        margin-bottom: rem-calc(10px);
+        max-width: rem-calc(598px);
+      }
+
+      @include breakpoint(small down) {
+        .section-icon-text__wrapper {
+          max-width: rem-calc(1000px);
+        }
+
+        .section-icon-text__inner {
+          width: rem-calc(1000px);
+          margin: 0 -80px;
+
+          .section-icon-text__item-title {
+            font-size: rem-calc(18px);
+          }
+
+          .section-icon-text__item {
+            margin-bottom: rem-calc(8px);
+
+            &:nth-of-type(odd) {
+              transform: translate(18%, 0) rotate(var(--rotate));
+            }
+
+            &:nth-of-type(even) {
+              transform: translate(-18%, 35px) rotate(var(--rotate));
+            }
+
+            &:last-of-type {
+              transform: translate(0, 5px) rotate(var(--rotate));
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .liquid-html-embed__inner {
+    display: flex;
+    justify-content: center;
+    overflow: visible;
+
+    .klaviyo-form {
+      width: 95%;
+
+      @include breakpoint(large up) {
+        width: 70%;
+      }
+
+      form[data-testid="klaviyo-form-Y4H9Pf"] {
+        .needsclick button[type="button"].needsclick.go300628013:not(
+            [aria-label="Show Options"]) {
+            width: 100% !important;
+        }
+
+        .needsclick label svg {
+            min-width: rem-calc(30px) !important;
+            width: rem-calc(30px) !important;
+            height: rem-calc(30px) !important;
+            margin-right: rem-calc(10px) !important;
+        }
+
+        & > .kl-private-reset-css-Xuajs1
+          [data-testid="form-row"]:first-of-type
+          div {
+            font-size: rem-calc(14px) !important;
+            line-height: rem-calc(16px) !important;
+
+            @include breakpoint(large up) {
+              font-size: rem-calc(20px) !important;
+              line-height: rem-calc(22px) !important;
+            }
+        }
+      }
+    }
+  }
+}

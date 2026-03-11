@@ -1,0 +1,45 @@
+{%- liquid
+  assign form_id = 'product_form_' | append: product.id
+  assign product_id = product.selected_or_first_available_variant.id
+  assign initial_price = product.selected_or_first_available_variant.price | money_without_currency
+  assign variant_selectors = blocks | where: 'type', 'variant_selector' | first
+  assign variants_size = product.variants | size
+  assign quantity_selectors = section.blocks | where: 'type', 'quantity_selector'
+  assign first_quantity_selector = quantity_selectors | first
+-%}
+
+{% comment %}
+  Call addToCart() in mfr-cart.js
+  Parameters: variant id, quantity, properties, selling plan id, callback function (can be anything)
+{% endcomment %}
+{% capture add_to_cart_function %}
+  $store.cart.addToCart(Number(currentSelectedVariant), currentQuantity, currentProperties, Number(currentSellingPlanId), (onAdded) => { $store.pdp.addToCartAddons() })
+{% endcapture %}
+
+<form
+  class="product-top__form"
+  id="product-form-{{- product_id -}}"
+  data-product-id="{{- product_id -}}"
+  data-product-handle="{{- product.handle -}}"
+  data-enable-history-state="true"
+  data-base-price="{{ initial_price }}"
+  data-price-discount="0"
+  data-addons="{{ hasAddons }}"
+  x-ref="productForm"
+  @submit.prevent.debounce.300ms="{{- add_to_cart_function -}}"
+>
+  {% render 'product-form__hidden-input', product: product %}
+
+  {%- for block in blocks -%}
+    {% case block.type %}
+      {% when 'submit_button' %}
+        {% render 'product-top__submit', block: block, price: price %}
+
+      {% when 'subscription_option' %}
+        {% render 'product-form__subscription-options', block: block, product: product, form_id: form_id %}
+
+      {%- when 'variant_selector' -%}
+        {% render 'product-form__variant-selector' %}
+    {% endcase %}
+  {%- endfor -%}
+</form>

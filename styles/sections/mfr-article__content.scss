@@ -1,0 +1,142 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+.mfr-article__content {
+  .grid-x {
+    justify-content: center;
+  }
+
+  .section-content {
+    width: 100%;
+    text-align: left;
+
+    .inner {
+      max-width: rem-calc(800px);
+    }
+
+    & > *:last-child {
+      margin-bottom: 0;
+    }
+
+    ul, ol {
+      @include regular;
+      line-height: rem-calc(30px);
+      text-align: left;
+      padding-left: rem-calc(45px);
+      counter-reset: my-sec-counter;
+      margin: rem-calc(20px) 0;
+    }
+
+    p {
+      margin-bottom: rem-calc(20px);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin: rem-calc(40px) 0 rem-calc(20px);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    h1,
+    h2 {
+      .custom-underline {
+        padding-bottom: rem-calc(11px);
+
+        &::after {
+          height: rem-calc(11px);
+        }
+      }
+    }
+
+    h3,
+    h4,
+    h5,
+    h6 {
+      .custom-underline {
+        padding-bottom: rem-calc(8px);
+
+        &::after {
+          height: rem-calc(8px);
+        }
+      }
+    }
+
+    h3 {
+      line-height: calc($font-heading-h3-line-height + 12px);
+
+      @include breakpoint(medium down) {
+        line-height: calc($font-heading-h3-line-height-mobile + 3px);
+      }
+    }
+
+    blockquote {
+      @include large;
+      font-style: italic;
+      text-transform: initial;
+      border-left: rem-calc(5px) solid $black;
+      padding-left: rem-calc(25px);
+      margin: rem-calc(20px);
+
+      @include breakpoint(medium down) {
+        line-height: rem-calc(24px);
+      }
+    }
+
+    &-video,
+    &-image {
+      overflow: hidden;
+      margin-bottom: 1rem;
+      @include opacity(0.9999999);
+      @include border-radius(rem-calc(12px));
+
+      &.is-portrait {
+        margin-left: auto;
+        margin-right: auto;
+        display: inline-block;
+        left: 50%;
+        position: relative;
+        @include transform(translateX(-50%));
+
+        video,
+        img {
+          max-height: calc(100vh - 90px);
+          width: 100%;
+          height: unset;
+
+          @include breakpoint(large up) {
+            max-width: rem-calc(350px);
+            width: unset;
+          }
+        }
+      }
+
+      video,
+      img {
+        display: block;
+        width: 100%;
+        height: unset;
+      }
+    }
+
+    p > img,
+    .img-with-aniamtion-wrap  {
+      margin: rem-calc(30px) 0 rem-calc(10px);
+
+      .inner {
+        width: 80%;
+        max-width: unset;
+      }
+    }
+  }
+}

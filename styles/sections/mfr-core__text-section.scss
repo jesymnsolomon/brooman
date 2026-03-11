@@ -1,0 +1,41 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+section.mfr-core__text-section {
+  background-color: var(--section-background);
+
+  .wrapped-text {
+    width: 100%;
+    max-width: rem-calc( 450px );
+    padding: rem-calc( 28px ) rem-calc( 23px );
+    text-align: left;
+    background: rgba(#000,0.03);
+    @include border-radius( rem-calc( 20px ) );
+
+    @include breakpoint( large up ) {
+      max-width: rem-calc( 697px );
+      padding: rem-calc( 57px ) rem-calc( 45px );
+    }
+
+    * {
+      font-size: rem-calc( 18px );
+      line-height: 1.333em;
+      letter-spacing: rem-calc( -0.2px );
+      margin: 0;
+
+      @include breakpoint( large up ) {
+        font-size: rem-calc( 21px );
+        letter-spacing: rem-calc( -0.23px );
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 1em;
+      }
+    }
+
+    strong {
+      color: var(--section-heading);
+    }
+  }
+}

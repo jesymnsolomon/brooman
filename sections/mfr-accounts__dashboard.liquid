@@ -1,0 +1,575 @@
+{%- comment -%}
+--------------------------------------
+assign section settings to variables
+--------------------------------------
+{%- endcomment -%}
+
+{%- liquid
+  assign section_id = section.settings.custom_id | default: section.id
+  assign custom_class = section.settings.custom_class
+  assign title = section.settings.title
+-%}
+
+{% render 'renderer__color-scheme', name: "section", color_scheme: section.settings.color_scheme, selector: ".shopify-section", section_id: section_id %}
+
+{% capture spacer %}
+  --top-spacing-mobile: {{ section.settings.top_spacing_mobile | default: 100}}px;
+  --bottom-spacing-mobile: {{ section.settings.bottom_spacing_mobile | default: 100 }}px;
+  --top-spacing-desktop: {{ section.settings.top_spacing_desktop | default: 100 }}px;
+  --bottom-spacing-desktop: {{ section.settings.bottom_spacing_desktop | default: 100 }}px;
+{% endcapture %}
+
+<section class="mfr-accounts__dashboard {{ custom_class }} background" id="{{ section_id }}">
+  <div class="section-spacer" style="{{ spacer }}">
+    <div class="grid-container">
+      <div class="grid-x alignment-helper">
+        <div class="cell small-12 medium-8 section-content">
+          <h4 class="accent-text regular custom-font-family-3">Your Account</h4>
+          <h2 class="section-title">{{ title | default: 'Hi' }}, {{ customer.first_name }}</h2>
+        </div>
+
+        <div class="cell small-12 medium-8 section-dashboard">
+          <div
+            x-id="['tab']"
+            x-data="{
+              selectedId: null,
+
+              init() {
+                this.$nextTick(() => this.select(this.$id('tab', 1)))
+              },
+
+              select(id) {
+                this.selectedId = id
+              },
+
+              isSelected(id) {
+                return this.selectedId === id
+              },
+
+              whichChild(el, parent) {
+                return Array.from(parent.children).indexOf(el) + 1
+              }
+            }">
+
+            <ul
+              x-ref="tablist"
+              @keydown.right.prevent.stop="$focus.wrap().next()"
+              @keydown.home.prevent.stop="$focus.first()"
+              @keydown.page-up.prevent.stop="$focus.first()"
+              @keydown.left.prevent.stop="$focus.wrap().prev()"
+              @keydown.end.prevent.stop="$focus.last()"
+              @keydown.page-down.prevent.stop="$focus.last()"
+              role="tablist"
+              class="dashboard-tablist">
+              <li>
+                <button
+                  :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+                  @click="select($el.id)"
+                  @mousedown.prevent
+                  @focus="select($el.id)"
+                  type="button"
+                  :tabindex="isSelected($el.id) ? 0 : -1"
+                  :aria-selected="isSelected($el.id)"
+                  :class="isSelected($el.id) ? 'is-selected' : ''"
+                  role="tab"
+                  class="dashboard-tab">
+                  <span>Profile</span>
+                </button>
+              </li>
+
+              <li>
+                <button
+                  :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+                  @click="select($el.id)"
+                  @mousedown.prevent
+                  @focus="select($el.id)"
+                  type="button"
+                  :tabindex="isSelected($el.id) ? 0 : -1"
+                  :aria-selected="isSelected($el.id)"
+                  :class="isSelected($el.id) ? 'is-selected' : ''"
+                  role="tab"
+                  class="dashboard-tab">
+                  <span>Orders</span>
+                </button>
+              </li>
+
+              <li>
+                <button
+                  :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+                  @click="select($el.id)"
+                  @mousedown.prevent
+                  @focus="select($el.id)"
+                  type="button"
+                  :tabindex="isSelected($el.id) ? 0 : -1"
+                  :aria-selected="isSelected($el.id)"
+                  :class="isSelected($el.id) ? 'is-selected' : ''"
+                  role="tab"
+                  class="dashboard-tab">
+                  <span>Subscriptions</span>
+                </button>
+              </li>
+            </ul>
+
+            <div role="tabpanels" class="dashboard-tabpanels">
+              <section
+                x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+                :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+                role="tabpanel"
+                class="dashboard-tabpanel dashboard-tabpanel-grid dashboard-tabpanel--general-accounts">
+
+                <div class="dashboard-tabpanel-left">
+                  {% comment %} <h4>General</h4> {% endcomment %}
+
+                  {% if customer.name != blank %}
+                    <div class="dashboard-tabpanel-group">
+                      <p class="label">Name</p>
+                      <p>{{ customer.name }}</p>
+                    </div>
+                  {% endif %}
+
+                  {% if customer.email != blank %}
+                    <div class="dashboard-tabpanel-group">
+                      <p class="label">Email</p>
+                      <p>{{ customer.email }}</p>
+                    </div>
+                  {% endif %}
+                </div>
+
+                <div class="dashboard-tabpanel-right">
+                  <h4>Address</h4>
+
+                  <div class="dashboard-tabpanel-group">
+                    <p class="label">Primary</p>
+                    {{ customer.default_address | format_address }}
+
+                    <a href="{{ routes.account_addresses_url }}" class="link" aria-label="{{ 'customer.account.view_addresses' | t }}">
+                      <span>{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</span>
+                    </a>
+                  </div>
+                </div>
+
+              </section>
+
+              <section
+                x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+                :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+                role="tabpanel"
+                class="dashboard-tabpanel dashboard-tabpanel--order-history">
+
+                {% paginate customer.orders by 20 %}
+                  {% comment %} ORDER ENTRIES {% endcomment %}
+                  {%- if customer.orders.size > 0 -%}
+                    {%- for order in customer.orders -%}
+                      <div class="order-item">
+                        <div class="order-inner">
+                          <div class="order-number" x-data="{ orderInfo: false }">
+                            <strong>Order Number: <em>#{{ order.order_number }}</em></strong>
+
+                            <button type="button" role="button" aria-label="More about order information" x-ref="infoButton" @click="orderInfo = ! orderInfo">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon-question-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247m2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z"/>
+                              </svg>
+                            </button>
+
+                            <div x-show="orderInfo" x-anchor.top="$refs.infoButton" @click.outside="orderInfo = false">
+                              <div class="order-statuses">
+                                <p><strong>Confirmation Number:</strong> {{ order.confirmation_number }}</p>
+                                <p><strong>Created:</strong> {{ order.created_at | date: "%B %-d, %Y - %-l:%M %p %Z" }}</p>
+                                <p><strong>Financial Status:</strong> {{ order.financial_status | upcase }}</p>
+
+                                {% if order.cancelled %}
+                                  <p><strong>Fulfillment Status:</strong> CANCELLED @ {{ order.cancelled_at | date: "%B %-d, %Y - %-l:%M %p %Z" }}</p>
+                                  {% if order.cancel_reason != blank %}
+                                  <p><strong>Reason:</strong> {{ order.cancel_reason }}</p>
+                                  {% endif %}
+                                {% else %}
+                                  <p><strong>Fulfillment Status:</strong> {{ order.fulfillment_status | upcase }}</p>
+                                {% endif %}
+
+                                {% if order.order_status_url != blank %}
+                                  <p><strong>Status URL:</strong> <a href="{{ order.order_status_url }}" target="_blank" aria-label="Order page">ORDER PAGE</a></p>
+                                {% endif %}
+
+                                <p><strong>Notes:</strong> {{ order.note | default: "N/A" }}</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="order-products">
+                            {%- for lineItem in order.line_items -%}
+                              <div class="order-product" x-data>
+                                <div class="order-inner">
+                                  <div class="order-image">
+                                    <img src="{{ lineItem.image | img_url: " 200x220" }}" alt="{{ lineItem.title }}" class="image-cover">
+                                  </div>
+
+                                  <div class="order-details">
+                                    <p class="order-title"><strong>{{ lineItem.title }}</strong></p>
+                                    <p class="order-price">Price: {{ lineItem.final_line_price | money }}</p>
+                                    <p class="order-quantity">Quantity: {{ lineItem.quantity }}</p>
+
+                                    <template x-if="!$store.cart.cartExclusions.includes('{{- lineItem.product.type -}}')">
+                                      <a href="{{ lineItem.url }}" class="link" aria-label="Reorder {{ lineItem.title }}">Reorder</a>
+                                    </template>
+                                  </div>
+                                </div>
+                              </div>
+                            {%- endfor -%}
+                          </div>
+                        </div>
+                      </div>
+                    {%- endfor -%}
+                  {%- else -%}
+                    <h4>Hmm..</h4>
+                    <p>{{ 'customer.orders.none' | t }}</p>
+                  {%- endif -%}
+
+                  {% comment %} ORDER PAGINATION {% endcomment %}
+                  {%- if paginate.pages > 1 -%}
+                    {%- if paginate.parts.size > 0 -%}
+                      <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
+                        <ul role="list">
+                          {%- if paginate.previous -%}
+                            <li>
+                              <a href="{{ paginate.previous.url }}" aria-label="{{ 'general.pagination.previous' | t }}">
+                                <svg aria-hidden="true" focusable="false" viewBox="0 0 10 6">
+                                  <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor">
+                                </svg>
+                              </a>
+                            </li>
+                          {%- endif -%}
+
+                          {%- for part in paginate.parts -%}
+                            <li>
+                              {%- if part.is_link -%}
+                                  <a href="{{ part.url }}" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">{{ part.title }}</a>
+                              {%- else -%}
+                                {%- if part.title == paginate.current_page -%}
+                                  <span aria-current="page" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">{{ part.title }}</span>
+                                {%- else -%}
+                                  <span>{{ part.title }}</span>
+                                {%- endif -%}
+                              {%- endif -%}
+                            </li>
+                          {%- endfor -%}
+
+                          {%- if paginate.next -%}
+                            <li>
+                              <a href="{{ paginate.next.url }}" aria-label="{{ 'general.pagination.next' | t }}">
+                                <svg aria-hidden="true" focusable="false" viewBox="0 0 10 6">
+                                  <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor">
+                                </svg>
+                              </a>
+                            </li>
+                          {%- endif -%}
+                        </ul>
+                      </nav>
+                    {%- endif -%}
+                  {%- endif -%}
+                {% endpaginate %}
+              </section>
+
+              <section
+                x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+                :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+                role="tabpanel"
+                class="dashboard-tabpanel dashboard-tabpanel--manage-subscriptions">
+
+                {% if customer.metafields.subscriptions.customer_string %}
+                  <h4>You have an active subscription</h4>
+                  <a href="/tools/recurring/login/" class="link" aria-label="Manage your Subscription">Manage your Subscription</a>
+                {% else %}
+                  <h4>Hmm..</h4>
+                  <p>It looks like you don't have any subscriptions yet.</p>
+                {% endif %}
+              </section>
+            </div>
+          </div>
+
+          <div class="dashboard-submit">
+            <a href="{{ routes.account_logout_url }}" class="button underline" aria-label="{{ 'customer.log_out' | t }}">
+              <span>{{ 'customer.log_out' | t }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- render 'component__gradient-bg-styles' -%}
+  {%- render 'component__accent-graphics' -%}
+</section>
+
+{% schema %}
+  {
+    "name": "Accounts: Dashboard",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content Settings"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Login"
+      },
+      {
+        "type": "header",
+        "content": "Color Schemes Settings"
+      },
+      {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "default": "scheme_1",
+        "label": "Color Scheme",
+        "info": "This will be the color scheme of the header initially."
+      },
+      {
+        "type": "header",
+        "content": "Mobile Section Spacing"
+      },
+      {
+        "type": "range",
+        "id": "top_spacing_mobile",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Top Spacing",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "bottom_spacing_mobile",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Bottom Spacing",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Desktop Section Spacing"
+      },
+      {
+        "type": "range",
+        "id": "top_spacing_desktop",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Top Spacing",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "bottom_spacing_desktop",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Bottom Spacing",
+        "default": 0
+      },
+      {
+        "type":"header",
+        "content":"Background"
+      },
+      {
+        "type": "color_background",
+        "id": "bg_color",
+        "label": "Background Color/Gradient"
+      },
+      {
+        "type":"header",
+        "content":"Attribute Settings"
+      },
+      {
+        "type": "text",
+        "id": "custom_class",
+        "label": "Custom class"
+      },
+      {
+        "type": "text",
+        "id": "custom_id",
+        "label": "Custom ID"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "accent_graphic",
+        "name": "Accent Graphic",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon"
+          },
+          {
+            "type": "html",
+            "id": "svg_code",
+            "label": "Graphic SVG Code",
+            "info": "Paste SVG code for vector graphic"
+          },
+          {
+            "type": "header",
+            "content": "Visibility"
+          },
+          {
+            "type": "select",
+            "id": "visibility",
+            "options": [
+              { "value": "always", "label": "Always" },
+              { "value": "desktop_only", "label": "Desktop Only" },
+              { "value": "mobile_only", "label": "Mobile Only" }
+            ],
+            "label": "Show on..",
+            "default": "always"
+          },
+          {
+            "type":"header",
+            "content":"Value Type"
+          },
+          {
+            "type": "select",
+            "id": "value_type",
+            "options": [
+              { "value": "px", "label": "Pixels" },
+              { "value": "%", "label": "Percentage" }
+            ],
+            "label": "Position Value Type",
+            "default": "%",
+            "info": "Pixel values are multiplied by 5"
+          },
+          {
+            "type":"header",
+            "content":"Position"
+          },
+          {
+            "type": "select",
+            "id": "x_setting",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "center", "label": "Center" },
+              { "value": "right", "label": "Right" }
+            ],
+            "label": "X Position",
+            "default": "left"
+          },
+          {
+            "type": "select",
+            "id": "y_setting",
+            "options": [
+              { "value": "top", "label": "Top" },
+              { "value": "bottom", "label": "Bottom" }
+            ],
+            "label": "Y Position",
+            "default": "top"
+          },
+          {
+            "type":"header",
+            "content":"Large Screen Settings"
+          },
+          {
+            "type": "range",
+            "id": "width_large",
+            "min": 10,
+            "max": 400,
+            "step": 10,
+            "unit": "px",
+            "label": "Graphic Width",
+            "default": 150
+          },
+          {
+            "type": "range",
+            "id": "position_x_large",
+            "min": -100,
+            "max": 100,
+            "step": 2,
+            "label": "X Position",
+            "default": 10
+          },
+          {
+            "type": "range",
+            "id": "position_y_large",
+            "min": -100,
+            "max": 100,
+            "step": 2,
+            "label": "Y Position",
+            "default": 10
+          },
+          {
+            "type":"header",
+            "content":"Small Screen Settings"
+          },
+          {
+            "type": "range",
+            "id": "width_small",
+            "min": 10,
+            "max": 400,
+            "step": 10,
+            "unit": "px",
+            "label": "Graphic Width",
+            "default": 150
+          },
+          {
+            "type": "range",
+            "id": "position_x_small",
+            "min": -100,
+            "max": 100,
+            "step": 2,
+            "label": "X Position",
+            "default": 10
+          },
+          {
+            "type": "range",
+            "id": "position_y_small",
+            "min": -100,
+            "max": 100,
+            "step": 2,
+            "label": "Y Position",
+            "default": 10
+          },
+          {
+            "type":"header",
+            "content":"Animation Settings"
+          },
+          {
+            "type": "select",
+            "id": "animation",
+            "options": [
+              { "value": "none", "label": "None" },
+              { "value": "rotating", "label": "Rotate" },
+              { "value": "floating", "label": "Float" },
+              { "value": "spark", "label": "Spark" }
+            ],
+            "label": "Animation",
+            "default": "none"
+          },
+          {
+            "type": "header",
+            "content": "Appearance Settings"
+          },
+          {
+            "type": "range",
+            "id": "rotate",
+            "min": 0,
+            "max": 360,
+            "step": 36,
+            "unit": "%",
+            "label": "Rotate",
+            "default": 0
+          },
+          {
+            "type": "checkbox",
+            "id": "flip",
+            "label": "Flip Graphics?",
+            "default": false
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

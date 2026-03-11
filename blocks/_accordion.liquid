@@ -1,0 +1,58 @@
+{% if block.settings.title != blank and block.settings.content != blank %}
+  {%- capture accordion_content -%}
+    {{- block.settings.content -}}
+  {%- endcapture -%}
+  {% render 'mfr-component__accordion',
+    block_id: block.id,
+    trigger_label: block.settings.title,
+    icon: block.settings.icon,
+    content: accordion_content,
+    initially_open: block.settings.initially_open,
+    background: block.settings.bg_color %}
+{% endif %}
+
+{%- schema -%}
+  {
+    "name": "Accordion",
+    "class": "accordion__wrapper",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "icon",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Lorem ipsum dolor sit?"
+      },
+      {
+        "type": "richtext",
+        "id": "content",
+        "label": "Content",
+        "default": "<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime assumenda itaque commodi repellat veniam ex voluptate nemo necessitatibus mollitia molestias!</p>"
+      },
+      {
+        "type": "header",
+        "content": "Accordion Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "initially_open",
+        "label": "Initially Open?",
+        "default": false
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Accordion"
+      }
+    ]
+  }
+{%- endschema -%}

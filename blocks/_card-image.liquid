@@ -1,0 +1,89 @@
+<style>
+  #shopify-block-{{ block.id }} {
+    --aspect-ratio-mobile: {{ block.settings.aspect_ratio_mobile }};
+    --aspect-ratio-desktop: {{ block.settings.aspect_ratio_desktop }};
+    --border-radius-mobile: {{ block.settings.border_radius_mobile }}px;
+    --border-radius-desktop: {{ block.settings.border_radius_desktop }}px;
+    --object-fit: {{ block.settings.image_fit }};
+  }
+</style>
+{% unless block.settings.image_mobile != blank and block.settings.image_desktop != blank %}
+  {%- capture svg_code -%}{{- 'lifestyle-2' | placeholder_svg_tag -}}{%- endcapture -%}
+  {% render 'component__svg-encoder', svg_code: svg_code, alt: "placeholder image" %}
+{% else %}
+  {% render 'component__responsive-image-v2',
+    image_mobile: block.settings.image_mobile,
+    image_desktop: block.settings.image_desktop,
+    default_alt: "content image",
+    lazyload: true %}
+{% endunless %}
+
+{% schema %}
+  {
+    "name": "Image",
+    "class": "mfr-card__image",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Image Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_mobile",
+        "label": "Image - Mobile"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_desktop",
+        "label": "Image - Desktop"
+      },
+      {
+        "type": "select",
+        "id": "image_fit",
+        "label": "Image Fit",
+        "options": [
+          { "label": "Crop to Fill", "value": "cover" },
+          { "label": "Fit Within Space", "value": "contain" }
+        ],
+        "default": "cover"
+      },
+      {
+        "type": "header",
+        "content": "Aspect Ratio Settings"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_mobile",
+        "label": "Aspect Ratio - Mobile",
+        "default": "436/473"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_desktop",
+        "label": "Aspect Ratio - Desktop",
+        "default": "436/473"
+      },
+      {
+        "type": "header",
+        "content": "Border Radius Settings"
+      },
+      {
+        "type": "number",
+        "id": "border_radius_mobile",
+        "label": "Border Radius - Mobile",
+        "default": 0
+      },
+      {
+        "type": "number",
+        "id": "border_radius_desktop",
+        "label": "Border Radius - Desktop",
+        "default": 0
+      }
+    ],
+    "presets": [
+      {
+        "name": "Image"
+      }
+    ]
+  }
+{% endschema %}

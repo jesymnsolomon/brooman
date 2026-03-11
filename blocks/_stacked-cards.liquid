@@ -1,0 +1,273 @@
+{%-liquid
+  assign start = block.settings.start_offset | default: 150
+  assign end = block.settings.end_offset | default: 165
+  assign selected_variant = product.selected_variant
+%}
+
+<style>
+  {% if block.settings.max_width != blank or block.settings.max_width_mobile != blank %}
+    #shopify-block-{{ block.id }} .stacked-cards__inner {
+      --max-width: {{ block.settings.max_width }}{{ block.settings.width_value_type }};
+      --max-width-mobile: {{ block.settings.max_width_mobile }}{{ block.settings.width_value_type_mobile }};
+      --aspect-ratio: {{ block.settings.max_height_mobile }}{{ block.settings.aspect_ratio }};
+      --aspect-ratio-mobile: {{ block.settings.max_height_mobile }}{{ block.settings.aspect_ratio_mobile }};
+    }
+  {% endif %}
+</style>
+
+{%- if block.blocks.size > 0 or block.settings.metaobject_instructions != blank or block.settings.metaobject_selling_points != blank -%}
+  <div class="stacked-cards__inner {{ block.settings.is_skewed }} {{ block.settings.card_layout }}"
+    x-data="{
+        isEnabled: '{{ block.settings.enable_stack }}',
+
+        init() {
+          this.initializeStacking();
+        },
+
+        initializeStacking() {
+          const isMobile = this.isMobile();
+
+          if (this.isEnabled === 'none') return;
+
+          if (
+            this.isEnabled === 'both' ||
+            (this.isEnabled === 'mobile' && isMobile) ||
+            (this.isEnabled === 'desktop' && !isMobile)
+          ) {
+            this.stackingCards();
+          }
+        },
+
+        isMobile() {
+          return window.innerWidth <= 768; // adjust breakpoint if needed
+        },
+
+        stackingCards() {
+          gsap.registerPlugin(ScrollTrigger)
+          const parent = this.$el.closest('.stacked-cards');
+          const sectionID = this.$el.closest('section').id;
+          const cardsWrappers = gsap.utils.toArray('#' + sectionID + ' .stacked-card')
+          const cards = gsap.utils.toArray('#' + sectionID + '.stacked-card__inner')
+          const offset = { start: {{ start }}, end: {{ end }} };
+
+          cardsWrappers.forEach((wrapper, i) => {
+            const card = cards[i]
+
+            gsap.to(card, {
+              transformOrigin: 'top center',
+              ease: 'none',
+              scrollTrigger: {
+                trigger: wrapper,
+                start: 'top ' + (offset.start + offset.end * i),
+                end: 'bottom 700',
+                endTrigger: parent,
+                scrub: true,
+                pin: wrapper,
+                pinSpacing: false,
+                markers: false,
+                id: i + 1,
+                onEnter: (card) => {
+                  card.pin.parentElement.classList.add('is-finished');
+                },
+                onLeaveBack: (card) => {
+                  card.pin.parentElement.classList.remove('is-finished');
+                }
+              }
+            })
+          })
+        }
+    }">
+    {%- content_for "blocks" -%}
+
+    {% if selected_variant != blank %}
+      {% assign product_metafield = product.metafields.mfr_fields %}
+      {% assign variant_metafield = selected_variant.metafields.mfr_fields %}
+      {% assign product_instructions = product_metafield.section_instructions.value.instructions.value %}
+      {% assign product_selling_points = product_metafield.section_selling_points.value.entries.value %}
+
+      {% assign instructions = variant_metafield.section_instructions.value.instructions.value |  default: product_instructions %}
+      {% assign selling_points = variant_metafield.section_selling_points.value.entries.value |  default: product_selling_points %}
+
+      {% if block.settings.metaobject_instructions != blank and instructions != blank %}
+        {% for entry in instructions %}
+          <div class="shopify-block stacked-card">
+            {% render 'component__stacked-card',
+              entry: entry,
+              index: forloop.index,
+              is_metaobject: true %}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      {% if block.settings.metaobject_selling_points != blank and selling_points != blank %}
+        {% for entry in selling_points %}
+          <div class="shopify-block stacked-card">
+            {% render 'component__stacked-card',
+              entry: entry,
+              index: forloop.index,
+              is_metaobject: true %}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% else %}
+      {% if block.settings.metaobject_instructions != blank %}
+        {% for entry in block.settings.metaobject_instructions %}
+          <div class="shopify-block stacked-card">
+            {% render 'component__stacked-card',
+              entry: entry,
+              index: forloop.index,
+              is_metaobject: true %}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      {% if block.settings.metaobject_selling_points != blank %}
+        {% for entry in block.settings.metaobject_selling_points %}
+          <div class="shopify-block stacked-card">
+            {% render 'component__stacked-card',
+              entry: entry,
+              index: forloop.index,
+              is_metaobject: true %}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endif %}
+
+  </div>
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Stacked Cards",
+    "class": "stacked-cards",
+    "settings": [
+      {
+        "type": "metaobject_list",
+        "id": "metaobject_instructions",
+        "metaobject_type": "pdp_instructions",
+        "label": "Metaobject",
+        "info": "Metaobject pulled from PDP: Instructions"
+      },
+      {
+        "type": "metaobject_list",
+        "id": "metaobject_selling_points",
+        "metaobject_type": "pdp_selling_points",
+        "label": "Metaobject",
+        "info": "Metaobject pulled from PDP: Selling Points"
+      },
+      {
+        "type": "header",
+        "content": "Stacked Cards Settings"
+      },
+      {
+        "type": "select",
+        "id": "enable_stack",
+        "options": [
+          { "value": "", "label": "No Stacking" },
+          { "value": "mobile", "label": "On Mobile" },
+          { "value": "desktop", "label": "On Desktop" },
+          { "value": "both", "label": "Both" }
+        ],
+        "label": "Stacking Animation",
+        "default": "both"
+      },
+      {
+        "type": "number",
+        "id": "start_offset",
+        "label": "Start Point",
+        "default": 150
+      },
+      {
+        "type": "number",
+        "id": "end_offset",
+        "label": "End Point",
+        "default": 165
+      },
+      {
+        "type": "header",
+        "content": "Cards Styling"
+      },
+      {
+        "type": "select",
+        "id": "card_layout",
+        "options": [
+          { "value": "default", "label": "Layout 1" },
+          { "value": "selling-point", "label": "Layout 2" },
+          { "value": "instruction", "label": "Layout 3" },
+          { "value": "collection", "label": "Layout 4" }
+        ],
+        "label": "Card Layout",
+        "default": "default"
+      },
+      {
+        "type": "select",
+        "id": "is_skewed",
+        "options": [
+          { "value": "skewed", "label": "Skewed" },
+          { "value": "", "label": "Straight" }
+        ],
+        "label": "Styling",
+        "default": "skewed"
+      },
+      {
+        "type": "header",
+        "content": "Desktop: Layout"
+      },
+      {
+        "type": "number",
+        "id": "max_width",
+        "label": "Max Width",
+        "default": 100
+      },
+      {
+        "type": "select",
+        "id": "width_value_type",
+        "options": [
+          { "value": "px", "label": "Pixels" },
+          { "value": "%", "label": "Percentage" }
+        ],
+        "label": "Value Type",
+        "default": "%"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio",
+        "label": "Aspect Ratio",
+        "default": "1/1"
+      },
+      {
+        "type": "header",
+        "content": "Mobile: Layout"
+      },
+       {
+        "type": "number",
+        "id": "max_width_mobile",
+        "label": "Max Width",
+        "default": 100
+      },
+      {
+        "type": "select",
+        "id": "width_value_type_mobile",
+        "options": [
+          { "value": "px", "label": "Pixels" },
+          { "value": "%", "label": "Percentage" }
+        ],
+        "label": "Value Type",
+        "default": "%"
+      },
+       {
+        "type": "text",
+        "id": "aspect_ratio_mobile",
+        "label": "Aspect Ratio",
+        "default": "1/1"
+      }
+    ],
+    "blocks": [
+      { "type": "_stacked-card" }
+    ],
+    "presets": [
+      {
+        "name": "Stacked Cards"
+      }
+    ]
+  }
+{% endschema %}

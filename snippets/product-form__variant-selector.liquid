@@ -1,0 +1,177 @@
+{%- assign variants = product.variants | size -%}
+{%- assign first_variant = product.selected_or_first_available_variant -%}
+{%- assign options_values_size = product.options_with_values | size -%}
+
+{% if variants >= 1 %}
+  <div
+    class="variant-selectors"
+    x-ref="variantSelectors"
+    x-data='
+      {
+        productUrl: "{{ product.url }}",
+        sectionId: "{{ section.id }}",
+
+        setInitialVariant(element, price, previousPrice) {
+          if (element.checked) {
+            basePrice = price
+            comparePrice = previousPrice
+          }
+        },
+
+        onVariantChange(element, price) {
+          const newVariantId = element.dataset.variantId
+          const sections = [
+          { section: "section.mfr-product__top", target: ".product-top"},
+          { section: "section.instructions", target: ".grid-x"},
+          { section: "section.selling_point", target: ".grid-x"},
+          { section: "section.mfr-product__features", target: ".grid-x"}];
+
+          let parameter = `sections=`;
+
+          for(let i = 0; i < sections.length; i++) {
+            const section = document.querySelector(sections[i].section);
+
+            if(section) {
+              const id = document.querySelector(sections[i].section).id;
+
+              if(i == sections.length - 1) {
+                parameter += `,${id}&`
+              } else {
+                parameter += `,${id}`
+              }
+            } else {
+              parameter += `&`
+            }
+          }
+
+          if (newVariantId) {
+            parameter += `variant=${newVariantId}`
+          } else {
+            const selectedOptionValues = Array.from($refs.variantSelectors.querySelectorAll("fieldset input:checked")).map((input) => input.dataset.optionValueId).join(",")
+            parameter += `option_values=${selectedOptionValues}`
+          }
+
+          $refs.productForm.classList.add("loading")
+
+          // Fetch rendering API and replacing form elements based on selected variant
+          fetch(`${this.productUrl}?${parameter}`).then((response) => response.text()).then((responseText) => {
+            responseText = JSON.parse(responseText);
+            const html = new DOMParser().parseFromString(responseText[this.sectionId], "text/html")
+            const productForm = html.querySelector(".variant-selectors")
+            const productCarousel = html.querySelector(".product-top")
+
+            const carouselRoot = document.querySelector(".product-top")
+            carouselRoot.innerHTML = productCarousel.innerHTML
+
+            for(let i = 0; i < sections.length; i++) {
+              const section = document.querySelector(sections[i].section);
+              if(!section) return;
+              const id = section.id;
+
+              this.changeContent(id, sections[i], responseText);
+            }
+
+            $nextTick( () => {
+              Alpine.initTree(carouselRoot);
+              window.stickyElementFunction(carouselRoot);
+
+              carouselRoot.querySelectorAll("img").forEach(img => {
+                if (img.hasAttribute("data-src")) {
+                  img.setAttribute("src", img.getAttribute("data-src"));
+                }
+
+                if (img.hasAttribute("data-srcset")) {
+                  img.setAttribute("srcset", img.getAttribute("data-srcset"));
+                }
+              });
+
+              document.querySelectorAll( "[data-mfr-sticky]" ).forEach( e => {
+                e.stickyTrigger.kill();
+              } );
+
+              if( ScrollTrigger && ScrollTrigger.refresh ) ScrollTrigger.refresh()
+            } );
+
+            if ("URLSearchParams" in window) {
+              let url = new URL(window.location);
+              url.searchParams.set("variant", newVariantId); // Update or add query param
+              window.history.pushState({}, "", url);
+            }
+          }).finally(() => {
+            if($refs.productForm) $refs.productForm.classList.remove("loading")
+            currentSelectedVariant = newVariantId
+
+            $store.pdp.currentPrice = price
+          })
+        },
+
+        changeContent(id, section, responseText) {
+          const sectionElement = document.querySelector(section.section);
+          if(!sectionElement) return;
+          const sectionID = sectionElement.id;
+          const html = new DOMParser().parseFromString(responseText[sectionID], "text/html")
+          const newContent = html.querySelector(section.target);
+
+          const element = document.getElementById(sectionID).querySelector(section.target);
+          element.innerHTML = newContent.innerHTML
+
+          initInview(element.querySelectorAll("[data-inview]"))
+          initStaggerInview(`#${sectionID} [data-stagger-inview]`);
+          initSplitTexts(element.querySelectorAll("[data-split-text]"));
+          stickyElementFunction(element);
+        },
+      }
+    '
+  >
+    {% comment %} Holds variant id based on selection {% endcomment %}
+    <input type="hidden" name="id" value="{{ first_variant.id }}">
+
+    {% comment %} Use options_with_values to render options {% endcomment %}
+    {%- for option in product.options_with_values -%}
+      <fieldset class="variant-selectors__selectors-wrapper {% if option.name == "Title" %}hide{% endif %}">
+        <legend class="selectors-label visually-hidden">Select {{ option.name }}</legend>
+        <div class="variant-selectors__selectors">
+          {%- for option_value in option.values -%}
+            {%- capture input_id -%}
+              {{ section.id }}-{{ option.position }}-{{ forloop.index0 -}}
+            {%- endcapture -%}
+            <label for="{{ input_id }}">
+              {% comment %} Use product_option_value` fields to simplify option value input rendering and support combined listings {% endcomment %}
+              <input
+                type="radio"
+                id="{{ input_id }}"
+                name="{{ option.name }}"
+                value="{{ option_value | escape }}"
+                {% if option_value.selected %}
+                  checked
+                {% endif %}
+                {% unless option_value.variant.available %}
+                  disabled
+                {% endunless %}
+                class="visually-hidden"
+                data-product-url="{{ option_value.product_url }}"
+                data-variant-id="{{ option_value.variant.id }}"
+                data-option-value-id="{{ option_value.id }}"
+                @change="onVariantChange($el, {{ option_value.variant.price }});"
+                x-init="setInitialVariant($el, {{ option_value.variant.price }}, {{ first_variant.compare_at_price }})"
+              >
+
+              <div class="variant-selectors__selectors-image">
+                {% render 'component__lazyload-image',
+                  image: option_value.variant.image,
+                  width: 500,
+                  widths: '420,480,600,720,900',
+                  alt: option_value.variant.image.alt
+                %}
+              </div>
+
+              <span class="variant-selectors__selector-label">
+                {{- option_value.variant.metafields.custom.variant_title | default: option_value -}}
+              </span>
+            </label>
+          {%- endfor -%}
+        </div>
+      </fieldset>
+    {%- endfor -%}
+  </div>
+{% endif %}

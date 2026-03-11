@@ -1,0 +1,54 @@
+{%- if block.settings.product != blank -%}
+  {% render 'component__add-to-cart-button', 
+    product: block.settings.product, 
+    show_price: block.settings.show_price,
+    button_class: block.settings.color_theme
+  %}
+{%- endif -%}
+{%- schema -%}
+{
+  "name": "Add To Cart Button",
+  "class": "add-to-cart__wrapper",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show Price?",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "color_theme",
+      "label": "Color Theme",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "tertiary",
+          "label": "Tertiary"
+        },
+        {
+          "value": "underlined-cta",
+          "label": "Underline"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Add To Cart Button"
+    }
+  ]
+}
+{%- endschema -%}

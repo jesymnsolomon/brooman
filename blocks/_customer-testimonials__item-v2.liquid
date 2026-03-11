@@ -1,0 +1,132 @@
+{%- assign entry = block -%}
+<style>
+  #shopify-block-{{ block.id }} {
+    --width-mobile: {{ block.settings.width_mobile }}px;
+    --width-desktop: {{ block.settings.width_desktop }}px;
+    --aspect-ratio-mobile: {{ block.settings.aspect_ratio_mobile }};
+    --aspect-ratio-desktop: {{ block.settings.aspect_ratio_desktop }};
+  }
+</style>
+<div class="customer-testimonials__entry-inner customer-testimonials__entry-v2-inner mfr-carousel__item">
+  {% if block.settings.video != blank or block.settings.image != blank %}
+    <div class="customer-testimonials__entry-v2-media" x-data>
+      {% if block.settings.video != blank %}
+        {%- render 'component__video-with-controls'
+          block_id: block.id,
+          video: block.settings.video,
+          poster_size: block.settings.width_desktop,
+          autoplay: false,
+          loop: false,
+          controls: false,
+          muted: false,
+          poster: block.settings.image,
+          show_play_button: true,
+          show_speaker_button: true,
+          without_wrapper: false
+         -%}
+      {% elsif block.settings.image != blank %}
+        {% assign default_alt = "maybe an image about " | append: block.settings.testimonial %}
+        {% assign alt = block.settings.image.alt | default: default_alt %}
+        {% assign width = block.settings.width_desktop %}
+
+        {% if block.settings.image.aspect_ratio > 1 %}
+          {% assign width = width | times: 2 %}
+        {% endif %}
+
+        {% render 'component__lazyload-image',
+          image: block.settings.image,
+          width: width,
+          alt: alt %}
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if block.settings.testimonial != blank or block.settings.name != blank %}
+    <div class="customer-testimonials__entry-v2-content">
+      {% if block.settings.testimonial != blank %}
+        <p class="customer-testimonials__entry-v2-testimonial">
+          {{ block.settings.testimonial }}
+        </p>
+      {% endif %}
+      {% if block.settings.name != blank %}
+        <p class="customer-testimonials__entry-v2-name">
+          {{ block.settings.name }}
+        </p>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+  {
+    "name": "Testimonial - Type 2",
+    "class": "customer-testimonials__entry customer-testimonials__entry-v2 mfr-carousel__item",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Media Settings"
+      },
+      {
+        "type": "video",
+        "id": "video",
+        "label": "A Shopify-hosted video"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "header",
+        "content": "Content Settings"
+      },
+      {
+        "type": "text",
+        "id": "testimonial",
+        "label": "Testimonial",
+        "default": "Lorem ipsum dolor sit amet consectetur adipisicing elit"
+      },
+      {
+        "type": "text",
+        "id": "name",
+        "label": "Name",
+        "default": "John D."
+      },
+      {
+        "type": "header",
+        "content": "Sizing Settings"
+      },
+      {
+        "type": "number",
+        "id": "width_mobile",
+        "label": "Width - Mobile",
+        "default": 340,
+        "info": "in pixels"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_mobile",
+        "label": "Aspect Ratio - Mobile",
+        "default": "340/460"
+      },
+      {
+        "type": "number",
+        "id": "width_desktop",
+        "label": "Width - Desktop",
+        "default": 380,
+        "info": "in pixels"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_desktop",
+        "label": "Aspect Ratio - Desktop",
+        "default": "340/515"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Testimonial - Type 2"
+      }
+    ]
+  }
+{% endschema %}

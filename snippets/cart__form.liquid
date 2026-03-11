@@ -1,0 +1,61 @@
+{% comment %}
+  Closed form is intended so that we can avoid nested forms.
+  Submit button should have form="cart-form" attribute on order for this to be submitted
+{% endcomment %}
+
+<form action="/cart" method="post" id="cart-form"></form>
+<div class="cart-form__main">
+  <div class="cart-form__body">
+    <div class="cart-form__list">
+      <template x-if="$store.cart.checkIsCartEmpty()">
+        <div class="cart-form__empty">
+          <p class="text">Cart is empty</p>
+        </div>
+      </template>
+
+      <template x-if="$store.cart.checkIsCartNotEmpty()">
+        <div class="cart-form__items">
+          <template x-for="item in $store.cart.cartData.items">
+            <template x-if="!$store.cart.cartExclusions.includes(item.product_type)">
+              {% render 'cart__product' %}
+            </template>
+          </template>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  <div class="cart-form__footer">
+    <div class="cart-form__summary">
+      {% if cart_surcharge != blank %}
+      {% render 'cart__additional-fee', block: cart_surcharge %}
+      {% endif %}
+
+      {% if product_upsell != blank %}
+        {% render 'cart__product-upsell', block: product_upsell %}
+      {% endif %}
+
+      {% if rebuy_widget != blank %}
+        <div class="cart-form__rebuy-widget">
+          {{ rebuy_widget.settings.widget_code }}
+        </div>
+      {% endif %}
+
+      {% if settings.cart_notes_enabled %}
+        {% render 'cart__note' %}
+      {% endif %}
+
+      {% assign gen_msg = section.settings.general_message %}
+      {% assign sub_msg = section.settings.subscription_message %}
+
+      {% if sub_msg != blank or gen_msg != blank %}
+        {% render 'cart__footer-message', gen_msg: gen_msg, sub_msg: sub_msg %}
+      {% endif %}
+
+      <div class="cart-form__checkout">
+        {% render 'cart__submit', section: section %}
+        {% render 'cart__tax-note' %}
+      </div>
+    </div>
+  </div>
+</div>

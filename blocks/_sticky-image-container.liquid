@@ -1,0 +1,22 @@
+<div class="sticky-image__container">
+  {% content_for "blocks" %}
+</div>
+
+{% schema %}
+  {
+    "name": "Sticky Image Container",
+    "class": "sticky-image",
+    "settings": [
+    ],
+      "blocks": [
+      {
+        "type": "_sticky-image"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Sticky Image Container"
+      }
+    ]
+  }
+{% endschema %}

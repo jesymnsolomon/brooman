@@ -1,0 +1,58 @@
+{%- capture slides_content -%}
+  {%- assign articles = block.settings.blog.articles -%}
+  {% if articles != blank %}
+    {%- for article in articles limit: block.settings.posts_limit -%}
+      <div class="blog-carousel__entry mfr-carousel__item">
+        <div class="blog-carousel__entry-inner">
+          {% render 'partial__blog-card',
+            featured_article: article,
+            settings: section.settings %}
+        </div>
+      </div>
+    {%- endfor -%}
+  {%- elsif request.design_mode -%}
+    {% for i in (1..5) %}
+      <div class="blog-carousel__entry mfr-carousel__item">
+        <div class="blog-carousel__entry-inner">
+          {% render 'partial__blog-card',
+            featured_article: article,
+            settings: section.settings %}
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+{%- endcapture -%}
+
+{% render 'mfr-component__carousel',
+  settings: '{
+    contain: true,
+    wrapAround: false,
+    groupCells: true,
+    mobileSettings: {
+      cellAlign: "center",
+      wrapAround: true
+    }
+  }',
+  class: "blog-carousel__carousel",
+  content: slides_content
+%}
+
+{% schema %}
+  {
+    "name": "Blog Carousel",
+    "class": "cell small-12 blog-carousel",
+    "settings": [
+      {
+        "type": "blog",
+        "id": "blog",
+        "label": "Blog"
+      },
+      {
+        "type": "number",
+        "id": "posts_limit",
+        "label": "Posts Limit",
+        "default": 10
+      }
+    ]
+  }
+{% endschema %}

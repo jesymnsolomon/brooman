@@ -1,0 +1,105 @@
+<div class="review-card__inner"
+  data-inview>
+  <div class="review-card__stars">
+    {%- capture stars_svg -%}
+      {%- assign color = section.settings.color_scheme.settings.icons -%}
+      {%- assign count = block.settings.star_rating -%}
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="128" height="24">
+        <path fill="{{ color | default: 'currentColor' }}" d="M12 18L4.9465771 21.708204L6.2936611 13.854102L0.58732182 8.2917957L8.4732885 7.1458979L12 0L15.526711 7.1458979L23.412678 8.2917957L17.706339 13.854102L19.053423 21.708204L12 18Z" fill-rule="evenodd"/>
+        <path
+          {% if count >= 2 %}
+            fill="{{ color | default: 'currentColor' }}"
+          {% else %}
+            fill="transparent"
+            stroke="{{ color | default: 'currentColor' }}"
+          {% endif %} 
+          transform="translate(26 0)" d="M12 18L4.9465771 21.708204L6.2936611 13.854102L0.58732182 8.2917957L8.4732885 7.1458979L12 0L15.526711 7.1458979L23.412678 8.2917957L17.706339 13.854102L19.053423 21.708204L12 18Z" fill-rule="evenodd"/>
+        <path
+          {% if count >= 3 %}
+            fill="{{ color | default: 'currentColor' }}"
+          {% else %}
+            fill="transparent"
+            stroke="{{ color | default: 'currentColor' }}"
+          {% endif %} 
+          transform="translate(52 0)" d="M12 18L4.9465771 21.708204L6.2936611 13.854102L0.58732182 8.2917957L8.4732885 7.1458979L12 0L15.526711 7.1458979L23.412678 8.2917957L17.706339 13.854102L19.053423 21.708204L12 18Z" fill-rule="evenodd"/>
+        <path
+          {% if count >= 4 %}
+            fill="{{ color | default: 'currentColor' }}"
+          {% else %}
+            fill="transparent"
+            stroke="{{ color | default: 'currentColor' }}"
+          {% endif %} 
+          transform="translate(78 0)" d="M12 18L4.9465771 21.708204L6.2936611 13.854102L0.58732182 8.2917957L8.4732885 7.1458979L12 0L15.526711 7.1458979L23.412678 8.2917957L17.706339 13.854102L19.053423 21.708204L12 18Z" fill-rule="evenodd"/>
+        <path
+          {% if count >= 5 %}
+            fill="{{ color | default: 'currentColor' }}"
+          {% else %}
+            fill="transparent"
+            stroke="{{ color | default: 'currentColor' }}"
+          {% endif %} 
+          transform="translate(104 0)" d="M12 18L4.9465771 21.708204L6.2936611 13.854102L0.58732182 8.2917957L8.4732885 7.1458979L12 0L15.526711 7.1458979L23.412678 8.2917957L17.706339 13.854102L19.053423 21.708204L12 18Z" fill-rule="evenodd"/>
+      </svg>
+    {%- endcapture -%}
+    {% render 'component__svg-encoder',
+      svg_code: stars_svg,
+      width: 128,
+      alt: "stars" %}
+  </div>
+  {% if block.settings.title != blank %}
+    <p class="review-card__title">
+      {{ block.settings.title }}
+    </p>
+  {% endif %}
+  {% if block.settings.caption != blank %}
+    <p class="review-card__caption">
+      {{ block.settings.caption }}
+    </p>
+  {% endif %}
+  {% if block.settings.small_text != blank %}
+    <p class="review-card__small-text">
+      {{ block.settings.small_text }}
+    </p>
+  {% endif %}
+</div>
+
+{% schema %}
+  {
+    "name": "Review Card",
+    "class": "review-card",
+    "settings": [
+      {
+        "type": "range",
+        "id": "star_rating",
+        "min": 1,
+        "max": 5,
+        "step": 1,
+        "unit": "☆",
+        "label": "Stars",
+        "default": 5
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Lorem ipsum dolor sit amet"
+      },
+      {
+        "type": "textarea",
+        "id": "caption",
+        "label": "Caption",
+        "default": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem molestiae iure quidem natus quas dicta fugiat adipisci laborum laudantium, aperiam sit enim in pariatur iusto quisquam non ratione deleniti cumque!"
+      },
+      {
+        "type": "text",
+        "id": "small_text",
+        "label": "Small Text",
+        "default": "Lorem, ipsum dolor."
+      }
+    ],
+    "presets": [
+      {
+        "name": "Review Card"
+      }
+    ]
+  }
+{% endschema %}

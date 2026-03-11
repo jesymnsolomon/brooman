@@ -1,0 +1,933 @@
+/**
+ * Sets a media query for the specified breakpoint
+ *
+ * Accepts:
+ * - $media-query: {String} Breakpoint variable (list found in variables.scss)
+ *
+ * Usage:
+ * .selector {
+ *   @include breakpoint(medium up) {
+ *     color: red;
+ *   }
+ * }
+ */
+
+@mixin media-query($media-query) {
+  $breakpoint-found: false;
+  @each $breakpoint in $slate-breakpoints {
+    $name: nth($breakpoint, 1);
+    $declaration: nth($breakpoint, 2);
+    @if $media-query==$name and $declaration {
+      $breakpoint-found: true;
+      @media only screen and #{$declaration} {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin hashtag-transition {
+  @for $i from 1 through 100 {
+    &:nth-child(#{$i}) {
+      transition-delay: #{$i * 0.09}s !important;
+    }
+  }
+}
+
+/**
+ * Outputs list of transition properties
+ *
+ * Accepts:
+ * - $transitions: {String} List of transition properties to set
+ *
+ * Usage:
+ * .selector {
+ *   @include transition(width, height 0.5s ease-in);
+ * }
+ */
+
+@mixin transition($transitions...) {
+  $output: ();
+  @each $transition in $transitions {
+    $output: append($output, get-transition-properties($transition), comma);
+  }
+  transition: $output;
+}
+
+/**
+ * Forces an element to self-clear its children
+ *
+ * Usage:
+ * .selector {
+ *   @include clearfix;
+ * }
+ */
+
+@mixin clearfix() {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  // stylelint-disable-next-line
+  *zoom: 1;
+}
+
+/**
+ * Hide element but make it accessible to screen readers
+ *
+ * Usage:
+ * .selector {
+ *   @include visually-hidden;
+ * }
+ */
+
+@mixin visually-hidden() {
+  // stylelint-disable-next-line
+  position: absolute !important;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  left: 0;
+}
+
+/**
+ * Reverse the properties applied by @mixin visually-hidden
+ *
+ * Accepts:
+ * - $position: {String} Positioning method for element
+ *
+ * Usage:
+ * .selector {
+ *   @include visually-shown(relative);
+ * }
+ */
+
+@mixin visually-shown($position: inherit) {
+  // stylelint-disable-next-line
+  position: $position !important;
+  overflow: auto;
+  width: auto;
+  height: auto;
+  margin: 0;
+  clip: auto;
+}
+
+/* Transition
+====================================================================
+====================================================================*/
+
+@mixin transition($transition) {
+  -moz-transition: $transition;
+  -o-transition: $transition;
+  -webkit-transition: $transition;
+  transition: $transition;
+}
+
+/* Transition Delay
+====================================================================
+====================================================================*/
+
+@mixin transition-delay($transition) {
+  -moz-transition-delay: $transition;
+  -o-transition-delay: $transition;
+  -webkit-transition-delay: $transition;
+  transition-delay: $transition;
+}
+
+/* Transition Duration
+====================================================================
+====================================================================*/
+
+@mixin transition-duration($duration...) {
+  -moz-transition-duration: $duration;
+  -o-transition-duration: $duration;
+  -webkit-transition-duration: $duration;
+  transition-duration: $duration;
+}
+
+/* Shadow
+====================================================================
+====================================================================*/
+
+@mixin shadow($shadow) {
+  -moz-box-shadow: $shadow;
+  -o-box-shadow: $shadow;
+  -webkit-box-shadow: $shadow;
+  box-shadow: $shadow;
+}
+
+/* Opacity
+====================================================================
+====================================================================*/
+
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+/* Border Radius
+====================================================================
+====================================================================*/
+
+@mixin border-radius($radius) {
+  -moz-border-radius: $radius;
+  -o-border-radius: $radius;
+  -ms-border-radius: $radius;
+  -webkit-border-radius: $radius;
+  border-radius: $radius;
+}
+
+/* Transforms
+====================================================================
+====================================================================*/
+
+// generic transform
+@mixin transform($transforms) {
+  -moz-transform: $transforms;
+  -o-transform: $transforms;
+  -ms-transform: $transforms;
+  -webkit-transform: $transforms;
+  transform: $transforms;
+}
+
+// rotate
+@mixin rotate($deg) {
+  @include transform(rotate(#{$deg}deg));
+}
+
+// scale
+@mixin scale($scale) {
+  @include transform(scale($scale));
+}
+
+// translate
+@mixin translate($x, $y) {
+  @include transform(translate($x, $y));
+}
+
+// skew
+@mixin skew($x, $y) {
+  @include transform(skew(#{$x}deg, #{$y}deg));
+}
+
+//transform origin
+@mixin transform-origin($origin) {
+  moz-transform-origin: $origin;
+  -o-transform-origin: $origin;
+  -ms-transform-origin: $origin;
+  -webkit-transform-origin: $origin;
+  transform-origin: $origin;
+}
+
+/* Columns
+  ====================================================================
+  ====================================================================*/
+
+@mixin column-count($column-count) {
+  -webkit-column-count: $column-count;
+  -moz-column-count: $column-count;
+  column-count: $column-count;
+}
+
+@mixin column-gap($column-gap) {
+  -webkit-column-gap: $column-gap;
+  -moz-column-gap: $column-gap;
+  column-gap: $column-gap;
+}
+
+/* Hover
+  ====================================================================
+  ====================================================================*/
+@mixin hover {
+  @media screen and (pointer: fine) {
+    &:hover {
+      @content;
+    }
+  }
+
+  // Only keep dropdown open if focused via keyboard or focus is inside
+  &:focus-visible,
+  &:focus-within {
+    @content;
+  }
+}
+
+/* Resets
+  ====================================================================
+  ====================================================================*/
+@mixin clear-list {
+  padding-left: 0;
+  margin-bottom: 0;
+  margin-top: 0;
+  list-style: none;
+}
+
+@mixin clear-button {
+  cursor: pointer;
+  display: inline-block;
+  border: none;
+  outline: none;
+}
+
+/* Filter
+  ====================================================================
+  ====================================================================*/
+
+@mixin filter($value) {
+  -webkit-filter: $value;
+  -moz-filter: $value;
+  -o-filter: $value;
+  filter: $value;
+}
+
+/* User Select
+====================================================================
+====================================================================*/
+
+@mixin user-select($value) {
+  -webkit-touch-callout: $value;
+  -webkit-user-select: $value;
+  -khtml-user-select: $value;
+  -moz-user-select: $value;
+  -ms-user-select: $value;
+  user-select: $value;
+}
+
+/* Touch Action
+====================================================================
+====================================================================*/
+
+@mixin touch-action($value) {
+  -ms-touch-action: $value;
+  touch-action: $value;
+}
+
+@mixin no-select() {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@mixin animateScale() {
+  @include breakpoint(large up) {
+    @include transform(scale(0));
+    @include transition($global-transition);
+
+    &.is-inview {
+      @include transform(unset);
+    }
+  }
+}
+
+@mixin animateFadeUp() {
+  @include breakpoint(large up) {
+    @include opacity(0);
+    @include transform(translate3d(0, 50%, 0));
+    // @include transition( $global-transition );
+    @include transition(0.5s all $sharp_ease);
+
+    &.is-inview {
+      @include opacity(0.9999999);
+      @include transform(unset);
+    }
+  }
+}
+
+@mixin animateFadeUpSharp() {
+  @include breakpoint(large up) {
+    @include opacity(0);
+    @include transform(translate3d(0, 100%, 0));
+    @include transition(0.4s all $sharp_ease);
+
+    &.is-inview {
+      @include opacity(0.9999999);
+      @include transform(unset);
+    }
+  }
+}
+
+@mixin animateFadeFromRight() {
+  @include breakpoint(large up) {
+    @include opacity(0);
+    @include transform(translate3d(50%, 0, 0));
+    @include transition($global-transition);
+
+    &.is-inview {
+      @include opacity(0.9999999);
+      @include transform(unset);
+    }
+  }
+}
+
+@mixin animateFadeFromLeft() {
+  @include breakpoint(large up) {
+    @include opacity(0);
+    @include transform(translate3d(-50%, 0, 0));
+    @include transition($global-transition);
+
+    &.is-inview {
+      @include opacity(0.9999999);
+      @include transform(unset);
+    }
+  }
+}
+
+@mixin enter-animation {
+  &:not(.is-inview):not(.disable-inview) {
+    .js.with-enter-animations:not(.design-mode) .shopify-section & {
+      @content;
+    }
+  }
+}
+
+@mixin slides-offset($width) {
+  &:first-child {
+    @include breakpoint(medium up) {
+      $offset: rem-calc(16px);
+      width: calc(#{$width} + #{$offset});
+      padding-left: $offset;
+    }
+
+    @include breakpoint(large up) {
+      $offset: rem-calc(28px);
+      width: calc(#{$width} + #{$offset});
+      padding-left: $offset;
+    }
+
+    @include breakpoint(xlarge up) {
+      $offset: rem-calc(48px);
+      width: calc(#{$width} + #{$offset});
+      padding-left: $offset;
+    }
+  }
+  &:last-child {
+    @include breakpoint(medium up) {
+      $offset: rem-calc(16px);
+      width: calc(#{$width} + #{$offset});
+      padding-right: $offset;
+    }
+
+    @include breakpoint(large up) {
+      $offset: rem-calc(28px);
+      width: calc(#{$width} + #{$offset});
+      padding-right: $offset;
+    }
+
+    @include breakpoint(xlarge up) {
+      $offset: rem-calc(48px);
+      width: calc(#{$width} + #{$offset});
+      padding-right: $offset;
+    }
+  }
+}
+
+@mixin highlight-text {
+  background: -webkit-linear-gradient(101deg, #db331f 14%, #f38730 89%);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+
+@mixin appearance($value) {
+  -webkit-appearance: $value;
+  -moz-appearance: $value;
+  appearance: $value;
+}
+
+@mixin box-shadow($value) {
+  -webkit-box-shadow: $value;
+  -moz-box-shadow: $value;
+  box-shadow: $value;
+}
+
+/*
+--------------------------------------
+Typography Mixins
+--------------------------------------
+*/
+
+@mixin dynamic-font-size($min, $max) {
+  font-size: max(#{$min}, #{$max});
+}
+@mixin dynamic-line-height($min, $max) {
+  line-height: max(#{$min}, #{$max});
+}
+
+@mixin h1 {
+  font-family: $font-heading-h1;
+  font-size: $font-heading-h1-size-mobile;
+  line-height: $font-heading-h1-line-height-mobile;
+  letter-spacing: $font-heading-h1-spacing-mobile;
+  font-weight: $font-heading-h1-weight;
+  text-transform: $h1-font-case;
+
+  @include breakpoint(large up) {
+    font-size: $font-heading-h1-size;
+    line-height: $font-heading-h1-line-height;
+    letter-spacing: $font-heading-h1-spacing;
+  }
+}
+
+@mixin h2 {
+  font-family: $font-heading-h2;
+  font-size: $font-heading-h2-size-mobile;
+  letter-spacing: $font-heading-h2-spacing-mobile;
+  line-height: $font-heading-h2-line-height-mobile;
+  font-weight: $font-heading-h2-weight;
+  text-transform: $h2-font-case;
+
+  @include breakpoint(large up) {
+    font-size: $font-heading-h2-size;
+    line-height: $font-heading-h2-line-height;
+    letter-spacing: $font-heading-h2-spacing;
+  }
+}
+
+@mixin h3 {
+  font-family: $font-heading-h3;
+  font-size: $font-heading-h3-size-mobile;
+  line-height: $font-heading-h3-line-height-mobile;
+  letter-spacing: $font-heading-h3-spacing-mobile;
+  font-weight: $font-heading-h3-weight;
+  text-transform: $h3-font-case;
+
+  @include breakpoint(large up) {
+    font-size: $font-heading-h3-size;
+    line-height: $font-heading-h3-line-height;
+    letter-spacing: $font-heading-h3-spacing;
+  }
+}
+
+@mixin h4 {
+  font-family: $font-heading-h4;
+  font-size: $font-heading-h4-size-mobile;
+  line-height: $font-heading-h4-line-height-mobile;
+  letter-spacing: $font-heading-h4-spacing-mobile;
+  font-weight: $font-heading-h4-weight;
+  text-transform: $h4-font-case;
+
+  @include breakpoint(large up) {
+    font-size: $font-heading-h4-size;
+    line-height: $font-heading-h4-line-height;
+    letter-spacing: $font-heading-h4-spacing;
+  }
+}
+
+@mixin h5 {
+  font-family: $font-heading-h5;
+  font-size: $font-heading-h5-size-mobile;
+  line-height: $font-heading-h5-line-height-mobile;
+  letter-spacing: $font-heading-h5-spacing-mobile;
+  font-weight: $font-heading-h5-weight;
+  text-transform: $h5-font-case;
+
+  @include breakpoint(large up) {
+    font-size: $font-heading-h5-size;
+    line-height: $font-heading-h5-line-height;
+    letter-spacing: $font-heading-h5-spacing;
+  }
+}
+
+@mixin h6 {
+  font-family: $font-heading-h6;
+  font-size: $font-heading-h6-size-mobile;
+  line-height: $font-heading-h6-line-height-mobile;
+  letter-spacing: $font-heading-h6-spacing-mobile;
+  font-weight: $font-heading-h6-weight;
+  text-transform: $h6-font-case;
+
+  @include breakpoint(large up) {
+    font-size: $font-heading-h6-size;
+    line-height: $font-heading-h6-line-height;
+    letter-spacing: $font-heading-h6-spacing;
+  }
+}
+
+@mixin small-title {
+  font-family: $font-heading-small-title;
+  font-size: $font-heading-small-title-size-mobile;
+  line-height: 1;
+  letter-spacing: $font-heading-small-title-spacing;
+  font-weight: $font-heading-small-title-weight;
+  text-transform: $small_title-font-case;
+
+  @include breakpoint(large up) {
+    font-size: $font-heading-small-title-size;
+  }
+}
+
+@mixin xlarge {
+  font-size: $font-body-size-xlarge-mobile;
+  line-height: calc($font-body-size-xlarge-mobile + 5px);
+  line-height: 1.053em;
+  font-weight: 600;
+
+  @include breakpoint(large up) {
+    font-size: $font-body-size-xlarge;
+    line-height: calc($font-body-size-xlarge + 5px);
+  }
+}
+
+@mixin large {
+  font-size: $font-body-size-large-mobile !important;
+  line-height: calc($font-body-size-large-mobile + 10px);
+
+  @include breakpoint(large up) {
+    font-size: $font-body-size-large !important;
+    line-height: calc($font-body-size-large + 10px);
+  }
+}
+
+@mixin regular {
+  font-size: $font-body-size-regular-mobile;
+  line-height: calc($font-body-size-regular-mobile + 5px);
+
+  @include breakpoint(large up) {
+    font-size: $font-body-size-regular;
+    line-height: calc($font-body-size-regular + 5px);
+  }
+}
+
+@mixin small {
+  font-size: $font-body-size-small-mobile;
+  @include breakpoint(large up) {
+    font-size: $font-body-size-small;
+  }
+  p {
+    @include opacity(1); // use for lighter opacity for smaller text
+  }
+}
+
+@mixin xsmall {
+  font-size: $font-body-size-xsmall;
+  line-height: normal;
+}
+
+@mixin text-gradient(
+  $color:
+    var(
+      --header-text-gradient,
+      var(
+        --offcanvas-text-gradient,
+        var(--section-text-gradient, var(--footer-text-gradient))
+      )
+    )
+) {
+  background: $color;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: currentColor;
+}
+
+@mixin global-button-text-style {
+  @include border-radius(rem-calc(10px));
+  position: relative;
+  font-family: $button-font-family;
+  text-decoration: none;
+  user-select: none;
+  appearance: none;
+  white-space: normal;
+  font-size: $button-font-size-mobile;
+  line-height: $button-line-height-mobile;
+  font-weight: $button-font-weight;
+  letter-spacing: $button-letter-spacing-mobile;
+  outline: none;
+  background: inherit;
+  border-width: $button-border-width;
+  border-style: solid;
+  text-transform: $button-font-case;
+  text-align: center;
+  cursor: pointer;
+  @include border-radius($button-border-radius);
+
+  @include breakpoint(large up) {
+    font-size: $button-font-size;
+    line-height: $button-line-height;
+    font-weight: $button-font-weight;
+    letter-spacing: $button-letter-spacing;
+  }
+}
+
+@mixin button {
+  @include global-button-text-style;
+  @include transition(all 0.3s $smooth_ease);
+  @include border-radius(rem-calc(26px));
+  @include border-radius($button-border-radius);
+  @include drop-shadow($black, 4);
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: rem-calc(70px);
+  box-sizing: border-box;
+  padding: rem-calc( 20px );
+
+  @include breakpoint(large up) {
+    min-width: var(--max-width);
+  }
+
+  &.underlined-cta {
+    color: inherit;
+    padding: 0 0 rem-calc(4px);
+    border: none;
+    border-bottom: solid $global-border-width currentColor;
+    min-height: unset;
+    min-width: unset;
+    box-shadow: none;
+    @include border-radius(0);
+  }
+
+  span.arrow {
+    @include transition(all 0.2s $smooth_ease);
+    margin-left: rem-calc(21px);
+    max-width: 100%;
+    width: rem-calc(18px);
+    flex-shrink: 1;
+    display: flex;
+    align-items: center;
+    svg {
+      width: 100%;
+    }
+  }
+
+  span.text {
+    &:not(:last-child) {
+      margin-right: auto;
+    }
+  }
+
+  @include hover {
+    @include transform(translate(2px, -2px));
+    @include drop-shadow($black, 8);
+    @include transition(all 0.4s $smooth_ease);
+  }
+
+  @keyframes arrow-move {
+    0% {
+      @include transform(translateX(-100%));
+    }
+    100% {
+      @include transform(translateX(100%));
+    }
+  }
+}
+
+@mixin form-inputs {
+  @include regular;
+  font-weight: 500;
+  color: $black;
+  margin: 0;
+  padding: rem-calc(12px) rem-calc(15px);
+  width: 100%;
+  min-height: rem-calc(55px);
+  box-shadow: unset;
+  border: $global-border-width solid $black;
+  background-color: $white;
+  @include border-radius(0);
+
+  @include placeholder {
+    color: $black;
+    @include opacity(0.50);
+  }
+}
+
+@mixin placeholder {
+  &::placeholder {
+    @content;
+  }
+
+  &::-webkit-input-placeholder {
+    @content;
+  }
+
+  &:-moz-placeholder {
+    @content;
+  }
+
+  &::-moz-placeholder {
+    @content;
+  }
+
+  &:-ms-input-placeholder {
+    @content;
+  }
+}
+
+$container-max-width-1: rem-calc( 1440px );
+$container-max-width-2: rem-calc( 1600px );
+$container-max-width-3: rem-calc( 1920px );
+$container-max-width-4: rem-calc( 2400px );
+$container-max-width-5: rem-calc( 2560px );
+
+@mixin set-content-max-width {
+  @media (min-width: 1023px) {
+    max-width: $container-max-width-1;
+  }
+
+  @media (min-width: 1600px) {
+    max-width: $container-max-width-2;
+  }
+
+  @media (min-width: 1920px) {
+    max-width: $container-max-width-3;
+  }
+
+  @media (min-width: 2560px) {
+    max-width: $container-max-width-4;
+  }
+
+  @media (min-width: 3840px) {
+    max-width: $container-max-width-5;
+  }
+}
+
+@mixin left-carousel-entry-spacing {
+  $standard-container-gutter: rem-calc( 60px );
+  $standard-container-gutters: rem-calc( $standard-container-gutter * 2 );
+
+  @media (min-width: 1023px) {
+    padding-left: max(#{ $standard-container-gutter }, calc((100vw - #{$container-max-width-1} + #{ $standard-container-gutters }) / 2 ) );
+  }
+
+  @media (min-width: 1600px) {
+    padding-left: max(#{ $standard-container-gutter }, calc((100vw - #{$container-max-width-2} + #{ $standard-container-gutters }) / 2 ) );
+  }
+
+  @media (min-width: 1920px) {
+    padding-left: max(#{ $standard-container-gutter }, calc((100vw - #{$container-max-width-3} + #{ $standard-container-gutters }) / 2 ) );
+  }
+
+  @media (min-width: 2560px) {
+    padding-left: max(#{ $standard-container-gutter }, calc((100vw - #{$container-max-width-4} + #{ $standard-container-gutters }) / 2 ) );
+  }
+
+  @media (min-width: 3840px) {
+    padding-left: max(#{ $standard-container-gutter }, calc((100vw - #{$container-max-width-5} + #{ $standard-container-gutters }) / 2 ) );
+  }
+}
+
+@mixin right-carousel-entry-spacing {
+  $standard-container-gutter: rem-calc( 60px ); // contained container gutter size times 2 to get total of left and right gutters
+  $standard-container-gutters: rem-calc( $standard-container-gutter * 2 ); // contained container gutter size times 2 to get total of left and right gutters
+  //Carousel right entry spacing
+  @media (min-width: 1023px) {
+    padding-right: max(#{ $standard-container-gutter }, calc((100vw - #{$container-max-width-1} + #{ $standard-container-gutters }) / 2 ) );
+  }
+
+  @media (min-width: 1600px) {
+    padding-right: max(#{ $standard-container-gutter }, calc((100vw - #{$container-max-width-2} + #{ $standard-container-gutters }) / 2 ) );
+  }
+
+  @media (min-width: 1920px) {
+    padding-right: max(#{ $standard-container-gutter }, calc((100vw - #{$container-max-width-3} + #{ $standard-container-gutters }) / 2 ) );
+  }
+
+  @media (min-width: 2560px) {
+    padding-right: max(#{ $standard-container-gutter }, calc((100vw - #{$container-max-width-4} + #{ $standard-container-gutters }) / 2 ) );
+  }
+
+  @media (min-width: 3840px) {
+    padding-right: max(#{ $standard-container-gutter }, calc((100vw - #{$container-max-width-5} + #{ $standard-container-gutters }) / 2 ) );
+  }
+}
+
+// Project Specific
+/**
+ *
+ * Usage:
+ * .selector {
+ *   @include drop-shadow($black);
+ * }
+ */
+
+@mixin drop-shadow($color: null, $offset: null) {
+  $final-color: if($color == null, rgba(0, 0, 0, 0.57), $color);
+  $final-offset: if($offset == null, 7, $offset);
+  box-shadow: rem-calc(-$final-offset) rem-calc($final-offset) 0 0 $final-color;
+}
+
+@mixin border-bottom-hover() {
+  &::after {
+    content: '';
+    display: block;
+    margin-top: rem-calc( 7px );
+    height: rem-calc( 5px );
+    background-repeat: no-repeat !important;
+    background-position: center;
+    width: 0%;
+    bottom: 0;
+    background: url('data:image/svg+xml,<%3Fxml version="1.0" encoding="UTF-8"%3F><svg version="1.1" viewBox="0 0 345 3" xmlns="http://www.w3.org/2000/svg"><title>Fill 1</title><g fill="none" fill-rule="evenodd"><g transform="translate(-20 -603)" fill="%23000"><g transform="translate(0 -115.05)"><path d="m352.73 720.81c-17.628-0.091215-17.67-0.091215-35.298-0.18422-17.656-0.032194-17.661-0.032194-35.315-0.064387-17.635 0.094791-17.68 0.094791-35.315 0.18958-17.654 0.037558-17.659 0.037558-35.313 0.076906-17.663 0-17.663-0.28616-35.324-0.28616-17.65 0.044712-17.656 0.044712-35.304 0.091214-17.667 0.014308-17.67 0.014308-35.337 0.030405-17.672-0.057233-17.687-0.057233-35.359-0.11446-17.672 0.059021-17.689 0.059021-35.359 0.11983-13.055 0-14.809-0.53477-14.809-1.2251 0-0.68858 1.7532-1.1286 14.809-1.1286 17.648 0 17.648-0.23608 35.298-0.23608 17.656 0 17.656 0.2647 35.313 0.2647 17.656 0.023251 17.659 0.023251 35.315 0.04829 17.656 0 17.656-0.28974 35.315-0.28974 17.632 0.1091 17.691 0.1091 35.324 0.2182 17.652 0.010731 17.652 0.010731 35.304 0.021462 17.667-0.016097 17.667-0.016097 35.335-0.032193 17.654-0.098369 17.704-0.10016 35.359-0.19852 17.678-0.030405 17.683-0.030405 35.361-0.059021 13.055 0 12.259 0.70288 12.259 1.3915 0 0.69037 0.79592 1.3664-12.259 1.3664"/></g></g></g></svg>');
+    transition: 0.4s;
+    overflow: hidden;
+  }
+
+  @include hover {
+    &::after {
+      width: 100%;
+      transition: 0.5s;
+    }
+  }
+}
+
+@mixin border-bottom() {
+  position: relative;
+
+  &::after {
+    position: absolute;
+    content: '';
+    display: block;
+    margin-top: rem-calc( 7px );
+    height: rem-calc( 5px );
+    background-repeat: no-repeat !important;
+    background-position: center;
+    bottom: 0;
+    width: 100%;
+    background: url('data:image/svg+xml,<%3Fxml version="1.0" encoding="UTF-8"%3F><svg version="1.1" viewBox="0 0 345 3" xmlns="http://www.w3.org/2000/svg"><title>Fill 1</title><g fill="none" fill-rule="evenodd"><g transform="translate(-20 -603)" fill="%23000"><g transform="translate(0 -115.05)"><path d="m352.73 720.81c-17.628-0.091215-17.67-0.091215-35.298-0.18422-17.656-0.032194-17.661-0.032194-35.315-0.064387-17.635 0.094791-17.68 0.094791-35.315 0.18958-17.654 0.037558-17.659 0.037558-35.313 0.076906-17.663 0-17.663-0.28616-35.324-0.28616-17.65 0.044712-17.656 0.044712-35.304 0.091214-17.667 0.014308-17.67 0.014308-35.337 0.030405-17.672-0.057233-17.687-0.057233-35.359-0.11446-17.672 0.059021-17.689 0.059021-35.359 0.11983-13.055 0-14.809-0.53477-14.809-1.2251 0-0.68858 1.7532-1.1286 14.809-1.1286 17.648 0 17.648-0.23608 35.298-0.23608 17.656 0 17.656 0.2647 35.313 0.2647 17.656 0.023251 17.659 0.023251 35.315 0.04829 17.656 0 17.656-0.28974 35.315-0.28974 17.632 0.1091 17.691 0.1091 35.324 0.2182 17.652 0.010731 17.652 0.010731 35.304 0.021462 17.667-0.016097 17.667-0.016097 35.335-0.032193 17.654-0.098369 17.704-0.10016 35.359-0.19852 17.678-0.030405 17.683-0.030405 35.361-0.059021 13.055 0 12.259 0.70288 12.259 1.3915 0 0.69037 0.79592 1.3664-12.259 1.3664"/></g></g></g></svg>');
+  }
+}
+
+@mixin border-top() {
+  position: relative;
+
+  &::before {
+    position: absolute;
+    content: '';
+    display: block;
+    margin-top: rem-calc( 7px );
+    height: rem-calc( 5px );
+    background-repeat: no-repeat !important;
+    background-position: center;
+    top: 0;
+    width: 100%;
+    background: url('data:image/svg+xml,<%3Fxml version="1.0" encoding="UTF-8"%3F><svg version="1.1" viewBox="0 0 345 3" xmlns="http://www.w3.org/2000/svg"><title>Fill 1</title><g fill="none" fill-rule="evenodd"><g transform="translate(-20 -603)" fill="%23000"><g transform="translate(0 -115.05)"><path d="m352.73 720.81c-17.628-0.091215-17.67-0.091215-35.298-0.18422-17.656-0.032194-17.661-0.032194-35.315-0.064387-17.635 0.094791-17.68 0.094791-35.315 0.18958-17.654 0.037558-17.659 0.037558-35.313 0.076906-17.663 0-17.663-0.28616-35.324-0.28616-17.65 0.044712-17.656 0.044712-35.304 0.091214-17.667 0.014308-17.67 0.014308-35.337 0.030405-17.672-0.057233-17.687-0.057233-35.359-0.11446-17.672 0.059021-17.689 0.059021-35.359 0.11983-13.055 0-14.809-0.53477-14.809-1.2251 0-0.68858 1.7532-1.1286 14.809-1.1286 17.648 0 17.648-0.23608 35.298-0.23608 17.656 0 17.656 0.2647 35.313 0.2647 17.656 0.023251 17.659 0.023251 35.315 0.04829 17.656 0 17.656-0.28974 35.315-0.28974 17.632 0.1091 17.691 0.1091 35.324 0.2182 17.652 0.010731 17.652 0.010731 35.304 0.021462 17.667-0.016097 17.667-0.016097 35.335-0.032193 17.654-0.098369 17.704-0.10016 35.359-0.19852 17.678-0.030405 17.683-0.030405 35.361-0.059021 13.055 0 12.259 0.70288 12.259 1.3915 0 0.69037 0.79592 1.3664-12.259 1.3664"/></g></g></g></svg>');
+  }
+}
+
+@mixin content-alignment() {
+  @include breakpoint(large up) {
+    align-items: var(--desktop-vertical);
+    justify-content: var(--desktop-horizontal);
+  }
+
+  @include breakpoint(medium down) {
+    align-items: var(--mobile-vertical);
+    justify-content: var(--mobile-horizontal);
+  }
+}
+
+@mixin custom-margin() {
+  margin-top: var(--margin-top);
+  margin-bottom: var(--margin-bottom);
+}

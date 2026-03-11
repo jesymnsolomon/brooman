@@ -1,0 +1,52 @@
+{% assign collection_name = collection.metafields.mfr_fields.nice_title | default: collection.title %}
+{% assign product_name = product.metafields.mfr_fields.product_nice_title | default: product.title %}
+
+{% assign split_mailto = text | split: "[mailto]" | last | split: "[/mailto]" | first %}
+{% assign mailto_on_text = "[mailto]" | append: split_mailto | append: "[/mailto]" %}
+{%- capture mailto_link -%}
+  <a href="mailto:{{- split_mailto -}}">{{- split_mailto -}}</a>
+{%- endcapture -%}
+
+{% assign product_description = product.description | strip_html %}
+
+{%- if text contains "[policy-content]" and text contains "[/policy-content]" -%}
+  {%- assign policy_content_var = text | split: "[policy-content]" | last | split: "[/policy-content]" | first -%}
+  {%- assign policy_shortcode = "[policy-content]" | append: policy_content_var | append: "[/policy-content]" -%}
+  {%- if policy_content_var contains "policy" or policy_content_var == "terms_of_service" -%}
+    {% assign policy_to_replace = shop[policy_content_var].body %}
+  {%- endif -%}
+{% else %}
+  {%- assign policy_content_var = false -%}
+  {%- assign policy_shortcode = false -%}
+{%- endif -%}
+
+{%- if strip_paragraph -%}
+  {% assign text = text 
+    | replace: "<p>", ""
+    | replace: "</p>", "" %}
+{%- endif -%}
+
+{{ text
+  | replace: "[underline]", "<span class='custom-underline'>" 
+  | replace: "[/underline]", "</span>"
+  | replace: "[highlight]", "<span class='highlighted'>"
+  | replace: "[/highlight]", "</span>"
+  | replace: "[text-gradient]", "<span class='text-gradient'>"
+  | replace: "[/text-gradient]", "</span>"
+  | replace: "[color-animation-text]", "<span data-split-text='colorAnimation'>"
+  | replace: "[/color-animation-text]", "</span>"
+  | replace: "[br]", "<br>"
+  | replace: "[collection_title]", collection_name
+  | replace: "[product_name]", product_name
+  | replace: '®', '<sup>®</sup>'
+  | replace: "[underline]", "<span class='custom-underline'>" 
+  | replace: "[/underline]", "</span>"
+  
+  | replace: "[low-opacity]", "<span class='low-opacity'>"
+  | replace: "[/low-opacity]", "</span>"
+  | replace: mailto_on_text, mailto_link
+  | replace: "[product-description]", product_description
+  | replace: "[text-gradient]", "<span class='text-gradient'>"
+  | replace: "[/text-gradient]", "</span>"
+
+  | replace: policy_shortcode, policy_to_replace }}

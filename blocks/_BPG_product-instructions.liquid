@@ -1,0 +1,126 @@
+{%- if block.settings.products != blank -%}
+  {%- assign products = block.settings.products -%}
+  {%- capture slides_content -%}
+    {%- for product in products -%}
+      {%- assign instruction = product.metafields.mfr_fields.section_instructions.value -%}
+      {%- assign youtube_embed = instruction.youtube_embed.value -%}
+      {%- assign youtube_embed_metafield = product.metafields.mfr_fields.help_center_video_url_embed -%}
+      {% if instruction != blank or youtube_embed != blank or youtube_embed_metafield != blank %}
+        <div class="product-instructions__carousel-item mfr-carousel__item">
+          {%- assign video = instruction.media.value -%}
+          {% assign id = "insruction-" | append: product.id | append: "-" | append: forloop.index0 %}
+          {%- if youtube_embed_metafield != blank -%}
+            {{ youtube_embed_metafield }}
+          {%- elsif youtube_embed != blank -%}
+            {{ youtube_embed }}
+          {% else %}
+            {%- render 'component__video-with-controls'
+              block_id: id,
+              video: video,
+              poster_size: 720,
+              autoplay: false,
+              loop: true,
+              controls: false,
+              muted: false,
+              poster: instruction.media.value,
+              show_play_button: true,
+              show_speaker_button: false,
+            -%}
+          {%- endif -%}
+          <a href="{{ product.url }}"
+            aria-label="{{ product.title }}"
+            title="{{ product.title }}">
+            {{ product.title }}
+            <span class="indicator">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10" height="16">
+                <path fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="matrix(-4.37114e-08 1 -1 -4.37114e-08 7.09961 1.1001)" d="M0 6L6.0923076 0L12 6" fill-rule="evenodd"/>
+              </svg>
+            </span>
+          </a>
+        </div>
+      {% endif %}
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- capture settings -%}
+  {
+    contain: true,
+    wrapAround: true,
+    groupCells: false,
+    prevNextButtons: false,
+    pageDots: false,
+    mobileSettings: {
+      contain: true,
+      wrapAround: true,
+      groupCells: false,
+      prevNextButtons: false,
+      pageDots: false,
+    }
+  }
+  {%- endcapture -%}
+
+  {% render 'mfr-component__carousel',
+    settings: settings,
+    class: "product-instructions__carousel",
+    content: slides_content
+  %}
+
+  <div class="product-instructions__nav"
+    x-data='{
+      selectedCell: 0,
+    }'
+    x-init='
+      const wrapper = $el.closest( ".product-instructions" );
+      const carousel = wrapper.querySelector( ".product-instructions__carousel" );
+      const buttons = wrapper.querySelectorAll( ".product-instructions__nav button" );
+      const flkty = Flickity.data(carousel);
+
+      flkty.on( "change", (e) => {
+        selectedCell = e;
+      } );
+    '>
+    {%- for product in products -%}
+      {%- assign instruction = product.metafields.mfr_fields.section_instructions.value -%}
+      {%- assign youtube_embed = instruction.youtube_embed.value -%}
+      {%- assign youtube_embed_metafield = product.metafields.mfr_fields.help_center_video_url_embed -%}
+      {% if instruction != blank or youtube_embed != blank or youtube_embed_metafield != blank %}
+        <button
+          :class='selectedCell == Array.from($el.parentElement.children).indexOf($el) ? "is-active" : ""'
+          @click='
+            const wrapper = $el.closest( ".product-instructions" );
+            const carousel = wrapper.querySelector( ".product-instructions__carousel" );
+            const buttons = wrapper.querySelectorAll( ".product-instructions__nav button" );
+            const flkty = Flickity.data(carousel);
+
+            if(Flickity && Flickity.data) {
+              flkty?.select(Array.from($el.parentElement.children).indexOf($el))
+            }
+          '>
+          {{ product.title }}
+        </button>
+      {% endif %}
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Product Instructions",
+    "class": "product-instructions",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Product Instructions",
+        "info": "This block will pull product instructions metaobject assigned in products added to Products input settings."
+      },
+      {
+        "type": "product_list",
+        "id": "products",
+        "label": "Products"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product Instructions"
+      }
+    ]
+  }
+{% endschema %}

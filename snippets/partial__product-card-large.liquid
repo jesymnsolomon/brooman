@@ -1,0 +1,121 @@
+{% comment %}
+  Metafields
+
+  - product_card_image
+  - product_card_description
+  - product_type
+  - nice_title
+  - product_light_color
+  - product_dark_color
+
+{% endcomment %}
+
+{%- liquid
+  assign product_options = product.options.first
+  assign product_variants = product.variants
+  assign product_variants_size = product_variants | size
+
+  assign metafields = product.metafields.mfr_fields
+  assign media = metafields.nice_image | default: product.featured_image
+  assign default_alt = product.title | append: "Featured Image"
+  assign image_alt = media.alt | default: default_alt
+  assign description = product.content | strip_html | truncatewords: 10
+  assign short_description = metafields.caption | default: description
+  assign featured_video = metafields.main_featured_video
+  assign background_color = metafields.accent_color.value.tertiary | default: metafields.accent_color.value.primary
+-%}
+
+<div
+  id="product-{{ product.id }}"
+  class="product-card product-card-large"
+  style="background: {{ background_color }};"
+  >
+  <div class="product-card-large__inner">
+    {% comment %} <div class="product-card-large__tag">
+        {% for tag in product.tags %}
+          {% assign tag_handle = tag | handleize %}
+          {% if tag_handle contains 'new' %}
+            {{ tag_handle }}
+          {% endif %}
+        {% endfor %}
+    </div> {% endcomment %}
+
+    {% comment %} Header  {% endcomment %}
+    <div class="product-card-large__header">
+      <div class="product-card-large__header-left">
+        <h6 class="product-card-large__title h6">
+            {{ metafields.nice_title | default: product.title | replace: 'with', '</br><span>with</span>'  }}
+        </h6>
+
+        {% render 'component__add-to-cart-button',
+          product: product,
+          show_price: false,
+          color_theme: "secondary",
+          button_class: "product-card-large__button button secondary" %}
+
+        <div class="product-card-large__price">
+		      <span>{%- render 'price', product: product, use_variant: true -%}</span>
+        </div>
+      </div>
+
+      <div class="product-card-large__header-right">
+        {% if product.metafields.reviews.rating.value %}
+          {% assign rating_parts = product.metafields.reviews.rating.value | split: "." %}
+          {% assign rating_number = rating_parts[0] | plus: 0 | times: 1 %}
+          {% assign rating_decimal = rating_parts[1] | slice: 0, 1 | prepend: "0." | plus: 0 %}
+          {% assign full_rating = rating_number | plus: rating_decimal %}
+
+          <div class="product-card-large__reviews">
+            {% render 'component__product-rating', rating: full_rating, total_reviews: product.metafields.reviews.rating_count }, color: "#000" %}
+          </div>
+        {% endif %}
+
+         <div class="product-card-large__image">
+            {% assign image = metafields.nice_image | default: product.featured_image %}
+            {% assign alt = image.alt |  default: product.title %}
+
+            {% if image %}
+              {{ image
+                | image_url: width: 300
+                | image_tag: width: 300,
+                  class: "image",
+                  widths: "300",
+                  alt: alt,
+                  loading: "lazy" }}
+            {% else %}
+              <div class="image shopify-placeholder-image">
+                {%- capture svg_code -%}{{- 'image' | placeholder_svg_tag -}}{%- endcapture -%}
+                {% render 'component__svg-encoder', svg_code: svg_code, alt: "placeholder image" %}
+              </div>
+            {% endif %}
+          </div>
+      </div>
+    </div>
+    {% comment %} End of Header  {% endcomment %}
+
+    {% if short_description != blank %}
+      <div class="product-card-large__desc">
+        {{- short_description -}}
+      </div>
+    {% endif %}
+
+    {% if featured_video != blank %}
+      <div class="product-card-large__content" x-data>
+        {%- render 'component__video-with-controls'
+          block_id: block.id,
+          video: featured_video.value,
+          poster_size: 500,
+          autoplay: false,
+          loop: true,
+          controls: true,
+          muted: false,
+          poster: entry.image,
+          show_play_button: true,
+          show_speaker_button: true,
+          without_wrapper: false
+        -%}
+      </div>
+    {% endif %}
+  </div>
+  {% render 'schema__product', product: product %}
+</div>

@@ -1,0 +1,66 @@
+<div class="cart-form__product cart-product">
+  <div class="cart-product__inner">
+    <div class="cart-product__left">
+      <div class="cart-product__image">
+        <img :src="item.featured_image.url" :alt="item.title">
+      </div>
+    </div>
+
+    <div class="cart-product__center">
+      <a class="cart-product__name" :href="item.url" x-text="item.product_title"></a>
+
+      <small class="cart-product__variant-title" x-text="item.variant_title"></small>
+
+      <div class="cart-product__spacer"></div>
+
+      <template x-if="item.selling_plan_allocation">
+        <div class="cart-product__freq">
+          {% render 'icon__rotate', color: '#141723' %}
+          <span x-text="$store.cart.formatSellingplan(item.selling_plan_allocation.selling_plan.name)"></span>
+        </div>
+      </template>
+
+      <template x-if="Array.isArray(item.discounts) && item.discounts.length >= 1">
+        <ul class="cart-product__discounts">
+          <template x-for="discount in item.discounts">
+            <li x-show="discount.amount > 0" text="discount.title"></li>
+          </template>
+        </ul>
+      </template>
+
+      <div class="cart-product__quantity quantity">
+        <div class="quantity-picker__counter" x-data>
+          <button
+            class="quantity-picker__minus"
+            aria-label="Decrease line item quantity"
+            @click.debounce.50ms="$store.cart.decrementQuantity(item.key, item.quantity)"
+          ></button>
+
+          <span class="quantity-picker__number item-quantity" x-text="item.quantity"></span>
+
+          <button
+            class="quantity-picker__plus"
+            aria-label="Increase line item quantity"
+            @click.debounce.50ms="$store.cart.incrementQuantity(item.key, item.quantity)"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cart-product__right">
+      <button
+        class="cart-product__remove"
+        aria-label="Remove line item from cart"
+        @click.once="$store.cart.removeToCart(item.key)"
+      >
+        {%- render 'icon__close' -%}
+      </button>
+
+      <span class="cart-product__price" x-text="$store.cart.formatMoney(item.line_price)"></span>
+
+      <template x-if="item.original_line_price != item.line_price">
+        <span class="cart-product__original-price" x-text="$store.cart.formatMoney(item.original_line_price)"></span>
+      </template>
+    </div>
+  </div>
+</div>

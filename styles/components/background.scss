@@ -1,0 +1,132 @@
+/* BACKGROUND IMAGE */
+.background__image {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  //z-index: -1;
+
+  .video-player {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  img, svg {
+    position: absolute !important;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  picture {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  img {
+    object-fit: cover;
+    object-position: center;
+  }
+  &.has-mobile-image {
+    .main-image {
+      display: block;
+    }
+    .mobile-image {
+      display: none;
+    }
+    @include breakpoint(medium down) {
+      .main-image {
+        display: none;
+      }
+      .mobile-image {
+        display: block;
+      }
+    }
+  }
+
+  .mfr-components__video {
+    align-items: center;
+    justify-content: center;
+
+    .mfr-components__video-inner {
+      width: 100%;
+      height: 100%;
+
+      video {
+        height: 101%;
+      }
+    }
+  }
+}
+
+.background__sparkles {
+  position: absolute;
+  height: 50%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  padding-top: rem-calc(20px);
+  display: flex;
+  align-items: flex-start;
+  opacity: 0.8;
+
+  @include breakpoint(large up) {
+    padding-top: rem-calc(70px);
+  }
+
+  svg, path, g {
+    fill: white;
+    color: white;
+    overflow: visible;
+    width: 100%;
+    transition: transform 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
+  }
+
+  path.sparkle {
+    animation-name: sparkle;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards; /* Keeps final state */
+    transform-origin: center;
+
+    @keyframes sparkle {
+      0% {
+        opacity: 1;
+        filter: brightness(2.5);
+      }
+
+      100% {
+        opacity: 0.2;
+        filter: brightness(1);
+      }
+    }
+  }
+
+  .svg {
+    display: flex;
+    width: 30%;
+    flex: 1;
+
+    &:nth-of-type(even) {
+      transform: translateY(-5%);
+    }
+
+    @include breakpoint(medium down) {
+      &:nth-of-type(3),
+      &:last-of-type {
+        display: none;
+      }
+    }
+  }
+}

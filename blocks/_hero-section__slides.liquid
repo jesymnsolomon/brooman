@@ -1,0 +1,25 @@
+{% content_for "blocks" %}
+{% schema %}
+  {
+    "name": "Slides",
+    "class": "hero-section__carousel carousel__slides section-content",
+    "blocks": [
+      {
+        "type": "_hero-section__slide"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Slides",
+        "blocks": [
+          { 
+            "type": "_hero-section__slide",
+            "blocks": [
+              { "type": "_section-content__title" }
+            ] 
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

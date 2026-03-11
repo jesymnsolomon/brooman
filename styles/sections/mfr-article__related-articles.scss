@@ -1,0 +1,71 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+.mfr-article__related-articles {
+  position: relative;
+
+  .section-content {
+    margin-bottom: rem-calc(30px);
+  }
+
+  .related-articles {
+    // width: 100%;
+
+    &__item {
+      flex-shrink: 0;
+      padding: rem-calc(8px);
+      width: 90%;
+      min-width: 90%;
+      flex: 1;
+
+      @include breakpoint(large up) {
+        width: calc(100% / 3);
+        min-width: calc(100% / 3);
+        padding: rem-calc(10px);
+      }
+
+      @include breakpoint(xlarge up) {
+        width: calc(100% / 5);
+        min-width: calc(100% / 5);
+        padding: rem-calc(10px);
+      }
+
+      // &:first-child {
+      //   @include breakpoint(large up) {
+      //     @include left-carousel-entry-spacing;
+      //   }
+      // }
+
+      // &:last-child {
+      //   @include breakpoint(large up) {
+      //     @include right-carousel-entry-spacing;
+      //   }
+      // }
+
+      .blog-card {
+        aspect-ratio: 350/500;
+        height: 100%;
+        @include transition($global-transition );
+
+        @include enter-animation {
+          @include opacity(0);
+          @include transform(translateY($enter-transform-value));
+        }
+      }
+    }
+
+    &__carousel {
+      @include breakpoint(large up) {
+        @include left-carousel-entry-spacing;
+        @include right-carousel-entry-spacing;
+      }
+    }
+  }
+
+  .flickity-page-dots {
+    @include breakpoint(medium down) {
+      display: none;
+    }
+  }
+}

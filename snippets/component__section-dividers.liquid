@@ -1,0 +1,76 @@
+<style>
+  #shopify-section-{{ section.id }} {
+    {%- if section.settings.section_divider_top == "line" -%}
+      border-top: solid 2px black;
+    {%- endif -%}
+
+    {%- if section.settings.section_divider_bottom == "line" -%}
+      border-bottom: solid 2px black;
+    {%- endif -%}
+
+    {%- if section.settings.section_divider_bottom == "rounded" -%}
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+      margin-bottom: -30px;
+      z-index: 2;
+      overflow: hidden;
+    {%- endif -%}
+
+    {%- if section.settings.section_divider_top == "rounded" -%}
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      margin-top: -30px;
+      z-index: 2;
+      overflow: hidden;
+    {%- endif -%}
+
+    {%- if section.settings.section_divider_bottom == "rounded" -%}
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+      margin-bottom: -30px;
+      z-index: 2;
+      overflow: hidden;
+    {%- endif -%}
+
+    {%- if section.settings.divider_color != blank -%}
+      --divider-color: {{ section.settings.divider_color }};
+    {%- endif -%}
+  }
+</style>
+
+{%- if section.settings.section_divider_top == "scale" -%}
+  <style>
+    #shopify-section-{{ section.id }} {
+      padding-left: 60px;
+      padding-right: 60px;
+      margin-top: -30px;
+      z-index: 2;
+      background: linear-gradient(180deg, transparent 0, #fff 30px);
+    }
+
+    #shopify-section-{{ section.id }} section {
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      overflow: hidden;
+    }
+  </style>
+
+  <div class="section-scale-helper" x-data="MFRSectionScale"></div>
+  {% render 'script__section', file: "MFRSectionScale.js" %}
+{%- endif -%}
+
+{%- if section.settings.section_divider_top contains 'divider' or section.settings.section_divider_bottom contains 'divider'-%}
+  <div class="section-divider">
+    {% if section.settings.section_divider_top == 'divider_1' %}
+      <div class="section-divider__top divider-1">
+        {% render 'assets__top-divider-1', color: color %}
+      </div>
+    {% endif %}
+
+    {% if section.settings.section_divider_bottom == 'divider_1' %}
+      <div class="section-divider__bottom divider-1">
+        {% render 'assets__bottom-divider-1', color: color %}
+      </div>
+    {% endif %}
+  </div>
+{%- endif -%}

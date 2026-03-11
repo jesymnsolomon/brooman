@@ -1,0 +1,104 @@
+{%- if block.settings.embed_code != blank -%}
+  <style>
+    #shopify-block-{{ block.id }} {
+      {% if block.settings.max_width_mobile != blank %}
+        --max-width-mobile: {{ block.settings.max_width_mobile }}px;
+      {% endif %}
+      {% if block.settings.max_width_desktop != blank %}
+        --max-width-desktop: {{ block.settings.max_width_desktop }}px;
+      {% endif %}
+      {% if block.settings.height_mobile != blank %}
+        --height-mobile: {{ block.settings.height_mobile }}px;
+      {% endif %}
+      {% if block.settings.height_desktop != blank %}
+        --height-desktop: {{ block.settings.height_desktop }}px;
+      {% endif %}
+    }
+  </style>
+  {% if request.host contains "bigpotatogames.de" and block.settings.embed_code_germany != blank %}
+    <div class="liquid-html-embed__inner">
+      {{- block.settings.embed_code_germany -}}
+    </div>
+  {% elsif request.host contains "bigpotato.co.uk" and block.settings.embed_code_uk != blank %}
+     <div class="liquid-html-embed__inner">
+      {{- block.settings.embed_code_uk -}}
+    </div>
+  {% elsif request.host contains "bigpotato.com" and block.settings.embed_code_us != blank %}
+    <div class="liquid-html-embed__inner">
+      {{- block.settings.embed_code_us -}}
+    </div>
+  {%  else %}
+    <div class="liquid-html-embed__inner">
+      {{- block.settings.embed_code -}}
+    </div>
+  {% endif %}
+{%- elsif request.design_mode -%}
+  <div class="liquid-html-embed__inner preview">
+    This will be an embed code
+  </div>
+{%- endif -%}
+{%- schema -%}
+  {
+    "name": "Liquid/HTML Embed",
+    "class": "liquid-html-embed",
+    "settings": [
+      {
+        "type": "liquid",
+        "id": "embed_code",
+        "label": "Default: Embed Code"
+      },
+      {
+        "type": "liquid",
+        "id": "embed_code_uk",
+        "label": "UK: Embed Code"
+      },
+       {
+        "type": "liquid",
+        "id": "embed_code_us",
+        "label": "US: Embed Code"
+      },
+      {
+        "type": "liquid",
+        "id": "embed_code_germany",
+        "label": "Germany: Embed Code"
+      },
+      {
+        "type": "header",
+        "content": "Size Settings"
+      },
+      {
+        "type": "number",
+        "id": "max_width_mobile",
+        "label": "Max Width - Mobile",
+        "default": 480,
+        "info": "in pixels"
+      },
+      {
+        "type": "number",
+        "id": "height_mobile",
+        "label": "Height - Mobile",
+        "default": 270,
+        "info": "in pixels"
+      },
+      {
+        "type": "number",
+        "id": "max_width_desktop",
+        "label": "Max Width - Desktop",
+        "default": 720,
+        "info": "in pixels"
+      },
+      {
+        "type": "number",
+        "id": "height_desktop",
+        "label": "Height - Desktop",
+        "default": 405,
+        "info": "in pixels"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Liquid/HTML Embed"
+      }
+    ]
+  }
+{%- endschema -%}

@@ -1,0 +1,44 @@
+.mfr-responsive-video {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: rem-calc( 388px );
+
+  @include breakpoint( large up ) {
+    max-width: rem-calc( 1360px );
+  }
+
+  video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .mute-button {
+    position: absolute;
+    bottom: rem-calc( 13px );
+    right: rem-calc( 13px );
+    width: rem-calc( 28px );
+    height: rem-calc( 28px );
+    background-color: #323230;
+    @include border-radius( 50% );
+
+    @include breakpoint( large up ) {
+      bottom: rem-calc( 22px );
+      right: rem-calc( 22px );
+    }
+  }
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    pointer-events: all;
+    object-fit: cover;
+  }
+
+  &[data-loaded="true"] img { display: none; }
+}

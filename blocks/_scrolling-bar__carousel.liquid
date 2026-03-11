@@ -1,0 +1,127 @@
+<style>
+  #shopify-block-{{ block.id }} {
+    --spacing-mobile: {{ block.settings.spacing_mobile | divided_by: 2.00 }}px;
+    --spacing-desktop: {{ block.settings.spacing_desktop | divided_by: 2.00 }}px;
+  }
+</style>
+
+{%- capture slide_content -%}
+  {%- if request.visual_preview_mode -%}
+    {% for i in (1..5) %}
+      <div class="scrolling-bar__icon-text-item scrolling-bar__item preview">
+        {{ "PlaceholderImage-Small.jpg"
+          | asset_img_url: 'master'
+          | img_tag: "Manufactur Placeholder Image", "", "30x30" }}
+        <p class="regular">Lorem ipsum dolor sit amet.</p>
+      </div>
+    {% endfor %}
+  {% else %}
+    {%- content_for "blocks" -%}
+
+    {% if block.settings.metaobject != blank %}
+      {% for item in block.settings.metaobject %}
+        <div class="shopify-block scrolling-bar__icon-text-item scrolling-bar__item">
+        {% render 'component__scrollbar-item', item: item, is_metafield: true %}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endif %}
+{%- endcapture -%}
+
+{%- capture settings -%}
+  {
+    pauseOnDrag: {{ block.settings.pause_on_drag }},
+    renderAutoScrollOn: "{{ block.settings.render_autoscroll_on }}",
+    scrollSpeed: 1,
+    direction: "{{ block.settings.direction | default: "left" }}"
+  }
+{%- endcapture -%}
+
+{% render 'mfr-component__carousel-marquee',
+  settings: settings,
+  class: "scrolling-bar-carousel__carousel",
+  content: slide_content %}
+
+{% schema %}
+  {
+    "name": "Scrolling Bar Carousel",
+    "class": "scrolling-bar",
+    "settings": [
+      {
+        "type": "metaobject_list",
+        "id": "metaobject",
+        "metaobject_type": "pdp_scrolling_bar",
+        "label": "Metaobject"
+      },
+      {
+        "type": "header",
+        "content": "Scrollbar Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "pause_on_drag",
+        "label": "Pause Autoscroll On Drag",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "render_autoscroll_on",
+        "label": "Render Autoscroll on:",
+        "options": [
+          {
+            "value": "",
+            "label": "Both"
+          },
+          {
+            "value": "mobile",
+            "label": "Mobile"
+          },
+          {
+            "value": "desktop",
+            "label": "Desktop"
+          }
+        ],
+        "default": ""
+      },
+      {
+        "type": "select",
+        "id": "direction",
+        "label": "Direction",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "left"
+      },
+      {
+        "type": "number",
+        "id": "spacing_mobile",
+        "label": "Item Spacing - Mobile",
+        "default": 15
+      },
+      {
+        "type": "number",
+        "id": "spacing_desktop",
+        "label": "Item Spacing - Desktop",
+        "default": 30
+      }
+    ],
+    "blocks": [
+      { "type": "_scrolling-bar__icon-text-item" }
+    ],
+    "presets": [
+      {
+        "name": "Scrolling Bar Carousel",
+        "blocks": [
+          { "type": "_scrolling-bar__icon-text-item" }
+        ]
+      }
+    ]
+  }
+{% endschema %}

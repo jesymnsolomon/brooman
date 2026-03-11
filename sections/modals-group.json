@@ -1,0 +1,66 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "custom.modals",
+  "name": "Modals",
+  "sections": {
+    "modal_QxYQFV": {
+      "type": "modal",
+      "blocks": {
+        "small_text_DzzYzh": {
+          "type": "small_text",
+          "settings": {
+            "text": "Accent Text",
+            "small_text_color": ""
+          }
+        },
+        "lists_t7RiMB": {
+          "type": "lists",
+          "settings": {
+            "list_items": "list item\nlist item\nlist item"
+          }
+        },
+        "button_YNaDdp": {
+          "type": "button",
+          "settings": {
+            "button_label": "Button label",
+            "button_link": "",
+            "color_theme": "primary"
+          }
+        },
+        "image_M9KYEa": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/threader-necklace-closeup_925x_4a719d49-8c3d-4c4d-862a-2a5e6e88c1a4.jpg"
+          }
+        },
+        "image_4pNjDy": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/silver-threader-necklace_925x_c675c717-2bb6-4578-bb41-245108ecb2db.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "small_text_DzzYzh",
+        "lists_t7RiMB",
+        "button_YNaDdp",
+        "image_M9KYEa",
+        "image_4pNjDy"
+      ],
+      "settings": {
+        "modal_id": "example-modal"
+      }
+    }
+  },
+  "order": [
+    "modal_QxYQFV"
+  ]
+}

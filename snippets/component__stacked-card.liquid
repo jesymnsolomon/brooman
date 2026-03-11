@@ -1,0 +1,47 @@
+{% assign description = entry.description  %}
+
+{% if is_metaobject %}
+  {% assign description = entry.description | metafield_tag %}
+{% endif %}
+
+<div class="stacked-card__inner" style="background: {{ entry.color }};">
+  {%- if entry.title != blank or entry.description != blank or entry.icon != blank -%}
+    <div class="stacked-card__header">
+      {%- if entry.icon != blank -%}
+        {% assign alt = entry.icon.alt |  default: entry.title |  append: 'icon' %}
+
+        <div class="stacked-card__icon">
+          {% render 'component__lazyload-image',
+          image: entry.icon,
+          alt: alt,
+          width: "300" %}
+        </div>
+      {%- endif -%}
+      {%- if entry.title != blank or entry.description != blank -%}
+        <div class="stacked-card__texts">
+          {%- if entry.title != blank -%}
+            <h3 class="stacked-card__texts-title h3">
+              <span class="stacked-card__texts-title-num">{{ index }}.</span> {{ entry.title }}
+            </h3>
+          {%- endif -%}
+          {%- if entry.description != blank -%}
+            <div class="stacked-card__texts-desc">
+              {{ description }}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  {% endif %}
+
+  {%- if entry.image_mobile != blank or entry.image_desktop != blank -%}
+    <div class="stacked-card__image">
+      {% render 'component__responsive-image-v2',
+        image_mobile: entry.image_mobile,
+        image_desktop: entry.image_desktop,
+        default_alt: "card image",
+        width_mobile: 1080,
+        width_desktop: 720 %}
+    </div>
+  {%- endif -%}
+</div>

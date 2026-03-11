@@ -1,0 +1,71 @@
+<div class="mfr-carousel__item">
+  {% if entry.accent_graphic != blank %}
+    <div class="customer-testimonials__entry-accent-graphic">
+      {% render 'component__lazyload-image',
+        image: entry.accent_graphic.value,
+        width: 200 %}
+     </div>
+  {% endif %}
+
+  <div class="customer-testimonials__entry-inner customer-testimonials__entry-v2-inner">
+    {% if entry.media != blank %}
+    {% assign media = entry.media.value %}
+
+    <div class="customer-testimonials__entry-v2-media" x-data>
+      {% if media.media_type == "video" %}
+      {%- render 'component__video-with-controls'
+      block_id: block.id,
+      video: media,
+      poster_size: 380,
+      autoplay: false,
+      loop: false,
+      controls: false,
+      muted: false,
+      poster: entry.image,
+      show_play_button: true,
+      show_speaker_button: true,
+      without_wrapper: false
+      -%}
+      {% elsif media.media_type == "image" %}
+      {% assign default_alt = "maybe an image about " | append: entry.title %}
+      {% assign alt = media.alt | default: default_alt %}
+      {% assign width = 380 %}
+
+      {% if media.aspect_ratio > 1 %}
+        {% assign width = width | times: 2 %}
+      {% endif %}
+
+      {% render 'component__lazyload-image',
+        image: media,
+        width: width,
+        alt: alt %}
+      {% endif %}
+    </div>
+    {% endif %}
+
+    {% if entry.title != blank or entry.author != blank %}
+      {% assign product = entry.product.value %}
+      <a href="{{ product.url |  default: '#' }}" role="button" class="customer-testimonials__entry-v2-content no-hover">
+        <div class="customer-testimonials__entry-v2-content-left">
+          {% if entry.title != blank %}
+            <p class="customer-testimonials__entry-v2-testimonial">
+              {{ entry.title }}
+            </p>
+          {% endif %}
+
+          {% if entry.author != blank %}
+            <p class="customer-testimonials__entry-v2-name">
+              {{ entry.author }}
+            </p>
+          {% endif %}
+        </div>
+
+        {% if entry.product.value != blank %}
+          <div href="{{ product.url }}" class="customer-testimonials__entry-link">
+            {% render 'icon__chevrons', position: 'right' %}
+          </div>
+        {% endif %}
+      </a>
+    {% endif %}
+  </div>
+</div>

@@ -1,0 +1,295 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "custom.offcanvas",
+  "name": "Offcanvas Sections",
+  "sections": {
+    "offcanvas_menu_QmtAiq": {
+      "type": "offcanvas-menu",
+      "blocks": {
+        "search_ihw66y": {
+          "type": "search",
+          "settings": {}
+        },
+        "cta_menu_nbY6Ay": {
+          "type": "cta_menu",
+          "settings": {
+            "title": "Find Your Perfect Match",
+            "menu": "mfr-menu-mobile-cta-menu-1"
+          }
+        },
+        "product_menu_Wahktj": {
+          "type": "product_menu",
+          "settings": {
+            "menu": "mfr-menu-left-menu-extended",
+            "color": "#009ddb"
+          }
+        },
+        "menu_6QJKPJ": {
+          "type": "menu",
+          "settings": {
+            "menu": "mfr-menu-mobile-menu"
+          }
+        },
+        "cta_menu_zNBx6U": {
+          "type": "cta_menu",
+          "settings": {
+            "title": "",
+            "menu": "mfr-menu-mobile-cta-menu"
+          }
+        },
+        "image_link_AmMkk7": {
+          "type": "image_link",
+          "settings": {
+            "menu_label": "Shop",
+            "url": "shopify://collections/expandable-hoses",
+            "label": "Standard Expandable",
+            "caption": "Lightweight, efficient, and versatile.",
+            "bg_color": "#c6f695"
+          }
+        },
+        "image_link_hndAYn": {
+          "type": "image_link",
+          "settings": {
+            "menu_label": "Shop",
+            "url": "shopify://collections/proseries-hoses",
+            "label": "Pro Series Expandable",
+            "caption": "Powerful performance made easy.",
+            "bg_color": "#ffbc88"
+          }
+        },
+        "image_link_6H7iHf": {
+          "type": "image_link",
+          "settings": {
+            "menu_label": "Shop",
+            "url": "shopify://collections/flatjacket-hoses",
+            "label": "FLATJACKET™",
+            "caption": "Compact and super light.",
+            "bg_color": "#b6e7f9"
+          }
+        },
+        "image_link_djYXqz": {
+          "type": "image_link",
+          "settings": {
+            "menu_label": "Shop",
+            "url": "shopify://collections/nozzles",
+            "label": "Nozzles & Accessories",
+            "caption": "Precision tools for every task.",
+            "bg_color": "#ffd793"
+          }
+        }
+      },
+      "block_order": [
+        "search_ihw66y",
+        "cta_menu_nbY6Ay",
+        "product_menu_Wahktj",
+        "menu_6QJKPJ",
+        "cta_menu_zNBx6U",
+        "image_link_AmMkk7",
+        "image_link_hndAYn",
+        "image_link_6H7iHf",
+        "image_link_djYXqz"
+      ],
+      "settings": {
+        "color_scheme": "scheme-6d2649d8-c48a-4015-ade0-e6438e7bf85d"
+      }
+    },
+    "offcanvas_contact_9wGjjV": {
+      "type": "offcanvas-contact",
+      "blocks": {
+        "email_enVTf7": {
+          "type": "email",
+          "disabled": true,
+          "settings": {
+            "separate_name": false,
+            "name_placeholder": "First & Last Name",
+            "email_placeholder": "Enter your Email Address"
+          }
+        },
+        "field_UDcp6M": {
+          "type": "field",
+          "disabled": true,
+          "settings": {
+            "required": false,
+            "type": "input",
+            "label": "Phone Number",
+            "placeholder": "xxx - xxx - xxx"
+          }
+        },
+        "field_4NmHLA": {
+          "type": "field",
+          "disabled": true,
+          "settings": {
+            "required": false,
+            "type": "textarea",
+            "label": "Message",
+            "placeholder": "Type your message"
+          }
+        },
+        "button_JThkmQ": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "label": "Submit",
+            "color_theme": "primary"
+          }
+        }
+      },
+      "block_order": [
+        "email_enVTf7",
+        "field_UDcp6M",
+        "field_4NmHLA",
+        "button_JThkmQ"
+      ],
+      "settings": {
+        "title": "CONTACT US",
+        "embed_code": "[nerdy-form:17562]",
+        "success_message": "<h4>Thanks for reaching out!</h4><p>We will get back to you shortly.</p>",
+        "color_scheme": "scheme-6d2649d8-c48a-4015-ade0-e6438e7bf85d"
+      }
+    },
+    "offcanvas_cart_GhbKBA": {
+      "type": "offcanvas-cart",
+      "blocks": {
+        "price_progress_bar_EepTtF": {
+          "type": "price_progress_bar",
+          "settings": {
+            "collection": "all-products",
+            "price": "0",
+            "condition_label": "<p>You are <strong>[price]</strong> away from free shipping!</p>",
+            "success_message": "<p>You have free shipping!</p>",
+            "track_color": "#ffea39",
+            "track_bg_color": "#ffffff",
+            "color_scheme_progress_bar": "scheme-6d2649d8-c48a-4015-ade0-e6438e7bf85d"
+          }
+        },
+        "quantity_progress_bar_hTeCGw": {
+          "type": "quantity_progress_bar",
+          "disabled": true,
+          "settings": {
+            "collection": "bracelets",
+            "quantity": 3,
+            "condition_label": "<p>Add <strong>[quantity] </strong>more for 20% off</p>",
+            "success_message": "<p>You have 20% off!</p>",
+            "track_color": "#141723",
+            "track_bg_color": "#a0a1a6",
+            "color_scheme_progress_bar": "scheme_1"
+          }
+        },
+        "product_upsell_4GVm84": {
+          "type": "product_upsell",
+          "disabled": true,
+          "settings": {
+            "color_scheme_upsell": "scheme-6d2649d8-c48a-4015-ade0-e6438e7bf85d",
+            "title": "",
+            "quantity": 0,
+            "products": [
+              "herd-mentality",
+              "p-for-pizza"
+            ]
+          }
+        },
+        "rebuy_widget_H4zRag": {
+          "type": "rebuy_widget",
+          "settings": {
+            "widget_code": "<div data-rebuy-id=\"225823\"></div>"
+          }
+        },
+        "cart_surcharge_KHWaJr": {
+          "type": "cart_surcharge",
+          "disabled": true,
+          "settings": {
+            "title": "Surcharge of",
+            "type_indicator": "mws_fee_generated"
+          }
+        }
+      },
+      "block_order": [
+        "price_progress_bar_EepTtF",
+        "quantity_progress_bar_hTeCGw",
+        "product_upsell_4GVm84",
+        "rebuy_widget_H4zRag",
+        "cart_surcharge_KHWaJr"
+      ],
+      "settings": {
+        "cart_title": "Cart",
+        "checkout_message": "",
+        "general_message": "",
+        "button_label": "Checkout",
+        "color_theme": "primary",
+        "cart_exclusion_strings": "'mws_fee_generated'",
+        "color_scheme": "scheme-6d2649d8-c48a-4015-ade0-e6438e7bf85d",
+        "color_scheme_checkout": "scheme-3281f1a6-44f0-4c91-b920-9318c44d1969"
+      }
+    },
+    "offcanvas_filters_HarGA8": {
+      "type": "offcanvas-filters",
+      "blocks": {
+        "sort_item_xcDFBn": {
+          "type": "sort_item",
+          "settings": {
+            "title": "Price",
+            "field": "price",
+            "asc_label": "Low to High",
+            "desc_label": "High to Low"
+          }
+        },
+        "filter_item_gDjmKU": {
+          "type": "filter_item",
+          "settings": {
+            "title": "Age",
+            "field": "age",
+            "collection_list": []
+          }
+        },
+        "filter_item_mPQ3WG": {
+          "type": "filter_item",
+          "settings": {
+            "title": "Player",
+            "field": "players",
+            "collection_list": []
+          }
+        },
+        "filter_item_dVQmjT": {
+          "type": "filter_item",
+          "settings": {
+            "title": "Category",
+            "field": "className",
+            "collection_list": [
+              "best-sellers",
+              "board-games-for-families",
+              "party-games",
+              "travel-games",
+              "2-player-board-games",
+              "new-games"
+            ]
+          }
+        }
+      },
+      "block_order": [
+        "sort_item_xcDFBn",
+        "filter_item_gDjmKU",
+        "filter_item_mPQ3WG",
+        "filter_item_dVQmjT"
+      ],
+      "name": "Offcanvas Filters",
+      "settings": {
+        "referenced_section_id": "collection-grid",
+        "color_scheme": "scheme-6d2649d8-c48a-4015-ade0-e6438e7bf85d"
+      }
+    }
+  },
+  "order": [
+    "offcanvas_menu_QmtAiq",
+    "offcanvas_contact_9wGjjV",
+    "offcanvas_cart_GhbKBA",
+    "offcanvas_filters_HarGA8"
+  ]
+}

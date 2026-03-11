@@ -1,0 +1,56 @@
+<script src="{{ 'html-element__main-search.js' | asset_url }}" defer="defer"></script>
+
+{% paginate search.results by 24 %}
+  <div class="search-results">
+    {% render 'search__form', main_search: true, predictive: true, search_icon: true %}
+
+    {%- if search.performed -%}
+      {%- if search.results_count > 0 -%}
+        <p class="search-results__status" role="status">{{ 'templates.search.results_with_count_and_term' | t: terms: search.terms, count: search.results_count }}</p>
+      {%- endif -%}
+
+      {%- if search.results_count == 0 and search.filters == empty -%}
+        <p class="search-results__status" role="status">{{ 'templates.search.no_results' | t: terms: search.terms }}</p>
+      {%- endif -%}
+
+      {%- if search.results.size > 0 -%}
+        <ul class="search-results__results">
+          {%- for result in search.results -%}
+            <li>
+              {% case result.object_type %}
+
+                {%- when "product" -%}
+                  {% render 'search__item-card',
+                    title: result.title,
+                    description: result.description,
+                    image: result.featured_image,
+                    price: result.price,
+                    url: result.url,
+                    show_image: true
+                  %}
+
+                {%- when "article" -%}
+                  {% render 'search__item-card',
+                    title: result.title,
+                    description: result.excerpt,
+                    image: result.image,
+                    url: result.url,
+                    show_image: true
+                  %}
+
+                {%- when "page" -%}
+                  {% render 'search__item-card',
+                    title: result.title,
+                    image: result.featured_image,
+                    url: result.url,
+                    show_image: false,
+                    is_page: true
+                  %}
+              {%- endcase -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+{% endpaginate %}

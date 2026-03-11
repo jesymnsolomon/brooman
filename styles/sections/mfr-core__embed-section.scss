@@ -1,0 +1,135 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+.mfr-core__embed-section {
+
+  .grid-x {
+    overflow: hidden;
+  }
+
+  .grid-container {
+    max-width: none;
+  }
+
+  .inner-spacing {
+    position: relative;
+    padding: rem-calc(60px) 0;
+
+    @include breakpoint(large up) {
+      padding: rem-calc(120px) 0 rem-calc(100px);
+    }
+  }
+
+  .small-title {
+    margin: 0;
+
+    &:not(:last-child) {
+      margin-bottom: rem-calc( 19px );
+
+      @include breakpoint( large up ) {
+        margin-bottom: rem-calc( 24px );
+      }
+    }
+  }
+
+  .section-content {
+    margin: 0;
+
+    &:not(:last-child) {
+      margin-bottom: rem-calc( 42px );
+
+      @include breakpoint( large up ) {
+        margin-bottom: rem-calc( 63px );
+      }
+    }
+
+    .section-title {
+      margin: 0;
+
+      &:not(:last-child) {
+        margin-bottom: rem-calc( 8px );
+
+        @include breakpoint( large up ) {
+          margin-bottom: rem-calc( 15px );
+        }
+      }
+    }
+
+    .section-text {
+      margin: 0;
+
+      &:not(:last-child) {
+        margin-bottom: rem-calc( 36px );
+
+        @include breakpoint( large up ) {
+          margin-bottom: rem-calc( 44px );
+        }
+      }
+    }
+
+    .button-set {
+      margin: rem-calc( 48px ) 0 1rem;
+
+      @include breakpoint( large up ) {
+        margin-top: rem-calc( 20px );
+      }
+    }
+  }
+
+  .embed-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    &__wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    &__divider {
+      width: 100%;
+      max-width: rem-calc( 180px );
+      margin: rem-calc( 17px ) auto var(--margin-bottom-mobile);
+      height: $global-border-width;
+      background: linear-gradient(-41deg,#4F391F,#A36F3B);
+
+      @include breakpoint( large up ) {
+        max-width: rem-calc( 255px );
+        margin-top: rem-calc( 19px );
+        margin-bottom: var(--margin-bottom-desktop);
+      }
+    }
+
+    &__embed {
+      padding: rem-calc( 45px ) rem-calc( 21px );
+      width: 100%;
+      max-width: rem-calc( 450px );
+      background: rgba(#000,0.03);
+      @include border-radius( rem-calc( 20px ) );
+
+      @include breakpoint( large up ) {
+        padding: rem-calc( 54px );
+        max-width: rem-calc( 700px );
+      }
+    }
+  }
+
+  .liquid-html-embed__inner {
+    align-items: flex-start;
+    justify-content: center;
+
+    form {
+      margin: 0 !important;
+    }
+  }
+  //tables
+  thead, tbody, tfoot {
+    background: inherit !important;
+    border: inherit !important;
+  }
+  tbody tr:nth-child(even) {
+    border-bottom: 0 !important;
+    background-color: inherit !important;
+  }
+}

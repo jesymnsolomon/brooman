@@ -1,0 +1,1 @@
+{"version":3,"sources":["mfr-core__two-column-content.scss"],"names":[],"mappings":"AAKE,sCACE,MAAA,KACA,QAAA","file":"mfr-core__two-column-content.css","sourcesContent":["@import \"../variables\";\n@import \"../tools/util/util\";\n@import \"../tools/mixins\";\n\n.mfr-core__two-column-content {\n  .column {\n    width: 100%;\n    display: flex;\n  }\n}"]}

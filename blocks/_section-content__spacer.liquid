@@ -1,0 +1,36 @@
+<style>
+  #shopify-block-{{ block.id }} {
+    height: {{ block.settings.height_mobile }}px;
+  }
+
+  @media (min-width: 1024px ) {
+    #shopify-block-{{ block.id }} {
+      height: {{ block.settings.height_desktop }}px;
+    }
+  }
+</style>
+{% schema %}
+  {
+    "name": "Spacer",
+    "class": "section-content__spacer",
+    "settings": [
+      {
+        "type": "number",
+        "id": "height_mobile",
+        "label": "Height - Mobile",
+        "default": 30
+      },
+      {
+        "type": "number",
+        "id": "height_desktop",
+        "label": "Height - Desktop",
+        "default": 60
+      }
+    ],
+    "presets": [
+      {
+        "name": "Spacer"
+      }
+    ]
+  }
+{% endschema %}

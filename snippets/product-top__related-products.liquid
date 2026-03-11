@@ -1,0 +1,24 @@
+{% assign product_id = product.id %}
+
+{% if products != blank %}
+	<div class="product-top__related-products" data-inview>
+		<div class="related-products__products" data-stagger-inview=".related-products__product">
+			{% for product in products %}
+			<a 
+				href="{% if product_id == product.id %}#{% else %}{{ product.url }}{% endif %}"
+				class="related-products__product {% if product_id == product.id %}is-active{% endif %}" 
+				style="--bg-color: {{ product.metafields.mfr_fields.product_card_background_color | default: '#fff' }}"
+			>
+				<span class="related-products__product-inner">
+					{% if product.metafields.mfr_fields.product_card_image %}
+						{{ product.metafields.mfr_fields.product_card_image | image_url: width: 50 | image_tag: width: 50, widths: "50", alt: product.title }}
+					{% endif %}
+				</span>
+				<span class="related-products__product-name">
+					{{ product.title }}
+				</span>
+			</a>
+			{% endfor %}
+		</div>
+	</div>
+{% endif %}

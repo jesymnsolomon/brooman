@@ -1,0 +1,111 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "mfr-collection__list",
+      "blocks": {
+        "section-content": {
+          "type": "_section-content",
+          "static": true,
+          "settings": {
+            "mobile_alignment": "",
+            "desktop_alignment": "",
+            "text_alignment_desktop": "center",
+            "text_alignment_mobile": "center",
+            "max_width_mobile": 0,
+            "max_width_desktop": 0
+          },
+          "blocks": {
+            "section_content_title_eHN8nT": {
+              "type": "_section-content__title",
+              "name": "Section Title",
+              "settings": {
+                "heading": "All Collections",
+                "disable_animation": false,
+                "header_style": "h2",
+                "header_tag": "h2",
+                "font_family": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 0,
+                "margin_bottom": 50
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "section_content_title_eHN8nT"
+          ]
+        },
+        "collections-grid": {
+          "type": "_collections-grid",
+          "static": true,
+          "settings": {},
+          "blocks": {}
+        },
+        "accent-graphics": {
+          "type": "_accent-graphics",
+          "static": true,
+          "settings": {},
+          "blocks": {
+            "accent_graphic_rYzR8P": {
+              "type": "_accent-graphic",
+              "name": "Accent Graphic",
+              "settings": {
+                "icon": "shopify://shop_images/star-bitmap.png",
+                "svg_code": "",
+                "visibility": "always",
+                "value_type": "%",
+                "x_setting": "left",
+                "y_setting": "top",
+                "width_large": 120,
+                "position_x_large": 4,
+                "position_y_large": -4,
+                "width_small": 100,
+                "position_x_small": 10,
+                "position_y_small": -2,
+                "animation": "none",
+                "rotate": 0,
+                "flip": false,
+                "custom_class": ""
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "accent_graphic_rYzR8P"
+          ]
+        }
+      },
+      "settings": {
+        "container_width": "",
+        "max_width": 85,
+        "grid_gutter": "",
+        "mobile_alignment": "center",
+        "desktop_alignment": "center",
+        "color_scheme": "scheme-e7a2b49c-36ae-4b1f-b31f-f3ec31db1021",
+        "top_spacing_mobile": 50,
+        "bottom_spacing_mobile": 50,
+        "top_spacing_desktop": 100,
+        "bottom_spacing_desktop": 100,
+        "bg_color": "",
+        "section_divider_top": "",
+        "section_divider_bottom": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

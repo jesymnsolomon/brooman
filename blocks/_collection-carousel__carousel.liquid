@@ -1,0 +1,35 @@
+{%- assign collections = block.settings.collections -%}
+
+{% if collections != blank %}
+  {%- for collection in collections -%}
+    <div class="collection-carousel__carousel-item carousel__item">
+      <div class="collection-carousel__carousel-item-inner">
+        {% render 'partial__collection-card',
+          collection: collection %}
+      </div>
+    </div>
+  {%- endfor -%}
+{% elsif request.design_mode %}
+  {% for i in (1..5) %}
+    <div class="collection-carousel__carousel-item carousel__item">
+      <div class="collection-carousel__carousel-item-inner">
+        {% render 'partial__collection-card',
+          collection: collection %}
+      </div>
+    </div>
+  {% endfor %}
+{% endif %}
+
+{%- schema -%}
+  {
+    "name": "Collection Carousel",
+    "class": "collection-carousel__carousel carousel__slides",
+    "settings": [
+      {
+        "type": "collection_list",
+        "id": "collections",
+        "label": "Collections"
+      }
+    ]
+  }
+{%- endschema -%}

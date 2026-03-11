@@ -1,0 +1,37 @@
+{%- liquid
+  assign id = block_id | default: "blog-card-" | append: featured_article.id
+  assign featured_image = featured_article.image
+  assign tags = featured_article.tags
+  assign metafields = featured_article.metafields.mfr_fields
+-%}
+{%- capture reading_time -%}
+  Read: {{ article.content | strip_html | split: " " | size | divided_by: 200 | plus: 1 }} mins;
+{%- endcapture -%}
+
+<a 
+  href="{{ featured_article.url }}" 
+  class="blog-card {{ classes }} {% for tag in featured_article.tags %} {{ tag | handle | replace: '', '' | downcase }} {% endfor %}" 
+  aria-label="{{ featured_article.title }} {{ reading_time }}" 
+  id="{{ id }}">
+  <div class="blog-card__media">
+    {% assign default_alt = "maybe an image about " | append: featured_article.title %}
+    {% assign alt = featured_image.alt | default: default_alt %}
+
+    {%- for tag in featured_article.tags -%}
+      <span class="blog-card__category">{{ tag }}</span>
+    {%- endfor -%}
+
+    {% render 'component__lazyload-image',
+      image: featured_image,
+      width: 600,
+      alt: alt,
+      widths: "360,420,480,600",
+      sizes: 350px 
+    %}
+  </div>
+
+  <div class="blog-card__info">
+    <span class="blog-card__title">{{ featured_article.title }}</span>
+    <span class="blog-card__reading-time">{{ reading_time }}</span>
+  </div>
+</a>

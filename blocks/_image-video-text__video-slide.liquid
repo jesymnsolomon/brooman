@@ -1,0 +1,100 @@
+<style>
+  #shopify-block-{{ block.id }} .mfr-video-with-controls {
+    height: 100%;
+  }
+  #shopify-block-{{ block.id }} video {
+    object-fit: {{ block.settings.video_fit }};
+  }
+</style>
+{% unless block.settings.poster != blank %}
+  {%- capture svg_code -%}{{- 'lifestyle-2' | placeholder_svg_tag -}}{%- endcapture -%}
+  {% render 'component__svg-encoder', svg_code: svg_code, alt: "placeholder image" %}
+{% else %}
+  {%- render 'component__video-with-controls'
+    block_id: block.id,
+    video: block.settings.video,
+    poster_size: 5120,
+    autoplay: block.settings.autoplay,
+    loop: block.settings.loop,
+    controls: block.settings.controls,
+    muted: block.settings.muted,
+    poster: block.settings.poster,
+    show_play_button: block.settings.show_play_button,
+    show_speaker_button: block.settings.show_speaker_button,
+    without_wrapper: false
+   -%}
+{% endunless %}
+
+{% schema %}
+  {
+    "name": "Video Slide",
+    "class": "image-video-text__video-slide mfr-carousel__item image-video-text__slide-item",
+    "settings": [
+      {
+        "type": "video",
+        "id": "video",
+        "label": "Video File"
+      },
+      {
+        "type": "image_picker",
+        "id": "poster",
+        "label": "Poster Image",
+      },
+      {
+        "type": "select",
+        "id": "video_fit",
+        "label": "Video Fit",
+        "options": [
+          { "label": "Crop to Fill", "value": "cover" },
+          { "label": "Fit Within Space", "value": "contain" }
+        ],
+        "default": "cover"
+      },
+      {
+        "type": "header",
+        "content": "Video Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Autoplay",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "loop",
+        "label": "Loop",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "controls",
+        "label": "Controls",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "muted",
+        "label": "Muted",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_play_button",
+        "label": "Show Play Button",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_speaker_button",
+        "label": "Show Speaker Button",
+        "default": true
+      },
+    ],
+    "presets": [
+      {
+        "name": "Video Slide"
+      }
+    ]
+  }
+{% endschema %}

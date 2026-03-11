@@ -1,0 +1,45 @@
+<div class="cart-form__gift-note" x-data="{
+	isGiftWrapper: '', 
+	messageBox: false,
+	messageCounter: '',
+	messageLimit: 100,
+
+	init() {
+		this.isGiftWrapper = $root.querySelector('#isGift')
+		this.checkMessageBox()
+	},
+
+	checkMessageBox() {
+		if (this.isGiftWrapper.length === 0) return
+
+		if (this.isGiftWrapper.checked) {
+			this.messageBox = true
+		}
+	},
+
+	toggleMessageBox() {
+		this.messageBox = !this.messageBox
+	},
+
+	calculateMaxCharacters(el) {
+		if (el.value.length > this.messageLimit) {
+			return false
+		}
+
+		this.messageCounter = `Limit: ${this.messageLimit - el.value.length}/${this.messageLimit}`
+	}
+}">
+	<div class="cart-attribute__field">
+		<input type="hidden" name="attributes[Is this a gift?]" value="No">
+		<input type="checkbox" id="isGift" name="attributes[Is this a gift?]" value="Yes" @click="toggleMessageBox()">
+		<label for="isGift">Is this a gift?</label>
+	</div>
+
+	<div class="cart-attribute__field">
+		<label for="gift-note" class="visually-hidden">Cart Note</label>
+		<div id="gift-message" :class="messageBox ? '' : 'hide' ">
+			<textarea id="gift-note" placeholder="Write your note" name="attributes[Gift Note]" :maxlength="messageLimit" @keyup="calculateMaxCharacters($el)">{{ cart.attributes["Gift Note"] }}</textarea>
+			<span x-text="messageCounter"></span>
+		</div>
+	</div>
+</div>

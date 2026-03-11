@@ -1,0 +1,337 @@
+{% capture success_message %}
+  {%- assign success_message = section.settings.success_message -%}
+
+  {% if success_message != blank %}
+    <div class="offcanvas-contact__success-message">
+      {{ success_message }}
+    </div>
+  {% endif %}
+{% endcapture %}
+
+{%- capture contact_form -%}
+  {% comment %} Error messages {% endcomment %}
+  {%- if form.errors -%}
+    {%- for field in form.errors -%}
+      <span class="errors">
+        {%- if field == 'form' -%}
+          {{ form.errors.messages[field] }}
+        {%- else -%}
+          <strong>{{ form.errors.translated_fields[field] }}</strong> {{ form.errors.messages[field] }}
+        {%- endif -%}
+      </span>
+    {%- endfor -%}
+  {%- endif -%}
+
+  {%- for block in section.blocks -%}
+    <div class="form-{{ block.type }}">
+      {%- case block.type -%}
+        {% comment %} Email and name fields {% endcomment %}
+        {%- when 'email' -%}
+          {%- if block.settings.separate_name -%}
+            <div class="form-inner two-column">
+              <div class="form-inner">
+                <label for="contactFormFirstName">First Name</label>
+                <input type="text" id="contactFormFirstName" name="contact[first_name]" tabindex="0" placeholder="Enter your first name" autocapitalize="words" required value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+              </div>
+              <div class="form-inner">
+                <label for="contactFormLastName">Last Name</label>
+                <input type="text" id="contactFormLastName" name="contact[last_name]" tabindex="0" placeholder="Enter your last name" autocapitalize="words" required value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+              </div>
+            </div>
+          {%- else -%}
+            <div class="form-inner">
+              <label for="contactFormName">Your Name</label>
+              <input type="text" id="contactFormName" name="contact[name]" tabindex="0" placeholder="{{ block.settings.name_placeholder }}" autocapitalize="words" required value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+            </div>
+          {%- endif -%}
+
+          <div class="form-inner">
+            <label for="contactFormEmail">Email Address</label>
+            <input type="email" id="contactFormEmail" name="contact[email]" placeholder="{{ block.settings.email_placeholder }}" autocorrect="off" autocapitalize="off" required value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+          </div>
+
+        {% comment %} Form fields {% endcomment %}
+        {%- when 'field' -%}
+          {%- assign id = block.id | prepend: 'field' -%}
+
+          <label for="{{ id }}">{{ block.settings.label | escape }}</label>
+          {% if block.settings.type == 'input' %}
+            <input type="text"
+          {% else %}
+            <textarea
+          {% endif %}
+              id="{{ id }}" name="contact[{{ block.settings.label | handleize }}]"
+              placeholder="{{ block.settings.placeholder | escape }}"
+              autocorrect="off" autocapitalize="off" autocomplete="off"
+              {% if block.settings.required %} required {% endif %}>
+          {%- if block.settings.type == 'textarea' -%}
+            </textarea>
+          {%- endif -%}
+
+        {% comment %} Dropdown fields {% endcomment %}
+        {%- when 'dropdown' -%}
+          {%- assign id = block.id | prepend: 'dropdown' -%}
+          {%- assign options = block.settings.options | newline_to_br | strip_newlines | split: '<br />' -%}
+
+          <label for="{{ id }}">{{ block.settings.label | escape }}</label>
+          <div class="form__select">
+            <select id="{{ id }}" name="contact[{{ block.settings.label | handleize }}]" {% if block.settings.required %}required{% endif %}>
+              <option value="" disabled selected>{{ block.settings.placeholder | default: block.settings.label | escape }}</option>
+              {%- for option in options -%}
+                <option value="{{- option -}}">{{- option -}}</option>
+              {%- endfor -%}
+            </select>
+            {%- render 'icon__carets', position: 'down' -%}
+          </div>
+
+        {% comment %} Submit field {% endcomment %}
+        {%- when 'button' -%}
+          <button type="submit" role="button" class="button {{ block.settings.color_theme }}" aria-label="{{ block.settings.label | escape }}">
+            <span class="text">{{ block.settings.label | escape }}</span>
+          </button>
+      {%- endcase -%}
+    </div>
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- capture contact_content -%}
+  {% render 'renderer__color-scheme', name: "section", color_scheme: section.settings.color_scheme, selector: ".shopify-section", section_id: "offCanvasContact" %}
+  {% render 'style-tags__section', asset_file_name: "offcanvas-contact.css", lazyload: true %}
+
+  <div class="offcanvas-contact__content off-canvas__wrapper offcanvas-contact__wrapper">
+    <div class="offcanvas-contact__panel offcanvas-contact-panel">
+      <div class="offcanvas-contact__head">
+        <div class="offcanvas-contact__head-inner section-content">
+          <button class="close-button close"
+            aria-label="Close contact form"
+            type="button"
+            role="button"
+            x-data
+            @click='$store["offCanvasContact"].closeOffcanvas()'>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="38" height="38">
+              <path fill="none" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" transform="translate(0.530334 0.530209)" d="M35.855339 2.5801583e-13L0.5 35.355339M35.355339 35.855339L-6.5580874e-13 0.5" fill-rule="evenodd"></path>
+            </svg>
+          </button>
+
+          {%- if section.settings.title != blank -%}
+            {%- assign id = section.id | append: "--contact" -%}
+            <div id="{{ id }}" class="offcanvas-contact__title">
+              {% render "block__title", block_id: id, text: section.settings.title, header_style: "h4", disable_animation: true %}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="offcanvas-contact__body">
+        {%- assign contact_infos = section.blocks | where: "type", "contact_info" -%}
+
+        {%- if section.settings.embed_code != blank -%}
+          <div class="offcanvas-contact__form--embed">
+            {{ section.settings.embed_code }}
+          </div>
+        {%- else -%}
+          <div class="offcanvas-contact__form">
+            {%- assign form_id = section.id | prepend: 'form-' -%}
+
+            {% form 'contact', id: form_id, class: 'simple-form mfr-contact' %}
+              {% comment %} Notification {% endcomment %}
+              {% if form.posted_successfully? %}
+                {% render "component__notification",
+                  show: true,
+                  type: "success",
+                  title: "Success!",
+                  description: "Form submission success!",
+                  id: "form-notification"
+                %}
+              {% elsif form.errors != blank %}
+                {% render "component__notification",
+                  show: true,
+                  type: "error",
+                  title: "Error",
+                  description: "There are some error(s) after Contact form submission",
+                  errors: form.errors
+                  id: "form-notification"
+                %}
+              {% endif %}
+
+              {% comment %} Success message {% endcomment %}
+              {% if form.posted_successfully? %}
+                {{ success_message }}
+              {% else %}
+                {{ contact_form }}
+              {% endif %}
+            {% endform %}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endcapture -%}
+
+{%- capture x_init -%}
+  const urlParams = new URLSearchParams(window.location.search);
+
+  if (urlParams.get("contact_posted") === "true") {
+    $store.offCanvas.contact = true
+  }
+{%- endcapture -%}
+
+{% render 'mfr-component__offcanvas',
+  id: "offCanvasContact",
+  class: "offcanvas-contact",
+  position: "right",
+  content: contact_content,
+  x_init: x_init
+%}
+
+{% schema %}
+{
+  "name": "Slideout Contact",
+  "enabled_on": {
+    "groups": ["custom.offcanvas"]
+  },
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Contact"
+    },
+    {
+      "type": "textarea",
+      "id": "embed_code",
+      "label": "Form Code",
+      "info": "Embed code will hide input blocks"
+    },
+    {
+      "type": "richtext",
+      "id": "success_message",
+      "label": "Success Message"
+    },
+    {
+      "type": "header",
+      "content": "Color Schemes"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "scheme_1",
+      "label": "Color Options",
+      "info": "This will be the color scheme of the header initially."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "email",
+      "name": "Name & Email",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "separate_name",
+          "label": "Split first and last names",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "name_placeholder",
+          "label": "Name Placeholder",
+          "default": "John Doe"
+        },
+        {
+          "type": "text",
+          "id": "email_placeholder",
+          "label": "Email Placeholder",
+          "default": "name@company.com"
+        }
+      ]
+    },
+    {
+      "type": "field",
+      "name": "Form field",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required"
+        },
+        {
+          "type": "select",
+          "id": "type",
+          "label": "Type",
+          "options": [
+            { "value": "input", "label": "Single line" },
+            { "value": "textarea", "label": "Multi line" }
+          ],
+          "default": "input"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder"
+        }
+      ]
+    },
+    {
+      "type": "dropdown",
+      "name": "Dropdown",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label"
+        },
+        {
+          "type": "textarea",
+          "id": "options",
+          "label": "Options",
+          "info": "Separated by new line"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Submit",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Submit"
+        },
+        {
+          "type": "select",
+          "id": "color_theme",
+          "label": "Color Theme",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "tertiary", "label": "Tertiary" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Slideout Contact"
+    }
+  ]
+}
+{% endschema %}

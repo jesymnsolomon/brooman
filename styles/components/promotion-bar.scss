@@ -1,0 +1,106 @@
+.promotion-bar {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+	background: $white;
+	padding: rem-calc( 9px ) rem-calc( 8px ) rem-calc( 15px );
+	border-top: rem-calc( 2px ) solid $color-accent;
+	z-index: 1;
+
+	@include breakpoint( medium up ) {
+		height: rem-calc( 60px );
+		flex-wrap: nowrap;
+		padding: rem-calc( 30px );
+	}
+
+	&__promotion {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+	    justify-content: center;
+	    align-items: center;
+
+	    @include breakpoint( medium up ) {
+			flex-wrap: nowrap;
+		}
+
+		& + .promotion-bar__promotion {
+			margin-top: rem-calc( 10px );
+			@include breakpoint( medium up ) {
+	    		margin: 0 0 0 rem-calc( 20px );
+	    	}
+	    }
+	}
+
+	&__text {
+		color: $color-accent;
+
+		&.success {
+			> :not(.success) {
+				display: none;
+			}
+		}
+
+		&.fail {
+			> :not(.fail) {
+				display: none;
+			}
+		}
+
+		p {
+			@include xsmall;
+			font-weight: bold;
+
+			@include breakpoint( medium up ) {
+				@include regular;
+			}
+		}
+
+		strong {
+			position: relative;
+
+			&:after {
+		    	content: '';
+		    	position: absolute;
+		    	bottom: 0;
+		    	left: 0;
+		    	background-color: $color-accent;
+		    	width: 100%;
+		    	height: rem-calc( 3px );
+		    	@include transform ( translateY(rem-calc(2px)) rotate(1deg) );
+		    }
+		}
+	}
+
+	&__progress-bar {
+		width: 100%;
+		height: rem-calc( 13px );
+		@include border-radius( 7px );
+		background-color: $color-accent-2;
+		margin: rem-calc( 12px ) 0 0;
+		overflow: hidden;
+
+		@include breakpoint( medium up ) {
+			max-width: rem-calc( 555px );
+			flex: 1;
+			margin: 0 0 0 rem-calc( 22px );
+		}
+
+		.progress {
+			height: 100%;
+			background-color: $color-accent;
+			@include border-radius( inherit );
+			width: rem-calc( 5px );
+			@include transition(.3s all $smooth_ease);
+
+			&.progress-underway {
+				width: calc( var(--cart-count) / var(--promo-target) * 100% );
+			}
+		}
+	}
+}

@@ -1,0 +1,85 @@
+{% capture styling %}
+  --background: {{- block.settings.bg_color -}};
+  --rotate: {{- block.settings.rotate -}}deg;
+{% endcapture %}
+
+<a href="{{- block.settings.url -}}" class="card-collection__item {% if block.settings.url == blank %}no-hover{% endif %}"
+  aria-label="View {{ block.settings.title }} collection"
+  style="{{- styling -}}">
+  {% if block.settings.title != blank %}
+    <h4 class="card-collection__item-title">{{- block.settings.title -}}</h4>
+  {% endif %}
+  {% if block.settings.icon != blank %}
+    <div class="card-collection__item-icon">
+			{{ block.settings.icon | image_url: width: 200 | image_tag: width: 200, alt: block.settings.title, height: 200 }}
+    </div>
+  {% endif %}
+  {% if block.settings.image != blank %}
+    <div class="card-collection__item-image">
+      {% assign alt = block.settings.image.alt |  default: "an image" %}
+      {{ block.settings.image
+        | image_url: width: 300
+        | image_tag: width: 300,
+          height: 300,
+          widths: "480,600,720,900,1080,1260,1440,1800,2160",
+          alt: alt,
+          loading: "lazy" }}
+    </div>
+  {% endif %}
+</a>
+
+{% schema %}
+  {
+    "name": "Card Collection Item",
+    "class": "card-collection__item-wrapper",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Card Content"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Card Title"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon",
+        "label": "Icon"
+      },
+        {
+        "type": "url",
+        "id": "url",
+        "label": "Link"
+      },
+      {
+        "type": "header",
+        "content": "Card Settings"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color"
+      },
+      {
+        "type": "range",
+        "id": "rotate",
+        "label": "Rotate",
+        "min": -30,
+        "max": 30,
+        "step": 1,
+        "default": 0
+      }
+    ],
+    "presets": [
+      {
+        "name": "Card Collection Item"
+      }
+    ]
+  }
+{% endschema %}

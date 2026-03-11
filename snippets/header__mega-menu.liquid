@@ -1,0 +1,32 @@
+<div class="header__mega-menu mega-menu"
+  id="{{ mega_menu.handle }}">
+  <div class="mega-menu__inner">
+    <div class="mega-menu__image-links">
+      {% for image_link in image_links %}
+        {% assign image_link = image_link.settings %}
+        <a href="{{ image_link.url }}"
+          aria-label="{{ image_link.label }}"
+          title="{{ image_link.label }}"
+          style="--bg-color: {{ image_link.bg_color }}">
+          <span class="label">{{ image_link.label }}</span>
+          <span class="indicator">
+            {%- capture chevron_svg -%}
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="8" height="14">
+                <path fill="none" stroke="{{ section.settings.color_scheme.settings.text | default: '#141723' }}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" transform="matrix(-4.37114e-08 1 -1 -4.37114e-08 6.82227 0.823242)" d="M0 6L6 0L12 6" fill-rule="evenodd"/>
+              </svg>
+            {%- endcapture -%}
+            {% render 'component__svg-encoder',
+              svg_code: chevron_svg,
+              width: 36,
+              height: 36,
+              alt: "chevron icon" %}
+          </span>
+          {% render 'component__lazyload-image',
+            image: image_link.image,
+            width: 360,
+            widths: "360" %}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>

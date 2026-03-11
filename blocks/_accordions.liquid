@@ -1,0 +1,49 @@
+{%- if section.settings.show_three_pillars and section.settings.three_pillars != blank  -%}
+  {%- for pillar in section.settings.three_pillars -%}
+    {%- assign content = pillar.content | metafield_text -%}
+    <div class="accordion__wrapper">
+      {% render 'mfr-component__accordion',
+        block_id: pillar.id,
+        trigger_label: pillar.title,
+        icon: pillar.image,
+        content: content,
+        initially_open: false,
+        background: pillar.background_color %}
+    </div>
+  {%- endfor -%}
+{%- elsif block.blocks.size > 0 -%}
+  {%- content_for "blocks" -%}
+{%- else -%}
+  {%- if request.design_mode -%}
+    {%- for i in (1..3) -%}
+      <div class="accordion__wrapper">
+        {% render 'mfr-component__accordion',
+          block_id: i,
+          initially_open: true,
+          trigger_label: "Lorem ipsum dolor sit?",
+          content: "<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime assumenda itaque commodi repellat veniam ex voluptate nemo necessitatibus mollitia molestias!</p>" %}
+      </div>
+    {%- endfor -%}
+  {%- endif -%}
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Accordions",
+    "class": "accordions",
+    "settings": [
+    ],
+    "blocks": [
+      { "type": "_accordion" }
+    ],
+    "presets": [
+      {
+        "name": "Accordions",
+        "blocks": [
+          { "type": "_accordion" },
+          { "type": "_accordion" },
+          { "type": "_accordion" }
+        ]
+      }
+    ]
+  }
+{% endschema %}

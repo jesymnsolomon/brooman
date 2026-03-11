@@ -1,0 +1,89 @@
+{%- assign width_mobile = block.settings.max_width_mobile | default: block.settings.image_mobile.width -%}
+{%- assign width_desktop = block.settings.max_width_desktop | default: block.settings.image_desktop.width -%}
+{%- capture sizes_mobile -%}
+  min( 100vw, {{ width_mobile }}px )
+{%- endcapture -%}
+{%- capture sizes_desktop -%}
+  min( 50vw, {{ width_desktop }}px )
+{%- endcapture -%}
+
+<style>
+  #shopify-block-{{ block.id }} img {
+    object-fit: {{ block.settings.image_fit }};
+    --scale-desktop: 1.{{ block.settings.scale_desktop }};
+    --scale-mobile: 1.{{ block.settings.scale_mobile }};
+  }
+</style>
+{% unless block.settings.image_mobile != blank and block.settings.image_desktop != blank %}
+  {%- capture svg_code -%}{{- 'lifestyle-2' | placeholder_svg_tag -}}{%- endcapture -%}
+  {% render 'component__svg-encoder', svg_code: svg_code, alt: "placeholder image" %}
+{% else %}
+  {% render 'component__responsive-image-v2',
+    image_mobile: block.settings.image_mobile,
+    image_desktop: block.settings.image_desktop,
+    lazyload: block.settings.lazyload,
+    sizes_mobile: sizes_mobile,
+    sizes_desktop: sizes_desktop %}
+{% endunless %}
+
+{% schema %}
+  {
+    "name": "Image Slide",
+    "class": "image-video-text__image-slide mfr-carousel__item image-video-text__slide-item",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image_mobile",
+        "label": "Image - Mobile"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_desktop",
+        "label": "Image - Desktop"
+      },
+      {
+        "type": "checkbox",
+        "id": "lazyload",
+        "label": "Lazyload?",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "image_fit",
+        "label": "Image Fit",
+        "options": [
+          { "label": "Crop to Fill", "value": "cover" },
+          { "label": "Fit Within Space", "value": "contain" }
+        ],
+        "default": "cover"
+      },
+       {
+        "type": "header",
+        "content": "Image Settings"
+      },
+      {
+        "type": "range",
+        "label": "Scale - Mobile",
+        "id": "scale_mobile",
+        "min": 0,
+        "max": 9,
+        "step": 1,
+        "default": 0
+      },
+      {
+        "type": "range",
+        "label": "Scale - Desktop",
+        "id": "scale_desktop",
+        "min": 0,
+        "max": 9,
+        "step": 1,
+        "default": 0
+      }
+    ],
+    "presets": [
+      {
+        "name": "Image Slide"
+      }
+    ]
+  }
+{% endschema %}

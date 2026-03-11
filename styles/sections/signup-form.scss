@@ -1,0 +1,40 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+[aria-label="POPUP Form"] {
+  p {
+    font-family: $custom-font-name-2 !important;
+    line-height: normal;
+  }
+
+  h3 {
+    font-size: rem-calc( 34px );
+    line-height: normal;
+    font-family: $custom-font-name-1 !important;
+    margin: 0 auto;
+
+    @include breakpoint( large up ) {
+      font-size: rem-calc( 50px );
+    }
+  }
+
+  [data-testid="form-row"] {
+    &:nth-child( 2 ) {
+      p {
+        font-size: rem-calc( 15px );
+        line-height: normal;
+        font-family: $custom-font-name-2 !important;
+        max-width: rem-calc( 280px );
+        margin: 0 auto;
+      }
+    }
+
+    &:last-child {
+      p {
+        max-width: rem-calc( 280px );
+        margin: 0 auto;
+      }
+    }
+  }
+}

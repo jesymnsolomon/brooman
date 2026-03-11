@@ -1,0 +1,532 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+.mfr-collection__product-grid {
+  background: var(--section-background);
+
+  .grid-x {
+    justify-content: var(--vertical-alignment);
+
+    @include breakpoint(medium down) {
+      justify-content: var(--vertical-alignment-mobile);
+    }
+  }
+
+  &:first-of-type {
+    background-color: var(--section-background);
+  }
+
+  .section-content {
+    display: flex;
+
+    &__inner {
+      display: flex;
+      justify-content: center;
+
+      &:not(:last-child) {
+        margin-bottom: rem-calc( 38px );
+
+        @include breakpoint( large up ) {
+          margin-bottom: rem-calc( 60px );
+        }
+      }
+    }
+
+    .small-text__wrapper {
+      &:not(:last-child) {
+        margin-bottom: rem-calc( 23px );
+
+        @include breakpoint( large up ) {
+          margin-bottom: rem-calc( 43px );
+        }
+      }
+    }
+
+    .section-title {
+      &:not(:last-child) {
+        margin-bottom: rem-calc( 21px );
+
+        @include breakpoint( large up ) {
+          margin-bottom: rem-calc( 27px );
+        }
+      }
+    }
+
+    .collection-title {
+      position: relative;
+      width: auto;
+      margin: 0 auto rem-calc(20px);
+
+      @include breakpoint(medium down) {
+        width: 100%;
+
+        .section-title {
+          max-width: 90%;
+        }
+      }
+
+      .accent-graphics {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+
+        &.left-right,
+        &.left,
+        &.right {
+          .graphic-1 {
+            position: absolute;
+            left: rem-calc(-100px);
+            top: rem-calc(-50px);
+          }
+
+          .graphic-2 {
+            position: absolute;
+            right: rem-calc(-100px);
+            bottom: rem-calc(-50px);
+          }
+
+          @include breakpoint(medium down) {
+            .graphic-1 {
+              left: -0;
+              top: rem-calc(-60px);
+              width: rem-calc(60px);
+            }
+
+            .graphic-2 {
+              right: 0;
+              bottom: rem-calc(-60px);
+              width: rem-calc(60px);
+            }
+          }
+        }
+
+        &.left {
+          .graphic-2 {
+            display: none;
+          }
+        }
+
+        &.right {
+          .graphic-1 {
+            display: none;
+          }
+        }
+      }
+
+    }
+  }
+  .cell {
+    .section-content__wrapper {
+      width: 100%;
+    }
+
+    @include breakpoint(large up) {
+      &[data-column-count="1"] {
+        .product-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      &[data-column-count="2"] {
+        .product-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      &[data-column-count="3"] {
+        .product-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+    }
+
+    @include breakpoint(medium down) {
+      &[data-column-count-mobile="1"] {
+        .product-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+    &[data-column-count-mobile="2"] {
+        .product-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    }
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(calc((100% - #{rem-calc( 15px )}) / 2), 1fr));
+    grid-auto-rows: 1fr 1fr;
+    gap: rem-calc( 12px );
+    width: 100%;
+    padding: rem-calc(20px);
+    $column-count: var(--column-count);
+
+    @include breakpoint( large up ) {
+      column-gap: rem-calc( 17px );
+      row-gap: rem-calc( 38px );
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    &:not(:last-child) {
+      margin-bottom: rem-calc( 32px );
+
+      @include breakpoint( large up ) {
+        margin-bottom: rem-calc( 67px );
+      }
+    }
+
+    &__item {
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+
+      // @include enter-animation {
+      //   .product-card {
+      //     @include transform( translateY( $enter-transform-value ) );
+      //     @include opacity( 0 );
+      //   }
+      // }
+
+      &[data-show='true'] {
+        display: flex;
+      }
+
+      .product-card {
+        width: 100%;
+      }
+
+      @include breakpoint(medium down) {
+        .product-card {
+          aspect-ratio: 185/334;
+          width: 100%;
+          height: 100%;
+
+          &.product-card-large {
+            width: 100%;
+            aspect-ratio: 378/747;
+          }
+
+          &__details {
+            padding: rem-calc(13px) 0;
+          }
+
+          &__media {
+            transform: translateY(-5px) scale(1.1);
+          }
+
+          &__info {
+            padding: rem-calc(5px) rem-calc(10px) rem-calc(15px);
+
+            &-title {
+              font-size: rem-calc(18px);
+              line-height: rem-calc(17px)
+            }
+
+            &-description {
+              margin-bottom: rem-calc(10px);
+              font-size: rem-calc(14px);
+              line-height: rem-calc(14px);
+            }
+
+            &-rating svg{
+              width: rem-calc(15px);
+              height: rem-calc(14px);
+            }
+          }
+
+          form {
+            @include breakpoint( large up ) {
+              padding: 0 rem-calc(5px);
+            }
+          }
+
+          button {
+            min-height: rem-calc(46px);
+            font-size: rem-calc(20px);
+            border-radius: rem-calc(15px);
+
+            @include breakpoint(medium down) {
+              min-width: fit-content;
+              white-space: nowrap;
+            }
+          }
+        }
+      }
+    }
+
+    &__image {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 314/493;
+      position: relative;
+      overflow: hidden;
+      @include opacity( 0.9999999 );
+      @include border-radius( rem-calc( 30px ) );
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &__filters {
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: rem-calc(15px);
+
+      @include breakpoint(medium down) {
+        flex-wrap: nowrap;
+        overflow: auto;
+        padding: 0 rem-calc(20px) rem-calc(10px);
+
+        button {
+          width: 100%;
+          min-width: fit-content;
+        }
+      }
+
+      @mixin custom-button {
+        padding: rem-calc(15px) rem-calc(20px);
+        min-height: auto;
+        border-radius: rem-calc(12px);
+        @include drop-shadow(rgba(0, 0, 0, 0.1), 7);
+
+        &:hover {
+          @include drop-shadow(black, 8);
+        }
+
+        span {
+          font-size: rem-calc(17px);
+          line-height: rem-calc(21px);
+        }
+      }
+
+      &-wrapper {
+        padding: rem-calc(30px) rem-calc(50px);
+        flex-wrap: wrap;
+        display: flex;
+
+        @include breakpoint(medium down) {
+          padding: rem-calc(0) 0 rem-calc(20px);
+        }
+
+        &-left {
+          width: 70%;
+          margin-right: rem-calc(20px);
+
+          @include breakpoint(medium down) {
+            width: 100%;
+            margin: 0;
+            margin-bottom: rem-calc(10px);
+          }
+        }
+
+        &-right {
+          display: flex;
+          justify-content: flex-end;
+          align-items: flex-start;
+          width: calc(30% - 20px);
+
+          @include breakpoint(medium down) {
+            width: 100%;
+            padding: 0 rem-calc(20px) rem-calc(5px);
+
+            button {
+              width: 100%;
+              justify-content: space-between;
+            }
+          }
+
+          button {
+            @include custom-button();
+            padding: rem-calc(25px) rem-calc(20px);
+
+            svg {
+              height: rem-calc(25px);
+              width: rem-calc(25px);
+              margin-left: rem-calc(25px);
+            }
+
+            span {
+              text-transform: capitalize;
+              font-size: rem-calc(20px);
+              line-height: rem-calc(21px);
+            }
+          }
+        }
+      }
+
+      &-title {
+        width: 100%;
+        text-align: left;
+        margin-bottom: rem-calc(15px);
+
+        @include breakpoint(medium down) {
+          padding: rem-calc(10px) rem-calc(20px) 0;
+        }
+
+        * {
+          margin: 0;
+          font-family: $custom-font-name-3;
+          font-size: rem-calc(20px);
+          line-height: rem-calc(18px)
+        }
+      }
+
+      &-item {
+        @include custom-button();
+      }
+
+      &-selected {
+        display: flex;
+        gap: rem-calc(10px);
+        margin-top: rem-calc(20px);
+
+        @include breakpoint(medium down) {
+          padding: 0 0 rem-calc(5px) rem-calc(20px);
+          overflow: auto;
+        }
+
+        button {
+          padding: rem-calc(5px);
+          display: flex;
+          align-items: center;
+          font-size: rem-calc(16px);
+          min-width: fit-content;
+
+          svg {
+            stroke-width: rem-calc(2px);
+            height: rem-calc(10px);
+            width: rem-calc(10px);
+            margin-left: rem-calc(10px);
+
+            path, g {
+              stroke-width: rem-calc(4px);
+            }
+          }
+        }
+      }
+    }
+
+    &__load-more {
+      min-width: rem-calc(220px);
+
+      @include breakpoint(large up) {
+        min-width: rem-calc(320px);
+      }
+    }
+  }
+
+  .product-filters {
+    width: 100%;
+
+    & + .section-content__wrapper {
+      padding-top: rem-calc(20px);
+
+      @include breakpoint(large up) {
+        padding-top: rem-calc(50px);
+      }
+    }
+  }
+
+  .review-card {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    &__inner {
+      position: relative;
+      text-align: center;
+      width: 100%;
+      max-width: rem-calc( 398px );
+      padding: rem-calc( 34px ) rem-calc( 18px );
+      @include transition( $global-transition );
+
+      @include breakpoint( large up ) {
+        max-width: rem-calc( 926px );
+        padding: rem-calc( 34px ) rem-calc( 34px ) rem-calc( 40px );
+      }
+
+      @include enter-animation {
+        @include transform( translateY( $enter-transform-value ) );
+        @include opacity( 0 );
+      }
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: var(--texture-1);
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    }
+
+    &__stars {
+      height: rem-calc( 18px );
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:not(:last-child) {
+        margin-bottom: rem-calc( 6px );
+      }
+
+      svg,
+      img {
+        height: 100%;
+        width: auto;
+        display: block;
+      }
+    }
+
+    &__title {
+      font-size: rem-calc( 14px );
+      line-height: 1em;
+      font-weight: 600;
+      display: block;
+      margin: 0;
+
+      &:not(:last-child) {
+        margin-bottom: rem-calc( 16px );
+      }
+    }
+
+    &__caption {
+      font-size: rem-calc( 18px );
+      line-height: 1.333em;
+      font-weight: 400;
+      letter-spacing: rem-calc( -0.2px );
+      display: block;
+      margin: 0 auto;
+      width: 100%;
+      @include opacity( 0.8 );
+
+      @include breakpoint( large up ) {
+        max-width: rem-calc( 662px );
+      }
+
+      &:not(:last-child) {
+        margin-bottom: rem-calc( 16px );
+      }
+    }
+
+    &__small-text {
+      font-size: rem-calc( 12px );
+      line-height: 1.417em;
+      font-weight: 600;
+      text-transform: uppercase;
+      @include opacity( 0.4 );
+    }
+  }
+}

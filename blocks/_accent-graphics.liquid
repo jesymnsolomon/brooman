@@ -1,0 +1,42 @@
+
+{%- comment -%}
+  Settings
+  --
+  accent_graphic
+  icon
+  svg_code
+
+  x_setting
+  y_setting
+  
+  width_large
+  position_x_desktop
+  position_y_desktop
+
+  width_mobile
+  position_x_mobile
+  position_y_mobile 
+
+  rotate
+  flip
+  layer
+{%- endcomment -%}
+
+{%- if block.blocks.size > 0 -%}
+  {%- content_for "blocks" -%}
+{%- endif -%}
+
+{%- schema -%}
+  {
+    "name": "Accent Graphics",
+    "class": "accent-graphic-wrapper",
+    "blocks": [
+      { "type": "_accent-graphic" }
+    ],
+    "presets": [
+      {
+        "name": "Accent Graphics"
+      }
+    ]
+  }
+{%- endschema -%}

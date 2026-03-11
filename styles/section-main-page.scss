@@ -1,0 +1,78 @@
+@import "./variables";
+@import "./tools/util/util";
+@import "./tools/mixins";
+
+.main-page {
+  position: relative;
+  
+  &__title {
+    text-align: center;
+    margin: 0 0 rem-calc( 40px );
+    max-width: rem-calc( 710px );
+    margin: 0 auto;
+
+    @include breakpoint( large up ) {
+      margin: 0 auto rem-calc( 60px );
+    }
+  }
+
+  &__body {
+    max-width: rem-calc( 710px );
+    margin: 0 auto;
+
+    @include breakpoint( large up ) {
+      padding: 0 rem-calc( 15px );
+    }
+
+    h1, h2, h3 {
+      font-family: $custom-font-name-1;
+      font-weight: 300;
+    }
+
+    h4, h6, h6 {
+      font-family: $custom-font-name-2;
+      font-weight: 300;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      object-position: center;
+      object-fit: cover;
+      margin: auto;
+      @include border-radius($global-border-radius);
+    }
+
+    a {
+      color: $brand-color !important;
+    }
+
+    ul {
+      padding-left: rem-calc(20px);
+
+      @include breakpoint(large up) {
+        padding-left: rem-calc(30px);
+      }
+    }
+
+    table {
+      th {
+        @include small;
+        strong {
+          font-weight: 600;
+        }
+      }
+
+      th:first-child,
+      td:first-child {
+        width: 30%;
+      }
+
+      th:last-child,
+      td:last-child {
+        width: 10%;
+      }
+    }
+  }
+}
+

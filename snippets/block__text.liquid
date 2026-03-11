@@ -1,0 +1,115 @@
+{% comment %}
+    Attributes
+
+    - text
+    - color
+    - bold_color
+    - text_style
+    - font_family
+    - shopify_attributes
+{% endcomment %}
+
+{% if color != "" and color != "rgba(0,0,0,0)" %}
+    {% assign has_custom_color = "has-custom-color" %}
+    {% assign color_style = "color: " | append: color | append: ";" %}
+{% else %}
+    {% assign has_custom_color = "" %}
+    {% assign color_style = "" %}
+{% endif %}
+
+{% if bold_color != "" and bold_color != "rgba(0,0,0,0)" %}
+    {% assign has_bold_color = "has-bold-color" %}
+    {% assign bold_color_style = "--text-block-border-color: " | append: bold_color | append: ";" %}
+{% else %}
+    {% assign has_bold_color = "" %}
+    {% assign bold_color_style = "" %}
+{% endif %}
+
+{% if underline_color != "" and underline_color != "rgba(0,0,0,0)" %}
+    {% assign has_underline_color = "has-underline_color" %}
+
+    {% capture underline_component %}
+        {% if block_id != blank %}
+            <style>
+                #block--{{ block_id }} .custom-underline {
+                    --underline-color: {{ underline_color }};
+                    {% comment %}  font-weight: bold; {% endcomment %}
+                    {% comment %}background-image: ; {% endcomment %}
+                }
+            </style>
+        {% endif %}
+    {% endcapture %}
+{% else %}
+    {% assign has_underline_color = "" %}
+    {% assign underline_color_style = "" %}
+{% endif %}
+
+{% if font_case != blank %}
+    {% assign font_case_style = "text-transform: " |  append: font_case %}
+{% endif %}
+
+{% if max_width != 0 %}
+    {% capture max_width_style %}
+        max-width: {{ max_width }}rem;
+    {% endcapture %}
+{% endif %}
+
+{% if font_size != 0 and font_size != blank %}
+    {% assign has_font_size = "has-custom-font-size" %}
+    {% assign font_size_style = "font-size: " | append: font_size | append: "px;" %}
+{% else %}
+    {% assign has_font_size = "" %}
+    {% assign font_size_style = "" %}
+{% endif %}
+
+{% if centered_on_mobile %}
+    {% assign centered_on_mobile_class = "centered-on-mobile" %}
+{% else %}
+    {% assign centered_on_mobile_class = "" %}
+{% endif %}
+
+
+{% assign split_mailto = text | split: "[mailto]" | last | split: "[/mailto]" | first %}
+{% assign mailto_on_text = "[mailto]" | append: split_mailto | append: "[/mailto]" %}
+{%- capture mailto_link -%}
+    <a href="mailto:{{- split_mailto -}}">{{- split_mailto -}}</a>
+{%- endcapture -%}
+
+{%- capture geek_text -%}
+  {% assign block_id = block.id | replace: "-", " " | replace: "_", " " | camelcase %}
+  <span
+    class="geek-text"
+    x-show="geekMode"
+    x-collapse
+    :aria-hidden="!geekMode"
+    x-cloak>
+{%- endcapture -%}
+{% assign product_description = product.description | strip_html %}
+
+<div {% if block_id != blank %}id="block--{{ block_id }}"{% endif %}
+    class="section-text {{ custom_class }}  {{ has_font_size }} {{ text_style }} {{ font_family }} {{ has_custom_color }} {{ has_bold_color }} {{ has_underline_color }} {{ device_visibility }} {{ centered_on_mobile_class }} {% if disable_inview %}disable-inview{% endif %}"
+    data-inview
+    data-stagger-inview="> *"
+    {{ shopify_attributes }}
+    style="{{- color_style -}} {{- bold_color_style -}} {{- max_width_style -}} {{- font_size_style -}} {{- font_case_style -}};">
+    {{  underline_component }}
+
+    {%- assign text = text
+      | replace: '®', '<sup>®</sup>'
+      | replace: "[underline]", "<span class='custom-underline'>"
+      | replace: "[/underline]", "</span>"
+
+      | replace: "[low-opacity]", "<span class='low-opacity'>"
+      | replace: "[/low-opacity]", "</span>"
+
+      | replace: mailto_on_text, mailto_link
+
+      | replace: "[product-description]", product_description
+
+      | replace: "[text-gradient]", "<span class='text-gradient'>"
+      | replace: "[/text-gradient]", "</span>"
+
+      | replace: "[geek-text]", geek_text
+      | replace: "[/geek-text]", "</span>" -%}
+    {{- text -}}
+</div>

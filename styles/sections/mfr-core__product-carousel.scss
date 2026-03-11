@@ -1,0 +1,130 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+.mfr-product__carousel {
+  .section-content {
+    &:not(:last-child) {
+      margin-bottom: rem-calc(25px);
+
+      @include breakpoint(large up) {
+        margin-bottom: rem-calc(60px);
+      }
+    }
+  }
+
+  .section-button {
+    margin-top: rem-calc(30px);
+
+    &__wrapper {
+      width: 95%;
+    }
+  }
+
+  .section-carousel {
+    display: flex;
+    width: 100%;
+    margin-top: rem-calc(25px);
+    justify-content: inherit;
+
+    @include breakpoint(large up) {
+      margin-top: rem-calc(30px);
+      min-height: rem-calc(500px);
+    }
+
+    .product-carousel__carousel-inner:not(.flickity-enabled) {
+      justify-content: inherit;
+    }
+
+    .product-carousel__item {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      max-width: 100%;
+      min-height: 100%;
+      padding: 0 rem-calc(8px);
+
+      @include breakpoint(large up) {
+        padding: 0 rem-calc(10px);
+      }
+
+      &[aria-hidden="true"] {
+        a[href],
+        button,
+        input,
+        select,
+        textarea,
+        [tabindex]:not([tabindex="-1"]),
+        [contenteditable]:not([contenteditable="false"]) {
+          display: block !important;
+        }
+      }
+
+      &:first-child {
+        padding-left: rem-calc( 27px );
+
+        @include breakpoint( large up ) {
+          padding-left: rem-calc( 60px );
+        }
+      }
+
+      &:last-child {
+        padding-right: rem-calc( 27px );
+
+        @include breakpoint( large up ) {
+          padding-right: rem-calc( 60px );
+        }
+      }
+
+      .product-card {
+        width: rem-calc( 319px );
+        max-width: calc( 100vw - #{ rem-calc( 40px ) } );
+      }
+
+
+      &.is-selected {
+        @include breakpoint(medium down) {
+          .product-card__media {
+            a > img {
+              transform: scale(1.2) rotate(-7deg);
+              transition: $global-transition;
+            }
+
+            .product-card__accent-graphics {
+              transform: translate(var(--x-position), var(--y-position)) scale(var(--scale));
+              @include transition($global-transition);
+            }
+          }
+        }
+      }
+    }
+
+    .flickity-viewport {
+      overflow: initial;
+    }
+
+    .flickity-prev-next-button {
+      top: calc(50% - 1.25rem);
+
+      @include breakpoint(medium down) {
+        &.next {
+          right: rem-calc(15px);
+        }
+
+        &.previous {
+          left: rem-calc(15px);
+        }
+      }
+    }
+
+    .flickity-page-dots {
+      max-width: rem-calc(300px);
+
+      @include breakpoint(large up) {
+        margin-top: rem-calc(45px);
+      }
+    }
+  }
+}
+
+html:not(.design-mode) .template-product .mfr-product__carousel:not(:has(.section-carousel > .product-carousel__carousel-inner)) { display: none; }

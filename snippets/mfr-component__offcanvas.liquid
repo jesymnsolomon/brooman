@@ -1,0 +1,48 @@
+{% assign position = position | default: "left" %}
+{% if position == "left" %}
+  {% assign position_class = "mfr-offcanvas__left" %}
+{% else %}
+  {% assign position_class = "mfr-offcanvas__right" %}
+{% endif %}
+<div class="mfr-offcanvas {{ position_class }} {{ class }}" 
+  id="{{ id }}"
+  x-init='
+    Alpine.store("{{ id }}", {
+      open: {{ initially_open | default: 'false' }},
+      
+      openOffcanvas() {
+        this.open = true
+      },
+
+      closeOffcanvas() {
+        this.open = false
+      },
+
+      toggleOffcanvas() {
+        this.open = !this.open
+      }
+    })
+
+    if ( window.location.hash.replace("#", "") == "{{ id }}" ) {
+      Alpine.store("{{ id }}").openOffcanvas()
+    }
+  '
+  x-show='$store["{{ id }}"].open'
+  x-trap.noscroll='$store["{{ id }}"].open'
+  x-cloak
+  :aria-hidden='open ? "false" : "true"'
+  x-transition:enter-start="mfr-offcanvas--hidden"
+  x-transition:enter-end="mfr-offcanvas--showing"
+  x-transition:leave-start="mfr-offcanvas--showing"
+  x-transition:leave-end="mfr-offcanvas--hidden">
+  {{ content }}
+</div>
+<div class="mfr-offcanvas__overlay"
+  x-data
+  x-on:click='Alpine.store("{{ id }}").closeOffcanvas()'
+  x-show='Alpine.store("{{ id }}").open'
+  x-transition:enter-start="mfr-offcanvas__overlay--hidden"
+  x-transition:enter-end="mfr-offcanvas__overlay--showing"
+  x-transition:leave-start="mfr-offcanvas__overlay--showing"
+  x-transition:leave-end="mfr-offcanvas__overlay--hidden"
+  x-cloak></div>

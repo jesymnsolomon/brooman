@@ -1,0 +1,208 @@
+{% render 'style-tags__section', asset_file_name: "mfr-core__text-section.css" %}
+
+{%- liquid
+  assign section_id = section.settings.custom_id | default: section.id
+  assign custom_class = section.settings.custom_class
+  assign container_width = section.settings.container_width
+  assign max_width = section.settings.max_width
+  assign grid_gutter = section.settings.grid_gutter
+-%}
+{% render 'renderer__color-scheme', name: "section", color_scheme: section.settings.color_scheme, selector: ".shopify-section", section_id: section_id %}
+
+{%- if max_width != 0 and container_width == "" -%}
+  {%- capture max_width_style -%}
+    style="max-width: {{ max_width }}rem;"
+  {%- endcapture -%}
+{%- endif -%}
+
+{% capture spacer %}
+  --top-spacing-mobile: {{ section.settings.top_spacing_mobile | default: 100}}px;
+  --bottom-spacing-mobile: {{ section.settings.bottom_spacing_mobile | default: 100 }}px;
+  --top-spacing-desktop: {{ section.settings.top_spacing_desktop | default: 100 }}px;
+  --bottom-spacing-desktop: {{ section.settings.bottom_spacing_desktop | default: 100 }}px;
+{% endcapture %}
+
+{% render 'section__settings-styles' %}
+
+<section class="mfr-core__text-section {{ custom_class }}" id="{{ section_id }}">
+  <div class="section-spacer background {{ grid_gutter }}" style="{{ spacer }}">
+    <div class="grid-container {{ container_width }}" {{ max_width_style }}>
+      <div class="grid-x alignment-helper">
+        <div class="cell small-12 large-12 section-content">
+          <div class="image-button-row">
+            {% for block in section.blocks %}
+              {% if block.type == 'image_with_button' %}
+                <div class="image-button-item">
+                  {% if block.settings.image %}
+                    <img
+                      src="{{ block.settings.image | image_url: width: 400 }}"
+                      alt="{{ block.settings.alt_text | escape }}"
+                      width="{{ block.settings.image.width }}"
+                      height="{{ block.settings.image.height }}"
+                      loading="lazy"
+                    />
+                  {% endif %}
+                  {% if block.settings.button_text %}
+                    {% if block.settings.button_link != blank %}
+                      <a href="{{ block.settings.button_link }}" class="button">{{ block.settings.button_text }}</a>
+                    {% else %}
+                      <span class="button">{{ block.settings.button_text }}</span>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% render 'component__gradient-bg-styles' %}
+  </div>
+  {% render 'component__section-dividers', is_video_background: true %}
+</section>
+
+<style>
+  .image-button-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .image-button-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 220px;
+    text-align: center;
+  }
+
+  .image-button-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+
+</style>
+
+{% schema %}
+{
+  "name": "Text Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "custom_class",
+      "label": "Custom class"
+    },
+    {
+      "type": "text",
+      "id": "custom_id",
+      "label": "Custom ID"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container Width",
+      "options": [
+        { "value": "full", "label": "Full Width" },
+        { "value": "", "label": "Contained" }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "rem",
+      "label": "Max Content Width",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "grid_gutter",
+      "label": "Grid Gutter",
+      "options": [
+        { "value": "", "label": "No Margin" },
+        { "value": "grid-gutter-mobile", "label": "Mobile Only" },
+        { "value": "grid-gutter-desktop", "label": "Desktop Only" },
+        { "value": "grid-gutter-mobile grid-gutter-desktop", "label": "Both" }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "scheme_1",
+      "label": "Color Scheme"
+    },
+    {
+      "type": "number",
+      "id": "top_spacing_mobile",
+      "label": "Top Spacing (Mobile)",
+      "default": 100
+    },
+    {
+      "type": "number",
+      "id": "bottom_spacing_mobile",
+      "label": "Bottom Spacing (Mobile)",
+      "default": 100
+    },
+    {
+      "type": "number",
+      "id": "top_spacing_desktop",
+      "label": "Top Spacing (Desktop)",
+      "default": 100
+    },
+    {
+      "type": "number",
+      "id": "bottom_spacing_desktop",
+      "label": "Bottom Spacing (Desktop)",
+      "default": 100
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_with_button",
+      "name": "Image + Button",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alt Text",
+          "default": "Image description"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Click Me"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text Section",
+      "blocks": [
+        { "type": "image_with_button" },
+        { "type": "image_with_button" },
+        { "type": "image_with_button" }
+      ]
+    }
+  ]
+}
+{% endschema %}

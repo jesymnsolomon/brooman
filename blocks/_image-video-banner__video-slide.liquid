@@ -1,0 +1,125 @@
+{%- assign text_alignment = section.settings.text_alignment -%}
+{%- assign container_width = section.settings.container_width -%}
+{%- assign max_width = section.settings.max_width -%}
+{%- assign color_theme = section.settings.color_theme -%}
+
+{%- if max_width != 0 and container_width == "" -%}
+  {%- capture max_width_style -%}
+    style="max-width: {{ max_width }}rem;"
+  {%- endcapture -%}
+{%- endif -%}
+
+{%- if block.settings.enable_overlay -%}
+  {%- assign has_overlay_class = "has-overlay" -%}
+  {%- capture overlay_style -%}
+    style="
+      --mobile-overlay: {{ block.settings.overlay_mobile }};
+      --desktop-overlay: {{ block.settings.overlay_desktop }};
+    "
+  {%- endcapture -%}
+{%- else -%}
+  {%- assign has_overlay_class = "" -%}
+  {%- assign overlay_style = "" -%}
+{% endif %}
+
+<div class="video-banner {{ has_overlay_class }}" {{ overlay_style }}>
+  {% unless block.settings.poster != blank %}
+    {%- capture svg_code -%}{{- 'lifestyle-2' | placeholder_svg_tag -}}{%- endcapture -%}
+    {% render 'component__svg-encoder', svg_code: svg_code, alt: "placeholder image" %}
+  {% else %}
+    <div class="desktop">
+      {%- render 'component__video-with-controls'
+        block_id: block.id,
+        video: block.settings.video,
+        poster_size: 3000,
+        autoplay: true,
+        loop: true,
+        controls: false,
+        muted: true,
+        poster: block.settings.poster,
+        show_play_button: false,
+        show_speaker_button: false,
+        without_wrapper: true
+      -%}
+    </div>
+    <div class="mobile">
+      {%- render 'component__video-with-controls'
+        block_id: block.id,
+        video: block.settings.video_mobile,
+        poster_size: 2000,
+        autoplay: true,
+        loop: true,
+        controls: false,
+        muted: true,
+        poster: block.settings.poster,
+        show_play_button: false,
+        show_speaker_button: false,
+        without_wrapper: true
+      -%}
+    </div>
+  {% endunless %}
+</div>
+
+<div class="grid-container {{ container_width }}" {{ max_width_style }}>
+  <div class="grid-x alignment-helper {{ color_theme }} {{ text_alignment }}">
+    <div class="cell small-12 large-12 section-content"
+      data-stagger-inview=".section-icon__wrapper, .section-content__small-text, .section-content__text, .section-content__button">
+      {%- content_for "block", type: "_section-content", id: "section-content" -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Video Slide",
+    "class": "image-video-banner__video-slide mfr-carousel__item",
+    "settings": [
+      {
+        "type": "video",
+        "id": "video",
+        "label": "Desktop - Video File"
+      },
+      {
+        "type": "video",
+        "id": "video_mobile",
+        "label": "Mobile - Video File"
+      },
+      {
+        "type": "image_picker",
+        "id": "poster",
+        "label": "Poster Image",
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_overlay",
+        "label": "Enable Overlay",
+        "default": false
+      },
+      {
+        "type": "color_background",
+        "id": "overlay_mobile",
+        "label": "Overlay - Mobile"
+      },
+      {
+        "type": "color_background",
+        "id": "overlay_desktop",
+        "label": "Overlay - Desktop"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Video Slide",
+        "blocks": [
+          {
+            "type": "_section-content",
+            "id": "section-content",
+            "static": true,
+            "blocks": [
+              { "type": "_section-content__title" }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

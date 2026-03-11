@@ -1,0 +1,57 @@
+{
+  "name": "brooman",
+  "version": "3.0.0",
+  "description": "A Shopify theme for Brooman.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "styles:sections": "gulp sections",
+    "styles:theme": "gulp sass",
+    "styles:quickload": "gulp quickload",
+    "styles:gsap": "gulp gsap",
+    "styles:js": "gulp js",
+    "styles:components": "gulp components",
+    "styles": "run-s styles:**",
+    "watch:shopify": "shopify theme serve",
+    "watch:gulp": "gulp",
+    "watch": "run-p watch:**",
+    "dev:shopify-3.0": "shopify theme dev --store sippytea.myshopify.com",
+    "dev:gulp": "gulp",
+    "dev": "run-p dev:**",
+    "build": "npm run styles",
+    "switch": "shopify switch --store=sippytea.myshopify.com",
+    "pull": "shopify theme pull -d --nodelete"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jesymnsolomon/brooman.git"
+  },
+  "keywords": [
+    "shopify",
+    "liquid"
+  ],
+  "author": "Manufactur",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jesymnsolomon/brooman/issues"
+  },
+  "homepage": "https://github.com/jesymnsolomon/brooman#readme",
+  "devDependencies": {
+    "chokidar": "^3.6.0",
+    "gulp": "^5.0.1",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-foreach": "^0.1.0",
+    "gulp-header": "^1.8.9",
+    "gulp-minify": "^3.0.0",
+    "gulp-order": "^1.2.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^5.0.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-terser": "^2.1.0",
+    "npm-run-all": "^4.1.5",
+    "sass": "^1.38.1"
+  },
+  "dependencies": {
+    "shopify": "^0.1.0"
+  }
+}

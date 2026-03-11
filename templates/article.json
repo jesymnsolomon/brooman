@@ -1,0 +1,321 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "mfr_article_header_xaWCpM": {
+      "type": "mfr-article__header",
+      "blocks": {
+        "section-content": {
+          "type": "_section-content",
+          "static": true,
+          "settings": {
+            "mobile_alignment": "center",
+            "desktop_alignment": "center",
+            "text_alignment_desktop": "center",
+            "text_alignment_mobile": "center",
+            "max_width_mobile": 750,
+            "max_width_desktop": 1200
+          },
+          "blocks": {
+            "section_content_title_hJMCJr": {
+              "type": "_section-content__title",
+              "name": "Section Title",
+              "settings": {
+                "heading": "{{ closest.article.title }}",
+                "disable_animation": false,
+                "header_style": "h3",
+                "header_tag": "h2",
+                "font_family": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 0
+              },
+              "blocks": {}
+            },
+            "section_content_spacer_J4aQUr": {
+              "type": "_section-content__spacer",
+              "name": "Spacer",
+              "settings": {
+                "height_mobile": 10,
+                "height_desktop": 30
+              },
+              "blocks": {}
+            },
+            "section_content_text_Q6wNNV": {
+              "type": "_section-content__text",
+              "name": "Section Text",
+              "settings": {
+                "text": "{{ closest.article.excerpt }}",
+                "disable_animation": false,
+                "text_style": "large",
+                "font_family": "",
+                "color": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "section_content_title_hJMCJr",
+            "section_content_spacer_J4aQUr",
+            "section_content_text_Q6wNNV"
+          ]
+        },
+        "article-header-media": {
+          "type": "_article-header__media",
+          "static": true,
+          "settings": {
+            "image": "{{ closest.article.image }}",
+            "width_mobile": 750,
+            "width_desktop": 750,
+            "bottom_offset_mobile": 150,
+            "bottom_offset": 250
+          },
+          "blocks": {}
+        },
+        "accent-graphics": {
+          "type": "_accent-graphics",
+          "disabled": true,
+          "static": true,
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "name": "Article: Header",
+      "settings": {
+        "container_width": "full",
+        "max_width": 0,
+        "grid_gutter": "",
+        "mobile_alignment": "center",
+        "desktop_alignment": "center",
+        "color_scheme": "scheme-e7a2b49c-36ae-4b1f-b31f-f3ec31db1021",
+        "top_spacing_mobile": 60,
+        "bottom_spacing_mobile": 0,
+        "top_spacing_desktop": 100,
+        "bottom_spacing_desktop": 0,
+        "bg_color": "",
+        "section_divider_top": "",
+        "section_divider_bottom": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    },
+    "mfr_article_content_zr488H": {
+      "type": "mfr-article__content",
+      "blocks": {
+        "section-content": {
+          "type": "_section-content",
+          "static": true,
+          "settings": {
+            "mobile_alignment": "left",
+            "desktop_alignment": "left",
+            "text_alignment_desktop": "center",
+            "text_alignment_mobile": "center",
+            "max_width_mobile": 450,
+            "max_width_desktop": 750
+          },
+          "blocks": {
+            "section_content_text_UnpEk7": {
+              "type": "_section-content__text",
+              "name": "Section Text",
+              "settings": {
+                "text": "{{ closest.article.content }}",
+                "disable_animation": false,
+                "text_style": "regular",
+                "font_family": "",
+                "color": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "section_content_text_UnpEk7"
+          ]
+        },
+        "accent-graphics": {
+          "type": "_accent-graphics",
+          "disabled": true,
+          "static": true,
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "name": "Article: Content",
+      "settings": {
+        "container_width": "",
+        "max_width": 0,
+        "grid_gutter": "",
+        "mobile_alignment": "center",
+        "desktop_alignment": "center",
+        "color_scheme": "",
+        "top_spacing_mobile": 180,
+        "bottom_spacing_mobile": 30,
+        "top_spacing_desktop": 280,
+        "bottom_spacing_desktop": 50,
+        "bg_color": "",
+        "section_divider_top": "",
+        "section_divider_bottom": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    },
+    "mfr_article_comments_VcPwfG": {
+      "type": "mfr-article__comments",
+      "blocks": {
+        "section-content": {
+          "type": "_section-content",
+          "static": true,
+          "settings": {
+            "mobile_alignment": "",
+            "desktop_alignment": "",
+            "text_alignment_desktop": "center",
+            "text_alignment_mobile": "center",
+            "max_width_mobile": 0,
+            "max_width_desktop": 0
+          },
+          "blocks": {
+            "section_content_title_yRnmQi": {
+              "type": "_section-content__title",
+              "name": "Section Title",
+              "settings": {
+                "heading": "Comments",
+                "disable_animation": false,
+                "header_style": "h2",
+                "header_tag": "h2",
+                "font_family": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "section_content_title_yRnmQi"
+          ]
+        },
+        "article-comments-form": {
+          "type": "_article-comments__form",
+          "static": true,
+          "settings": {},
+          "blocks": {}
+        },
+        "accent-graphics": {
+          "type": "_accent-graphics",
+          "disabled": true,
+          "static": true,
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "name": "Article: Comments",
+      "settings": {
+        "container_width": "",
+        "max_width": 0,
+        "grid_gutter": "",
+        "mobile_alignment": "center",
+        "desktop_alignment": "center",
+        "color_scheme": "scheme-1",
+        "top_spacing_mobile": 30,
+        "bottom_spacing_mobile": 30,
+        "top_spacing_desktop": 50,
+        "bottom_spacing_desktop": 50,
+        "bg_color": "",
+        "section_divider_top": "",
+        "section_divider_bottom": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    },
+    "mfr_article_related_articles_ME88AT": {
+      "type": "mfr-article__related-articles",
+      "blocks": {
+        "section-content": {
+          "type": "_section-content",
+          "static": true,
+          "settings": {
+            "mobile_alignment": "",
+            "desktop_alignment": "",
+            "text_alignment_desktop": "center",
+            "text_alignment_mobile": "center",
+            "max_width_mobile": 0,
+            "max_width_desktop": 0
+          },
+          "blocks": {
+            "section_content_title_t7eFBh": {
+              "type": "_section-content__title",
+              "settings": {
+                "heading": "Related Articles",
+                "disable_animation": false,
+                "header_style": "h2",
+                "header_tag": "h2",
+                "font_family": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "section_content_title_t7eFBh"
+          ]
+        },
+        "article-related-articles-carousel": {
+          "type": "_article-related-articles__carousel",
+          "static": true,
+          "settings": {},
+          "blocks": {}
+        },
+        "accent-graphics": {
+          "type": "_accent-graphics",
+          "disabled": true,
+          "static": true,
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "name": "Article: Related Articles",
+      "settings": {
+        "container_width": "full",
+        "max_width": 0,
+        "grid_gutter": "",
+        "mobile_alignment": "center",
+        "desktop_alignment": "center",
+        "color_scheme": "",
+        "top_spacing_mobile": 30,
+        "bottom_spacing_mobile": 50,
+        "top_spacing_desktop": 50,
+        "bottom_spacing_desktop": 100,
+        "bg_color": "",
+        "section_divider_top": "",
+        "section_divider_bottom": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    }
+  },
+  "order": [
+    "mfr_article_header_xaWCpM",
+    "mfr_article_content_zr488H",
+    "mfr_article_comments_VcPwfG",
+    "mfr_article_related_articles_ME88AT"
+  ]
+}

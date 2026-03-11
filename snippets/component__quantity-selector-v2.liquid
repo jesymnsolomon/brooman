@@ -1,0 +1,97 @@
+{%- comment -%}
+  Renders a quantifier with single increments and decrements.
+
+  Accepts:
+  - name: {string} The name of the field. (optional)
+  - min: {number} The minimum number the quantifier can go to. (optional)
+  - max: {number} The maximum number the quantifier can go to. (optional)
+  - value: {number} The initial value. (optional)
+
+  Usage:
+  {%- render "component__quantity-selector", min: 1, classes: "another-class" -%}
+{%- endcomment -%}
+
+<div
+  class="quantity-selector-v2 {{ classes }}"
+  x-data="
+    {
+      quantity: {{ min | default: 1 }},
+      min: {{ min | default: 1 }},
+      max: {{ max | default: 1 }}
+    }
+  "
+>
+  <div class="quantity-selector-v2__wrapper">
+    <button
+      class="quantity-selector-v2__button quantity-selector-v2__minus"
+      type="button"
+      aria-label="Decrease Quantity"
+      x-data
+      @click="
+        quantity = Math.max(min, quantity - 1);
+        $data.currentQuantity = quantity
+      "
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="3">
+        <path fill="none" stroke="#141723" stroke-width="1.5" stroke-miterlimit="10" transform="translate(0 0.27858)" d="M20 0.47142857L0 0.47142857" fill-rule="evenodd"/>
+      </svg>
+      <span class="visually-hidden">Decrease Quantity</span>
+    </button>
+
+    <div class="quantity-selector-v2__content">
+      <div class="quantity-selector-v2__total">
+        <label for="quantitySelectorInput" class="ada-hide-element">Quantity</label>
+        <input
+          class="quantity-selector-v2__input"
+          id="quantitySelectorInput"
+          type="number"
+          name="{{ name | default: "quantity" }}"
+          value="{{ value | default: 1 }}"
+          min="{{ min | default: 1 }}"
+          :value="quantity"
+          x-data
+          @input="quantity = parseInt($el.value)"
+          {% comment %}
+            <!-- removing max attribute because it was preventing products without inventory tracking from adding to cart -->
+            {% if max != blank %}
+              max="{{ max }}"
+            {% endif %}
+          {% endcomment %}
+        >
+
+        {% if unit != blank -%}
+          {% comment -%}
+            data-plural and data-single can be set for the single and plural quantifiers.
+            By default, the unit will be pluralized with an 's'.
+          {% endcomment -%}
+          <span
+            class="quantity-selector-v2__unit"
+            data-single="{{ unit }}"
+            {% if unit_plural != blank -%}
+              data-plural="{{ unit_plural }}"
+            {%- endif -%}
+          >
+            {{ unit }}
+          </span>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <button
+      class="quantity-selector-v2__button quantity-selector-v2__plus"
+      type="button"
+      aria-label="Increase Quantity"
+      x-data
+      @click="
+        quantity = Math.min(max,quantity + 1);
+        $data.currentQuantity = quantity
+      "
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20">
+        <path fill="none" stroke="#141723" stroke-width="1.5" stroke-miterlimit="10" transform="translate(9.26145 0)" d="M0.73847651 0L0.73847651 20" fill-rule="evenodd"/>
+        <path fill="none" stroke="#141723" stroke-width="1.5" stroke-miterlimit="10" transform="translate(0 9.26145)" d="M20 0.73847651L0 0.73847651" fill-rule="evenodd"/>
+      </svg>
+      <span class="visually-hidden">Increase Quantity</span>
+    </button>
+  </div>
+</div>

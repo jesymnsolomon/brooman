@@ -1,0 +1,370 @@
+
+  /* Txt Backgrounds
+  ====================================================================
+  ====================================================================*/
+
+.tw {
+  h1 {
+    // display: inline-flex;
+    flex-wrap: wrap;
+    margin: 0 rem-calc( -4px );
+    //line-height: 3.1rem;
+    @include breakpoint(large up) {
+      //line-height: 3.9rem;
+    }
+  }
+  span.o {
+    // overflow: hidden;
+    // padding: 0 rem-calc( 3px );
+
+    // @include breakpoint( large up ) {
+    //   padding: 0 rem-calc( 8px );
+    // }
+
+    @for $i from 1 through 100 {
+      &:nth-child(#{$i}) span.i {
+        transition-delay: #{$i * .04}s !important;
+      }
+    }
+  }
+  // strong:after {
+  //   @include transition(.2s all cubic-bezier(0.5,0,0,1) .8s);
+  //   width: 0;
+  // }
+  span.i {
+    display: inline-block;
+    @include opacity( 0 );
+    @include transform(translate(0, 10rem));
+    @include transition(.4s all cubic-bezier(0.5,0,0,1));
+    @include breakpoint(medium up) {
+      @include transform(translate(0, 8rem));
+    }
+  }
+  &.tw--in-view span.i {
+    @include opacity( 1 );
+    @include transform(translate(0, 0rem));
+    // strong:after {
+    //   width: calc(100% + 1.6rem);
+    //   @include breakpoint(large up) {
+    //     width: calc(100% + 1.6rem);
+    //   }
+    // }
+  }
+
+  &.tw--in-view .section-title {
+    &__sub-text {
+      @include transform( unset );
+    }
+  }
+
+  &:last-child .section-title { margin-bottom: 0; }
+}
+
+.text-center .tw h1 {
+  justify-content: center;
+}
+
+
+  /* Fade In
+  ====================================================================
+  ====================================================================*/
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @mixin animation-fade-in($speed: 500ms, $delay: 50ms) {
+    transform: translateZ(0);
+    animation: fadeIn $speed ease normal;
+    animation-delay: $delay;
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(.65,.49,.21,.98);
+  }
+
+.is-hidden { display: block !important; }
+
+/*--------------------------------
+Float
+-------------------------------- */
+.floating {
+    animation-name: floating;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes floating {
+    from { transform: translate(0,  0px); }
+    65%  { transform: translate(0, 15px); }
+    to   { transform: translate(0, 0px); }
+}
+
+@keyframes floating-reverse {
+  from { transform: translate(0,  0px); }
+  65%  { transform: translate(0, -15px); }
+  to   { transform: translate(0, 0px); }
+}
+
+.floating.reverse {
+  animation-name: floating-reverse;
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+
+/* --------------------------------
+Shadow Blur
+-------------------------------- */
+.shadow-blur img {
+  animation-name: shadow-blur;
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes shadow-blur {
+  from { filter: blur(1.3rem) grayscale(1) brightness(0); @include transform(scale(1) skew(30deg, -4deg)); }
+  65%  { filter: blur(.8rem) grayscale(1) brightness(0); @include transform(scale(.85) skew(30deg, -4deg)); }
+  to   { filter: blur(1.3rem) grayscale(1) brightness(0); @include transform(scale(1) skew(30deg, -4deg)); }
+}
+
+.shadow-blur.reverse img {
+  animation-name: shadow-blur-reverse;
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes shadow-blur-reverse {
+  from { filter: blur(.8rem) grayscale(1) brightness(0); @include transform(scale(.85) skew(30deg, -4deg)); }
+  65%  { filter: blur(1rem) grayscale(1) brightness(0); @include transform(scale(1) skew(30deg, -4deg)); }
+  to   { filter: blur(.8rem) grayscale(1) brightness(0); @include transform(scale(.85) skew(30deg, -4deg)); }
+}
+
+
+//sharper shadow
+.shadow-blur-small img {
+  animation-name: shadow-blur-small;
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes shadow-blur-small {
+  from { filter: blur(.3rem) grayscale(1) brightness(0); @include transform(scale(.95)); }
+  65%  { filter: blur(.5rem) grayscale(1) brightness(0); @include transform(scale(1)); }
+  to   { filter: blur(.3rem) grayscale(1) brightness(0); @include transform(scale(.95)); }
+}
+
+.shadow-blur-small.reverse img {
+  animation-name: shadow-blur-reverse-small;
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes shadow-blur-reverse-small {
+  from { filter: blur(.5rem) grayscale(1) brightness(0); @include transform(scale(.95)); }
+  65%  { filter: blur(.3rem) grayscale(1) brightness(0); @include transform(scale(1)); }
+  to   { filter: blur(.5rem) grayscale(1) brightness(0); @include transform(scale(.95)); }
+}
+
+
+
+
+/* --------------------------------
+Flying
+-------------------------------- */
+.flying {
+    animation-name: flying;
+    animation-duration: 30s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes flying {
+    from { left: -5%; }
+    65%  { left: 70%; }
+    100%   { left: 110%; }
+}
+
+
+
+/* --------------------------------
+Rotate
+-------------------------------- */
+.rotating {
+    animation-name: rotating;
+    animation-duration: 26s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.rotating-slow {
+    animation-name: rotating;
+    animation-duration: 60s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes rotating {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+
+
+/* --------------------------------
+Pulsate
+-------------------------------- */
+@keyframes pulsate {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(.7); /* Adjust scale value to control the intensity of the pulsate */
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+
+/*--------------------------------
+Spark
+-------------------------------- */
+.spark {
+  animation-name: spark;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes spark {
+  from { @include transform( scale( 0 ) ); }
+  50%  { @include transform( scale( 1 ) ); }
+  to   { @include transform( scale( 0 ) ); }
+}
+
+.spark-fast {
+  animation-name: spark-fast;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes spark-fast {
+  from { @include transform( scale( .75 ) ); }
+  50%  { @include transform( scale( 1 ) ); }
+  to   { @include transform( scale( .75 ) ); }
+}
+
+  /* --------------------------------
+  Custom AOS
+  -------------------------------- */
+  [data-aos="fade-up-small"] {
+    opacity: 0;
+    transition-property: transform, opacity;
+
+    &.aos-animate {
+      opacity: 1;
+    }
+
+    @media screen and (min-width: 768px) {
+      transform: translateY(30px);
+
+      &.aos-animate {
+        transform: translateX(0);
+      }
+    }
+  }
+
+
+
+  [data-aos="height"] {
+    @include transition(.6s all cubic-bezier(0.5,0,0,1));
+    height: 0%;
+    transition-property: height;
+    &.aos-animate {
+      height: 100%;
+    }
+  }
+
+/**
+  Cards Hover Animation
+*/
+
+// .with-card-hover-animation {
+//   @include breakpoint( medium up ) {
+//     @include transition(.2s all cubic-bezier(0.5,0,0,1));
+  
+//     @include hover {
+//       @include transform( translateY( rem-calc( -2px ) ) scale( 1.05 ) );
+//       @include shadow( 0 5px 10px 0px rgba(0, 0, 0, .2) );
+//     }
+  
+//     &__wrapper { //insert this class to with-card-hover-animation parent to avoid being cutoff when on flickity carousel
+//       padding-top: 2rem;
+//       padding-bottom: 2rem;
+//     }
+//   }
+//}
+
+.transition {
+  transition: $global-transition;
+}
+.translate-x-full {
+  transform: translateX(100%);
+}
+.-translate-x-full {
+  transform: translateX(-100%);
+}
+.translate-x-0 {
+  transform: translateX(0);
+}
+.opacity-0 {
+  opacity: 0 !important;
+}
+.opacity-100 {
+  opacity: 1 !important;
+}
+.scale-0 {
+  @include transform( scale( 0 ) );
+}
+.scale-100 {
+  @include transform( scale( 1 ) );
+}
+
+@keyframes tada {
+  0% {
+      -webkit-transform: scaleX(1);
+      transform: scaleX(1)
+  }
+
+  10%,20% {
+      -webkit-transform: scale3d(.9,.9,.9) rotate(-3deg);
+      transform: scale3d(.9,.9,.9) rotate(-3deg)
+  }
+
+  30%,50%,70%,90% {
+      -webkit-transform: scale3d(1.1,1.1,1.1) rotate(3deg);
+      transform: scale3d(1.1,1.1,1.1) rotate(3deg)
+  }
+
+  40%,60%,80% {
+      -webkit-transform: scale3d(1.1,1.1,1.1) rotate(-3deg);
+      transform: scale3d(1.1,1.1,1.1) rotate(-3deg)
+  }
+
+  to {
+      -webkit-transform: scaleX(1);
+      transform: scaleX(1)
+  }
+}

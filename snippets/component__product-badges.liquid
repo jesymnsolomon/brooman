@@ -1,0 +1,30 @@
+{%- assign tag_handle = "" -%}
+
+{%- for tag in product.tags -%}
+  {%- assign tag_handle = tag | handleize -%}
+
+  {%- if tag_handle contains 'best-seller' -%}
+    <div class="product-badge best-seller">
+      {% render 'icon__badge' %}
+      <span>Best Seller</span>
+    </div>
+
+  {%- elsif tag_handle contains 'new' -%}
+    <div class="product-badge new">
+      {% render 'icon__badge' %}
+      <span>New</span>
+    </div>
+
+  {%- elsif tag_handle contains 'coming-soon' -%}
+    <div class="product-badge coming-soon">
+      {% render 'icon__badge' %}
+      <span>Coming Soon</span>
+    </div>
+
+  {%- elsif tag_handle contains 'sale' -%}
+    <div class="product-badge on-sale">
+      {% render 'icon__badge' %}
+      <span>Sale</span>
+    </div>
+  {%- endif -%}
+{%- endfor -%}

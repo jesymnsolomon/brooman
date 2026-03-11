@@ -1,0 +1,140 @@
+{% comment %}
+  Section: Image Row with Buttons Underneath
+{% endcomment %}
+
+<style>
+  .image-button-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .image-button-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 200px;
+    text-align: center;
+  }
+
+  .image-button-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+
+.image-button-section {
+  background-color: pink; /* test */
+}
+
+
+.image-button-item .button {
+  background-color: var(--color-button-background);
+  color: var(--color-button-text);
+}
+
+.image-button-item .button:hover {
+  background-color: var(--color-button-background-hover);
+  color: var(--color-button-text-hover);
+}
+  }
+</style>
+{% render 'renderer__color-scheme', name: "section", color_scheme: section.settings.color_scheme, selector: ".image-button-section", section_id: section.id %}
+
+<section
+  class="image-button-section color-scheme color-scheme--{{ section.settings.color_scheme }}"
+  id="{{ section.id }}"
+>
+
+
+  <div class="image-button-row">
+    {% for block in section.blocks %}
+      <div class="image-button-item">
+        {% if block.settings.image %}
+          <img src="{{ block.settings.image | image_url: width: 400 }}" alt="{{ block.settings.alt_text | escape }}">
+        {% endif %}
+
+        {% if block.settings.button_text %}
+          {% if block.settings.button_link != blank %}
+            <a href="{{ block.settings.button_link }}" class="button">{{ block.settings.button_text }}</a>
+          {% else %}
+            <span class="button">{{ block.settings.button_text }}</span>
+          {% endif %}
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Image Row with Buttons",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image Row Settings"
+    }
+  ],
+ "settings": [
+   {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "scheme_1",
+      "label": "Color Scheme",
+      "info": "This will be the color scheme of the header initially."
+    },
+    ],
+  "blocks": [
+    {
+      "type": "image_with_button",
+      "name": "Image + Button",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alt Text",
+          "default": "Image description"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Click Me"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Image Row with Buttons",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "image_with_button"
+        },
+        {
+          "type": "image_with_button"
+        },
+        {
+          "type": "image_with_button"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

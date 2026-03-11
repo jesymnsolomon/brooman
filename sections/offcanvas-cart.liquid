@@ -1,0 +1,348 @@
+{% assign quantity_progress_bar = section.blocks | where: "type", "quantity_progress_bar" | first %}
+{% assign price_progress_bar = section.blocks | where: "type", "price_progress_bar" | first %}
+{% assign product_upsell = section.blocks | where: "type", "product_upsell" | first %}
+{% assign rebuy_widget = section.blocks | where: "type", "rebuy_widget" | first %}
+{% assign cart_surcharge = section.blocks | where: "type", "cart_surcharge" | first %}
+
+{% render 'renderer__color-scheme', name: "section", color_scheme: section.settings.color_scheme, selector: ".price-progress-bar" %}
+{% render 'renderer__color-scheme', name: "section", color_scheme: section.settings.color_scheme, selector: ".cart-form__main, .cart-form__head-inner" %}
+{% render 'renderer__color-scheme', name: "section", color_scheme: section.settings.color_scheme_checkout, selector: ".cart-form__checkout" %}
+
+{%- capture cart_content -%}
+  <div class="offcanvas-cart__content" id="cart-wrapper" x-data x-init="$store.cart.cartExclusions.push({{- section.settings.cart_exclusion_strings -}})" data-cart-view>
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when "@app" -%}
+        {% render block %}
+      {%- endcase -%}
+    {%- endfor -%}
+
+    <div class="offcanvas-cart__form cart-form" :class="$store.cart.cartState.updating ? 'cart-updating' : ''">
+      <div class="cart-form__head">
+        <div class="cart-form__head-inner">
+          <button class="close-button close"
+            aria-label="Close cart"
+            type="button"
+            role="button"
+            x-data
+            @click='$store["offCanvasCart"].closeOffcanvas()'>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="38" height="38">
+              <path fill="none" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" transform="translate(0.530334 0.530209)" d="M35.855339 2.5801583e-13L0.5 35.355339M35.355339 35.855339L-6.5580874e-13 0.5" fill-rule="evenodd"></path>
+            </svg>
+          </button>
+          <h5 class="h5 section-text">{{ section.settings.cart_title | default: 'Cart' }}</h5>
+        </div>
+
+        {% if quantity_progress_bar != blank %}
+          {% render 'cart__quantity-progress-bar', block: quantity_progress_bar %}
+        {% endif %}
+
+        {% if price_progress_bar != blank %}
+          {% render 'cart__price-progress-bar', block: price_progress_bar %}
+        {% endif %}
+
+        {%- if section.settings.checkout_message != blank -%}
+          <div class="cart-form__head-message">{{ section.settings.checkout_message }}</div>
+        {%- endif -%}
+      </div>
+
+      {% render "cart__form", product_upsell: product_upsell, rebuy_widget: rebuy_widget, cart_surcharge: cart_surcharge %}
+    </div>
+
+    {% comment %} <script>
+      document.addEventListener('cartReady', event => {
+        console.log(event.detail.cartData)
+      })
+    </script> {% endcomment %}
+  </div>
+{%- endcapture -%}
+
+{% render 'mfr-component__offcanvas',
+  id: "offCanvasCart",
+  class: "offcanvas-cart",
+  position: "right",
+  content: cart_content,
+  initially_open: false %}
+
+{% schema %}
+  {
+    "name": "Slideout Cart",
+    "enabled_on": {
+      "groups": ["custom.offcanvas"]
+    },
+    "limit": 1,
+    "settings": [
+      {
+        "type": "header",
+        "content": "Cart Messages"
+      },
+      {
+        "type": "text",
+        "id": "cart_title",
+        "label": "Main Title",
+        "default": "My Cart"
+      },
+      {
+        "type": "richtext",
+        "id": "checkout_message",
+        "label": "Header Message",
+        "info": "Ex: Free shipping for US orders"
+      },
+      {
+        "type": "richtext",
+        "id": "general_message",
+        "label": "Footer Message",
+        "info": "Ex: Shipping and taxes calculated at checkout"
+      },
+      {
+        "type": "header",
+        "content": "Cart Button"
+      },
+      {
+        "type": "text",
+        "id": "button_label",
+        "label": "Button Label",
+        "default": "Checkout"
+      },
+      {
+        "type": "select",
+        "id": "color_theme",
+        "label": "Color Theme",
+        "options": [
+          {
+            "value": "primary",
+            "label": "Primary"
+          },
+          {
+            "value": "secondary",
+            "label": "Secondary"
+          },
+          {
+            "value": "tertiary",
+            "label": "Tertiary"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Cart Exclusions"
+      },
+      {
+        "type": "textarea",
+        "id": "cart_exclusion_strings",
+        "label": "Product Type Names",
+        "info": "Products that includes the following strings as their product_type will be excluded from the cart counter"
+      },
+      {
+        "type": "header",
+        "content": "Cart Color Schemes"
+      },
+      {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "default": "scheme_1",
+        "label": "Color Scheme - Main"
+      },
+      {
+        "type": "color_scheme",
+        "id": "color_scheme_checkout",
+        "default": "scheme_1",
+        "label": "Checkout Section"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "quantity_progress_bar",
+        "name": "Quantity Progress Bar",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection",
+            "info": "Products inside the collection will only be counted"
+          },
+          {
+            "type": "number",
+            "id": "quantity",
+            "label": "Max Quantity",
+            "default": 0
+          },
+          {
+            "type": "header",
+            "content": "Progress Messages"
+          },
+          {
+            "type": "richtext",
+            "id": "condition_label",
+            "label": "Condition Label",
+            "default": "<p>Add <strong>[quantity] more</strong> pack for 20% off</p>",
+            "info": "The text that will be displayed to inform user that the condition has not been met. Use [quantity] to show current quantity count"
+          },
+          {
+            "type": "richtext",
+            "id": "success_message",
+            "label": "Success Message",
+            "default": "<p>You have 20% off!</p>"
+          },
+          {
+            "type": "header",
+            "content": "Progress Theme"
+          },
+          {
+            "type": "color",
+            "id": "track_color",
+            "label": "Track Color",
+            "default": "#2A7519"
+          },
+          {
+            "type": "color",
+            "id": "track_bg_color",
+            "label": "Track Color",
+            "default": "#A4D65D"
+          },
+          {
+            "type": "color_scheme",
+            "id": "color_scheme_progress_bar",
+            "default": "scheme_1",
+            "label": "Color Scheme"
+          }
+        ]
+      },
+      {
+        "type": "price_progress_bar",
+        "name": "Price Progress Bar",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection",
+            "info": "Products inside the collection will only be counted"
+          },
+          {
+            "type": "text",
+            "id": "price",
+            "label": "Max Price",
+            "default": "0",
+            "info": "Enter a number value only, ie: 50 or 49.99"
+          },
+          {
+            "type": "header",
+            "content": "Progress Messages"
+          },
+          {
+            "type": "richtext",
+            "id": "condition_label",
+            "label": "Condition Label",
+            "default": "<p>Spend <strong>$[price]</strong> to get free shipping!</p>",
+            "info": "The text that will be displayed to inform user that the condition has not been met. Use [price] to show remaining amount needed to reach the goal"
+          },
+          {
+            "type": "richtext",
+            "id": "success_message",
+            "label": "Success Message",
+            "default": "<p>You have free shipping!</p>"
+          },
+          {
+            "type": "header",
+            "content": "Progress Theme"
+          },
+          {
+            "type": "color",
+            "id": "track_color",
+            "label": "Track Color",
+            "default": "#2A7519"
+          },
+          {
+            "type": "color",
+            "id": "track_bg_color",
+            "label": "Track Color",
+            "default": "#A4D65D"
+          },
+          {
+            "type": "color_scheme",
+            "id": "color_scheme_progress_bar",
+            "default": "scheme_1",
+            "label": "Color Scheme"
+          }
+        ]
+      },
+      {
+        "type": "product_upsell",
+        "name": "Product Upsell",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "header",
+            "content": "Color Settings"
+          },
+          {
+            "type": "color_scheme",
+            "id": "color_scheme_upsell",
+            "default": "scheme_1",
+            "label": "Progress Bar Color Scheme"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "number",
+            "id": "quantity",
+            "label": "Quantity",
+            "default": 0,
+            "info": "Upsells will only appear if the cart item count is less than the set quantity."
+          },
+
+          {
+            "type": "header",
+            "content": "Product Settings"
+          },
+          {
+            "type": "product_list",
+            "id": "products",
+            "label": "Products"
+          }
+        ]
+      },
+      {
+        "type": "cart_surcharge",
+        "name": "Cart Surcharge",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "type_indicator",
+            "label": "Type Indicator",
+            "info": "Identifier use for grouping cart items additional fee (i.e: mws_fee_generated)",
+            "default": "mws_fee_generated"
+          }
+        ]
+      },
+      {
+        "type": "rebuy_widget",
+        "name": "Rebuy Upsell Widget",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "textarea",
+            "id": "widget_code",
+            "label": "Rebuy Widget"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Offcanvas Cart"
+      }
+    ]
+  }
+{% endschema %}

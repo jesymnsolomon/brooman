@@ -1,0 +1,78 @@
+{%- comment -%}
+Attributes
+* name - name of this color scheme. Will be prepended to the css variable for specificity
+* color_scheme - the color scheme input settings
+* selector - to where the css variables be assigned to
+{%- endcomment -%}
+
+{% assign color = color_scheme.settings %}
+
+<style>
+{{ selector }} {%- if section_id != blank -%}#{{- section_id -}}{%- endif -%} {
+    --{{- name -}}-small-text: {{ color.small_text }};
+    --{{- name -}}-heading: {{ color.heading }};
+    --{{- name -}}-text: {{ color.text }};
+    --{{- name -}}-text-alpha: {{ color.text | color_modify: 'alpha', 0.4 }};
+    --{{- name -}}-text-gradient: {{ color.text_gradient }};
+    {% if color.background_gradient != blank %}
+        --{{- name -}}-background: {{ color.background_gradient }};
+    {% else %}
+        --{{- name -}}-background: {{ section_background | default: color.background }};
+    {% endif %}
+    --{{- name -}}-icons: {{ color.icons }};
+    --{{- name -}}-links: {{ color.links }};
+    --{{- name -}}-links-hover: {{ color.links_hover }};
+
+    {% if color.primary_button_bg_gradient != blank %}
+        --{{- name -}}-primary-button-bg: {{ color.primary_button_bg_gradient }};
+    {% else %}
+        --{{- name -}}-primary-button-bg: {{ color.primary_button_bg }};
+    {% endif %}
+    --{{- name -}}-primary-button-text: {{ color.primary_button_text }};
+    --{{- name -}}-primary-button-border: {{ color.primary_button_border }};
+    --{{- name -}}-primary-button-border-alpha: {{ color.primary_button_border | color_modify: "alpha", 0.25 }};
+    {% if color.primary_button_bg_gradient_hover != blank %}
+        --{{- name -}}-primary-button-bg-hover: {{ color.primary_button_bg_gradient_hover }};
+    {% else %}
+        --{{- name -}}-primary-button-bg-hover: {{ color.primary_button_bg_hover }};
+    {% endif %}
+    --{{- name -}}-primary-button-text-hover: {{ color.primary_button_text_hover }};
+    --{{- name -}}-primary-button-border-hover: {{ color.primary_button_border_hover }};
+    --{{- name -}}-primary-button-border-hover-alpha: {{ color.primary_button_border | color_modify: "alpha", 0.08 }};
+
+    {% if color.secondary_button_bg_gradient != blank %}
+        --{{- name -}}-secondary-button-bg: {{ color.secondary_button_bg_gradient }};
+    {% else %}
+        --{{- name -}}-secondary-button-bg: {{ color.secondary_button_bg }};
+    {% endif %}
+    --{{- name -}}-secondary-button-text: {{ color.secondary_button_text }};
+    --{{- name -}}-secondary-button-border: {{ color.secondary_button_border }};
+    --{{- name -}}-secondary-button-border-alpha: {{ color.secondary_button_border | color_modify: "alpha", 0.08 }};
+    {% if color.secondary_button_bg_gradient_hover != blank %}
+        --{{- name -}}-secondary-button-bg-hover: {{ color.secondary_button_bg_gradient_hover }};
+    {% else %}
+        --{{- name -}}-secondary-button-bg-hover: {{ color.secondary_button_bg_hover }};
+    {% endif %}
+    --{{- name -}}-secondary-button-text-hover: {{ color.secondary_button_text_hover }};
+    --{{- name -}}-secondary-button-border-hover: {{ color.secondary_button_border_hover }};
+    --{{- name -}}-secondary-button-border-hover-alpha: {{ color.secondary_button_border | color_modify: "alpha", 0.08 }};
+
+    {% if color.tertiary_button_bg_gradient != blank %}
+        --{{- name -}}-tertiary-button-bg: {{ color.tertiary_button_bg_gradient }};
+    {% else %}
+        --{{- name -}}-tertiary-button-bg: {{ color.tertiary_button_bg }};
+    {% endif %}
+    --{{- name -}}-tertiary-button-text: {{ color.tertiary_button_text }};
+    --{{- name -}}-tertiary-button-border: {{ color.tertiary_button_border }};
+    --{{- name -}}-tertiary-button-border-alpha: {{ color.tertiary_button_border | color_modify: "alpha", 0.08 }};
+    {% if color.tertiary_button_bg_gradient_hover != blank %}
+        --{{- name -}}-tertiary-button-bg-hover: {{ color.tertiary_button_bg_gradient_hover }};
+    {% else %}
+        --{{- name -}}-tertiary-button-bg-hover: {{ color.tertiary_button_bg_hover }};
+    {% endif %}
+    --{{- name -}}-tertiary-button-text-hover: {{ color.tertiary_button_text_hover }};
+    --{{- name -}}-tertiary-button-border-hover: {{ color.tertiary_button_border_hover }};
+    --{{- name -}}-tertiary-button-border-hover-alpha: {{ color.tertiary_button_border | color_modify: "alpha", 0.08 }};
+    --{{- name -}}-scrollbar-track-color: {{ color.scrollbar }};
+}
+</style>

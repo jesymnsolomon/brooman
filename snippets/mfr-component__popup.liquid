@@ -1,0 +1,87 @@
+{%- comment -%}
+  COMPONENT: Popup
+  ----------------------------------------------------------------------------
+  USAGE:
+    {% render 'mfr-component__popup',
+      popup_id: 'example-popup',
+      class: 'optional-classname',
+      content: content
+    %}
+
+  CONTENT EXAMPLE:
+    <h2 class="text-xl font-bold">Popup Title</h2>
+    <p>This is the content of the popup.</p>
+
+  REQUIREMENTS:
+    - Provide a unique `popup_id` string for each instance.
+    - `content` should be valid HTML or rendered Liquid content.
+    - The component uses Alpine.js and must be initialized via `x-data` and `Alpine.store`.
+
+  NOTES:
+    - Automatically appends the popup to `document.body` on init.
+    - Opens the popup if the URL hash matches the `popup_id`.
+    - Includes overlay click-to-close and Escape key trapping via `x-trap`.
+    - Use `x-cloak` to avoid flashing hidden content on load.
+    - Close button uses the `icon__close` component and is rendered via `component__svg-encoder`.
+    - Transitions are handled with `x-transition` for smooth appearance/disappearance.
+
+{%- endcomment -%}
+ {% if initially_open == true %}
+  {% assign initially_open = true %}
+{% else %}
+  {% assign initially_open = false %}
+ {% endif %}
+<div class="mfr-popup__wrapper {{ class }}"
+  id="{{ popup_id }}"
+  x-ref='{{ popup_id }}'
+  x-data='{
+    open: {{ initially_open }}
+  }'
+  x-init='
+    document.body.appendChild($el);
+    Alpine.store("{{ popup_id }}", {
+      open: {{ initially_open }},
+      openPopup() {
+        this.open = true
+      },
+      closePopup() {
+        this.open = false
+      }
+    });
+
+    if( window.location.hash.replace("#", "") == "{{ popup_id }}" )
+      Alpine.store("{{ popup_id }}").openPopup();
+  '
+  x-show='$store["{{ popup_id }}"].open'
+  x-trap='$store["{{ popup_id }}"].open'
+  :aria-hidden='$store["{{ popup_id }}"]?.open ? "false" : "true"'
+  x-cloak>
+  <div class="mfr-popup__overlay"
+    x-show='$store["{{ popup_id }}"].open'
+    @click='$store["{{ popup_id }}"].closePopup()'
+    x-transition:enter-start='opacity-0'
+    x-transition:leave-end='opacity-0'
+    x-cloak></div>
+
+    <div class="mfr-popup"
+      x-show='$store["{{ popup_id }}"].open'
+      x-transition:enter-start='mfr-popup--hiding'
+      x-transition:leave-end='mfr-popup--hiding'
+      x-cloak>
+      <div class="mfr-popup__head">
+        <button
+          @click='$store["{{ popup_id }}"].closePopup()'>
+          {%- capture close_svg -%}
+            {% render 'icon__close' %}
+          {%- endcapture -%}
+          {% render 'component__svg-encoder',
+            svg_code: close_svg,
+            width: 32,
+            alt: "close icon" %}
+        </button>
+      </div>
+      <div class="mfr-popup__content">
+        {{ content }}
+      </div>
+    </div>
+</div>

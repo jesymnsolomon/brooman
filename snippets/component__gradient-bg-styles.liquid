@@ -1,0 +1,97 @@
+{% assign background = section.settings.custom_bg_color |  default: section.settings.bg_color %}
+
+<style media="screen">
+  {% if section.settings.bg_image != blank and section.settings.bg_color != blank %}
+    {% assign separator = "," %}
+  {% else %}
+    {% assign separator = "" %}
+  {% endif %}
+  #shopify-section-{{ section.id }} .background {
+    background: {{ section.settings.custom_bg_color |  default: section.settings.bg_color | default: section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background }};
+  }
+  .shopify-section #shopify-section-{{ section.id }} section {
+    --section-background: {{ section.settings.bg_color }};
+  }
+</style>
+
+{% if section.settings.bg_image != blank or section.settings.video != blank %}
+<style>
+  #shopify-section-{{ section.id }} .background {
+    position: relative;
+    /* z-index: 1; */
+  }
+  #shopify-section-{{ section.id }} .background .background__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  {% if section.settings.bg_color != blank %}
+    #shopify-section-{{ section.id }} .background .background__image:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      background: {{ section.settings.bg_color }};
+    }
+  {% endif %}
+
+  #shopify-section-{{ section.id }} .background .background__image-inner {
+    width: 100%;
+    height: calc( 100% + 60px );
+  }
+
+  #shopify-section-{{ section.id }} .background .background__image-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
+
+<div class="background__image {% if section.settings.bg_image %}has-mobile-image{% endif %}">
+  <div class="background__image-inner">
+    {% if section.settings.background_video != blank and is_video_background != false %}
+      <div class="video-player" {{ overlay_style }}>
+        {% render "component__hosted-video",
+          media: section.settings.video,
+          autoplay: true,
+          muted: true,
+          controls: false,
+          play_on_view: false
+        %}
+      </div>
+    {% else %}
+      {% if section.settings.bg_image != blank or section.settings.bg_image_mobile != blank %}
+        {% assign main_height = 1800 | divided_by: section.settings.bg_image.aspect_ratio %}
+        {% assign mobile_height = 1080 | divided_by: section.settings.bg_image_mobile.aspect_ratio %}
+        {% assign alt = section.settings.bg_image.alt |  default: "background image" %}
+
+        {{ section.settings.bg_image
+          | image_url: width: 2160
+          | image_tag: width: 1800,
+            height: main_height,
+            widths: "480,600,720,900,1080,1260,1440,1800,2160",
+            alt: alt,
+            loading: "lazy",
+            class: "main-image" }}
+
+        {{ section.settings.bg_image_mobile
+          | image_url: width: 1080
+          | image_tag: width: 1080,
+            widths: "480,600,720,900,1080",
+            height: mobile_height,
+            alt: alt,
+            loading: "lazy",
+            class: "mobile-image" }}
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
+{% endif %}

@@ -1,0 +1,73 @@
+{%- capture slides_content -%}
+  {% if block.blocks.size > 0 %}
+    {%- content_for "blocks" -%}
+  {%- elsif request.design_mode -%}
+    <div class="image-video-banner__image-slide mfr-carousel__item">
+      <div class="image-banner"
+        data-image-parallax>
+        {%- capture svg_code -%}{{- 'lifestyle-2' | placeholder_svg_tag -}}{%- endcapture -%}
+        {% render 'component__svg-encoder', svg_code: svg_code, alt: "placeholder image" %}
+      </div>
+      
+      <div class="grid-container">
+        <div class="grid-x alignment-helper">
+          <div class="cell small-12 large-12 section-content">
+            <div class="section-content__inner">
+              <h2 class="section-title h1">
+                Lorem ipsum dolor sit amet.
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{%- endcapture -%}
+{%- capture settings -%}
+{
+  contain: true,
+  wrapAround: true,
+  groupCells: false,
+  autoPlay: {{- block.settings.autoplay_timing | times: 1000 | default: 0 -}},
+  mobileSettings: {
+    cellAlign: "center",
+    wrapAround: true
+  }
+}
+{%- endcapture -%}
+
+{% render 'mfr-component__carousel',
+  settings: settings,
+  class: "image-video-banner__carousel",
+  content: slides_content
+%}
+
+{% schema %}
+  {
+    "name": "Banner Carousel",
+    "class": "image-video-banner",
+    "settings": [
+      {
+        "type": "number",
+        "id": "autoplay_timing",
+        "label": "Autoplay Timing",
+        "default": 5,
+        "info": "In seconds"
+      },
+    ],
+    "blocks": [
+      { "type": "_image-video-banner__image-slide" },
+      { "type": "_image-video-banner__video-slide" }
+    ],
+    "presets": [
+      {
+        "name": "Banner Carousel",
+        "blocks": [
+          {
+            "type": "_image-video-banner__image-slide"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,60 @@
+{% render 'component__stacked-card', entry: block.settings %}
+
+{% schema %}
+  {
+    "name": "Stacked Card",
+    "class": "stacked-card",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Image Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_mobile",
+        "label": "Image - Mobile"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_desktop",
+        "label": "Image - Desktop"
+      },
+      {
+        "type": "header",
+        "content": "Icon Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon",
+        "label": "Icon"
+      },
+      {
+        "type": "header",
+        "content": "Text Settings"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Lorem ipsum dolor sit amet."
+      },
+      {
+        "type": "textarea",
+        "id": "description",
+        "label": "Description",
+        "default": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde dolorum neque quo, rem sunt veniam iusto facilis eos veritatis quisquam!"
+      },
+      {
+        "type": "color",
+        "id": "color",
+        "label": "Card Background",
+        "default": "#B6E7F9"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Stacked Card"
+      }
+    ]
+  }
+{% endschema %}

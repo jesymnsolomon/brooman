@@ -1,0 +1,31 @@
+<button 
+  type="button" 
+  role="button" 
+  aria-label="{{ block.settings.label }}" 
+  :class='currentFilter == filterValue ? "is-active" : ""'
+  x-data='{
+    filterValue: "{{ block.settings.label }}"
+  }'
+  @click='setFilter(filterValue)'>
+  {{ block.settings.label }}
+</button>
+
+{% schema %}
+  {
+    "name": "Filter",
+    "tag": "li",
+    "settings": [
+      {
+        "type": "text",
+        "id": "label",
+        "label": "Label",
+        "default": "Lorem ipsum"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Filter"
+      }
+    ]
+  }
+{% endschema %}

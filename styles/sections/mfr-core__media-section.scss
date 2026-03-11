@@ -1,0 +1,14 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+.mfr-core__media-section {
+  .shopify-block {
+    &:not(:last-child) {
+      margin-bottom: rem-calc( 30px );
+
+      @include breakpoint( large up ) {
+        margin-bottom: rem-calc( 60px );
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+<style>
+  #shopify-block-{{ block.id }} {
+    --spacing-mobile: {{ block.settings.spacing_mobile | divided_by: 2.00 }}px;
+    --spacing-desktop: {{ block.settings.spacing_desktop | divided_by: 2.00 }}px;
+  }
+</style>
+
+{%- if request.visual_preview_mode -%}
+  {% for i in (1..5) %}
+    <div class="logo-bar__item preview">
+      {{ "PlaceholderImage-Small.jpg"
+        | asset_img_url: 'master'
+        | img_tag: "Manufactur Placeholder Image", "", "30x30" }}
+      <p class="regular">Lorem ipsum dolor sit amet.</p>
+    </div>
+  {% endfor %}
+{% elsif block.blocks.size > 0 %}
+  {%- content_for "blocks" -%}
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Logo Bar Container",
+    "class": "logo-bar",
+    "settings": [
+    ],
+    "blocks": [
+      { "type": "_logo-bar__item" }
+    ],
+    "presets": [
+      {
+        "name": "Logo Bar Container",
+        "blocks": [
+          { "type": "_logo-bar__item" }
+        ]
+      }
+    ]
+  }
+{% endschema %}

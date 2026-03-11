@@ -1,0 +1,417 @@
+{%- comment -%}
+--------------------------------------
+assign section settings to variables
+--------------------------------------
+{%- endcomment -%}
+
+{% render 'style-tags__section', asset_file_name: "mfr-collection__product-grid.css" %}
+{%- assign container_width = section.settings.container_width -%}
+{%- assign max_width = section.settings.max_width -%}
+{%- assign grid_gutter = section.settings.grid_gutter -%}
+{%- assign color_theme = section.settings.color_theme -%}
+{%- assign custom_class = section.settings.custom_class -%}
+
+{%- assign section_id = section.settings.custom_id | default: section.id -%}
+
+{% render 'renderer__color-scheme', name: "section", color_scheme: section.settings.color_scheme, selector: ".shopify-section", section_id: section_id %}
+
+{%- if max_width != 0 -%}
+  {%- capture max_width_style -%}
+    style="max-width: {{ max_width }}rem;"
+  {%- endcapture -%}
+{%- endif -%}
+
+{% capture spacer %}
+  --vertical-alignment-mobile: {{ section.settings.desktop_alignment_mobile | default: 'center' }};
+  --vertical-alignment: {{ section.settings.desktop_alignment | default: 'center' }};
+  --top-spacing-mobile: {{ section.settings.top_spacing_mobile | default: 100}}px;
+  --bottom-spacing-mobile: {{ section.settings.bottom_spacing_mobile | default: 100 }}px;
+  --top-spacing-desktop: {{ section.settings.top_spacing_desktop | default: 100 }}px;
+  --bottom-spacing-desktop: {{ section.settings.bottom_spacing_desktop | default: 100 }}px;
+{% endcapture %}
+
+{% render 'section__settings-styles' %}
+
+<style>
+  #{{ section_id }} {
+    --vertical-alignment: {{ section.settings.vertical_alignment | default: 'center' }};
+  }
+</style>
+
+<section class="mfr-collection__product-grid {{ custom_class }} " id="{{ section_id }}">
+<div class="section-spacer background {{ grid_gutter }}" style="{{ spacer }}">
+    <div class="grid-container {{ container_width }}">
+      <div class="grid-x alignment-helper {{ color_theme }} ">
+
+        <div class="cell small-12 large-12 section-content"
+          {% if section.settings.unique_id != blank %}
+            id="{{ section.settings.unique_id }}"
+          {% endif %}
+
+          {% if section.settings.features != blank %}
+            data-limit="{{ section.settings.limit }}"
+            x-data="MFRProductFilter('{{ section_id }}', '{{ section.settings.limit }}')"
+          {% endif %}
+
+          data-column-count="{{ section.settings.grid_column }}"
+          data-column-count-mobile="{{ section.settings.grid_column_mobile }}"
+          data-stagger-inview=".section-icon__wrapper, .section-content__small-text, .section-content__text, .section-content__button">
+
+          {%- content_for "block", type: "_product-filters", id: "product-filters" -%}
+
+          <div class="section-content__wrapper" {{ max_width_style }}>
+            {%- content_for "block", type: "_collection-title", id: "collection-title" -%}
+            {%- content_for "block", type: "_section-content", id: "section-content" -%}
+            {%- content_for "block", type: "_product-grid", id: "product-grid" -%}
+
+            {% if section.settings.limit != blank %}
+              <button @click="loadMoreItems({{ section.settings.limit }})" x-show="checkUnloadedItems()"
+              class="button {{ section.settings.button_type }} product-grid__load-more" title="load more product items" aria-label="Load more product items"><span>Load More</span></button>
+            {% endif %}
+
+            {% content_for "blocks" %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {%- render 'component__gradient-bg-styles' -%}
+  </div>
+
+  {%- render 'component__section-dividers', is_video_background: true -%}
+  {% content_for "block", type: "_accent-graphics", id: "accent-graphics" %}
+  {% render 'script__section', file: "MFRProductFilter.js" %}
+</section>
+
+{% schema %}
+{
+  "name":"Collection: Product Grid",
+  "disabled_on": {
+     "groups": [
+      "header",
+      "footer",
+      "custom.offcanvas",
+      "custom.modals",
+      "custom.popups"
+    ]
+  },
+  "settings":[
+    {
+      "type": "text",
+      "label": "Unique ID",
+      "id": "unique_id",
+      "info": "Enter a value in this text field if this section will be targeted by the filters in the Offcanvas Filter. Then, copy the same value into the ‘Referenced Section ID’ field in the Offcanvas Filter block within the Header section."
+    },
+    {
+      "type": "header",
+      "content": "Grid Settings"
+    },
+    {
+      "type": "select",
+      "id": "features",
+      "label": "Includes filtering or item limit",
+      "options": [
+        { "value": "", "label": "Doesn't Include"},
+        { "value": "true", "label": "Include"}
+      ]
+    },
+    {
+      "type": "select",
+      "id": "limit",
+      "label": "Limit displayed products?",
+      "options": [
+        { "value": "", "label": "No Limit"},
+        { "value": "4", "label": "4 Items"},
+        { "value": "8", "label": "8 Items"},
+        { "value": "12", "label": "12 Items"}
+      ]
+    },
+    {
+      "type": "select",
+      "id": "grid_column",
+      "label": "Product Grid: Desktop Column Count",
+      "options": [
+        { "value": "1", "label": "1"},
+        { "value": "2", "label": "2"},
+        { "value": "3", "label": "3"},
+        { "value": "4", "label": "4"}
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "grid_column_mobile",
+      "label": "Product Grid: Mobile Column Count",
+      "options": [
+        { "value": "1", "label": "1"},
+        { "value": "2", "label": "2"}
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "button_type",
+      "label": "Load More Button Style",
+      "options": [
+        { "value": "primary", "label": "Primary"},
+        { "value": "secondary", "label": "Secondary"},
+        { "value": "tertiary", "label": "Tertiary"}
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "options": [
+        { "value": "full", "label": "Full" },
+        { "value": "", "label": "Contain" }
+      ],
+      "label": "Width",
+      "default": "full"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "rem",
+      "label": "Max Content Width",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "grid_gutter",
+      "options": [
+        {
+          "value": "",
+          "label": "No Margin"
+        },
+        {
+          "value": "grid-gutter-mobile",
+          "label": "On Mobile"
+        },
+        {
+          "value": "grid-gutter-desktop",
+          "label": "On Desktop"
+        },
+        {
+          "value": "grid-gutter-mobile grid-gutter-desktop",
+          "label": "On Both"
+        },
+      ],
+      "label": "Section Margin",
+    },
+    {
+      "type": "header",
+      "content": "Alignment Settings"
+    },
+    {
+      "type": "select",
+      "id": "mobile_alignment",
+      "label": "Content Alignment - Mobile",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "desktop_alignment",
+      "label": "Content Alignment - Desktop",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Color Schemes Settings"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "scheme_1",
+      "label": "Color Scheme",
+      "info": "This will be the color scheme of the header initially."
+    },
+    {
+      "type": "header",
+      "content": "Mobile Section Spacing"
+    },
+    {
+      "type": "number",
+      "id": "top_spacing_mobile",
+      "label": "Top Spacing",
+      "default": 100,
+      "info": "in pixels. This will use 100px as default value if left empty"
+    },
+    {
+      "type": "number",
+      "id": "bottom_spacing_mobile",
+      "label": "Bottom Spacing",
+      "default": 100,
+      "info": "in pixels. This will use 100px as default value if left empty"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Section Spacing"
+    },
+    {
+      "type": "number",
+      "id": "top_spacing_desktop",
+      "label": "Top Spacing",
+      "default": 100,
+      "info": "in pixels. This will use 100px as default value if left empty"
+    },
+    {
+      "type": "number",
+      "id": "bottom_spacing_desktop",
+      "label": "Bottom Spacing",
+      "default": 100,
+      "info": "in pixels. This will use 100px as default value if left empty"
+    },
+    {
+      "type":"header",
+      "content":"Background"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_color",
+      "label": "Background Color/Gradient"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image - Mobile"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image - Desktop"
+    },
+      {
+      "type": "header",
+      "content": "Divider Settings"
+    },
+    {
+      "type": "select",
+      "id": "section_divider_top",
+      "label": "Section Divider - Top",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "divider_1",
+          "label": "Custom Divider 1"
+        },
+        {
+          "value": "line",
+          "label": "Line"
+        },
+        {
+          "value": "rounded",
+          "label": "Rounded"
+        },
+        {
+          "value": "scale",
+          "label": "Scale"
+        }
+      ],
+      "default": ""
+    },
+    {
+      "type": "select",
+      "id": "section_divider_bottom",
+      "label": "Section Divider - Bottom",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "divider_1",
+          "label": "Custom Divider 1"
+        },
+        {
+          "value": "line",
+          "label": "Line"
+        },
+        {
+          "value": "rounded",
+          "label": "Rounded"
+        }
+      ],
+      "default": ""
+    },
+    {
+      "type":"header",
+      "content":"Attribute Settings"
+    },
+    {
+      "type": "text",
+      "id": "custom_class",
+      "label": "Custom class"
+    },
+    {
+      "type": "text",
+      "id": "custom_id",
+      "label": "Custom ID"
+    }
+  ],
+  "blocks":[
+    {
+      "type": "_section-content"
+    },
+    {
+      "type": "_collection-title"
+    },
+    {
+      "type": "_product-filters"
+    }
+  ],
+  "presets":[
+    {
+      "name":"Collection: Product Grid",
+      "blocks": [
+        {
+          "type": "_section-content",
+          "id": "section-content",
+          "static": true,
+          "blocks": [
+            { "type": "_section-content__title" }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

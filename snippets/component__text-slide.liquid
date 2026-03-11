@@ -1,0 +1,40 @@
+{% assign description = item.description  %}
+
+{% if is_metafield %}
+  {% assign description = item.description | metafield_tag %}
+{% endif %}
+
+<div class="text-testimonial__slide-item">
+    {% if item.icon != blank %}
+      <div class="text-testimonial__slide-icon">
+        {% assign alt = block.settings.icon.alt |  default: "accent image" %}
+
+        {% render 'component__lazyload-image',
+            image: item.icon,
+            width: 100,
+            alt: alt,
+            widths: "100" %}
+      </div>
+    {% endif %}
+
+    {% if item.description != blank %}
+      <div class="text-testimonial__slide-text">{{- description -}}</div>
+    {% endif %}
+
+    {% if item.author != blank %}
+      <p class="text-testimonial__slide-author">{{- item.author -}}</p>
+    {% endif %}
+
+    {% if item.logo != blank %}
+      <p class="text-testimonial__slide-logo">
+        {% render 'component__lazyload-image',
+            image: item.logo,
+            width: 150,
+            widths: "150" %}
+      </p>
+    {% endif %}
+
+    {% if item.cta_text != blank %}
+      <a href="{{- item.cta_url |  default: "#" -}}" class="text-testimonial__slide-cta">{{- item.cta_text -}}</a>
+    {% endif %}
+  </div>

@@ -1,0 +1,48 @@
+{% assign image_width = icon.width | times: 1.00 %}
+{% assign image_height = icon.height | times: 1.00 %}
+{% assign aspect_ratio = image_width | divided_by: image_height %}
+{% assign height = width | divided_by: aspect_ratio | round: 2 %}
+{% if lottie_file_url != blank %}
+  <div class="section-icon {% if hide_on_mobile != blank %}show-for-large{% endif %} {% if disable_inview %}disable-inview{% endif %}"
+    data-inview
+    {% if width != 0 %}
+      style="
+        width: 100%;
+        --max-width: {{ width }}px;
+        {%- if mobile_max_width != blank -%}
+          --mobile-max-width: {{ mobile_max_width }}px;
+        {%- endif -%}
+      "
+    {% endif %}>
+    <lottie-player src="{{ lottie_file_url }}"
+      background="transparent"
+      speed="0.5"
+      loop
+      autoplay>
+    </lottie-player>
+  </div>
+{% else %}
+  <div class="section-icon {% if hide_on_mobile != blank %}show-for-large{% endif %} {% if disable_inview %}disable-inview{% endif %}" data-inview
+      {% if width != 0 %}
+      style="
+        width: 100%;
+        --max-width: {{ width }}px;
+        {%- if mobile_max_width != blank -%}
+          --mobile-max-width: {{ mobile_max_width }}px;
+        {%- endif -%}
+        "
+      {% endif %}>
+      {% if icon %}
+        {% assign alt = icon.alt |  default: "" %}
+
+        {% render 'component__lazyload-image',
+          image: icon,
+          alt: alt,
+          width: width %}
+      {% elsif svg_code %}
+          {% render 'component__svg-encoder', svg_code: svg_code %}
+      {% else %}
+          <div class="shopify-placeholder-image">{{ 'image' | placeholder_svg_tag }}</div>
+      {% endif %}
+  </div>
+{% endif %}

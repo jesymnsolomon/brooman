@@ -1,0 +1,143 @@
+{% render 'renderer__color-scheme', name: "announcement-bar", color_scheme: section.settings.announcement_bar_color_scheme, selector: ".announcement-bar" %}
+<style>
+  #header .announcement-bar-marquee__container--infinite {
+    {% if settings.announcement_bar_marquee_speed %}
+      animation-duration:{{ settings.announcement_bar_marquee_duration }}s;
+    {% endif %}
+  }
+  {% if settings.announcement_bar_marquee_speed_mobile %}
+    @media screen and (max-width: 640px) {
+      #header .announcement-bar-marquee__container--infinite {
+        animation-duration:{{ settings.announcement_bar_marquee_duration_mobile }}s;
+      }
+    }
+  {% endif %}
+  {% if section.settings.bg_color != blank %}
+    #shopify-section-{{ section.id }} .announcement-bar {
+      --announcement-bar-background: {{ section.settings.bg_color }};
+    }
+  {% endif %}
+</style>
+{% assign announcements = section.blocks | where: "type", "announcement" %}
+{% assign announcements_size = announcements | size %}
+{% if announcements_size > 1 %}
+  {% assign marquee_class = "announcement-bar-marquee" %}
+{% endif %}
+{% if settings.announcement_bar_enable_infinite %}
+  {% assign marquee_infinite_class = "announcement-bar-marquee__container--infinite" %}
+{% endif %}
+
+{% assign show_announcement = true %}
+{% if settings.announcement_bar_home_page_only %}
+  {% unless template == "index" %}
+    {% assign show_announcement = false %}
+  {% endunless %}
+{% endif %}
+
+{%- capture alpine_attributes -%}
+  x-data='{ isSticky: window.scrollY <= 120 }'
+  x-cloak
+  x-collapse
+  x-show='isSticky'
+  x-on:scroll.window='isSticky = window.scrollY <= 120'
+{%- endcapture -%}
+
+{% capture inline_style %}
+  --marquee-animation-name: {{ settings.announcement_bar_marquee_direction }};
+  --marquee-animation-duration: {{ settings.announcement_bar_marquee_duration }}s;
+{% endcapture %}
+
+{% if show_announcement %}
+  {% if settings.announcement_enable_marquee != blank %}
+    <div class="announcement-bar {{ marquee_class }} marquee-scroller__wrapper"
+      {{ alpine_attributes }}
+      style="{{ inline_style }}">
+      <div class="announcement-bar-marquee__container {{ marquee_infinite_class }} marquee-scroller__group">
+        {% for i in (1..4) %}
+          {% for announcement in announcements %}
+            {% if announcement.settings.announcement_bar_text != blank %}
+              <div class="announcement-bar-marquee__entry marquee-scroller__item">
+                {%- if announcement.settings.announcement_bar_link != blank -%}
+                  <a href="{{ announcement.settings.announcement_bar_link }}">
+                    {{ announcement.settings.announcement_bar_text | escape }}
+                  </a>
+                {%- else -%}
+                  <span>{{ announcement.settings.announcement_bar_text | escape }}</span>
+                {%- endif -%}
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </div>
+      {% render 'script__section', file: "mfr-marquee.js" %}
+    </div>
+  {% else %}
+    <div class="announcement-bar non-marquee"
+      {{ alpine_attributes }}>
+      {% for announcement in announcements %}
+        {% if announcement.settings.announcement_bar_text != blank %}
+          <div class="announcement-bar-marquee__entry marquee-scroller__item">
+            {%- if announcement.settings.announcement_bar_link != blank -%}
+              <a href="{{ announcement.settings.announcement_bar_link }}">
+                {{ announcement.settings.announcement_bar_text | escape }}
+              </a>
+            {%- else -%}
+              <span>{{ announcement.settings.announcement_bar_text | escape }}</span>
+            {%- endif -%}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Announcement Bar",
+    "enabled_on": {
+      "groups": ["header"]
+    },
+    "settings": [
+      {
+        "type": "header",
+        "content": "Color Schemes Settings"
+      },
+      {
+        "type": "color_scheme",
+        "id": "announcement_bar_color_scheme",
+        "default": "scheme_1",
+        "label": "Announcement Bar Color Scheme"
+      },
+      {
+        "type": "color_background",
+        "id": "bg_color",
+        "label": "Background Color"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "announcement",
+        "name": "Announcement",
+        "settings": [
+          {
+            "type": "text",
+            "id": "announcement_bar_text",
+            "label": "Announcement text",
+            "default": "Announce something here"
+          },
+          {
+            "type": "url",
+            "id": "announcement_bar_link",
+            "label": "Announcement link",
+            "info": "Optional"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Announcement Bar"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,21 @@
+<div class="footer__embed embed-2">
+    {% if block.settings.small_text != blank %}
+        <div class="footer__embed-small-text"
+            data-inview>
+            {{ block.settings.small_text }}
+        </div>
+    {% endif %}
+    {% if block.settings.title != blank %}
+        <div class="footer__embed-title"
+            data-inview
+            data-split-text="fadeUp">
+            {{ block.settings.title }}
+        </div>
+    {% endif %}
+    {% if block.settings.embed_code != blank %}
+        <div class="footer__embed-code"
+            data-inview>
+            {{ block.settings.embed_code }}
+        </div>
+    {% endif %}
+</div>

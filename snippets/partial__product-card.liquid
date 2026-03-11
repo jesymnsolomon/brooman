@@ -1,0 +1,78 @@
+{%- comment -%}
+  assign product_options = product.options.first
+  assign product_variants = product.variants
+  assign product_variants_size = product_variants | size
+{%- endcomment -%}
+
+{%- liquid
+  if variant != blank
+    assign product_title = variant.title
+    assign media = variant.image
+    assign default_alt = variant.title | append: " Featured Image"
+    assign variant_description = variant.metafields.custom.variant_description
+    assign variant_accent_graphics = variant.metafields.mfr_fields.product_card_accent_graphics.value
+    assign variant_url = '?variant=' | append: variant.id
+  else
+    assign product_title = product.title
+    assign default_alt = product.title | append: " Featured Image"
+  endif
+
+  assign metafields = product.metafields.mfr_fields
+  assign media = media | default: metafields.nice_image | default: product.featured_image
+  assign image_alt = media.alt | default: default_alt
+  assign description = variant_description | default: product.content | strip_html | truncatewords: 10
+  assign short_description = metafields.caption | default: description
+  assign accent_graphics = variant_accent_graphics | default: product.metafields.mfr_fields.product_card_accent_graphics.value
+-%}
+
+{% capture accent_graphics_styling %}
+  --x-position: {{ accent_graphics.horizontal_position |  default: 0 }}px;
+  --y-position: {{ accent_graphics.vertical_position |  default: 0 }}px;
+  --scale: {{ accent_graphics.scale }}
+{% endcapture %}
+
+<div class="product-card">
+  <div class="product-card__details">
+		<span>{%- render 'price', product: product, variant: variant, use_variant: true -%}</span>
+	</div>
+
+  <div class="product-card__badges">
+    {% render 'component__product-badges', product: product %}
+  </div>
+
+  <div class="product-card__media">
+    <a href="{{ product.url }}{{ variant_url }}" aria-label="{{ product_title }}">
+      {% if accent_graphics != blank %}
+          <div class="product-card__accent-graphics" style="{{- accent_graphics_styling -}}">
+              {{ accent_graphics.image | image_url: width: 380 | image_tag: width: 380, alt: product_title, height: 380 }}
+          </div>
+      {% endif %}
+      {% render 'component__lazyload-image', image: media, widths: "480,600,720,900", alt: image_alt, sizes: "calc(50vw * 0.84), (min-width: 1023) 900px" %}
+    </a>
+  </div>
+
+  <div class="product-card__info">
+    <a href="{{ product.url }}{{ variant_url }}" aria-label="{{ product_title }}" class="no-hover">
+
+
+      {% if product.metafields.reviews.rating.value %}
+        {% assign rating_parts = product.metafields.reviews.rating.value | split: "." %}
+        {% assign rating_number = rating_parts[0] | plus: 0 | times: 1 %}
+        {% assign rating_decimal = rating_parts[1] | slice: 0, 1 | prepend: "0." | plus: 0 %}
+        {% assign full_rating = rating_number | plus: rating_decimal %}
+
+        {% render 'component__product-rating', rating: full_rating, total_reviews: product.metafields.reviews.rating_count }, color: "#000" %}
+      {% endif %}
+
+      <p class="product-card__info-title">{{ product_title }}</p>
+
+      {% comment %} {% if product_variants_size > 1 %}
+        <p class="product-card__info-caption">{{ product_variants_size }} {{ product_options }}</p>
+      {% endif %} {% endcomment %}
+
+      <p class="product-card__info-description">{{- short_description -}}</p>
+    </a>
+
+    {% render 'component__add-to-cart-button', product: product, variant: variant, show_price: false %}
+  </div>
+</div>

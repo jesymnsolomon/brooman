@@ -1,0 +1,104 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+.mfr-collection__list {
+  .section-content {
+    margin-bottom: rem-calc(20px);
+  }
+
+  .section-collection {
+    .inner {
+      display: grid;
+      gap: rem-calc(16px);
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+
+      @include breakpoint(medium down) {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: rem-calc(20px);
+      }
+
+      @include breakpoint(large up) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .card {
+      @include breakpoint(medium down) {
+        min-height: rem-calc(450px);
+      }
+
+      @include hover() {
+        .card-image {
+          img {
+            @include transform(scale(1.1));
+          }
+        }
+      }
+
+      &-inner {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow: hidden;
+        background: $white;
+        @include border-radius($global-border-radius);
+        @include drop-shadow(rgba(0, 0, 0, 0.164), 7);
+      }
+
+      &-image {
+        overflow: hidden;
+        height: rem-calc(200px);
+
+        @include breakpoint(medium down) {
+          flex: 1;
+        }
+
+        @include breakpoint(medium up) {
+          height: rem-calc(230px);
+        }
+
+        @include breakpoint(large up) {
+          height: rem-calc(330px);
+        }
+
+        img {
+          @include transition($global-transition);
+        }
+
+        &:has(img[src*=".png"]) {
+          // background-color: $color-accent-3;
+          background-color: $brand-color;
+        }
+      }
+
+      &-content {
+        padding: rem-calc(20px);
+        overflow: hidden;
+        margin-top: auto;
+
+        @include breakpoint(medium up) {
+          padding: rem-calc(20px) rem-calc(25px);
+        }
+
+        h3 {
+          font-size: rem-calc(26px);
+          line-height: rem-calc(25px) !important;
+          letter-spacing: 0.2px;
+          font-family: $custom-font-name-3;
+          margin: 0 0 rem-calc(10px);
+        }
+
+        p {
+          @include small;
+        }
+
+        .button {
+          width: 100%;
+          min-height: rem-calc(64px);
+          padding: rem-calc(15px) rem-calc(30px);
+        }
+      }
+    }
+  }
+}

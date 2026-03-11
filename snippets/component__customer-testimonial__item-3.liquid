@@ -1,0 +1,37 @@
+{%- assign entry = block -%}
+
+<div class="mfr-carousel__item">
+  <div class="customer-testimonials__entry-inner customer-testimonials__entry-v1-inner">
+    <div class="customer-testimonials__entry-v1-image">
+      {% assign default_alt = "maybe an image of " | append: entry.settings.name %}
+      {% assign alt = entry.settings.alt | default: default_alt %}
+      {% render 'component__lazyload-image',
+        image: entry.settings.image,
+        width: 240,
+        alt: alt %}
+    </div>
+    {% if entry.settings.testimony != blank %}
+      <p class="customer-testimonials__entry-v1-testimony">
+        {{ entry.settings.testimony }}
+      </p>
+    {% endif %}
+    <div class="customer-testimonials__entry-v1-footer">
+      <div class="customer-testimonials__entry-v1-footer-icon">
+        {% assign default_alt = "maybe an icon about this testimony" %}
+        {% assign alt = entry.settings.alt | default: default_alt %}
+        {% render 'component__lazyload-image',
+          image: entry.settings.icon,
+          width: 144,
+          alt: alt %}
+      </div>
+      <div class="customer-testimonials__entry-v1-footer-texts">
+        {% if entry.settings.name != blank %}
+          <p>{{ entry.settings.name }}</p>
+        {% endif %}
+        {% if entry.settings.subtitle != blank %}
+          <span>{{ entry.settings.subtitle }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

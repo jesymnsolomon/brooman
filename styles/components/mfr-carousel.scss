@@ -1,0 +1,17 @@
+.mfr-carousel {
+  width: 100%;
+  
+  &:not(.flickity-enabled) {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    .grid-x.align-center.text-center & {
+      justify-content: center;
+    }
+  }
+
+  &__item {
+    flex-shrink: 0;
+  }
+}

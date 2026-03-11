@@ -1,0 +1,125 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+.mfr-product__features {
+  .grid-x {
+    align-items: center;
+  }
+
+  .section-content {
+    margin-bottom: rem-calc(32px);
+
+    @include breakpoint(large up) {
+      margin-bottom: 0;
+    }
+
+    .section-icon {
+      height: fit-content;
+
+      &__wrapper {
+        margin-bottom: rem-calc(32px);
+      }
+    }
+
+    .section-title {
+      &.h2 {
+        @include breakpoint(medium down) {
+          font-size: rem-calc(74px);
+        }
+
+        @include breakpoint(large up) {
+          line-height: rem-calc(65px);
+        }
+      }
+    }
+  }
+
+  .section-features {
+
+    .section-box {
+      max-width: rem-calc(388px);
+      padding: rem-calc(22px) rem-calc(10px) rem-calc(30px);
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: rem-calc(28px);
+      background-color: $white;
+      @include drop-shadow(rgba(0, 0, 0, 0.186), 7);
+      @include border-radius(rem-calc(15px));
+      @include transition($global-transition);
+
+      @include enter-animation {
+        @include transform(translateY($enter-transform-value));
+        @include opacity(0);
+      }
+
+      @include breakpoint(large up) {
+        margin-right: unset;
+        margin-bottom: rem-calc(20px);
+      }
+    }
+
+    .section-image {
+      margin: 0 auto rem-calc(20px);
+      @include border-radius(0);
+    }
+
+    .section-text {
+      font-family: $custom-font-name-2;
+      @include regular;
+      font-weight: 700;
+      text-transform: uppercase;
+      text-align: left;
+      width: 100%;
+      padding-left: rem-calc(27px);
+      padding-right: rem-calc(27px);
+
+      ul, ol {
+        @include clear-list;
+
+        li {
+          padding: rem-calc(8px) 0 0;
+
+          &::before {
+            content: "";
+            display: inline-block;
+            width: rem-calc(23px);
+            height: rem-calc(23px);
+            margin-right: rem-calc(10px);
+            background-repeat: no-repeat;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='25' height='25'%3E%3Cpath transform='translate(0.162109 0.177246)' d='M22.588604 0.52047825C23.177235 1.1693237 23.128338 2.172461 22.479567 2.7610567C19.340487 5.6085424 17.142193 8.0231333 15.313194 10.877809C13.477978 13.74228 11.971509 17.117283 10.294277 21.935188C10.113343 22.454988 9.6759167 22.843773 9.1385326 22.962521C8.6011667 23.08144 8.0406294 22.913115 7.6574998 22.518024L0.44746998 15.082669C-0.16238061 14.453764 -0.14693138 13.44955 0.48197687 12.839692C1.1108851 12.229851 2.1151013 12.245304 2.7249434 12.874209L8.1664486 18.485699C9.5711889 14.741009 10.960955 11.790244 12.641986 9.1664209C14.673827 5.9950447 17.087845 3.3688531 20.348059 0.41137645C20.99683 -0.17721407 21.999973 -0.12836717 22.588604 0.52047825Z' fill-rule='evenodd'/%3E%3C/svg%3E");
+            @include transform(translateY(rem-calc(2px)));
+          }
+
+          &:not(:last-child) {
+            &::after {
+              content: "";
+              display: block;
+              width: 100%;
+              height: rem-calc(2px);
+              margin-top: rem-calc(10px);
+              background-size: 100%;
+              background-repeat: no-repeat;
+              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='323' height='3'%3E%3Cpath d='M311.51309 1.9872123C294.98911 1.9872123 294.98911 1.8542199 278.46509 1.8542199C261.93359 1.8542199 261.93359 1.8081841 245.40208 1.8081841C228.87309 1.8081841 228.87309 1.943734 212.34158 1.943734C195.81009 1.943734 195.81009 2 179.27859 2C162.7421 2 162.7421 1.7941177 146.2081 1.7941177C129.68159 1.7941177 129.68159 1.8593351 113.15509 1.8593351C96.613602 1.8593351 96.613602 1.8810742 80.072105 1.8810742C63.520626 1.8810742 63.520626 1.7992327 46.966644 1.7992327C30.415161 1.7992327 30.415161 1.8849105 13.863678 1.8849105C1.6411598 1.8849105 0 1.5 0 1.0025575C0 0.50639385 1.6411598 0.18925831 13.863678 0.18925831C30.387684 0.18925831 30.387684 0.019181585 46.91169 0.019181585C63.440689 0.019181585 63.440689 0.20971867 79.972191 0.20971867C96.503685 0.20971867 96.503685 0.24424553 113.03519 0.24424553C129.56668 0.24424553 129.56668 0.035805628 146.09819 0.035805628C162.63219 0.035805628 162.63219 0.19181585 179.16869 0.19181585C195.69518 0.19181585 195.69518 0.2084399 212.22168 0.2084399C228.76318 0.2084399 228.76318 0.18542199 245.30467 0.18542199C261.85614 0.18542199 261.85614 0.042199489 278.40762 0.042199489C294.96161 0.042199489 294.96161 0 311.51309 0C323.73563 0 322.99121 0.50639385 322.99121 1.0025575C322.99121 1.5 323.73563 1.9872123 311.51309 1.9872123' fill-rule='evenodd'/%3E%3C/svg%3E");
+            }
+          }
+        }
+      }
+    }
+
+    .section-caption {
+      font-family: $custom-font-name-2;
+      @include regular;
+      font-weight: 700;
+      text-transform: uppercase;
+      max-width: rem-calc(388px);
+      margin-left: auto;
+    }
+  }
+
+  .section-divider {
+    svg, g, path {
+      fill: var(--custom-bg-color, var(--section-background));
+    }
+  }
+}

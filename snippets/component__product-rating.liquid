@@ -1,0 +1,60 @@
+<div class="product-card__info-rating">
+  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+    <g clip-path="url(#clip0_10509_3137)">
+      <path fill="{% if rating >= 1 %}{{ color | default: "#EA7924" }}{% else %}#D8D8D8{% endif %}" d="M8.89678 0L11.5015 5.12582L16.9999 6.1119L13.1081 10.2653L13.9048 16L8.89678 13.4416L3.88872 16L4.68545 10.2653L0.793701 6.1119L6.29644 5.12582L8.89678 0Z" />
+    </g>
+    <defs>
+      <clipPath id="clip0_10509_3137">
+        <rect width="16.2062" height="16" fill="white" transform="translate(0.793701)"/>
+      </clipPath>
+    </defs>
+  </svg>
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+    <g clip-path="url(#clip0_10509_3137)">
+      <path fill="{% if rating >= 1.5 %}{{ color | default: "#EA7924" }}{% else %}#D8D8D8{% endif %}" d="M8.89678 0L11.5015 5.12582L16.9999 6.1119L13.1081 10.2653L13.9048 16L8.89678 13.4416L3.88872 16L4.68545 10.2653L0.793701 6.1119L6.29644 5.12582L8.89678 0Z" />
+    </g>
+    <defs>
+      <clipPath id="clip0_10509_3137">
+        <rect width="16.2062" height="16" fill="white" transform="translate(0.793701)"/>
+      </clipPath>
+    </defs>
+  </svg>
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+    <g clip-path="url(#clip0_10509_3137)">
+      <path fill="{% if rating >= 2.5 %}{{ color | default: "#EA7924" }}{% else %}#D8D8D8{% endif %}" d="M8.89678 0L11.5015 5.12582L16.9999 6.1119L13.1081 10.2653L13.9048 16L8.89678 13.4416L3.88872 16L4.68545 10.2653L0.793701 6.1119L6.29644 5.12582L8.89678 0Z" />
+    </g>
+    <defs>
+      <clipPath id="clip0_10509_3137">
+        <rect width="16.2062" height="16" fill="white" transform="translate(0.793701)"/>
+      </clipPath>
+    </defs>
+  </svg>
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+    <g clip-path="url(#clip0_10509_3137)">
+      <path fill="{% if rating >= 3.5 %}{{ color | default: "#EA7924" }}{% else %}#D8D8D8{% endif %}" d="M8.89678 0L11.5015 5.12582L16.9999 6.1119L13.1081 10.2653L13.9048 16L8.89678 13.4416L3.88872 16L4.68545 10.2653L0.793701 6.1119L6.29644 5.12582L8.89678 0Z" />
+    </g>
+    <defs>
+      <clipPath id="clip0_10509_3137">
+        <rect width="16.2062" height="16" fill="white" transform="translate(0.793701)"/>
+      </clipPath>
+    </defs>
+  </svg>
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+    <g clip-path="url(#clip0_10509_3137)">
+      <path  fill="{% if rating >= 4.5 %}{{ color | default: "#EA7924" }}{% else %}#D8D8D8{% endif %}" d="M8.89678 0L11.5015 5.12582L16.9999 6.1119L13.1081 10.2653L13.9048 16L8.89678 13.4416L3.88872 16L4.68545 10.2653L0.793701 6.1119L6.29644 5.12582L8.89678 0Z"/>
+    </g>
+    <defs>
+      <clipPath id="clip0_10509_3137">
+        <rect width="16.2062" height="16" fill="white" transform="translate(0.793701)"/>
+      </clipPath>
+    </defs>
+  </svg>
+
+  {% if total_reviews != blank %}
+    <span>{{ total_reviews }} {{ label }}</span>
+  {% endif %}
+</div>

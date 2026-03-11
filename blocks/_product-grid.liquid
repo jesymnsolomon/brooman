@@ -1,0 +1,217 @@
+{% assign card_layout = block.settings.card_layout %}
+{% assign increment = section.settings.limit |  plus: 1 %}
+
+{% if block.settings.collection != blank %}
+  {% assign products = block.settings.collection.products %}
+{%  elsif block.settings.product_list != blank %}
+  {% assign products = block.settings.product_list %}
+{% else %}
+  {% assign products = collection.products %}
+  {% unless products != blank %}
+    {% assign has_no_products = true %}
+  {% endunless %}
+{% endif %}
+
+{% unless has_no_products %}
+  {% assign object = "" %}
+
+  {%- for product in products -%}
+    {% assign parent_loop = forloop.last %}
+
+    {% if product.available %}
+      {%- assign metafields = product.metafields.mfr_fields -%}
+      {%- assign filter_source = product[block.settings.value_to_filter] -%}
+      {%- assign filter_classes = "" -%}
+      {% if section.settings.value_to_filter == "type" or section.settings.value_to_filter == "vendor" %}
+        {% assign filter_text = filter_source | handleize %}
+        {% assign filter_classes = filter_classes | append: " filter--" | append: filter_text %}
+      {% else %}
+        {%- for source in filter_source -%}
+          {% if section.settings.value_to_filter == "collections" %}
+            {% assign filter_text = source.handle %}
+            {% assign filter_classes = filter_classes | append: " filter--" | append: filter_text %}
+          {% else %}
+            {% assign filter_text = source.handle %}
+            {% assign filter_classes = filter_classes | append: " filter--" | append: filter_text %}
+          {% endif %}
+        {%- endfor -%}
+      {% endif %}
+
+      {% capture product_object %}
+        {
+          id: '{{ product.id }}',
+          title: {{ product.title | json }},
+          handle: {{ product.handle | json }},
+          className: 'filter--all {{ filter_classes }}',
+          duration: '{{ metafields.specifications.value.spec_1_value }}',
+          age: '{{ metafields.specifications.value.spec_2_value }}',
+          players: '{{ metafields.specifications.value.spec_3_value }}',
+          price: {{ product.price | money_without_currency | json }},
+          order: 0,
+          isCategoryShow: true,
+          isFilterShow: true,
+          isLoadMoreShow: true
+        }{% unless parent_loop and product.variants.size == 1 %},{% endunless %}
+      {% endcapture %}
+
+      {% assign object = object |  append: product_object %}
+
+      <div class="product-grid__item"
+        {% if section.settings.features != blank %}
+          :data-show="shouldShow({{ product.id }})"
+          :style="`order: ${getProductOrder({{ product.id }})}`"
+        {% else %}
+          data-show="true"
+        {% endif %}
+        data-inview>
+
+      {% if card_layout != blank %}
+        {% render 'partial__product-card-large', product: product %}
+      {% else %}
+        {% render 'partial__product-card', product: product %}
+      {% endif %}
+      </div>
+
+      {% comment %} Display Product Variants  {% endcomment %}
+      {% if block.settings.include_variants and product.variants.size != 1 %}
+        {%- assign limit_variant_per_product = block.settings.limit_variant_per_product | default: 2 -%}
+        {% for variant in product.variants limit: limit_variant_per_product %}
+          {% unless forloop.first %}
+            {% if variant.available %}
+              {% capture variant_object %}
+                {
+                  id: '{{ variant.id }}',
+                  title: {{ variant.title | json }},
+                  handle: {{ variant.handle | json }},
+                  className: 'filter--all {{ filter_classes }}',
+                  duration: '{{ metafields.specifications.value.spec_1_value }}',
+                  age: '{{ metafields.specifications.value.spec_2_value }}',
+                  players: '{{ metafields.specifications.value.spec_3_value }}',
+                  price: {{ variant.price | money_without_currency | json }},
+                  order: 0,
+                  isCategoryShow: true,
+                  isFilterShow: true,
+                  isLoadMoreShow: true
+                }{% unless parent_loop and forloop.last %},{% endunless %}
+              {% endcapture %}
+
+              {% assign object = object |  append: variant_object %}
+
+              <div class="product-grid__item"
+                {% if section.settings.features != blank %}
+                  :data-show="shouldShow({{ variant.id }})"
+                  :style="`order: ${getProductOrder({{ variant.id }})}`"
+                {% else %}
+                  data-show="true"
+                {% endif %}
+                data-inview>
+                {% render 'partial__product-card', product: product, variant: variant %}
+              </div>
+            {% endif %}
+          {% endunless %}
+
+        {% endfor %}
+      {% endif %}
+
+    {% endif %}
+  {%- endfor -%}
+{% else %}
+  {% for i in (1..6) %}
+    <div class="product-grid__item"
+      data-inview>
+      {% if card_layout != blank %}
+        {% render 'partial__product-card-large', product: product %}
+      {% else %}
+        {% render 'partial__product-card', product: product %}
+      {% endif %}
+    </div>
+  {% endfor %}
+{% endunless %}
+
+<script>
+  {% if section.settings.features != blank %}
+    window["productData"] = [{{ object }}];
+  {% endif %}
+</script>
+
+{% schema %}
+  {
+    "name": "Product Grid",
+    "class": "product-grid",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Card Settings"
+      },
+      {
+        "type": "select",
+        "id": "card_layout",
+        "label": "Card Layout",
+        "options": [
+          { "value": "", "label": "Default"},
+          { "value": "large", "label": "Large"}
+        ],
+        "default": ""
+      },
+      {
+        "type": "header",
+        "content": "Product List",
+        "info": "Products can be selected manually or by choosing a collection."
+      },
+      {
+        "type": "checkbox",
+        "id": "include_variants",
+        "label": "Include Variants",
+        "info": "Product Variants will be displayed as separate products cards"
+      },
+      {
+        "type": "number",
+        "id": "limit_variant_per_product",
+        "label": "Limit shown variant per product"
+      },
+      {
+        "type": "product_list",
+        "id": "product_list",
+        "label": "Product List"
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      },
+      {
+        "type": "header",
+        "content": "Filter Settings"
+      },
+      {
+        "type": "select",
+        "id": "value_to_filter",
+        "label": "What To Filter?",
+        "options": [
+          {
+            "value": "collections",
+            "label": "Collections"
+          },
+          {
+            "value": "type",
+            "label": "Type"
+          },
+          {
+            "value": "tags",
+            "label": "Tags"
+          },
+          {
+            "value": "vendor",
+            "label": "Vendor"
+          }
+        ],
+        "default": "collections"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product Grid"
+      }
+    ]
+  }
+{% endschema %}

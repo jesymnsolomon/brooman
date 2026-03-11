@@ -1,0 +1,92 @@
+{% comment %} {% assign disable_animation = true %} {% endcomment %}
+{% comment %}
+    Attributes
+
+    - block_id
+    - text
+    - header_style
+    - bold_color
+    - underline_color
+    - max_width
+{% endcomment %}
+
+{% if color != blank %}
+    {% assign has_custom_color = "has-custom-color" %}
+    {% assign color_style = "background-image: " | append: color | append: ";" %}
+    <style>
+        #block--{{ block_id }} .has-custom-color .split-text {
+          {{ color_style }}
+          background-size: 100%;
+          -webkit-background-clip: text;
+          -moz-background-clip: text;
+          /* -webkit-text-fill-color: transparent; 
+          -moz-text-fill-color: transparent; */
+        }
+    </style>
+{% else %}
+    {% assign has_custom_color = "" %}
+    {% assign color_style = "" %}
+{% endif %}
+
+{% if highlight_color != "" and highlight_color != "rgba(0,0,0,0)" %}
+  {% assign highlighted_style = "--title-block-bold-color: " | append: highlight_color | append: ";" %}
+{% else %}
+  {% assign highlighted_style = "" %}
+{% endif %}
+
+{% if make_xl == 'xl-title' %}
+  {% assign make_xl = "xl-title" %}
+{% else %}
+  {% assign make_xl = "" %}
+{% endif %}
+
+{% if underline_color != "" and underline_color != "rgba(0,0,0,0)" %}
+  {% assign underline_color_style = "--title-underline-color: " | append: underline_color | append: ";" %}
+
+  {% capture underline_component %}
+      {% if block_id != blank %}
+          <style>
+              #block--{{ block_id }} .custom-underline {
+                --underline-color: {{ underline_color }};
+                {% comment %} background-image: ; {% endcomment %}
+              }
+              #block--{{ block_id }} .highlighted {
+                --highlighted-color: {{ highlighted_style }};
+                {% comment %} background-color: ; {% endcomment %}
+                background-color: {{ highlighted_style }};
+              }
+          </style>
+      {% endif %}
+  {% endcapture %}
+{% else %}
+  {% assign underline_color_style = "" %}
+{% endif %}
+
+{% if max_width != blank and max_width != 0 %}
+  {%- capture max_width -%}
+    --block-max-width: {{ max_width }}rem;
+  {%- endcapture -%}
+{% else %}
+  {% assign max_width = "" %}
+{% endif %}
+
+{% assign with_line_class = '' %}
+
+{% if with_line %}
+  {% assign with_line_class = 'accent-line' %}
+{% endif %}
+
+<div
+  id="block--{{ block_id }}"
+  class="section-title {{ header_style }} {{ make_xl }} {{ with_line_class }}"
+  style="{{ highlighted_style }} {{ underline_color_style }} {{ max_width }}"
+  data-inview>
+  {{ underline_component }}
+  
+  <div class="section-title__inner {{ has_custom_color }}" 
+    {% unless disable_animation %}
+      data-split-text="fadeUp"
+    {% endunless %}>
+    {% render 'shortcode-renderer', text: text, strip_paragraph: true %}
+  </div>
+</div>

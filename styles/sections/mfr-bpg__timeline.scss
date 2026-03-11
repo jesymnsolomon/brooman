@@ -1,0 +1,148 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+.mfr-bpg__timeline {
+    .sticky-images {
+        z-index: 5;
+    }
+
+    .sticky-image__item {
+        &-wrapper {
+            position: absolute;
+        }
+
+        &-inner {
+            border-radius: rem-calc(20px);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            aspect-ratio: 1;
+            width: 100%;
+            transition: 1s;
+            transition-delay: 0.8s;
+            @include drop-shadow(rgba(0, 0, 0, 0.159), 7);
+
+            @include enter-animation {
+                transition: 0.1s;
+                @include opacity( 0 );
+            }
+
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+
+    .timeline {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+
+            &__wrapper {
+                &:not(:last-of-type) {
+                    .timeline-item::after {
+                        content: '';
+                        position: absolute;
+                        top: 5%;
+                        height: 100%;
+                        width: rem-calc(3px);
+                        background-color: $black;
+                        z-index: -1;
+                    }
+                }
+
+                &:nth-of-type(odd) .timeline-item__story {
+                    transform: translateX(25%) rotate(-5deg);
+
+                    @include breakpoint(large up) {
+                        transform: translateX(35%) rotate(-5deg);
+                    }
+                }
+
+                &:nth-of-type(even) .timeline-item__story {
+                    transform: translateX(-25%) rotate(-5deg);
+
+                    @include breakpoint(large up) {
+                        transform: translateX(-35%) rotate(-5deg);
+                    }
+                }
+
+                @include enter-animation {
+                    .timeline-item__story {
+                        @include opacity( 0 );
+                    }
+                }
+            }
+
+            &__year {
+                background: $brand-color;
+                border-radius: rem-calc(15px);
+                padding: rem-calc(10px) rem-calc(20px) rem-calc(15px);
+                max-width: rem-calc(130px);
+                text-align: center;
+                margin-bottom: rem-calc(50px);
+                @include drop-shadow(rgba(0, 0, 0, 0.625), 3);
+
+                h3 {
+                  font-size: rem-calc(46px);
+                  line-height: rem-calc(46px);
+                  margin: 0;
+                  color: $black;
+                }
+            }
+
+            &__story {
+                background-color: $white;
+                color: $black;
+                text-align: left;
+                padding: rem-calc(30px) rem-calc(15px);
+                border-radius: rem-calc(15px);
+                max-width: rem-calc(250px);
+                // aspect-ratio: 189/200;
+                margin-bottom: rem-calc(70px);
+                transition: $global-transition;
+                transition-delay: 0.3s;
+                transition-duration: 1s;
+                @include drop-shadow(rgba(0, 0, 0, 0.357), 6);
+
+                @include breakpoint(large up) {
+                    max-width: rem-calc(300px);
+                    // aspect-ratio: 189/153;
+                }
+
+                h3, p {
+                    margin: 0;
+                }
+
+                &-title {
+                    font-size: rem-calc(22px);
+                    line-height: rem-calc(22px);
+
+                    @include breakpoint(xxlarge up) {
+                        font-size: rem-calc(24px);
+                        line-height: rem-calc(24px);
+                    }
+                }
+
+                &-content {
+                    margin-top: rem-calc(20px);
+
+                    @include breakpoint(xxlarge up) {
+                        font-size: rem-calc(22px);
+                        line-height: rem-calc(22px);
+                    }
+                }
+            }
+        }
+    }
+}

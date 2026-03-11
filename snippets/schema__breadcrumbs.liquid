@@ -1,0 +1,49 @@
+{% unless template == 'index' or template == 'cart' or template == 'list-collections' %}
+	<script id="breadcrumbs-schema" type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		"itemListElement": [
+			{
+				"@type": "ListItem",
+				"position": 1,
+				"name": "Books",
+				"item": "https://{{ shop.domain }}"
+			},
+			{% case template.name %}
+				{% when "page" %}
+					{
+						"@type": "ListItem",
+						"position": 2,
+						"name": "{{ page.title }}",
+						"item": "https://{{ shop.domain }}{{ page.url }}"
+					}
+
+				{% when "product" %}
+					{
+						"@type": "ListItem",
+						"position": 2,
+						"name": "{{ product.title }}",
+						"item": "https://{{ shop.domain }}{{ product.url }}"
+					}
+							
+				{% when "blog" %}
+					{
+						"@type": "ListItem",
+						"position": 2,
+						"name": "{{ blog.title }}",
+						"item": "https://{{ shop.domain }}{{ blog.url }}"
+					}
+
+				{% when "article" %}
+					{
+						"@type": "ListItem",
+						"position": 2,
+						"name": "{{ article.title }}",
+						"item": "https://{{ shop.domain }}{{ article.url }}"
+					}
+			{% endcase %}
+		]
+	}
+	</script>
+{% endunless %}

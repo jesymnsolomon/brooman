@@ -1,0 +1,354 @@
+<style>
+  #shopify-block-{{ block.id }} {
+    --max-width-mobile: {{ block.settings.max_width_mobile |  default: 3000 }}px;
+    --max-width-desktop: {{ block.settings.max_width_desktop |  default: 3000 }}px;
+    --width-mobile: {{ block.settings.width_mobile | default: 436 }}{{- block.settings.width_unit_mobile -}};
+    --width-desktop: {{ block.settings.width_desktop | default: 436 }}{{- block.settings.width_unit -}};
+    --padding-mobile: {{ block.settings.padding_mobile }}px;
+    --padding-desktop: {{ block.settings.padding_desktop }}px;
+    --border-radius-mobile: {{ block.settings.border_radius_mobile }}px;
+    --border-radius-desktop: {{ block.settings.border_radius_desktop }}px;
+    --background-color: {{ block.settings.background_color }};
+    --color: {{ block.settings.text_color }};
+    --vertical-alignment: {{ block.settings.y_alignment }};
+    --horizontal-alignment: {{ block.settings.x_alignment }};
+    --horizontal-alignment-mobile: {{ block.settings.x_alignment_mobile }};
+    --aspect-ratio: {{ block.settings.aspect_ratio }};
+    --aspect-ratio-mobile: {{ block.settings.aspect_ratio_mobile }};
+    --text-alignment-mobile: {{ block.settings.text_alignment_mobile }};
+    --text-alignment-desktop: {{ block.settings.text_alignment_desktop }};
+  }
+</style>
+<div class="mfr-card__inner {% if block.settings.box_shadow %} with-shadow {% endif %}"
+  data-layout-desktop="{{ block.settings.layout }}" data-layout-mobile="{{ block.settings.mobile_layout }}">
+  {% if block.settings.background_image != blank %}
+    <div class="background-image">
+      {% render 'component__responsive-image-v2',
+        image_mobile: block.settings.background_image,
+        image_desktop: block.settings.background_image,
+        lazyload: true %}
+    </div>
+  {% endif %}
+  {%- content_for "blocks" -%}
+</div>
+{% schema %}
+  {
+    "name": "Card",
+    "class": "mfr-card mfr-carousel__item",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout Settings"
+      },
+      {
+        "type": "select",
+        "id": "layout",
+        "label": "Desktop: Layout",
+        "options": [
+            {
+              "value": "layout-1",
+              "label": "Layout 1"
+            },
+            {
+              "value": "layout-2",
+              "label": "Layout 2"
+            },
+            {
+              "value": "layout-3",
+              "label": "Layout 3"
+            },
+          ],
+          "default": "layout-1"
+      },
+      {
+        "type": "select",
+        "id": "mobile_layout",
+        "label": "Mobile: Layout",
+        "options": [
+             {
+              "value": "layout-1",
+              "label": "Layout 1"
+            },
+            {
+              "value": "layout-2",
+              "label": "Layout 2"
+            },
+            {
+              "value": "layout-3",
+              "label": "Layout 3"
+            }
+          ],
+          "default": "layout-1"
+      },
+        {
+        "type": "header",
+        "content": "Content Alignment Settings"
+      },
+      {
+        "type": "select",
+        "id": "x_alignment",
+        "label": "Horizontal Alignment",
+        "options": [
+            {
+              "value": "flex-start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "flex-end",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+      },
+         {
+        "type": "select",
+        "id": "x_alignment_mobile",
+        "label": "Horizontal Alignment - Mobile",
+        "options": [
+            {
+              "value": "flex-start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "flex-end",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+      },
+      {
+        "type": "select",
+        "id": "y_alignment",
+        "label": "Vertical Alignment",
+        "options": [
+            {
+              "value": "flex-start",
+              "label": "Top"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "flex-end",
+              "label": "Bottom"
+            }
+          ],
+          "default": "center"
+      },
+      {
+        "type": "select",
+        "id": "text_alignment_desktop",
+        "label": "Text Alignment - Desktop",
+        "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+      },
+      {
+        "type": "select",
+        "id": "text_alignment_mobile",
+        "label": "Text Alignment - Mobile",
+        "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+      },
+      {
+        "type": "header",
+        "content": "Background and Color Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background Image"
+      },
+      {
+        "type": "color_background",
+        "id": "background_color",
+        "label": "Background Color",
+        "default": "#CCD9F2"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#000000"
+      },
+      {
+        "type": "checkbox",
+        "id": "box_shadow",
+        "label": "Include shadow",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Width Settings"
+      },
+      {
+        "type": "number",
+        "id": "max_width_mobile",
+        "label": "Max Width - Mobile",
+        "info": "Value in pixels"
+      },
+      {
+        "type": "number",
+        "id": "width_mobile",
+        "label": "Width - Mobile",
+        "default": 436
+      },
+      {
+        "type": "select",
+        "id": "width_unit_mobile",
+        "label": "Unit - Mobile",
+        "options": [
+          {
+            "value": "px",
+            "label": "Pixels"
+          },
+          {
+            "value": "%",
+            "label": "Percent"
+          }
+        ]
+      },
+      {
+        "type": "number",
+        "id": "max_width_desktop",
+        "label": "Max Width - Desktop",
+        "info": "Value in pixels"
+      },
+      {
+        "type": "number",
+        "id": "width_desktop",
+        "label": "Width - Desktop",
+        "default": 436
+      },
+      {
+        "type": "select",
+        "id": "width_unit",
+        "label": "Unit - Desktop",
+        "options": [
+          {
+            "value": "px",
+            "label": "Pixels"
+          },
+          {
+            "value": "%",
+            "label": "Percent"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_mobile",
+        "label": "Aspect Ratio - Mobile",
+        "default": "436/436"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio",
+        "label": "Aspect Ratio - Desktop",
+        "default": "436/436"
+      },
+      {
+        "type": "header",
+        "content": "Padding Settings"
+      },
+      {
+        "type": "number",
+        "id": "padding_mobile",
+        "label": "Padding - Mobile",
+        "default": 5
+      },
+      {
+        "type": "number",
+        "id": "padding_desktop",
+        "label": "Padding - Desktop",
+        "default": 5
+      },
+      {
+        "type": "header",
+        "content": "Padding Settings"
+      },
+      {
+        "type": "number",
+        "id": "border_radius_mobile",
+        "label": "Border Radius - Mobile",
+        "default": 30
+      },
+      {
+        "type": "number",
+        "id": "border_radius_desktop",
+        "label": "Border Radius - Desktop",
+        "default": 30
+      },
+    ],
+    "blocks": [
+      {
+        "type": "_card-image"
+      },
+      {
+        "type": "_card-video"
+      },
+      {
+        "type": "_card-title"
+      },
+      {
+        "type": "_card-text"
+      },
+      {
+        "type": "_card-button"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Card",
+        "blocks": [
+          {
+            "type": "_card-image"
+          },
+          {
+            "type": "_card-title"
+          },
+          {
+            "type": "_card-text"
+          },
+          {
+            "type": "_card-button"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,17 @@
+{% comment %} <script>
+  window.sectionStylesheets = window.sectionStylesheets ?? [];
+  window.sectionStylesheets.push("{{ asset_file_name | asset_url }}");
+</script>
+
+{%- comment -%}For CMS Editor Preview{%- endcomment -%}
+{% if request.design_mode %}
+{% endif %} {% endcomment %}
+{% if lazyload %}
+  <link rel="preload" href="{{ asset_file_name | asset_url }}" as="style" onload="this.rel='stylesheet'">
+{% else %}
+  {{ asset_file_name | asset_url | stylesheet_tag: preload: true }}
+{% endif %}
+
+<noscript>
+  {{ asset_file_name | asset_url | stylesheet_tag }}
+</noscript>

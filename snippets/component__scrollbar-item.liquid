@@ -1,0 +1,17 @@
+<style>
+  #shopify-block-{{ block.id }} {
+    --width-mobile: {{ item.width_mobile }}px;
+    --height-mobile: {%- if item.height_mobile != blank and item.height_mobile != 0 -%}{{ item.height_mobile }}px{%- else -%}auto{%- endif -%};
+    --width-desktop: {{ item.width_desktop }}px;
+    --height-desktop: {%- if item.height_desktop != blank and item.height_desktop != 0 -%}{{ item.height_desktop }}px{%- else -%}auto{%- endif -%};
+  }
+</style>
+{%- if item.icon != blank -%}
+  {% assign alt = item.icon.alt |  default: "icon or logo image" %}
+
+  {% render 'component__lazyload-image',
+    image: item.icon,
+    alt: alt,
+    width: item.width_desktop %}
+{%- endif -%}
+<p class="{{ item.text_style }}">{{- item.text -}}</p>

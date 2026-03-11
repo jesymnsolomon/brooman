@@ -1,0 +1,485 @@
+{%- comment -%}
+--------------------------------------
+assign section settings to variables
+--------------------------------------
+{%- endcomment -%}
+
+{%- liquid
+  assign section_id = section.settings.custom_id | default: section.id
+  assign custom_class = section.settings.custom_class
+  assign title = section.settings.title
+  assign description = section.settings.description
+-%}
+{% render 'style-tags__section', asset_file_name: "mfr-accounts__login.css" %}
+{% render 'renderer__color-scheme', name: "section", color_scheme: section.settings.color_scheme, selector: ".shopify-section", section_id: section_id %}
+
+{% capture spacer %}
+  --top-spacing-mobile: {{ section.settings.top_spacing_mobile | default: 100}}px;
+  --bottom-spacing-mobile: {{ section.settings.bottom_spacing_mobile | default: 100 }}px;
+  --top-spacing-desktop: {{ section.settings.top_spacing_desktop | default: 100 }}px;
+  --bottom-spacing-desktop: {{ section.settings.bottom_spacing_desktop | default: 100 }}px;
+{% endcapture %}
+
+<section class="mfr-accounts__login {{ custom_class }} background" id="{{ section_id }}">
+  <div class="section-spacer" style="{{ spacer }}">
+    <div class="grid-container" x-data='{
+      showForgotPassword: false,
+      registerSuccess: "",
+
+      init() {
+        this.registerSuccess = this.getUrlVars()["register_success"]
+        this.scrollTop()
+      },
+
+      getUrlVars() {
+        let vars = [], hash
+        let hashes = window.location.href.slice(window.location.href.indexOf("?") + 1).split("&")
+
+        for (let i = 0; i < hashes.length; i++) {
+          hash = hashes[i].split("=")
+          vars.push(hash[0])
+          vars[hash[0]] = hash[1]
+        }
+
+        return vars
+      },
+
+      recoverPassword() {
+        if (history.pushState) {
+          history.pushState(null, null, "#recover-password")
+        } else {
+          location.hash = "#recover"
+        }
+
+        this.showForgotPassword = true
+      },
+
+      cancelRecoverPassword() {
+        if (history.pushState) {
+          history.pushState(null, null, "#login")
+        } else {
+          location.hash = "#login"
+        }
+
+        this.showForgotPassword = false
+      },
+
+      scrollTop() {
+        if (window.location.hash == "#login" || window.location.hash == "#recover-password") {
+          setTimeout(() => {
+            window.scrollTo(0, 0)
+          }, 10)
+        }
+      }
+    }'>
+      <template x-if="!showForgotPassword">
+        <div class="grid-x alignment-helper">
+          <div class="cell small-12 large-12 section-content">
+            {% if title != blank %}
+              <h2 class="section-title">{{ title }}</h2>
+            {% endif %}
+
+            {% if description != blank %}
+              <div class="section-text">{{ description }}</div>
+            {% endif %}
+          </div>
+
+          <div class="cell small-12 large-6 section-form">
+            {%- if recover_success == true -%}
+              <h3 class="form-message is-success" tabindex="-1" autofocus>
+                {{ 'customer.recover_password.success' | t }}
+              </h3>
+            {%- endif -%}
+
+            {%- form 'customer_login' -%}
+              {%- if form.errors -%}
+                {{ form.errors | default_errors }}
+              {%- endif -%}
+
+              <div class="form-field">
+                {% comment %} <label for="CustomerEmail">Username</label> {% endcomment %}
+                <input
+                  type="email"
+                  name="customer[email]"
+                  id="CustomerEmail"
+                  aria-required="true"
+                  required
+                  autocomplete="email"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  placeholder="Username"
+                  {% if form.errors contains 'form' %}aria-invalid="true"{% endif %}
+                >
+              </div>
+
+              {%- if form.password_needed -%}
+                <div class="form-field" x-data='{ showPassword: false }'>
+                  {% comment %} <label for="CustomerPassword">{{ 'customer.login_page.password' | t }}</label> {% endcomment %}
+                  <input
+                    :type="showPassword ? 'text' : 'password'"
+                    name="customer[password]"
+                    id="CustomerPassword"
+                    aria-required="true"
+                    required
+                    autocomplete="current-password"
+                    placeholder="Password"
+                    {% if form.errors contains 'form' %}aria-invalid="true"{% endif %}
+                  >
+
+                  <button type="button" role="button" class="password-visibility" aria-label="Toggle password visibility" @click="showPassword = !showPassword">
+                    <template x-if="showPassword">
+                      <div>{%- render 'icon__eyes', icon_type: 'open' -%}</div>
+                    </template>
+                    <template x-if="!showPassword">
+                      <div>{%- render 'icon__eyes', icon_type: 'close' -%}</div>
+                    </template>
+                  </button>
+                </div>
+              {%- endif -%}
+
+              <div class="form-submit">
+                <input type="submit" class="button primary" value="{{ 'customer.login_page.sign_in' | t }}">
+              </div>
+
+              <div class="form-notes">
+                <a href="{{ routes.account_register_url }}" class="form-create-account" aria-label="{{ 'customer.login_page.create_account' | t }}">
+                  <span>{{ 'customer.login_page.create_account' | t }}</span>
+                </a>
+                <hr>
+                <a href="#recover-password" class="form-forgot-password" aria-label="{{ 'customer.login_page.forgot_password' | t }}" @click.debounce.300ms="recoverPassword()">
+                  <span>{{ 'customer.login_page.forgot_password' | t }}</span>
+                </a>
+              </div>
+            {%- endform -%}
+          </div>
+        </div>
+      </template>
+
+      <template x-if="showForgotPassword">
+        <div class="grid-x alignment-helper">
+          <div class="cell small-12 large-6 section-forgot">
+            <h3 class="section-title">{{ 'customer.recover_password.title' | t }}</h3>
+            <div class="section-text">{{ 'customer.recover_password.subtext' | t }}</div>
+
+            {%- form 'recover_customer_password' -%}
+              {%- assign recover_success = form.posted_successfully? -%}
+
+              <div class="form-field">
+                <label for="RecoverEmail">{{ 'customer.login_page.email' | t }}</label>
+                <input
+                  type="email"
+                  name="email"
+                  id="RecoverEmail"
+                  aria-required="true"
+                  required
+                  autocorrect="off"
+                  autocapitalize="off"
+                  autocomplete="email"
+                  placeholder="{{ 'customer.login_page.email' | t }}"
+                  {% if form.errors %} aria-invalid="true" aria-describedby="RecoverEmail-email-error" autofocus {% endif %}
+                >
+              </div>
+
+              {%- if form.errors -%}
+                <div class="forgot-password-error" id="RecoverEmail-email-error">
+                  {{ form.errors.messages.form }}
+                </div>
+              {%- endif -%}
+
+              <div class="form-submit">
+                <input type="submit" class="button primary" value="{{ 'customer.login_page.submit' | t }}">
+
+                <button type="button" role="button" class="button link" aria-label="{{ 'customer.login_page.cancel' | t }}" @click.debounce.300ms="cancelRecoverPassword()">
+                  <span class="text">{{ 'customer.login_page.cancel' | t }}</span>
+                </button>
+              </div>
+            {%- endform -%}
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  {%- render 'component__gradient-bg-styles' -%}
+  {%- render 'component__accent-graphics' -%}
+</section>
+
+{% schema %}
+  {
+    "name": "Accounts: Login",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content Settings"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Login"
+      },
+      {
+        "type": "inline_richtext",
+        "id": "description",
+        "label": "Description",
+        "default": "Have a subscription? just log in to manage it"
+      },
+      {
+        "type": "header",
+        "content": "Color Schemes Settings"
+      },
+      {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "default": "scheme_1",
+        "label": "Color Scheme",
+        "info": "This will be the color scheme of the header initially."
+      },
+      {
+        "type": "header",
+        "content": "Mobile Section Spacing"
+      },
+      {
+        "type": "range",
+        "id": "top_spacing_mobile",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Top Spacing",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "bottom_spacing_mobile",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Bottom Spacing",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Desktop Section Spacing"
+      },
+      {
+        "type": "range",
+        "id": "top_spacing_desktop",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Top Spacing",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "bottom_spacing_desktop",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Bottom Spacing",
+        "default": 0
+      },
+      {
+        "type":"header",
+        "content":"Background"
+      },
+      {
+        "type": "color_background",
+        "id": "bg_color",
+        "label": "Background Color/Gradient"
+      },
+      {
+        "type":"header",
+        "content":"Attribute Settings"
+      },
+      {
+        "type": "text",
+        "id": "custom_class",
+        "label": "Custom class"
+      },
+      {
+        "type": "text",
+        "id": "custom_id",
+        "label": "Custom ID"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "accent_graphic",
+        "name": "Accent Graphic",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon"
+          },
+          {
+            "type": "html",
+            "id": "svg_code",
+            "label": "Graphic SVG Code",
+            "info": "Paste SVG code for vector graphic"
+          },
+          {
+            "type": "header",
+            "content": "Visibility"
+          },
+          {
+            "type": "select",
+            "id": "visibility",
+            "options": [
+              { "value": "always", "label": "Always" },
+              { "value": "desktop_only", "label": "Desktop Only" },
+              { "value": "mobile_only", "label": "Mobile Only" }
+            ],
+            "label": "Show on..",
+            "default": "always"
+          },
+          {
+            "type":"header",
+            "content":"Value Type"
+          },
+          {
+            "type": "select",
+            "id": "value_type",
+            "options": [
+              { "value": "px", "label": "Pixels" },
+              { "value": "%", "label": "Percentage" }
+            ],
+            "label": "Position Value Type",
+            "default": "%",
+            "info": "Pixel values are multiplied by 5"
+          },
+          {
+            "type":"header",
+            "content":"Position"
+          },
+          {
+            "type": "select",
+            "id": "x_setting",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "center", "label": "Center" },
+              { "value": "right", "label": "Right" }
+            ],
+            "label": "X Position",
+            "default": "left"
+          },
+          {
+            "type": "select",
+            "id": "y_setting",
+            "options": [
+              { "value": "top", "label": "Top" },
+              { "value": "bottom", "label": "Bottom" }
+            ],
+            "label": "Y Position",
+            "default": "top"
+          },
+          {
+            "type":"header",
+            "content":"Large Screen Settings"
+          },
+          {
+            "type": "range",
+            "id": "width_large",
+            "min": 10,
+            "max": 400,
+            "step": 10,
+            "unit": "px",
+            "label": "Graphic Width",
+            "default": 150
+          },
+          {
+            "type": "range",
+            "id": "position_x_large",
+            "min": -100,
+            "max": 100,
+            "step": 2,
+            "label": "X Position",
+            "default": 10
+          },
+          {
+            "type": "range",
+            "id": "position_y_large",
+            "min": -100,
+            "max": 100,
+            "step": 2,
+            "label": "Y Position",
+            "default": 10
+          },
+          {
+            "type":"header",
+            "content":"Small Screen Settings"
+          },
+          {
+            "type": "range",
+            "id": "width_small",
+            "min": 10,
+            "max": 400,
+            "step": 10,
+            "unit": "px",
+            "label": "Graphic Width",
+            "default": 150
+          },
+          {
+            "type": "range",
+            "id": "position_x_small",
+            "min": -100,
+            "max": 100,
+            "step": 2,
+            "label": "X Position",
+            "default": 10
+          },
+          {
+            "type": "range",
+            "id": "position_y_small",
+            "min": -100,
+            "max": 100,
+            "step": 2,
+            "label": "Y Position",
+            "default": 10
+          },
+          {
+            "type":"header",
+            "content":"Animation Settings"
+          },
+          {
+            "type": "select",
+            "id": "animation",
+            "options": [
+              { "value": "none", "label": "None" },
+              { "value": "rotating", "label": "Rotate" },
+              { "value": "floating", "label": "Float" },
+              { "value": "spark", "label": "Spark" }
+            ],
+            "label": "Animation",
+            "default": "none"
+          },
+          {
+            "type": "header",
+            "content": "Appearance Settings"
+          },
+          {
+            "type": "range",
+            "id": "rotate",
+            "min": 0,
+            "max": 360,
+            "step": 36,
+            "unit": "%",
+            "label": "Rotate",
+            "default": 0
+          },
+          {
+            "type": "checkbox",
+            "id": "flip",
+            "label": "Flip Graphics?",
+            "default": false
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

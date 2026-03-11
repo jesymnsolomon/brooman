@@ -1,0 +1,224 @@
+{% render 'style-tags__section', asset_file_name: "mfr-core__modal.css" %}
+{% assign modal_id = section.settings.modal_id %}
+{% assign image = section.settings.image %}
+{% assign images = section.blocks | where: "type", "image" %}
+{% assign first_image = images | first %}
+
+{%- capture content -%}
+  <div class="mfr-core__modal-inner">
+    {% if section.blocks != blank %}
+      <div class="mfr-core__modal-content section-content">
+        <div class="inner">
+          {% for block in section.blocks %}
+            {%- case block.type -%}
+                
+              {%- when 'icon' -%}
+                {% render 'renderer__block-icon', block: block, disable_inview: true %} 
+    
+              {%- when 'small_text' -%}
+                {% render "renderer__block-small-text", block: block %}
+
+              {%- when 'button' -%}
+                {% render 'renderer__block-button', block: block %}
+
+              {%- when "lists" -%}
+                <ul class="mfr-core__modal-list">
+                  {% assign list_items = block.settings.list_items | newline_to_br | strip_newlines | split: '<br />' %}
+                  {% for item in list_items %}
+                    <li>
+                      {{ item }}
+                    </li>
+                  {% endfor %}
+                </ul>
+
+              {%- when "image" -%}
+                {% if first_image.id == block.id %}
+                  {% if image != blank and images == blank%}
+                    <div class="mfr-core__modal-image">
+                      {%- capture sizes -%}
+                        (max-width: 1023px) 100vw,
+                        (max-width: 1221px) calc( 50vw - 84px ),
+                        598px
+                      {%- endcapture -%}
+                      {% render 'component__lazyload-image',
+                        image: image,
+                        alt: image.alt,
+                        width: 600,
+                        sizes: sizes %}
+                    </div>
+                  {% elsif images != blank %}
+                    {%- capture slides_content -%}
+                      {% for image in images %}
+                        <div class="mfr-core__modal-images-inner mfr-carousel__item">
+                          <div class="mfr-core__modal-images-inner-image">
+                            {%- capture sizes -%}
+                              (max-width: 1023px) 100vw,
+                              (max-width: 1221px) calc( 50vw - 84px ),
+                              598px
+                            {%- endcapture -%}
+                            {% render 'component__lazyload-image',
+                              image: image.settings.image,
+                              alt: image.settings.image.alt,
+                              width: 600,
+                              sizes: sizes %}
+                          </div>
+                        </div>
+                      {% endfor %}
+                    {%- endcapture -%}
+                    {%- capture slides_settings -%}
+                      {
+                        selectedAttraction: 0.1,
+                        friction: 0.55,
+                        prevNextButtons: true,
+                        contain: true,
+                        cellAlign: "center",
+                        pageDots: false,
+                        wrapAround: true,
+                        groupCells: true,
+                        adaptiveHeight: true,
+                        mobileSettings: {
+                          cellAlign: "center",
+                          contain: true,
+                          wrapAround: true,
+                          adaptiveHeight: true,
+                        }
+                      }
+                    {%- endcapture -%}
+                    {% render 'mfr-component__carousel',
+                      settings: slides_settings,
+                      class: "mfr-core__modal-images",
+                      content: slides_content
+                    %}
+                  {% endif %}
+                {% endif %}
+                
+            {%- endcase -%}
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+{%- endcapture -%}
+{% render 'mfr-component__popup',
+  popup_id: modal_id,
+  class: 'mfr-core__modal',
+  content: content
+%}
+
+{% schema %}
+  {
+    "name": "Modal",
+    "enabled_on": {
+      "groups": ["custom.modals"]
+    },
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "modal_id",
+        "label": "Modal ID",
+        "default": "example-modal"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "icon", 
+        "name": "Icon",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon"
+          }
+        ]
+      },
+      {
+        "type":"small_text",
+        "name":"Accent Text",
+        "settings":[
+          {
+            "type":"text",
+            "id":"text",
+            "default":"Accent Text",
+            "label":"Text"
+          },
+          {
+            "type": "color",
+            "id": "small_text_color",
+            "label": "Color"
+          }
+        ]
+      },
+      {
+        "type": "lists",
+        "name": "Lists",
+        "settings": [
+          {
+            "type": "textarea",
+            "id": "list_items",
+            "label": "List Items",
+            "info": "Separated by new line."
+          }
+        ]
+      },
+      {
+        "type":"button",
+        "name":"Button",
+        "limit":1,
+        "settings":[
+          {
+            "type":"text",
+            "id":"button_label",
+            "default":"Button label",
+            "label":"Button",
+            "info":"Leave the label blank to hide the button."
+          },
+          {
+            "type":"url",
+            "id":"button_link",
+            "label":"Button Link"
+          },
+          {
+            "type": "select",
+            "id": "color_theme",
+            "label": "Color Theme",
+            "options": [
+              {
+                "value": "primary",
+                "label": "Primary"
+              },
+              {
+                "value": "secondary",
+                "label": "Secondary"
+              },
+              {
+                "value": "tertiary",
+                "label": "Tertiary"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }
+        ]
+      },
+    ],
+    "presets":[
+      {
+        "name":"Modal"
+      }
+    ]
+  }
+{% endschema %}

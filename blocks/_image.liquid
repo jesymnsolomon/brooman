@@ -1,0 +1,135 @@
+<style>
+  #shopify-block-{{ block.id }} {
+    {%- if block.settings.max_width_mobile != blank -%}
+      --max-width-mobile: {{ block.settings.max_width_mobile }}{{ block.settings.width_value_type }};
+    {%- endif -%}
+    {%- if block.settings.max_width_desktop != blank -%}
+      --max-width-desktop: {{ block.settings.max_width_desktop }}{{ block.settings.width_value_type_mobile }};
+    {%- endif -%}
+    {%- if block.settings.aspect_ratio_mobile != blank -%}
+      --aspect-ratio-mobile: {{ block.settings.aspect_ratio_mobile }};
+    {%- endif -%}
+    {%- if block.settings.aspect_ratio != blank -%}
+      --aspect-ratio-desktop: {{ block.settings.aspect_ratio }};
+    {%- endif -%}
+    --image-fit: {{ block.settings.image_fit }}
+  }
+</style>
+
+{%- assign width_mobile = block.settings.image_mobile.width -%}
+{%- assign width_desktop = block.settings.image_desktop.width -%}
+{%- capture sizes_mobile -%}
+  min( 100vw, {{ width_mobile }}px )
+{%- endcapture -%}
+{%- capture sizes_desktop -%}
+  min( 100vw, {{ width_desktop }}px )
+{%- endcapture -%}
+{% if block.settings.image_mobile != blank or block.settings.image_desktop != blank %}
+  {% render 'component__responsive-image-v2',
+    image_mobile: block.settings.image_mobile,
+    image_desktop: block.settings.image_desktop,
+    lazyload: block.settings.lazyload,
+    width_mobile: width_mobile,
+    width_desktop: width_desktop,
+    sizes_mobile: sizes_mobile,
+    sizes_desktop: sizes_desktop %}
+{% elsif request.design_mode %}
+  {%- capture svg_code -%}{{- 'lifestyle-2' | placeholder_svg_tag -}}{%- endcapture -%}
+  {% render 'component__svg-encoder', svg_code: svg_code, alt: "placeholder image" %}
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Image",
+    "class": "section-image",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image_mobile",
+        "label": "Image - Mobile"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_desktop",
+        "label": "Image - Desktop"
+      },
+      {
+        "type": "checkbox",
+        "id": "lazyload",
+        "label": "Lazyload?",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Image Settings"
+      },
+      {
+        "type": "select",
+        "id": "image_fit",
+        "label": "Image Fit",
+        "options": [
+          {"value": "cover", "label": "Cover"},
+          {"value": "contain", "label": "Contain"}
+        ],
+        "default": "cover"
+      },
+      {
+        "type": "header",
+        "content": "Desktop: Layout"
+      },
+      {
+        "type": "number",
+        "id": "max_width_desktop",
+        "label": "Max Width",
+        "default": 1320
+      },
+      {
+        "type": "select",
+        "id": "width_value_type",
+        "options": [
+          { "value": "px", "label": "Pixels" },
+          { "value": "%", "label": "Percentage" }
+        ],
+        "label": "Position Value Type",
+        "default": "%"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio",
+        "label": "Aspect Ratio",
+        "default": "1320/691"
+      },
+      {
+        "type": "header",
+        "content": "Mobile: Layout"
+      },
+      {
+        "type": "number",
+        "id": "max_width_mobile",
+        "label": "Max Width",
+        "default": 450
+      },
+      {
+        "type": "select",
+        "id": "width_value_type_mobile",
+        "options": [
+          { "value": "px", "label": "Pixels" },
+          { "value": "%", "label": "Percentage" }
+        ],
+        "label": "Position Value Type",
+        "default": "%"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_mobile",
+        "label": "Aspect Ratio - Mobile",
+        "default": "398/474"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Image"
+      }
+    ]
+  }
+{% endschema %}

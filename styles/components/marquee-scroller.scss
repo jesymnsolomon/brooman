@@ -1,0 +1,47 @@
+.marquee-scroller {
+    &__wrapper {
+        white-space: nowrap;
+    }
+
+    &__group {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        white-space: nowrap;
+        animation: 
+            var(--marquee-animation-name) 
+            var(--marquee-animation-duration) 
+            linear infinite;
+        will-change: transform;
+    }
+
+    &__item {
+        flex-shrink: 0;
+        margin: 0 rem-calc( 18px );
+
+        @include breakpoint( large up ) {
+            margin: 0 rem-calc( 60px );
+        }
+
+        .logo__image {
+            .image {
+                object-fit: contain;
+                height: 24px;
+                @include breakpoint(large up) {
+                    height: 36px;
+                }
+            }
+        }
+    }
+
+
+    @keyframes right-to-left-marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX( -50% ); }
+    }
+
+    @keyframes left-to-right-marquee {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX( 0% ); }
+    }
+}

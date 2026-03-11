@@ -1,0 +1,31 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "mfr-accounts__register",
+      "settings": {
+        "title": "Create Account",
+        "description": "",
+        "color_scheme": "scheme-6d2649d8-c48a-4015-ade0-e6438e7bf85d",
+        "top_spacing_mobile": 20,
+        "bottom_spacing_mobile": 50,
+        "top_spacing_desktop": 100,
+        "bottom_spacing_desktop": 120,
+        "bg_color": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

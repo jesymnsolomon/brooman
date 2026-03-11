@@ -1,0 +1,73 @@
+.announcement-bar-marquee{
+    overflow: hidden;
+    display: block;
+    position: relative;
+
+    &__entry{
+      text-align: center;
+
+      &--hide-on-medium{
+        @include breakpoint(medium down) {
+          display: none;
+        }
+      }
+
+      &--hide-on-small{
+        @include breakpoint(small down) {
+          display: none;
+        }
+      }
+    }
+}
+
+// Announcement Bar
+.announcement-bar {
+  font-family: $header-font-family;
+  font-size: $header-font-size-mobile;
+  line-height: $header-line-height-mobile;
+  letter-spacing: $header-letter-spacing-mobile;
+  font-weight: $header-font-weight;
+  position: relative;
+  background: $announcement-bar-bg-color;
+  color: $announcement-bar-text-color;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  z-index: 2;
+  padding: rem-calc( 3px ) 0;
+  @include transition( $global-transition );
+
+  @include breakpoint( large up ) {
+    font-size: $header-font-size-desktop;
+    line-height: $header-line-height-desktop;
+    letter-spacing: $header-letter-spacing-desktop;
+    padding: rem-calc( 4px ) 0;
+  }
+
+  &.non-marquee {
+    justify-content: center;
+
+    .announcement-bar-marquee__entry {
+      max-width: 100%;
+    }
+  }
+  .icon-divider {
+    width: 1.4rem;
+    margin: 0 0.4rem;
+  }
+}
+
+/* Project Specific */
+.announcement-bar {
+  font-family: $custom-font-name-2;
+  font-weight: 600;
+  font-size: rem-calc( 17px );
+  line-height: rem-calc( 17px );
+  letter-spacing: 0.2px;
+
+  @include breakpoint(small down) {
+    font-size: rem-calc( 15px );
+    line-height: rem-calc( 15px );
+  }
+}

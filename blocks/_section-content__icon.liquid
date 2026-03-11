@@ -1,0 +1,84 @@
+{% assign icon = block.settings.icon %}
+{% assign lottie_file_url = block.settings.file_lottie_url %}
+
+{%- capture max_width_style -%}
+  --max-width-mobile: {{ block.settings.max_width_mobile }}px;
+  --max-width-desktop: {{ block.settings.max_width_desktop }}px;
+{%- endcapture -%}
+
+{%- capture sizes -%}
+  min(100vw,{{ block.settings.max_width_mobile }}px),
+  (min-width: 1024px) min(100vw,{{ block.settings.max_width_desktop }}px)
+{%- endcapture -%}
+
+{% assign width = block.settings.max_width_desktop %}
+{% if block.settings.max_width_mobile > block.settings.max_width_desktop %}
+  {% assign width = block.settings.max_width_mobile %}
+{% endif %}
+
+<div class="section-icon"
+  style="
+    {{ max_width_style }}
+  ">
+{% if lottie_file_url != blank %}
+    <lottie-player src="{{ lottie_file_url }}"
+      background="transparent"
+      speed="0.5"
+      loop
+      autoplay>
+    </lottie-player>
+{% else %}
+  {% if icon %}
+    {% assign alt = icon.alt |  default: 'decorative image' %}
+    {% render 'component__lazyload-image',
+      image: icon,
+      alt: alt,
+      width: width,
+      sizes: sizes %}
+  {% else %}
+      <div class="shopify-placeholder-image">{{ 'image' | placeholder_svg_tag }}</div>
+  {% endif %}
+{% endif %}
+</div>
+
+{% schema %}
+  {
+    "name": "Section Icon",
+    "class": "section-icon__wrapper",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "icon",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "file_lottie_url",
+        "label": "File Lottie URL"
+      },
+      {
+        "type": "header",
+        "content": "Width Settings"
+      },
+      {
+        "type": "number",
+        "id": "max_width_mobile",
+        "label": "Max Width - Mobile",
+        "default": 150,
+        "info": "in pixels."
+      },
+      {
+        "type": "number",
+        "id": "max_width_desktop",
+        "label": "Max Width - Desktop",
+        "default": 150,
+        "info": "in pixels."
+      }
+    ],
+    "presets": [
+      {
+        "name": "Section Icon"
+      }
+    ]
+  }
+{% endschema %}

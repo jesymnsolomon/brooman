@@ -1,0 +1,853 @@
+{% render 'renderer__color-scheme',
+  name: 'header',
+  color_scheme: section.settings.color_scheme,
+  selector: 'header.header .header__wrapper'
+%}
+{% render 'renderer__color-scheme',
+  name: 'header',
+  color_scheme: section.settings.color_scheme_sticky,
+  selector: 'header.header.header--sticky .header__wrapper'
+%}
+
+{% if section.settings.logo_position == 'center' %}
+  {% assign is_logo_centered = 'header--logo-centered' %}
+{% endif %}
+
+{% if section.settings.menu_display == 'hamburger' %}
+  {% assign menu_display = 'mobile' %}
+{% elsif section.settings.menu_display == 'standard' %}
+  {% assign menu_display = 'standard' %}
+{% else %}
+  {% assign menu_display = 'both' %}
+{% endif %}
+
+{% assign appear_on = section.settings.appear_on | newline_to_br | strip_newlines | split: '<br />' %}
+{% assign layout_mobile = section.settings.layout_mobile %}
+{% assign layout_desktop = section.settings.layout_desktop %}
+{% assign mega_menus = section.blocks | where: 'type', 'mega_menu' %}
+{% assign mega_menu_image_links = section.blocks | where: 'type', 'mega_menu_image_link' %}
+{% assign search_widget = section.blocks | where: 'type', 'search_widget' %}
+
+{% if request.design_mode %}
+  {% assign design_mode_class = 'design-mode' %}
+{% endif %}
+
+{% capture header_logo %}
+  {% render "component__header-logo" %}
+{% endcapture %}
+
+{% capture header_search %}
+  {% if search_widget != blank %}
+    <div class="header__search">
+      {% render 'header__search', searches: section.settings.searches, searches_heading: section.settings.searches_heading, icon_as_svg: true%}
+    </div>
+  {% endif %}
+{% endcapture %}
+
+{% capture header_contact %}
+  <a href="#offCanvasContact" class="header__contact show-for-large"
+    aria-label="{{ section.settings.contact_label }}"
+    title="{{ section.settings.contact_label }}">
+    {% if section.settings.contact_icon != blank %}
+      {{ section.settings.contact_icon
+        | image_url: width: 46
+        | image_tag: width: 46,
+          widths: "46",
+          alt: "account icon" }}
+      <span class="visually-hidden">{{ section.settings.contact_label }}</span>
+    {% else %}
+      <span>{{ section.settings.contact_label }}</span>
+    {% endif %}
+  </a>
+{% endcapture %}
+
+{% capture header_cta %}
+  {%- if section.settings.menu_cta != blank -%}
+    <ul class="header-submenu__ctas">
+        {%- for link in section.settings.menu_cta.links -%}
+          <li>
+            <a href="{{ link.url }}" title="{{ link.title }}" role="button" class="button primary">{{ link.title }}</a>
+          </li>
+        {% endfor %}
+    </ul>
+  {% endif %}
+{% endcapture %}
+
+{% capture header_menu %}
+  {%- if section.settings.menu != blank -%}
+    <nav class="header__menu header-menu left {{ menu_display }}">
+      <ul class="header-menu__items">
+        {%- for link in section.settings.menu.links -%}
+          {% assign assigned_mega_menus = mega_menus | map: "settings" | where: "trigger_label", link.title %}
+          <li class="header-menu__item {% if assigned_mega_menus != blank %}mega-menu__trigger{% endif %}">
+            <a class="header-menu__title mega-menu__trigger-anchor" href="{{ link.url }}"
+              aria-label="{{ link.title }}"
+              title="{{ link.title }}"
+              {% if assigned_mega_menus != blank %}aria-expanded="false"{% endif %}
+              @click='
+                $nextTick( () => $el.blur() );
+              '>
+              <span>{{ link.title }}</span>
+              {%- if link.links != blank or assigned_mega_menus != blank -%}
+                {%- render 'icon__chevrons', position: 'down' -%}
+              {%- endif -%}
+            </a>
+
+            <div class="header-menu__submenu header-submenu">
+                <div class="header-menu__submenu-wrapper">
+                  {% comment %} Left Menu  {% endcomment %}
+                  {%- if link.links != blank -%}
+                    <div class="header-menu__submenu-left">
+                        {% if assigned_mega_menus[0].menu_title  != blank %}
+                          <h2 class="header-submenu__title">{{ assigned_mega_menus[0].menu_title  }}</h2>
+                        {% endif %}
+
+                        <ul class="header-submenu__items">
+                          {%- for child_link in link.links -%}
+                            <li>
+                              <a href="{{ child_link.url }}" title="{{ child_link.title }}">
+                                <span>{{ child_link.title }}</span>
+                              </a>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+
+                        {%- if assigned_mega_menus != blank %}
+                          {{ header_cta }}
+                        {% endif %}
+                    </div>
+                  {%- endif -%}
+
+                  {% comment %} Left Menu Extended  {% endcomment %}
+                  {%- if assigned_mega_menus != blank and section.settings.menu_extended != blank or assigned_mega_menus != blank -%}
+                    <div class="header-menu__submenu-right">
+                      {%- if section.settings.menu_extended != blank -%}
+                        <ul class="header-submenu__products">
+                          {%- for link in section.settings.menu_extended.links -%}
+                            <li>
+                              <a href="{{ link.url }}" title="{{ link.title }}"
+                              class="header-submenu__products-title">
+                                <h2>{{ link.title }}</h2>
+
+                                <button aria-label="{{ link.title }}" title="{{ link.title }}">View All</button>
+                              </a>
+                              <ul class="header-submenu__products-list">
+                                {%- for child_link in link.links -%}
+                                  {% assign product = child_link.object %}
+                                  {% assign image = product.featured_image %}
+
+                                  <li  class="header-submenu__product">
+                                    <a href="{{ child_link.url }}" title="{{ child_link.title }}">
+                                      {{ image
+                                        | image_url: width: 500
+                                        | image_tag: width: 500,
+                                          height: 500,
+                                          widths: "480,600,720,900,1080,1260,1440,1800,2160",
+                                          alt: image.alt,
+                                          loading: "lazy" }}
+
+                                      <span>{{ child_link.title }}</span>
+                                    </a>
+                                  </li>
+                                {%- endfor -%}
+                              </ul>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      {% endif %}
+
+                    {% comment %} Mega Menu Image Links  {% endcomment %}
+                    {%- if assigned_mega_menus != blank -%}
+                      {% for mega_menu in assigned_mega_menus %}
+                        {% assign assigned_mega_menu_image_links = mega_menu_image_links
+                            | map: "settings"
+                            | where: "mega_menu_handle", mega_menu.handle %}
+
+                        {% if assigned_mega_menu_image_links != blank %}
+                          {% render 'header__mega-menu',
+                              mega_menu: mega_menu,
+                              image_links: assigned_mega_menu_image_links %}
+                        {% endif %}
+
+                      {% endfor %}
+                    {% endif %}
+                  </div>
+                {% endif %}
+
+                </div>
+              </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+    </nav>  <!-- .header__menu -->
+  {%- endif -%}
+{% endcapture %}
+
+{% capture header__right-menu %}
+  {%- if section.settings.right_menu != blank -%}
+    <nav class="header__menu header-menu right">
+      <ul class="header-menu__items">
+        {%- for link in section.settings.right_menu.links -%}
+          {% assign assigned_mega_menus = mega_menus | map: "settings" | where: "trigger_label", link.title %}
+          <li class="header-menu__item {% if assigned_mega_menus != blank %}mega-menu__trigger{% endif %}">
+            <a class="header-menu__title mega-menu__trigger-anchor" href="{{ link.url }}"
+              aria-label="{{ link.title }}"
+              title="{{ link.title }}"
+              {% if assigned_mega_menus != blank %}aria-expanded="false"{% endif %}
+              @click='
+                $nextTick( () => $el.blur() );
+              '>
+              <span>{{ link.title }}</span>
+              {%- if link.links != blank or assigned_mega_menus != blank -%}
+                {%- render 'icon__chevrons', position: 'down' -%}
+              {%- endif -%}
+            </a>
+            {%- if assigned_mega_menus != blank -%}
+              {% for mega_menu in assigned_mega_menus %}
+                {% assign assigned_mega_menu_image_links = mega_menu_image_links
+                    | map: "settings"
+                    | where: "mega_menu_handle", mega_menu.handle %}
+                {% render 'header__mega-menu',
+                  mega_menu: mega_menu,
+                  image_links: assigned_mega_menu_image_links %}
+              {% endfor %}
+            {%- elsif link.links != blank -%}
+              <div class="header-menu__submenu header-submenu">
+                <ul class="header-submenu__items">
+                  {%- for child_link in link.links -%}
+                    <li>
+                      <a href="{{ child_link.url }}" title="{{ child_link.title }}">
+                        <span>{{ child_link.title }}</span>
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+
+              </div>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+
+    </nav>  <!-- .header__menu -->
+  {%- endif -%}
+{% endcapture %}
+
+{% capture cart_icon %}
+  <div class="header__cart {% if section.settings.show_cart_icon != blank %}has-icon{% endif %} cart"
+    role="button"
+    x-data
+    x-on:click='$store["offCanvasCart"].openOffcanvas()'
+    :aria-expanded='$store["offCanvasCart"].open'>
+    <noscript>
+    <a href="/cart" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999999rem; z-index: 2;">Cart</a>
+    </noscript>
+    <div class="header__cart-inner">
+      <div class="cart__icon">
+        {% if section.settings.show_cart_icon %}
+          {% render 'icon__cart' %}
+        {% else %}
+          Cart
+        {% endif %}
+      </div>
+      <div class="cart__number">
+        <span class="cart__count">
+          <span x-text="$store.cart.cartCounter">0</span>
+        </span>
+      </div>
+    </div>
+  </div>
+{% endcapture %}
+
+{% capture account_icon %}
+  <a href="/account" class="header__account {% if section.settings.account_icon != blank %}has-icon{% endif %} cart" role="button">
+    {% if section.settings.account_icon != blank %}
+      {{ section.settings.account_icon
+        | image_url: width: 46
+        | image_tag: width: 46,
+          widths: "46",
+          alt: "account icon" }}
+    {% else %}
+      <span>{{ section.settings.account_label }}</span>
+    {% endif %}
+  </a>
+{% endcapture %}
+
+{% capture header_inline_styling %}
+  --header-offset-mobile: {{ section.settings.offset_mobile }}px;
+  --header-offset-mobile-top: {{ section.settings.offset_mobile_top }}px;
+  --header-offset-desktop: {{ section.settings.offset_desktop }}px;
+  --header-offset-desktop-top: {{ section.settings.offset_desktop_top }}px;
+  --header-offset-sticky-mobile: {{ section.settings.offset_sticky_mobile }}px;
+  --header-offset-sticky-mobile-top: {{ section.settings.offset_sticky_mobile_top }}px;
+  --header-offset-sticky-desktop: {{ section.settings.offset_sticky_desktop }}px;
+  --header-offset-sticky-desktop-top: {{ section.settings.offset_sticky_desktop_top }}px;
+  --header-border-radius-mobile: {{ section.settings.border_radius_mobile }}px;
+  --header-border-radius-desktop: {{ section.settings.border_radius_desktop }}px;
+  --header-border-radius-sticky-mobile: {{ section.settings.sticky_border_radius_mobile }}px;
+  --header-border-radius-sticky-desktop: {{ section.settings.sticky_border_radius_desktop }}px;
+  {% if section.settings.sticky_vertical_position != blank %}
+    --header-sticky-vertical-position: {{ section.settings.sticky_vertical_position }}%;
+  {% endif %}
+{% endcapture %}
+{% if appear_on == blank or appear_on contains template %}
+  <div
+    class="header__wrapper {{ header_wrapper_class }}  {{ design_mode_class }} {{ is_logo_centered }}"
+    style="{{ header_inline_styling }}"
+  >
+    <div class="header__inner">
+      <div class="header__wrapper-inner {{ layout_mobile }}--mobile {{ layout_desktop }}--desktop">
+        <div class="header__left">
+          <button
+            aria-label="Mobile Menu Trigger"
+            class="mobile-menu-trigger {{ menu_display }}"
+            type="button"
+            x-data
+            x-on:click='$store["offCanvasMenu"].toggleOffcanvas()'
+            :aria-expanded='$store["offCanvasMenu"].open'
+          >
+            <span class="indicator"></span>
+            <span class="indicator"></span>
+            <span class="indicator"></span>
+            <div class="menu-text visually-hidden">Menu</div>
+
+            <span class="close-indicator">
+              <span class="close-indicator__icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  width="19"
+                  height="15"
+                >
+                  <path fill="none" stroke="white" stroke-width="1.5" stroke-linecap="square" stroke-miterlimit="10" transform="translate(2.10156 6.5498)" d="M0 0.5L15 0.5" fill-rule="evenodd"/>
+                  <path fill="none" stroke="white" stroke-width="1.5" stroke-miterlimit="10" transform="translate(1.10156 0.549805)" d="M7 13L0 6.5L7 0" fill-rule="evenodd"/>
+                </svg>
+              </span>
+              <span class="close-indicator__text"> Close </span>
+            </span>
+          </button>
+
+          {{ header_menu }}
+        </div>
+        <!-- .header__left -->
+
+        <div class="header__center">
+          {{ header_logo }}
+        </div>
+
+        <div class="header__right">
+          {{ header__right-menu }}
+
+          {% if section.settings.show_search_bar != blank %}
+            {{ header_search }}
+          {% endif %}
+
+          {% if section.settings.show_contact_cta != blank %}
+            {{ header_contact }}
+          {% endif %}
+
+          {% if section.settings.show_account_cta != blank %}
+            {{ account_icon }}
+          {% endif %}
+
+          {% if section.settings.show_cart_cta != blank %}
+            {{ cart_icon }}
+          {% endif %}
+        </div>
+        <!-- .header__right -->
+      </div>
+    </div>
+  </div>
+  <!-- .header__wrapper -->
+{% else %}
+  <style>
+    #shopify-section-{{- section.id -}} {
+      visibility: hidden;
+      display: none;
+    }
+  </style>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Header",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_icon",
+      "label": "Logo Icon",
+      "info": "This will appear beside the logo and will only appear on desktop."
+    },
+    {
+      "type": "text",
+      "id": "logo_lottie_url",
+      "label": "Logo Lottie Url"
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "select",
+      "id": "layout_mobile",
+      "label": "Layout - Mobile",
+      "options": [
+        {
+          "value": "logo-left",
+          "label": "Logo Left"
+        },
+        {
+          "value": "logo-left-contained",
+          "label": "Logo Left (Contained Left)"
+        },
+        {
+          "value": "logo-left-contained-right",
+          "label": "Logo Left (Contained Right)"
+        },
+        {
+          "value": "logo-center",
+          "label": "Logo Center"
+        },
+        {
+          "value": "logo-center-contained-left",
+          "label": "Logo Center (Contained Left)"
+        },
+        {
+          "value": "logo-center-contained-right",
+          "label": "Logo Center (Contained Right)"
+        }
+      ],
+      "default": "logo-left"
+    },
+    {
+      "type": "select",
+      "id": "layout_desktop",
+      "label": "Layout - Desktop",
+      "options": [
+        {
+          "value": "logo-left-contained",
+          "label": "Logo Left (Menu Left)"
+        },
+        {
+          "value": "logo-left",
+          "label": "Logo Left (Menu Center)"
+        },
+        {
+          "value": "logo-left-contained-right",
+          "label": "Logo Left (Menu Right)"
+        },
+        {
+          "value": "logo-center",
+          "label": "Logo Center"
+        }
+      ],
+      "default": "logo-left"
+    },
+    {
+      "type": "header",
+      "content": "Color Schemes Settings"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "scheme_1",
+      "label": "Color Scheme",
+      "info": "This will be the color scheme of the header initially."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme_sticky",
+      "default": "scheme_1",
+      "label": "Color Scheme (When Sticky)",
+      "info": "This will be the color scheme of the header when sticky."
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "offset_mobile",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Offset - Mobile: Left and Right",
+      "default": 0,
+      "info": "This will give header offset from top, left and right on mobile."
+    },
+    {
+      "type": "range",
+      "id": "offset_mobile_top",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Offset - Mobile: Top",
+      "default": 0,
+      "info": "This will give header offset from top, left and right on mobile."
+    },
+    {
+      "type": "range",
+      "id": "offset_desktop",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Offset - Desktop: Left and Right",
+      "default": 0,
+      "info": "This will give header offset from top, left and right on desktop."
+    },
+    {
+      "type": "range",
+      "id": "offset_desktop_top",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Offset - Desktop: Top",
+      "default": 0,
+      "info": "This will give header offset from top, left and right on desktop."
+    },
+    {
+      "type": "range",
+      "id": "offset_sticky_mobile_top",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Sticky Offset - Mobile: Top",
+      "default": 0,
+      "info": "This will give header offset from top, left and right on mobile when header goes sticky."
+    },
+    {
+      "type": "range",
+      "id": "offset_sticky_mobile",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Sticky Offset - Mobile: Left and Right",
+      "default": 0,
+      "info": "This will give header offset from top, left and right on mobile when header goes sticky."
+    },
+    {
+      "type": "range",
+      "id": "offset_sticky_desktop_top",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Sticky Offset - Desktop: Top",
+      "default": 0,
+      "info": "This will give header offset from top, left and right on desktop when header goes sticky."
+    },
+    {
+      "type": "range",
+      "id": "offset_sticky_desktop",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Sticky Offset - Desktop: Left and Right",
+      "default": 0,
+      "info": "This will give header offset from top, left and right on desktop when header goes sticky."
+    },
+    {
+      "type": "number",
+      "id": "sticky_vertical_position",
+      "label": "Sticky Vertical Position %",
+      "info": "This will set the header to sticky. Leave this blank if not in use."
+    },
+    {
+      "type": "range",
+      "id": "border_radius_mobile",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Border Radius - Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "border_radius_desktop",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Border Radius - Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "sticky_border_radius_mobile",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Sticky Border Radius - Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "sticky_border_radius_desktop",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Sticky Border Radius - Desktop",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Menu Settings"
+    },
+    {
+      "type": "select",
+      "id": "menu_display",
+      "label": "Desktop Menu display",
+      "options": [
+        {
+          "value": "standard",
+          "label": "Standard"
+        },
+        {
+          "value": "hamburger",
+          "label": "Hamburger"
+        },
+        {
+          "value": "both",
+          "label": "Both"
+        }
+      ],
+      "default": "standard"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Left Menu"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_extended",
+      "label": "Left Menu Extended"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_cta",
+      "label": "Left Menu CTA"
+    },
+    {
+      "type": "link_list",
+      "id": "right_menu",
+      "label": "Right Menu"
+    },
+    {
+      "type": "header",
+      "content": "Cart Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart_cta",
+      "label": "Show Cart CTA",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart_icon",
+      "label": "Show Cart Icon",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Search Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search_bar",
+      "label": "Show Search Bar",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Account Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account_cta",
+      "label": "Show Account CTA",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "account_icon",
+      "label": "Account Icon"
+    },
+    {
+      "type": "text",
+      "id": "account_label",
+      "label": "Account Label",
+      "default": "Account"
+    },
+    {
+      "type": "header",
+      "content": "Contact Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_contact_cta",
+      "label": "Show Contact CTA",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "contact_icon",
+      "label": "Contact Icon"
+    },
+    {
+      "type": "text",
+      "id": "contact_label",
+      "label": "Contact Label",
+      "default": "Contact Us"
+    },
+    {
+      "type": "header",
+      "content": "Visibility Settings"
+    },
+    {
+      "type": "textarea",
+      "id": "appear_on",
+      "label": "Appear Only On:",
+      "info": "Separated by newline. Insert template.suffix. Example: product or product.bundles"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega_menu",
+      "name": "Mega Menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_title",
+          "label": "Menu Title"
+        },
+        {
+          "type": "text",
+          "id": "trigger_label",
+          "label": "Trigger Label",
+          "default": "Shop"
+        },
+        {
+          "type": "text",
+          "id": "handle",
+          "label": "Mega Menu Handle",
+          "default": "mega-menu-1",
+          "info": "Unique identifier. Use this to assign megamenu child blocks to this mega menu."
+        }
+      ]
+    },
+    {
+      "type": "mega_menu_image_link",
+      "name": "Mega Menu: Image Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "mega_menu_handle",
+          "label": "Mega Menu Handle",
+          "default": "mega-menu-1"
+        },
+        {
+          "type": "header",
+          "content": "Block Settings"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Lorem ipsum"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background Color",
+          "default": "#fff"
+        }
+      ]
+    },
+    {
+      "type": "search_widget",
+      "name": "Search Widget"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header"
+    }
+  ]
+}
+{% endschema %}
+
+<script type="application/ld+json">
+  {%- liquid
+    assign socials_array = "twitter,facebook,pinterest,instagram,tumblr,snapchat,youtube,vimeo" | split: ","
+    assign same_as_links = ""
+    assign separator = ""
+
+    for social in socials_array
+      assign key = "social_" | append: social | append: "_link"
+      assign url = settings[key]
+      if url != blank
+        assign same_as_links = same_as_links | append: separator  | append: '"'  | append: url | append: '"'
+        assign separator = ","
+      endif
+    endfor
+  -%}
+  {
+    "@context": "http://schema.org",
+    "@type": "Organization",
+    "name": "{{ shop.name }}",
+    "logo": "https:{{ 'logo.png' | asset_url }}",
+    "sameAs": [{{ same_as_links }}],
+    "url": "{{ shop.url }}{{ page.url }}"
+  }
+</script>
+
+{% if template.name == 'index' %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": "{{ shop.name }}",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "{{ shop.url }}/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "url": "{{ shop.url }}{{ page.url }}"
+    }
+  </script>
+{% endif %}

@@ -1,0 +1,14 @@
+<button class="cart-form__submit cart-submit button block {{ section.settings.color_theme }}" form="cart-form"
+	type="submit" name="checkout" :disabled="$store.cart.checkIsCartEmpty()">
+	<span class="cart-submit__text">{{ section.settings.button_label | default: "checkout" }}</span>
+	<span class="cart-submit__divider" x-show="$store.cart.checkIsCartNotEmpty()">&mdash;</span>
+	<span class="cart-submit__price subtotal-number" x-html="$store.cart.formatMoney($store.cart.cartData.total_price)" x-show="$store.cart.checkIsCartNotEmpty()">
+		{{ cart.total_price | money }}
+	</span>
+
+	{%- if cart.total_price < cart.original_total_price -%} 
+		<span class="originaltotal-number" x-html="$store.cart.formatMoney($store.cart.cartData.original_total_price)" x-show="$store.cart.checkIsCartNotEmpty()">
+			{{ cart.original_total_price | money }}
+		</span>
+	{%- endif -%}
+</button>

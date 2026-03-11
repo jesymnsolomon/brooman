@@ -1,0 +1,64 @@
+.mfr-notification {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    padding: rem-calc( 10px );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+    @include opacity( 0 );
+    @include transform( translateY( -100% ) );
+    @include transition( .2s all $sharp_ease);
+
+    &--showing {
+        @include opacity( 1 );
+        @include transform( translateY( 0 ) );
+    }
+
+    &--neutral .mfr-notification__inner {
+        background-color: #fb7251;
+        color: $white;
+    }
+
+    &--error .mfr-notification__inner {
+        background-color: #f44f6e;
+        color: $white;
+    }
+
+    &--success .mfr-notification__inner {
+        background-color: #cbe87d;
+        color: #31751a;
+    }
+
+    &__inner {
+        padding: rem-calc( 5px );
+        @include border-radius( rem-calc( 5px ) );
+    }
+
+    &__title {
+        @include regular;
+        border-bottom: solid rem-calc( 1px ) #00000029;
+        font-weight: 800;
+        margin-bottom: rem-calc( 5px );
+        padding-bottom: rem-calc( 5px );
+    }
+
+    &__desc {
+        @include regular;
+        margin-bottom: rem-calc( 5px );
+    }
+
+    &__errors {
+        ul {
+            padding-left: rem-calc( 25px );
+            margin-bottom: 0;
+
+            li {
+                text-transform: capitalize;
+            }
+        }
+    }
+}

@@ -1,0 +1,277 @@
+.template-search {
+	@include breakpoint(medium down) {
+		margin-top: rem-calc(25px);
+	}
+
+	.page-width {
+		max-width: rem-calc(1280px);
+		width: 100%;
+		margin: auto;
+		padding-left: rem-calc(15px);
+		padding-right: rem-calc(15px);
+
+		>.h2 {
+			text-align: center;
+			margin-bottom: rem-calc(20px);
+		}
+
+		.product__queries {
+			margin-top: rem-calc(30px);
+
+			.item {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-direction: column;
+				border-bottom: $global-border-width solid rgba(44, 50, 51, 0.10);
+				margin-bottom: rem-calc(30px); 
+				padding-bottom: rem-calc(30px);
+
+				@include breakpoint(large up) {
+					flex-direction: row;
+				}
+
+				.image {
+					width: 100%;
+					margin-bottom: rem-calc(20px);
+
+					@include breakpoint(large up) {
+						width: rem-calc(300px);
+						margin-bottom: 0;
+					}
+				}
+
+				.content {
+					@include breakpoint(small down) {
+						width: 100%;
+					}
+
+					@include breakpoint(large up) {
+						padding-left: rem-calc(30px);
+						width: 70%;
+					}
+
+					.tag {
+						@include xsmall;
+						padding: rem-calc(8px) rem-calc(15px) rem-calc(7px);
+						display: inline-block;
+						text-transform: uppercase;
+						letter-spacing: rem-calc(0.5px);
+						color: $off-white;
+						background-color: $off-black;
+					}
+
+					h3 {
+						@include xlarge;
+						margin: rem-calc(10px) 0 0;
+					}
+
+					h4 {
+						margin: 0;
+					}
+
+					h5 {
+						margin: rem-calc(15px) 0;
+					}
+
+					p:first-of-type {
+						margin: 0;
+					}
+
+					.link {
+						@include regular;
+						color: $off-black;
+						display: inline-block;
+
+						&::after {
+							content: '';
+							display: block;
+							width: 100%;
+							height: 1px;
+							background-color: $off-black;
+							margin-top: rem-calc(5px);
+						}
+					}
+
+					>div {
+						@include regular;
+						line-height: rem-calc(20px);
+						margin-top: rem-calc(20px);
+
+						@include breakpoint(large up) {
+							max-width: 80%;
+						}
+					}
+				}
+			}
+		}
+
+		.template-search__search {
+			max-width: 100%;
+
+			.field {
+				display: flex;
+				position: relative;
+
+				@include breakpoint(small down) {
+					flex-direction: column;
+				}
+
+				.search__input {
+					color: $black;
+					border: $global-border;
+					border-color: $off-black;
+					box-shadow: initial;
+					@include border-radius(0);
+					padding: rem-calc(10px) rem-calc(20px) rem-calc(10px);
+					height: rem-calc(50px);
+					margin-right: rem-calc(20px);
+					max-width: 100%;
+
+					@include breakpoint(large up) {
+						max-width: calc(100% - 220px);
+					}
+				}
+
+				.search__button {
+					width: 100%;
+					min-height: rem-calc(50px);
+					height: rem-calc(50px);
+					border: $global-border;
+					border-color: $off-black;
+					background-color: $off-black;
+					color: $white;
+
+					@include breakpoint(small down) {
+						margin-bottom: rem-calc(20px);
+					}
+
+					@include breakpoint(large up) {
+						width: rem-calc(200px);
+					}
+
+					@include hover() {
+						@include transform(translateY(-3px) scale(1.02));
+						box-shadow: rgba(0, 0, 0, 0.25) 0px rem-calc(5px) rem-calc(15px);
+					}
+				}
+			}
+		}
+
+		.element-margin {
+			text-align: center;
+			margin: 0;
+		}
+
+		.product-grid {
+			list-style-type: none;
+			padding: 0;
+			margin: rem-calc(30px) 0 0;
+
+			.grid__item {
+				color: $off-black;
+
+				&:not(:last-child) {
+					border-bottom: $global-border-width solid rgba(44, 50, 51, 0.10);
+					margin-bottom: rem-calc(30px);
+					padding-bottom: rem-calc(30px);
+				}
+
+				.item {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					flex-direction: column;
+
+
+					@include breakpoint(large up) {
+						flex-direction: row;
+					}
+
+					.image {
+						width: 100%;
+						margin-bottom: rem-calc(20px);
+
+						@include breakpoint(large up) {
+							width: rem-calc(300px);
+							margin-bottom: 0;
+						}
+					}
+
+					.content {
+						@include breakpoint(small down) {
+							width: 100%;
+						}
+
+						@include breakpoint(large up) {
+							padding-left: rem-calc(30px);
+							width: 70%;
+						}
+
+						.tag {
+							@include xsmall;
+							padding: rem-calc(8px) rem-calc(15px) rem-calc(7px);
+							display: inline-block;
+							text-transform: uppercase;
+							letter-spacing: rem-calc(0.5px);
+							color: $off-white;
+							background-color: $off-black;
+						}
+
+						h3 {
+							@include xlarge;
+							margin: rem-calc(10px) 0 0;
+						}
+
+						h4 {
+							margin: 0;
+						}
+
+						h5 {
+							margin: rem-calc(15px) 0;
+						}
+
+						p:first-of-type {
+							margin: 0;
+						}
+
+						.link {
+							@include regular;
+							color: $off-black;
+							display: inline-block;
+							margin-top: rem-calc(20px);
+							text-transform: uppercase;
+
+							&::after {
+								content: '';
+								display: block;
+								width: 100%;
+								height: 1px;
+								background-color: $off-black;
+								margin-top: rem-calc(5px);
+							}
+						}
+
+						>div {
+							@include regular;
+							line-height: rem-calc(20px);
+							margin-top: rem-calc(20px);
+
+							@include breakpoint(large up) {
+								max-width: 80%;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.pagination {
+			text-align: center;
+
+			@include breakpoint(large up) {
+				margin-top: rem-calc(50px);
+			}
+		}
+	}
+}

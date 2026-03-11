@@ -1,0 +1,36 @@
+<div class="hero-section__icon-texts-inner scrolling-icon-text__icon-texts-inner"
+  data-mfr-scrolling-carousel="desktop"
+  data-pause-on-drag="true">
+  {%- content_for "blocks" -%}
+</div>
+
+{% schema %}
+  {
+    "name": "Icon Text",
+    "class": "hero-section__icon-texts scrolling-icon-text__icon-texts",
+    "blocks": [
+      {
+        "type": "_hero-section__icon-text"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Icon Text",
+        "blocks": [
+          {
+            "type": "_hero-section__icon-text"
+          },
+          {
+            "type": "_hero-section__icon-text"
+          },
+          {
+            "type": "_hero-section__icon-text"
+          },
+          {
+            "type": "_hero-section__icon-text"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

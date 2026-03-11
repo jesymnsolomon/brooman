@@ -1,0 +1,112 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+.mfr-blog__carousel {
+  .cell.mobile-text-center {
+    @include breakpoint(small only) {
+      text-align: center;
+    }
+  }
+
+  .section-content {
+    &:not(:last-child) {
+      margin-bottom: rem-calc( 18px );
+
+      @include breakpoint( large up ) {
+        margin-bottom: rem-calc( 35px );
+      }
+    }
+  }
+
+  .blog-carousel {
+    z-index: 2;
+    width: 100%;
+    &:not(.flickity-enabled) {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    &__carousel {
+      width: 100%;
+    }
+
+    &__wrapper {
+      &:not(:last-child) {
+        margin-bottom: rem-calc( 25px );
+
+        @include breakpoint( large up ) {
+          margin-bottom: rem-calc( 34px );
+        }
+      }
+    }
+
+    &.flickity-enabled {
+
+
+      .flickity-button {
+        background-color: $font-body-color;
+        width: rem-calc( 47px );
+        aspect-ratio: 1/1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: unset;
+        bottom: 100%;
+        left: unset;
+        right: 0;
+        @include transform( translateY( -50% ) !important );
+
+        @include breakpoint( medium down ) {
+          display: none;
+        }
+
+        &.previous {
+          right: calc( (( 100vw - #{ rem-calc( 1340px ) } ) / 2) + #{ rem-calc( 54px ) } );
+        }
+
+        &.next {
+          right: calc( ( 100vw - #{ rem-calc( 1340px ) } ) / 2 );
+        }
+      }
+    }
+
+    &__entry {
+      flex-shrink: 0;
+      padding: 0 rem-calc( 10px );
+      min-height: 100%;
+      display: flex;
+      align-items: stretch;
+
+      &:first-child {
+        padding-left: rem-calc( 20px );
+
+        @include breakpoint( large up ) {
+          padding-left: min(4.17vw,#{rem-calc( 60px )});
+        }
+      }
+      &:last-child {
+        padding-right: rem-calc( 20px );
+
+        @include breakpoint( large up ) {
+          padding-right: min(4.17vw,#{rem-calc( 60px )});
+        }
+      }
+
+      &-inner {
+        width: rem-calc( 314px );
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: stretch;
+        @include transition( $global-transition );
+
+        @include enter-animation {
+          @include transform( translateY( $enter-transform-value ) );
+          @include opacity( 0 );
+        }
+      }
+    }
+  }
+}

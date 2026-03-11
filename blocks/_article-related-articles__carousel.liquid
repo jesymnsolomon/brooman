@@ -1,0 +1,101 @@
+{%- capture slides_content -%}
+  {% if block.blocks != blank %}
+    {%- content_for "blocks" -%}
+  {% elsif template.name == "article" and block.blocks == blank %}
+    {% comment %}
+      Condition:
+        If section is used in article template AND no article blocks
+        This condition code block ensure that the articles return is related to current article by comparing their tags
+    {% endcomment %}
+    {% comment %}
+      Variables:
+        article_url - returns current article url pathname (i.e /blogs/news/article-title-here)
+        article_tags - returns current article tags (i.e Lifestyle, Health Tips, etc)
+        article_tags_array - returns current article tags formatted with correct spacing
+        blog_name - returns current article blog category (i.e news)
+        article_counter - container variable to determines loop limit (which is 3 items only)
+    {% endcomment %}
+    {%- liquid
+      assign article_url = request.path
+      assign article_tags = article.tags
+      assign article_tags_array = ""
+      assign blog_name = article_url | split: "/"
+      assign article_counter = 0
+      assign article_counter_default = 0
+      for article_tag in article_tags
+        assign article_tags_array = article_tags_array | append: article_tag | append: " "
+      endfor
+    -%}
+    {% comment %}
+      Process:
+        1. Loop through all articles in the selected blog category (i.e news)
+        2. Checks if the loop item's url is not equal to current article's url AND if loop index doesn't reach the limit of 3
+        3. If above condition is true, get the loop item's tags and store it to another variable that's formatted
+        4. If loop item's tag matches at least one tag in current article tags; return the loop item (article) AND increase the current counter value
+    {% endcomment %}
+    {%- for article in blogs[blog_name[2]].articles -%}
+      {% if article.url != article_url and article_counter < 9 %}
+        {%- liquid
+          assign article_item_tags = article.tags
+          assign article_item_tags_array = ""
+
+          for article_item_tag in article_item_tags
+            assign article_item_tags_array = article_item_tags_array | append: article_item_tag | append: " "
+          endfor
+        -%}
+        {% if article_tags_array contains article_item_tags_array %}
+          {% assign article_counter = article_counter | plus: 1 %}
+          <div class="related-articles__item mfr-carousel__item">
+            {% render 'partial__blog-card', featured_article: article %}
+          </div>
+        {% endif %}
+      {% endif %}
+    {%- endfor -%}
+    {% comment %}
+      If no related articles found by tags, loop through most recent articles instead
+    {% endcomment %}
+    {% if article_counter == 0 %}
+      {%- for article in blogs[blog_name[2]].articles -%}
+        {% if article.url != article_url and article_counter_default < 9 %}
+          {% assign article_counter_default = article_counter_default | plus: 1 %}
+          <div class="related-articles__item mfr-carousel__item">
+            {% render 'partial__blog-card', featured_article: article %}
+          </div>
+        {% endif %}
+      {%- endfor -%}
+    {% endif %}
+  {% elsif request.design_mode %}
+    {%- for i in (1..5) -%}
+      <div class="related-articles__item mfr-carousel__item">
+        {% render 'partial__blog-card' %}
+      </div>
+    {%- endfor -%}
+  {% endif %}
+{%- endcapture -%}
+
+{% render 'mfr-component__carousel',
+  settings: '{
+    contain: true,
+    wrapAround: true,
+    groupCells: true,
+    mobileSettings: {
+      cellAlign: "center",
+      wrapAround: true
+    }
+  }',
+  class: "related-articles__carousel",
+  content: slides_content
+%}
+
+{%- schema -%}
+  {
+    "name": "Related Articles",
+    "class": "related-articles",
+    "settings": [
+
+    ],
+    "blocks": [
+      { "type": "_article-related-articles__item" }
+    ]
+  }
+{%- endschema -%}

@@ -1,0 +1,116 @@
+{% assign link = block.settings.button_link %}
+{% assign color_theme = block.settings.color_theme %}
+{% assign label = block.settings.button_label %}
+{% assign max_width = block.settings.button_max_width | default: 220 %}
+{% assign max_width_mobile = block.settings.button_max_width_mobile %}
+{% assign width = block.settings.width %}
+{% assign width_mobile = block.settings.width_mobile %}
+
+{% if link contains '#' %}
+  {% assign scroll_to_section_class = "scroll-to-section" %}
+{% else %}
+  {% assign scroll_to_section_class = "" %}
+{% endif %}
+
+{% capture style %}
+  {%- if max_width != blank -%}
+    --max-width: {{- max_width -}}px;
+  {%- endif -%}
+  {%- if max_width_mobile != blank -%}
+    --max-width-mobile: {{- max_width_mobile -}}px;
+  {%- endif -%}
+  {%- if width != blank -%}
+    --width: {{- width -}}%;
+  {%- endif -%}
+  {%- if width_mobile != blank -%}
+    --width-mobile: {{- width_mobile -}}%;
+  {%- endif -%}
+{% endcapture %}
+
+<a href="{{ link | default: '#' }}"
+  class="button section-button {{ color_theme | default: '' }}"
+  {% if link == blank %}
+    aria-disabled="true"
+  {% endif %}
+  aria-label="{{ label | escape }}"
+  style="{{ style }}"
+  {{ block.shopify_attributes }}>
+  <span class="text">{{ label | escape }}</span>
+</a>
+
+{% schema %}
+  {
+    "name": "Section Button",
+    "class": "section-button__wrapper data-inview",
+    "settings": [
+      {
+        "type":"text",
+        "id":"button_label",
+        "default":"Button label",
+        "label":"Label",
+        "info":"Leave the label blank to hide the button."
+      },
+      {
+        "type":"url",
+        "id":"button_link",
+        "label":"Link"
+      },
+      {
+        "type": "select",
+        "id": "color_theme",
+        "label": "Color Theme",
+        "options": [
+          {
+            "value": "primary",
+            "label": "Primary"
+          },
+          {
+            "value": "secondary",
+            "label": "Secondary"
+          },
+          {
+            "value": "tertiary",
+            "label": "Tertiary"
+          },
+          {
+            "value": "underlined-cta",
+            "label": "Underline"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Desktop Layout"
+      },
+      {
+        "type": "number",
+        "id": "width",
+        "label": "Width in %"
+      },
+      {
+        "type": "number",
+        "id": "button_max_width",
+        "label": "Max Width"
+      },
+      {
+        "type": "header",
+        "content": "Mobile Layout"
+      },
+      {
+        "type": "number",
+        "id": "width_mobile",
+        "label": "Width in %"
+      },
+      {
+        "type": "number",
+        "id": "button_max_width_mobile",
+        "label": "Max Width"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Section Button"
+      }
+    ]
+  }
+{% endschema %}

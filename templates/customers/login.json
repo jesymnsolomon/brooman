@@ -1,0 +1,31 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "mfr-accounts__login",
+      "settings": {
+        "title": "Login",
+        "description": "",
+        "color_scheme": "scheme-6d2649d8-c48a-4015-ade0-e6438e7bf85d",
+        "top_spacing_mobile": 55,
+        "bottom_spacing_mobile": 70,
+        "top_spacing_desktop": 80,
+        "bottom_spacing_desktop": 130,
+        "bg_color": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

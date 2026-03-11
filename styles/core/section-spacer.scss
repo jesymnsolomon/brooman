@@ -1,0 +1,12 @@
+.section-spacer {
+  //overflow: hidden;
+  position: relative;
+  padding-top: var( --top-spacing-mobile );
+  padding-bottom: var( --bottom-spacing-mobile );
+  z-index: 3;
+
+  @include breakpoint( large up ) {
+    padding-top: var( --top-spacing-desktop );
+    padding-bottom: var( --bottom-spacing-desktop );
+  }
+}

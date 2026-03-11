@@ -1,0 +1,75 @@
+<div class="product-top__description"
+  x-data='{
+    wordLimit: 200,
+    fullText: `{{ product_description | escape }}`,
+    truncated: "",
+    remainingText: "",
+    expanded: false,
+    isTruncated: true,
+    getTruncatedHtml(wordLimit) {
+      let div = document.createElement("div");
+      div.innerHTML = this.fullText;
+
+      let words = [];
+      let wordCount = 0;
+
+      function processNode(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          let nodeWords = node.nodeValue.trim().split(/\s+/);
+
+          if (wordCount + nodeWords.length > wordLimit) {
+            node.nodeValue = nodeWords.slice(0, wordLimit - wordCount).join(" ") + "...";
+            words.push(...nodeWords.slice(0, wordLimit - wordCount));
+            return false; // Stop processing
+          } else {
+            words.push(...nodeWords);
+            wordCount += nodeWords.length;
+            this.isTruncated = false;
+          }
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          for (let child of [...node.childNodes]) {
+            if (!processNode(child)) {
+              while (child.nextSibling) {
+                child.parentNode.removeChild(child.nextSibling);
+              }
+              return false;
+            }
+          }
+        }
+        return true;
+      }
+
+      processNode(div);
+
+      return div.innerHTML; // Returns only the modified HTML
+    },
+    stripHtmlTags(str) {
+      let doc = new DOMParser().parseFromString(str, "text/html");
+      return doc.body.textContent || "";
+    }
+  }'
+  x-init='
+    truncated = getTruncatedHtml(200);
+
+    if(this.isTruncated) {
+      truncated += `
+        <button
+          @click="expanded = true"
+          class="read-more"
+        >
+          Read More
+        </button>
+      `;
+    }
+  '>
+  <div class="truncated" x-html="truncated" x-show="!expanded"></div>
+  <div x-show='expanded' x-cloak x-collapse>
+    <div x-html="fullText"></div>
+    <button
+      @click="expanded = false"
+      class="read-more"
+    >
+      Read Less
+    </button>
+  </div>
+</div>

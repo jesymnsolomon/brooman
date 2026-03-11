@@ -1,0 +1,184 @@
+.shopify-section {
+  section,
+  .mfr-offcanvas {
+    color: var(--section-text);
+
+    .small-text,
+    .small-title {
+      color: var(--section-small-text);
+    }
+
+    .section-title {
+      color: var(--section-heading);
+    }
+
+    .section-text {
+      color: var(--section-text);
+    }
+
+    .button {
+      &.primary {
+        position: relative;
+        background-color: unset;
+        background: var(--section-primary-button-bg);
+        color: var(--section-primary-button-text);
+        border-color: var(--section-primary-button-border);
+
+        .arrow svg path {
+          fill: var(--section-primary-button-text);
+        }
+
+        @include hover {
+          background: var(--section-primary-button-bg-hover);
+          color: var(--section-primary-button-text-hover);
+          border-color: var(--section-primary-button-border-hover);
+
+          .arrow svg path {
+            fill: var(--section-primary-button-text-hover);
+          }
+        }
+      }
+      &.secondary {
+        background-color: unset;
+        background: var(--section-secondary-button-bg);
+        color: var(--section-secondary-button-text);
+        border-color: var(--section-secondary-button-border);
+
+        .arrow svg path {
+          fill: var(--section-secondary-button-text);
+        }
+
+        @include hover {
+          background: var(--section-secondary-button-bg-hover);
+          color: var(--section-secondary-button-text-hover);
+          border-color: var(--section-secondary-button-border-hover);
+
+          .arrow svg path {
+            fill: var(--section-secondary-button-text-hover);
+          }
+        }
+      }
+      &.tertiary {
+        background-color: unset;
+        background: var(--section-tertiary-button-bg);
+        color: var(--section-tertiary-button-text);
+        border-color: var(--section-tertiary-button-border);
+
+        .arrow svg path {
+          fill: var(--section-tertiary-button-text);
+        }
+
+        @include hover {
+          background: var(--section-tertiary-button-bg-hover);
+          color: var(--section-tertiary-button-text-hover);
+          border-color: var(--section-tertiary-button-border-hover);
+
+          .arrow svg path {
+            fill: var(--section-tertiary-button-text-hover);
+          }
+        }
+      }
+
+      &:after {
+        left: 100%;
+        @include transform( scale(-1) );
+      }
+
+      @include hover {
+        &:before,
+        &:after {
+          background: inherit;
+        }
+
+        &:before {
+          @include transform( translateX(-100%) );
+        }
+        &:after {
+          @include transform( translateX(-100%) scale( -1 ) );
+        }
+      }
+    }
+  }
+}
+
+.header {
+  .button {
+    &.primary {
+      background-color: unset;
+      background: var(--header-primary-button-bg);
+      color: var(--header-primary-button-text);
+      border-color: var(--header-primary-button-border);
+
+      @include hover {
+        background: var(--header-primary-button-bg-hover);
+        color: var(--header-primary-button-text-hover);
+        border-color: var(--header-primary-button-border-hover);
+      }
+    }
+    &.secondary {
+      background-color: unset;
+      background: var(--header-secondary-button-bg);
+      color: var(--header-secondary-button-text);
+      border-color: var(--header-secondary-button-border);
+
+      @include hover {
+        background: var(--header-secondary-button-bg-hover);
+        color: var(--header-secondary-button-text-hover);
+        border-color: var(--header-secondary-button-border-hover);
+      }
+    }
+    &.tertiary {
+      background-color: unset;
+      background: var(--header-tertiary-button-bg);
+      color: var(--header-tertiary-button-text);
+      border-color: var(--header-tertiary-button-border);
+
+      @include hover {
+        background: var(--header-tertiary-button-bg-hover);
+        color: var(--header-tertiary-button-text-hover);
+        border-color: var(--header-tertiary-button-border-hover);
+      }
+    }
+  }
+}
+
+.footer {
+  .button {
+    &.primary {
+      background-color: unset;
+      background: var(--footer-primary-button-bg);
+      color: var(--footer-primary-button-text);
+      border-color: var(--footer-primary-button-border-alpha);
+
+      @include hover {
+        background: var(--footer-primary-button-bg-hover);
+        color: var(--footer-primary-button-text-hover);
+        border-color: var(--footer-primary-button-border-hover-alpha);
+      }
+    }
+    &.secondary {
+      background-color: unset;
+      background: var(--footer-secondary-button-bg);
+      color: var(--footer-secondary-button-text);
+      border-color: var(--footer-secondary-button-border-alpha);
+
+      @include hover {
+        background: var(--footer-secondary-button-bg-hover);
+        color: var(--footer-secondary-button-text-hover);
+        border-color: var(--footer-secondary-button-border-hover-alpha);
+      }
+    }
+    &.tertiary {
+      background-color: unset;
+      background: var(--footer-tertiary-button-bg);
+      color: var(--footer-tertiary-button-text);
+      border-color: var(--footer-tertiary-button-border-alpha);
+
+      @include hover {
+        background: var(--footer-tertiary-button-bg-hover);
+        color: var(--footer-tertiary-button-text-hover);
+        border-color: var(--footer-tertiary-button-border-hover-alpha);
+      }
+    }
+  }
+}

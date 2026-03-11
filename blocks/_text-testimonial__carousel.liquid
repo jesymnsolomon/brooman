@@ -1,0 +1,154 @@
+<style>
+  #shopify-block-{{ block.id }} {
+    --width-mobile: {{ block.settings.width_mobile }}{{- block.settings.unit_mobile -}};
+    --width-desktop: {{ block.settings.width_desktop }}{{- block.settings.unit_desktop -}};
+    --aspect-ratio-mobile: {{ block.settings.aspect_ratio_mobile }};
+    --aspect-ratio-desktop: {{ block.settings.aspect_ratio_desktop }};
+  }
+</style>
+{%- capture slides_content -%}
+  {%- content_for "blocks" -%}
+
+  {% if block.settings.metaobject != blank %}
+    {% for item in block.settings.metaobject %}
+      <div class="shopify-block text-testimonial__slide mfr-carousel__item">
+        {% render 'component__text-slide', item: item, is_metafield: true %}
+      </div>
+    {% endfor %}
+  {% endif %}
+{%- endcapture -%}
+
+{%- capture settings -%}
+{
+  contain: true,
+  groupCells: false,
+  wrapAround: {{- block.settings.wrap_around -}},
+  autoPlay: {{- block.settings.autoplay_timing | times: 1000 | default: 0 -}},
+  prevNextButtons: {{- block.settings.prev_next_buttons -}},
+  pageDots: {{- block.settings.page_dots -}},
+  adaptiveHeight: true,
+  mobileSettings: {
+    cellAlign: "center",
+    wrapAround: {{- block.settings.wrap_around -}},
+    autoPlay: {{- block.settings.autoplay_timing | times: 1000 | default: 0 -}},
+    prevNextButtons: {{- block.settings.prev_next_buttons -}},
+    pageDots: {{- block.settings.page_dots -}},
+  }
+}
+{%- endcapture -%}
+
+{%- if block.blocks.size > 0 or block.settings.metaobject != blank -%}
+  {% render 'mfr-component__carousel',
+    settings: settings,
+    class: "text-testimonial__carousel-inner",
+    content: slides_content
+  %}
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Text Testimonial Carousel",
+    "class": "text-testimonial__carousel",
+    "settings": [
+      {
+        "type": "metaobject_list",
+        "metaobject_type": "pdp_testimonials",
+        "id": "metaobject",
+        "label": "Metaobject"
+      },
+      {
+        "type": "header",
+        "content": "Carousel Settings"
+      },
+      {
+        "type": "number",
+        "id": "autoplay_timing",
+        "label": "Autoplay Timing",
+        "default": 5,
+        "info": "In seconds"
+      },
+      {
+        "type": "checkbox",
+        "id": "wrap_around",
+        "label": "Wrap Around?",
+        "default": false,
+        "info": "At the end of cells, wrap-around to the other end for infinite scrolling."
+      },
+      {
+        "type": "checkbox",
+        "id": "prev_next_buttons",
+        "label": "Previous/Next Buttons",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "page_dots",
+        "label": "Page Dots",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Size Settings",
+      },
+      {
+        "type": "number",
+        "id": "width_mobile",
+        "label": "Width_mobile - Mobile",
+        "default": 450
+      },
+      {
+        "type": "select",
+        "id": "unit_mobile",
+        "label": "Unit - Mobile",
+        "options": [
+          {
+            "value": "px",
+            "label": "px"
+          },
+          {
+            "value": "%",
+            "label": "%"
+          }
+        ],
+        "default": "px"
+      },
+      {
+        "type": "number",
+        "id": "width_desktop",
+        "label": "Width - Desktop",
+        "default": 750
+      },
+      {
+        "type": "select",
+        "id": "unit_desktop",
+        "label": "Unit - Desktop",
+        "options": [
+          {
+            "value": "px",
+            "label": "px"
+          },
+          {
+            "value": "%",
+            "label": "%"
+          }
+        ],
+        "default": "px"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_mobile",
+        "label": "Aspect Ratio - Mobile",
+        "default": "1/1"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_desktop",
+        "label": "Aspect Ratio - Desktop",
+        "default": "1/1"
+      },
+    ],
+    "blocks": [
+      { "type": "_text-testimonial__slide" }
+    ]
+  }
+{% endschema %}

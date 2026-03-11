@@ -1,0 +1,5 @@
+<div class="footer__policy-menu" data-stagger-inview="a">
+ {% for menu in block.settings.menu.links %}
+    <a href="{{ menu.url }}">{{ menu.title }}</a>
+ {% endfor %}   
+</div>

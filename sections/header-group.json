@@ -1,0 +1,105 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header Sections",
+  "sections": {
+    "header_announcement_bar_XtRbkg": {
+      "type": "header__announcement-bar",
+      "blocks": {
+        "announcement_GUcm6e": {
+          "type": "announcement",
+          "settings": {
+            "announcement_bar_text": "Get 10% off by signing up to our newsletter",
+            "announcement_bar_link": "shopify://pages/join-the-potato-club"
+          }
+        }
+      },
+      "block_order": [
+        "announcement_GUcm6e"
+      ],
+      "settings": {
+        "announcement_bar_color_scheme": "scheme-b8da0b5e-d4d6-4b9e-bc64-091b090bb8e2",
+        "bg_color": ""
+      }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "mega_menu_UTUrFe": {
+          "type": "mega_menu",
+          "settings": {
+            "menu_title": "Categories",
+            "trigger_label": "Shop Games",
+            "handle": "shop-mega-menu"
+          }
+        },
+        "search_widget_DLpeqT": {
+          "type": "search_widget",
+          "settings": {}
+        },
+        "mega_menu_image_link_6Pt7VT": {
+          "type": "mega_menu_image_link",
+          "disabled": true,
+          "settings": {
+            "mega_menu_handle": "shop-mega-menu",
+            "url": "shopify://collections/1000-piece-puzzles",
+            "label": "Lorem ipsum",
+            "image": "shopify://shop_images/ATP_WebArtboard_1_2x_55b62fd1-dfd4-4fb9-b7ad-654340202f39.png",
+            "bg_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "mega_menu_UTUrFe",
+        "search_widget_DLpeqT",
+        "mega_menu_image_link_6Pt7VT"
+      ],
+      "settings": {
+        "logo": "shopify://shop_images/logo_538dd2fc-091e-47dd-a078-cc4a7ce23c62.png",
+        "logo_lottie_url": "",
+        "layout_mobile": "logo-center",
+        "layout_desktop": "logo-center",
+        "color_scheme": "scheme-3281f1a6-44f0-4c91-b920-9318c44d1969",
+        "color_scheme_sticky": "scheme-3281f1a6-44f0-4c91-b920-9318c44d1969",
+        "offset_mobile": 17,
+        "offset_mobile_top": 10,
+        "offset_desktop": 41,
+        "offset_desktop_top": 15,
+        "offset_sticky_mobile_top": 10,
+        "offset_sticky_mobile": 17,
+        "offset_sticky_desktop_top": 25,
+        "offset_sticky_desktop": 41,
+        "sticky_vertical_position": -100,
+        "border_radius_mobile": 20,
+        "border_radius_desktop": 20,
+        "sticky_border_radius_mobile": 20,
+        "sticky_border_radius_desktop": 20,
+        "menu_display": "standard",
+        "menu": "left-desktop-menu",
+        "menu_extended": "mfr-menu-left-menu-extended",
+        "menu_cta": "left-cta-buttons",
+        "right_menu": "mfr-menu-right-menu",
+        "show_cart_cta": true,
+        "show_cart_icon": true,
+        "show_search_bar": true,
+        "show_account_cta": false,
+        "account_label": "Account",
+        "show_contact_cta": false,
+        "contact_label": "Contact Us",
+        "appear_on": ""
+      }
+    }
+  },
+  "order": [
+    "header_announcement_bar_XtRbkg",
+    "header"
+  ]
+}

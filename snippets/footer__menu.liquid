@@ -1,0 +1,20 @@
+<div class="footer__menu">
+    <ul data-stagger-inview="li">
+        {% for menu in block.settings.menu.links %}
+            <li>
+                <a href="{{ menu.url }}">
+                    {{ menu.title }}
+                </a>
+            </li>
+        {% endfor %}
+        {% if block.settings.show_accessibe_trigger %}
+          <li>
+            <a href="#" data-acsb-custom-trigger="true"
+              title="Accessibility"
+              aria-label="Accessibility">
+              Accessibility
+            </a>
+          </li>
+        {% endif %}
+    </ul>
+</div>

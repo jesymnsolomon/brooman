@@ -1,0 +1,29 @@
+<a href="{{ url }}"
+  class="search__item-card {% if is_page %}is-page{% endif %}"
+  aria-label="{{ title }}"
+  title="{{ title }}">
+
+  {% if show_image != blank %}
+    <div class="search__item-image">
+      {% render 'component__lazyload-image', image: image %}
+    </div>
+  {% endif %}
+
+  <div class="search__item-info">
+    <p class="search__item-title large">
+     {% if is_page %}Page:{% endif %} {{ title }}
+    </p>
+
+    {% if description != blank %}
+      <div class="search__item-description">
+        {{ description }}
+      </div>
+    {% endif %}
+
+    {% if price != blank %}
+      <span class="search__item-price small">
+        {{ price | money_with_currency }}
+      </span>
+    {% endif %}
+  </div>
+</a>

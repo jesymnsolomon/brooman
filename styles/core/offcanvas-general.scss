@@ -1,0 +1,36 @@
+.off-canvas {
+    $offcanvas-width: rem-calc( 394px );
+    padding: $offcanvas-offset-mobile;
+    background: none !important;
+    box-shadow: none !important;
+    z-index: 999; //must be higher than overlay
+    width: 100%;
+    max-width: calc( #{$offcanvas-width} + calc( #{$offcanvas-offset-desktop} * 2 ) );
+
+    @include breakpoint( large up ) {
+        padding: $offcanvas-offset-desktop;
+    }
+
+    &__wrapper {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: $offcanvas-bg-color;
+        font-family: $offcanvas-font-family;
+        text-transform: $offcanvas-font-case;
+        font-weight: $offcanvas-font-weight;
+        font-size: $offcanvas-font-size-mobile;
+        line-height: $offcanvas-line-height-mobile;
+        letter-spacing: $offcanvas-letter-spacing-mobile;
+        color: $offcanvas-text-color;
+        @include border-radius( $offcanvas-border-radius-mobile );
+        @include opacity( 0.9999999 );
+
+        @include breakpoint( large up ) {
+            font-size: $offcanvas-font-size;
+            line-height: $offcanvas-line-height;
+            letter-spacing: $offcanvas-letter-spacing;
+            @include border-radius( $offcanvas-border-radius-desktop );
+        }
+    }
+}

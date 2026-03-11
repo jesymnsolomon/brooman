@@ -1,0 +1,27 @@
+$tooltip-background-color: $black;
+$tooltip-text-color: $white;
+
+.tooltip {
+  @include border-radius(4px);
+  background: $tooltip-background-color;
+  color: $tooltip-text-color;
+  max-width: 20rem;
+  // font-weight: 400;
+  font-family: $header-font-family;
+  font-size: rem-calc(13);
+  line-height: 1;
+  text-transform: uppercase;
+  padding: rem-calc(5px) rem-calc(8px);
+  &.top:before {
+    border-color: $tooltip-background-color transparent transparent !important;
+    border-top-width: 6px !important;
+  }
+  &.bottom:before {
+    border-color: transparent transparent $tooltip-background-color !important;
+  }
+}
+
+.tooltip-item.has-tip {
+  //border-bottom: $global-border-width $white solid;
+  //padding: 0 0 3px 0;
+}

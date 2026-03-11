@@ -1,0 +1,78 @@
+{%- if block.blocks.size > 0 -%}
+  {% assign max_width_mobile = block.settings.max_width_mobile %}
+  {% assign max_width_desktop = block.settings.max_width_desktop %}
+
+  <style>
+    #shopify-block-{{ block.id }} {
+      {% if max_width_mobile != blank and max_width_mobile != 0 %}
+        --max-width-mobile: {{ max_width_mobile }}px;
+      {% endif %}
+      {% if max_width_desktop != blank and max_width_desktop != 0 %}
+        --max-width-desktop: {{ max_width_desktop }}px;
+      {% endif %}
+      --gap-mobile: {{ block.settings.gap_mobile | default: 7 }}px;
+      --gap-desktop: {{ block.settings.gap_desktop | default: 15 }}px;
+    }
+  </style>
+
+  <div class="section-icon-text__inner"
+    data-stagger-inview=".section-icon-text__item">
+    {% content_for "blocks" %}
+  </div>
+{%- endif -%}
+
+{%- schema -%}
+  {
+    "name": "Icon Text Wrapper",
+    "class": "section-icon-text__wrapper",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Gap Settings"
+      },
+      {
+        "type": "number",
+        "id": "gap_mobile",
+        "label": "Gap - Mobile",
+        "default": 7,
+        "info": "in pixels"
+      },
+      {
+        "type": "number",
+        "id": "gap_desktop",
+        "label": "Gap - Desktop",
+        "default": 15,
+        "info": "in pixels"
+      },
+      {
+        "type": "header",
+        "content": "Width Settings"
+      },
+      {
+        "type": "number",
+        "id": "max_width_mobile",
+        "label": "Max Width - Mobile",
+        "default": 0,
+        "info": "in pixels"
+      },
+      {
+        "type": "number",
+        "id": "max_width_desktop",
+        "label": "Max Width - Desktop",
+        "default": 0,
+        "info": "in pixels"
+      }
+    ],
+    "blocks": [
+      { "type": "_section-content__icon-text-item" }
+    ],
+    "presets": [
+      {
+        "name": "Section Icon Text Wrapper",
+        "blocks": [
+          { "type": "_section-content__icon-text-item" }
+        ]
+      }
+    ]
+  }
+{%- endschema -%}

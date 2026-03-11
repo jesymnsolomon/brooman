@@ -1,0 +1,31 @@
+/* PROGRESS BAR */
+.progress-bar {
+  $track-color: var( --progress-bar-track-color );
+  $track-bg-color: var( --progress-bar-track-bg-color );
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  @include border-radius( rem-calc( 7px ) );
+
+  &__track {
+    height: rem-calc( 8px );
+    width: 100%;
+    background-color: $track-bg-color;
+    border-radius: inherit;
+  }
+
+  &__value {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: $track-color;
+    border-radius: inherit;
+    @include transition( $global-transition );
+
+    &.completed {
+      background-color: $track-color;
+    }
+  }
+}

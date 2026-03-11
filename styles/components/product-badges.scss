@@ -1,0 +1,36 @@
+.product-badge {
+  line-height: rem-calc(14px);
+  font-weight: 700;
+  color: $white;
+  text-transform: uppercase;
+  letter-spacing: rem-calc(0.20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 3;
+  width: rem-calc(60px);
+  height: rem-calc(60px);
+  margin: 0;
+  padding: rem-calc(10px);
+  position: relative;
+
+  @include breakpoint(large up) {
+    width: rem-calc(70px);
+    height: rem-calc(70px);
+  }
+
+  svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  span {
+    z-index: 1;
+    font-size: rem-calc(19px);
+    font-family: $custom-font-name-1;
+  }
+}

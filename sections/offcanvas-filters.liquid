@@ -1,0 +1,296 @@
+{% assign sort_items = section.blocks | where: "type", "sort_item" %}
+{% assign filter_items = section.blocks | where: "type", "filter_item" %}
+
+{% render 'style-tags__section', asset_file_name: "offcanvas-filters.css", lazyload: true %}
+{% render 'renderer__color-scheme', name: "section", color_scheme: section.settings.color_scheme, selector: ".offcanvas-filters" %}
+
+{%- capture cart_content -%}
+<div class="offcanvas-filters__content"
+  x-data='{
+    grid: document.querySelector(".mfr-collection__product-grid [x-data]"),
+    increment: parseInt(this.grid ? this.grid.getAttribute("data-limit") : 8),
+
+    sortCollection(field, sort) {
+      if(!this.grid) return;
+      let count = this.increment;
+
+      Alpine.store("gridData").productData.sort((a, b) => {
+        let result;
+
+        if (field === "price") {
+          result = parseFloat(a[field]) - parseFloat(b[field]);
+        } else {
+          result = String(a[field]).localeCompare(String(b[field]));
+        }
+
+        return sort === "desc" ? -result : result;
+      });
+
+      Alpine.store("gridData").productData.forEach((item, index) => {
+        item.order = index;
+
+        if(!this.increment) return;
+
+        if(count > 0 && (item.isCategoryShow && item.isFilterShow)) {
+          item.isLoadMoreShow = true;
+          count--;
+        } else {
+          item.isLoadMoreShow = false;
+        }
+      });
+    },
+
+    filterCollection(field, value) {
+      if(!this.grid) return;
+      let count = this.increment;
+      if(!Alpine.store("gridData").productData) return;
+
+      Alpine.store("gridData").productData.forEach((item, index) => {
+        item.isFilterShow = item[field] === value;
+
+        if(!item.isCategoryShow || !item.isFilterShow) return;
+
+        if(count > 0) {
+          item.isLoadMoreShow = true;
+          count--;
+        } else {
+          item.isLoadMoreShow = false;
+        }
+      });
+    },
+
+    filterByCollection(handle) {
+      if(!this.grid) return;
+      let count = this.increment;
+      if(!Alpine.store("gridData").productData) return;
+
+      if(handle != "all" && Alpine.store("gridData").filtersData.indexOf(handle) < 0) {
+        Alpine.store("gridData").filtersData.push(handle);
+        Alpine.store("gridData").filtersData = Alpine.store("gridData").filtersData.filter(item => item !== "all");
+      } else if(handle == "all") {
+        Alpine.store("gridData").filtersData = ["all"];
+      }
+
+      Alpine.store("gridData").productData.forEach((item, index) => {
+        const className = item.className.toLowerCase();
+
+        item.isCategoryShow = Alpine.store("gridData").filtersData.some(filter =>
+          className.includes(`filter--${filter.toLowerCase()}`)
+        );
+
+        if(!item.isCategoryShow || !item.isFilterShow) return;
+
+        if(count > 0) {
+          item.isLoadMoreShow = true;
+          count--;
+        } else {
+          item.isLoadMoreShow = false;
+        }
+      });
+    }
+  }'>
+  <div class="offcanvas-filters__head">
+    <button class="button primary"
+      aria-label="Close cart"
+      type="button"
+      role="button"
+      x-data
+      @click='$store["offCanvasFilters"].closeOffcanvas()'>
+      {% render 'icon__chevrons', position: "left" %}
+      <span>Back</span>
+    </button>
+  </div>
+  <div class="offcanvas-filters__body">
+    {% comment %} Sort Item  {% endcomment %}
+    {% if sort_items != blank %}
+      {% assign sort_item_id = "" %}
+
+      {%- capture accordion_content -%}
+        {% for block in sort_items %}
+          {% assign sort_item_id = block.id %}
+
+          <div class="sort-item">
+            <button
+              @click="sortCollection('{{ block.settings.field }}','asc');$store['offCanvasFilters'].closeOffcanvas();"
+              aria-label="Sort {{ block.settings.title }} - {{ block.settings.asc_label }}" class="button secondary sort-button">
+              <span>{{ block.settings.title }} - {{ block.settings.asc_label }}</span>
+            </button>
+            <button
+              @click="sortCollection('{{ block.settings.field }}', 'desc');$store['offCanvasFilters'].closeOffcanvas();"
+              aria-label="Sort {{ block.settings.title }} - {{ block.settings.asc_label }}" class="button secondary sort-button">
+              <span>{{ block.settings.title }} - {{ block.settings.desc_label }}</span>
+            </button>
+          </div>
+        {% endfor %}
+      {%- endcapture -%}
+
+      {% render 'mfr-component__accordion',
+        block_id: sort_item_id,
+        trigger_label: "Sort",
+        content: accordion_content,
+        initially_open: false %}
+    {% endif %}
+
+    {% comment %} Filter Item  {% endcomment %}
+    {% if filter_items != blank %}
+      {% for block in filter_items %}
+        {%- capture accordion_content -%}
+          <div class="filter-item">
+            {% case block.settings.field %}
+              {% comment %} Age {% endcomment %}
+              {% when 'age' %}
+                {%- assign objects = shop.metaobjects['pdp_product_specifications'].values -%}
+                {%- assign keys = '' -%}
+
+                {% for obj in objects %}
+                  {% unless keys contains obj.spec_2_value %}
+                    <button
+                      @click="filterCollection('{{ block.settings.field }}','{{ obj.spec_2_value }}');$store['offCanvasFilters'].closeOffcanvas();"
+                      aria-label="Filter {{ block.settings.title }} - {{ block.settings.asc_label }}" class="button secondary filter-button">
+                      <span>{{ obj.spec_2_value }}</span>
+                    </button>
+
+                    {% assign keys = keys | append: obj.spec_2_value | append: '|' %}
+                  {% endunless %}
+                {% endfor %}
+
+                {% comment %} Player {% endcomment %}
+                {% when 'players' %}
+                  {%- assign objects = shop.metaobjects['pdp_product_specifications'].values -%}
+                  {%- assign keys = '' -%}
+                  {% for obj in objects %}
+                    {% unless keys contains obj.spec_3_value %}
+                      <button
+                        @click="filterCollection('{{ block.settings.field }}','{{ obj.spec_3_value }}');$store['offCanvasFilters'].closeOffcanvas();"
+                        aria-label="Filter {{ block.settings.title }} - {{ block.settings.asc_label }}" class="button secondary filter-button">
+                        <span>{{ obj.spec_3_value }}</span>
+                      </button>
+
+                      {% assign keys = keys | append: obj.spec_3_value | append: '|' %}
+                    {% endunless %}
+                  {% endfor %}
+
+                {% comment %} Category {% endcomment %}
+                {% when 'className' %}
+                  {% for collection in block.settings.collection_list %}
+                    <button class="button secondary filter-button" @click="filterByCollection('{{ collection.handle }}');$store['offCanvasFilters'].closeOffcanvas()">
+                      <span>{{ collection.metafields.mfr_fields.nice_title | default: collection.title }}</span>
+                    </button>
+                  {% endfor %}
+                {% else %}
+            {% endcase %}
+          </div>
+        {%- endcapture -%}
+
+        {% render 'mfr-component__accordion',
+          block_id: block.id,
+          trigger_label: block.settings.title,
+          content: accordion_content,
+          initially_open: false %}
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+{%- endcapture -%}
+
+{% render 'mfr-component__offcanvas',
+  id: "offCanvasFilters",
+  class: "offcanvas-filters",
+  position: "right",
+  content: cart_content,
+  initially_open: false %}
+
+{% schema %}
+  {
+    "name": "Offcanvas Filters",
+    "enabled_on": {
+      "groups": ["custom.offcanvas"]
+    },
+    "limit": 1,
+    "settings": [
+      {
+        "type": "text",
+        "id": "referenced_section_id",
+        "label": "Referenced Section ID",
+        "default": "collection-grid"
+      },
+      {
+        "type": "header",
+        "content": "Color Schemes"
+      },
+      {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "default": "scheme_1",
+        "label": "Color Scheme"
+      }
+    ],
+    "blocks": [
+        {
+          "type": "sort_item",
+          "name": "Sort Item",
+          "settings": [
+            {
+              "type": "text",
+              "id": "title",
+              "label": "Title or Label"
+            },
+            {
+              "type": "select",
+              "id": "field",
+              "label": "Field",
+              "options": [
+                { "value": "title",  "label": "Product Title" },
+                { "value": "price",  "label": "Product Price" },
+                { "value": "ratings", "label": "Product Ratings" }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "asc_label",
+              "label": "Ascending Label",
+              "default": "Low to High"
+            },
+            {
+              "type": "text",
+              "id": "desc_label",
+              "label": "Descending Label",
+              "default": "High to Low"
+            }
+          ]
+        },
+        {
+          "type": "filter_item",
+          "name": "Filter Item",
+          "settings": [
+            {
+              "type": "text",
+              "id": "title",
+              "label": "Title or Label"
+            },
+            {
+              "type": "select",
+              "id": "field",
+              "label": "Field",
+              "options": [
+                { "value": "age",  "label": "Ages" },
+                { "value": "player",  "label": "Players" },
+                { "value": "className", "label": "Category" }
+              ]
+            },
+            {
+              "type": "collection_list",
+              "id": "collection_list",
+              "label": "Category List",
+              "info": "If Category is chosen, choose a list of collection to be shown as filter options"
+            }
+          ]
+        }
+    ],
+    "presets": [
+      {
+        "name": "Offcanvas Filters"
+      }
+    ]
+  }
+{% endschema %}

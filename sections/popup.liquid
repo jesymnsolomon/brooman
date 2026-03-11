@@ -1,0 +1,37 @@
+{% for block in section.blocks %}
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+      window._KlOnsite = window._klOnsite || [];
+      window._klOnsite.push(['openForm', {{ block.settings.form_id }}]);
+    });
+  </script>
+{% endfor %}
+
+{% schema %}
+{
+  "name": "Popups",
+  "enabled_on": {
+    "groups": ["custom.popups"]
+  },
+  "settings": [],
+  "blocks": [
+    {
+      "type": "popup",
+      "name": "Popup",
+      "settings": [
+        {
+          "type": "text",
+          "id": "form_id",
+          "label": "Form ID",
+          "info": "Klaviyo Form ID"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Popups"
+    }
+  ]
+}
+{% endschema %}

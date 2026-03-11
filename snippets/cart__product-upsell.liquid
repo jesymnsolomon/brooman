@@ -1,0 +1,87 @@
+{% render 'renderer__color-scheme', name: "section", color_scheme: block.settings.color_scheme_upsell, selector: ".product-upsell" %}
+
+{% if block.settings.products %}
+	{%- liquid
+		assign upsell_products = ""
+
+		for product in block.settings.products
+			if product.available
+				assign upsell_products = upsell_products | append: product.first_available_variant.id
+			endif
+
+			unless forloop.last
+				assign upsell_products = upsell_products | append: ","
+			endunless
+		endfor
+	-%}
+
+	<div class="product-upsell" x-show="!upsellsIncludedInCart" x-data="{
+		upsellsIncludedInCart: false,
+		upsellProducts: [{{ upsell_products }}],
+
+		init() {
+			this.$watch('$store.cart.cartData.items', data => {
+				if (data !== null && data !== undefined) {
+					const checksCartItems = this.upsellProducts.every(id => data.some(item => item.id === id))
+					this.upsellsIncludedInCart = checksCartItems
+				}
+			})
+		},
+
+		upsellIncludedInCart(id) {
+			if (!Array.isArray($store.cart.cartData.items)) return false
+			return $store.cart.cartData.items.some(item => item.id === id)
+		},
+	}">
+		{% if block.settings.title != blank %}
+			<div class="product-upsell__title">
+				{{ block.settings.title }}
+			</div>
+		{% endif %}
+
+		<div class="product-upsell__inner">
+			{%- for product in block.settings.products -%}
+				{% if product.available %}
+					{% assign variant = product.selected_or_first_available_variant %}
+					{% assign metafield = product.metafields.mfr_fields %}
+					{% assign title = metafield.nice_title %}
+					{% assign color = metafield.accent_color.value.secondary %}
+
+					<template x-if="!$data.upsellIncludedInCart({{ variant.id }})">
+						<div class="product-upsell__product" {% if color != blank %}style="--background: {{ color }};"{% endif %}>
+							<div class="product-upsell__product-left">
+								{% comment %} <div class="product-upsell__product-image">
+									{% assign image = product.media[0] %}
+									{% if image != blank %}
+										{% assign height = 100 | divided_by: image.aspect_ratio %}
+										{{ image | image_url: width: 100 | image_tag: width: 100, alt: product.title, height: height }}
+									{% endif %}
+								</div> {% endcomment %}
+
+								<h3 class="product-upsell__product-title h3">
+									{% comment %} {{ title | default: product.title }} - {{ product.first_available_variant.title }} {% endcomment %}
+									{{ title | default: product.title }} 
+                  {% if product.first_available_variant.metafields.custom.variant_title != blank %}
+                    <br> {{ product.first_available_variant.metafields.custom.variant_title }}
+                  {% endif %}
+                  {% comment %} <br> {{ product.first_available_variant.title }} {% endcomment %}
+								</h3>
+							</div>
+
+							<div class="product-upsell__product-right">
+								<form data-productid="{{ product.id }}" id="upsell-form-{{ forloop.index }}" @submit.prevent.debounce.300ms="$store.cart.addToCart({{- variant.id -}})">
+									{% render 'product-form__hidden-input', product: product %}
+									<input type="hidden" name="id" data-productid="{{ product.id }}" value="{{ variant.id }}">
+								</form>
+
+								<button type="submit" class="button primary" form="upsell-form-{{ forloop.index }}">
+									<span>Add - {{ variant.price | money }}</span>
+								</button>
+							</div>
+						</div>
+					</template>
+				{%- endif -%}
+			{% endfor %}
+		</div>
+	</div>
+{% endif %}

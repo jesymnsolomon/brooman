@@ -1,0 +1,51 @@
+{% if block.settings.year != blank %}
+  <div class="timeline-item">
+      <div class="timeline-item__year">
+        <h3>{{ block.settings.year }}</h3>
+      </div>
+      {% if block.settings.title != blank and block.settings.content != blank %}
+        <div class="timeline-item__story">
+          {% if block.settings.title != blank %}
+            <h3 class="timeline-item__story-title">{{ block.settings.title }}</h3>
+          {% endif %}
+          {% if block.settings.content != blank %}
+            <div class="timeline-item__story-content">{{ block.settings.content }}</div>
+          {% endif %}
+        </div>
+      {% endif %}
+  </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Timeline Item",
+    "class": "timeline-item__wrapper",
+    "settings": [
+      {
+        "type": "text",
+        "id": "year",
+        "label": "Date or Year",
+        "default": "2000"
+      },
+      {
+        "type": "header",
+        "content": "Story Content"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "content",
+        "label": "Content"
+      }
+    ],
+    "presets": [
+    {
+      "name": "Timeline Item"
+    }
+  ]
+  }
+{% endschema %}

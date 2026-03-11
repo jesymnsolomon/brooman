@@ -1,0 +1,119 @@
+<div class="icon-text-slides__inner carousel"
+    data-mfr-carousel="
+      {
+        prevNextButtons: false,
+        contain: true,
+        cellAlign: 'center',
+        pageDots: false,
+        wrapAround: false,
+        groupCells: false
+      }
+    "
+    data-mfr-carousel-on-ready='
+      const thumbnails = $( `<div class="icon-text-slides__thumbs"></div>` );
+      this.$items.each( (i,e) => {
+        const icon = $( e ).find( ".icon-text-slide__icon" );
+        thumbnails.append( icon.removeClass( "hidden" ) );
+      });
+
+      this.$element.after( thumbnails );
+
+      thumbnails.flickity( {
+        asNavFor: this.$slider.get(0),
+        prevNextButtons: false,
+        contain: true,
+        cellAlign: "center",
+        pageDots: false,
+        wrapAround: false,
+        groupCells: false
+      } );
+
+      $( window ).on( "resize", () => thumbnails.flickity( "resize" ) );
+
+      this.autoplayTiming = 4;
+      this.timingArgs = {
+        percentTime: 0,
+        isPaused: false,
+      };
+
+      this.startProgressbar = () => {
+        this.resetProgressbar();
+        this.timingArgs.percentTime = 0;
+        this.timingArgs.isPaused = false;
+        this.timingArgs.lastTimestamp = performance.now();
+        this.timingArgs.tick = requestAnimationFrame(this.interval.bind(this));
+      }
+
+      this.interval = (timestamp) => {
+        if (!this.timingArgs.isPaused) {
+          this.timingArgs.percentTime +=
+            (timestamp - this.timingArgs.lastTimestamp) /
+            (this.autoplayTiming * 1000);
+          this.timingArgs.lastTimestamp = timestamp;
+
+          if (this.timingArgs.percentTime >= 1) {
+            this.$slider.flickity("next", true);
+            this.startProgressbar();
+          } else {
+            this.$element.find( ".progress-bar" ).css({
+              "--progress-value":
+                (this.timingArgs.percentTime * 100).toFixed(2),
+            });
+            this.timingArgs.tick = requestAnimationFrame(
+              this.interval.bind(this)
+            );
+          }
+        }
+      }
+
+      this.resetProgressbar = () => {
+        this.$element.find( ".progress-bar" ).css({
+          "--progress-value": 0,
+        });
+        cancelAnimationFrame(this.timingArgs.tick);
+      }
+
+      this.startProgressbar();
+    '
+    data-mfr-carousel-on-change='
+      this.resetProgressbar();
+      this.startProgressbar();
+    '>
+
+  <div class="progress-bar html"
+    style='
+      --progress-value: 50;
+    '>
+    <div class="progress-bar__icon">
+      {%- capture svg_code -%}
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="11" height="9">
+          <path fill="white" d="M11 4.6353383L9.2298851 4.6353383C9.2298851 2.9774437 9.6724138 1.6578947 10.367816 0L8.1867819 0C7.0804596 1.9962406 6.5114942 3.5526316 6.5114942 6.1578946L6.5114942 9L11 9L11 4.6353383ZM4.4568968 4.6353383L2.7183907 4.6353383C2.7183907 2.9774437 3.1609194 1.6578947 3.8247128 0L1.6436782 0C0.56896549 1.9962406 0 3.5526316 0 6.1578946L0 9L4.4568968 9L4.4568968 4.6353383Z"/>
+        </svg>
+      {%- endcapture -%}
+      {% render 'component__svg-encoder',
+        svg_code: svg_code,
+        width: 11,
+        height: 9,
+        alt: "quote icon" %}
+    </div>
+  </div>
+
+  <div class="icon-text-slides__carousel carousel__slides">
+    {%- content_for "blocks" -%}
+  </div>
+</div>
+{% render 'script__section', file: "mfr-carousel.js" %}
+{% schema %}
+  {
+    "name": "Icon Text Slides",
+    "class": "icon-text-slides",
+    "blocks": [
+      { "type": "_icon-text-slide" }
+    ],
+    "presets": [
+      {
+        "name": "Icon Text Slides"
+      }
+    ]
+  }
+{% endschema %}

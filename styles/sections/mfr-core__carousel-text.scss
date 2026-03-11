@@ -1,0 +1,179 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+section.mfr-core__carousel-text {
+  position: relative;
+  .small-order-1 {
+    @include breakpoint(small only) {
+      margin-bottom: 3rem;
+    }
+  }
+  
+  .section-content {
+    padding: 0rem;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 5;
+    @include breakpoint(large up) {
+      padding: 3rem;
+      margin-bottom: 0rem;
+    }
+    .inner {
+      margin: 0 auto;
+      width: 40rem;
+      max-width: 90%;
+      @include breakpoint(medium up) {
+        //padding: 2rem;
+      }
+    }
+    .section-title {
+      position: relative;
+      z-index: 1;
+      //text-align: center;
+      &.offset-title {
+        @include breakpoint(large up) {
+          @include transform(translate(-13rem, 0px));
+        }
+      }
+      &.no-wrap {
+        @include breakpoint(large up) {
+          white-space: nowrap;
+        }
+      }
+    }
+    .description {
+      max-width: 36rem;
+      margin: 0 auto;
+    }
+   
+  }
+
+  .carousel-wrapper {
+    position: relative;
+    width: 100%;
+    &:before {
+      content: "";
+      width: 1rem;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 10;
+    }
+    &.add-right-buffer {
+      @include breakpoint(small only) {
+        margin-right: 2rem;
+      }
+    }
+    &.large-carousel {
+      .flickity-viewport {
+        @include border-radius(0 4rem 4rem 0);
+        overflow: hidden;
+      }
+      .carousel-cell {
+        width: 100%;
+        height: 80vh;
+        .inner {
+          width: 100%;
+          height: 100%;
+        } 
+      }
+    }
+    &.small-carousel {
+      .carousel-cell {
+        height: 30rem;
+        width: 18.75rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-bottom: 4rem;
+        @include breakpoint(large up) {
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+        .inner {
+          overflow: hidden;
+          //position: absolute;
+          width: 100%;
+          height: 100%;
+          background: $color-accent;
+        }
+      }
+    }
+    .carousel-cell {
+      .inner {
+        position: relative;        
+        .image {
+          &.cover {
+              height: 100%;
+              img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+              }
+          }
+          &.contain {
+            @include transform(translate(-50%,-60%));
+            height: 50%;
+            width: 41%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            svg {
+              object-fit: contain;
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+        .caption {
+          position: absolute;
+          bottom: 1rem;
+          width: 80%;
+          left: 10%;
+          text-align: center;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  .section-image {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    &.margin-bottom {
+      margin-bottom: 2rem;
+    }
+    &.margin-top {
+      margin-top: 2rem;
+    }
+    &.cover {
+      .responsive-image__wrapper {
+        height: 100%;
+        img {
+          object-fit: cover;
+        }
+      }
+    }
+    &.contain .image-wrapper {
+      max-width: 37.5rem;
+    }
+    .image-wrapper {
+      @include transition(1s all cubic-bezier(0.5,0,0,1));
+      width: 100%;
+      //height: 100%;
+      overflow: hidden;
+    }
+  
+  }
+
+
+
+
+  
+}

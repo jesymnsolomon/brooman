@@ -1,0 +1,49 @@
+{% assign widths_mobile = widths_mobile | default: "480,600,720,900,1080" %}
+{% assign width_mobile = width_mobile | default: 1023 %}
+{% assign sizes_mobile = sizes_mobile | default: "100vw" %}
+
+{% assign widths_desktop = widths_desktop | default: "1260,1440,1800,2160,2520,2880,3240,3600,3960,4320,4680,5120" %}
+{% assign width_desktop = width_desktop | default: 2560 %}
+{% assign sizes_desktop = sizes_desktop | default: "100vw" %}
+
+{% assign render_width_mobile = width_mobile | times: 1.25 %}
+{% assign render_width_desktop = width_desktop | times: 1.25 %}
+
+<template
+  x-if='$store.methods.isMobile'>
+  {% if lazyload %}
+    {% render 'component__lazyload-image',
+      image: image_mobile,
+      width: render_width_mobile,
+      widths: widths_mobile,
+      %}
+  {% else %}
+    {{ image_mobile
+      | image_url: width: render_width_mobile
+      | image_tag: width: render_width_mobile,
+        widths: widths_mobile,
+        alt: image_mobile.alt |  default: default_alt,
+        preload: true,
+        fetchpriority: "high",
+        sizes: sizes_mobile }}
+  {% endif %}
+</template>
+<template
+  x-if='!$store.methods.isMobile'>
+  {% if lazyload %}
+    {% render 'component__lazyload-image',
+      image: image_desktop,
+      width: render_width_desktop,
+      widths: widths_desktop,
+      %}
+  {% else %}
+    {{ image_desktop
+      | image_url: width: render_width_desktop
+      | image_tag: width: render_width_desktop,
+        widths: widths_desktop,
+        alt: image_desktop.alt |  default: default_alt,
+        preload: true,
+        fetchpriority: "high",
+        sizes: sizes_desktop }}
+  {% endif %}
+</template>

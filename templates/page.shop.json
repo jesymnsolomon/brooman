@@ -1,0 +1,848 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "hide_page_title": true,
+        "text_alignment": "",
+        "container_width": "full",
+        "max_width": 0,
+        "grid_gutter": "grid-gutter",
+        "color_scheme": "",
+        "top_spacing_mobile": 30,
+        "bottom_spacing_mobile": 80,
+        "top_spacing_desktop": 50,
+        "bottom_spacing_desktop": 100,
+        "bg_color": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    },
+    "mfr_core_text_section_thWnVV": {
+      "type": "mfr-core__text-section",
+      "blocks": {
+        "section-content": {
+          "type": "_section-content",
+          "static": true,
+          "settings": {
+            "mobile_alignment": "",
+            "desktop_alignment": "",
+            "text_alignment_desktop": "center",
+            "text_alignment_mobile": "center",
+            "max_width_mobile": 0,
+            "max_width_desktop": 0
+          },
+          "blocks": {
+            "section_content_title_EXUEih": {
+              "type": "_section-content__title",
+              "settings": {
+                "heading": "<strong>ALL BOARD GAMES</strong>",
+                "disable_animation": false,
+                "header_style": "h2",
+                "header_tag": "h2",
+                "font_family": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 0
+              },
+              "blocks": {}
+            },
+            "section_content_text_NG4mNd": {
+              "type": "_section-content__text",
+              "settings": {
+                "text": "<p><strong>FOR BOARD GAME NIGHTS, PARTY NIGHTS AND THURSDAY NIGHTS</strong></p>",
+                "visibility": "",
+                "disable_animation": false,
+                "text_style": "large",
+                "font_family": "",
+                "color": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "section_content_title_EXUEih",
+            "section_content_text_NG4mNd"
+          ]
+        },
+        "accent-graphics": {
+          "type": "_accent-graphics",
+          "static": true,
+          "settings": {},
+          "blocks": {
+            "accent_graphic_wKm38J": {
+              "type": "_accent-graphic",
+              "settings": {
+                "icon": "shopify://shop_images/star.png",
+                "svg_code": "",
+                "visibility": "always",
+                "value_type": "%",
+                "x_setting": "left",
+                "y_setting": "top",
+                "width_large": 160,
+                "position_x_large": 6,
+                "position_y_large": 42,
+                "width_small": 80,
+                "position_x_small": 10,
+                "position_y_small": 30,
+                "animation": "none",
+                "rotate": 0,
+                "flip": false,
+                "custom_class": ""
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "accent_graphic_wKm38J"
+          ]
+        }
+      },
+      "settings": {
+        "container_width": "full",
+        "max_width": 0,
+        "grid_gutter": "",
+        "mobile_alignment": "center",
+        "desktop_alignment": "center",
+        "color_scheme": "",
+        "top_spacing_mobile": 80,
+        "bottom_spacing_mobile": 50,
+        "top_spacing_desktop": 80,
+        "bottom_spacing_desktop": 50,
+        "bg_color": "",
+        "section_divider_top": "",
+        "section_divider_bottom": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    },
+    "mfr_collection_product_grid_U6RBib": {
+      "type": "mfr-collection__product-grid",
+      "blocks": {
+        "product-filters": {
+          "type": "_product-filters",
+          "static": true,
+          "settings": {
+            "title": "Quick Options",
+            "collections": [
+              "best-sellers",
+              "board-games-for-families",
+              "party-games",
+              "travel-games",
+              "2-player-board-games",
+              "new-games"
+            ],
+            "bg_color": "#FFEA39"
+          },
+          "blocks": {}
+        },
+        "collection-title": {
+          "type": "_collection-title",
+          "disabled": true,
+          "static": true,
+          "settings": {
+            "disable_animation": false,
+            "header_style": "h1",
+            "header_tag": "h2",
+            "font_family": "",
+            "highlight_color": "",
+            "underline_color": "",
+            "max_width_mobile": 0,
+            "max_width_desktop": 0,
+            "graphics": ""
+          },
+          "blocks": {}
+        },
+        "section-content": {
+          "type": "_section-content",
+          "disabled": true,
+          "static": true,
+          "settings": {
+            "mobile_alignment": "",
+            "desktop_alignment": "",
+            "text_alignment_desktop": "center",
+            "text_alignment_mobile": "center",
+            "max_width_mobile": 0,
+            "max_width_desktop": 0
+          },
+          "blocks": {
+            "section_content_title_pJBTTE": {
+              "type": "_section-content__title",
+              "settings": {
+                "heading": "Heading Text",
+                "disable_animation": false,
+                "header_style": "h1",
+                "header_tag": "h2",
+                "font_family": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "section_content_title_pJBTTE"
+          ]
+        },
+        "product-grid": {
+          "type": "_product-grid",
+          "static": true,
+          "settings": {
+            "card_layout": "",
+            "include_variants": false,
+            "product_list": [],
+            "collection": "all",
+            "value_to_filter": "collections"
+          },
+          "blocks": {}
+        },
+        "accent-graphics": {
+          "type": "_accent-graphics",
+          "static": true,
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "settings": {
+        "unique_id": "collection-grid",
+        "features": "true",
+        "limit": "12",
+        "grid_column": "4",
+        "grid_column_mobile": "2",
+        "button_type": "primary",
+        "container_width": "full",
+        "max_width": 86,
+        "grid_gutter": "",
+        "mobile_alignment": "center",
+        "desktop_alignment": "center",
+        "color_scheme": "scheme-e7a2b49c-36ae-4b1f-b31f-f3ec31db1021",
+        "top_spacing_mobile": 0,
+        "bottom_spacing_mobile": 100,
+        "top_spacing_desktop": 0,
+        "bottom_spacing_desktop": 100,
+        "bg_color": "",
+        "section_divider_top": "",
+        "section_divider_bottom": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    },
+    "mfr_core_text_testimonials_carousel_FK6dCk": {
+      "type": "mfr-core__text-testimonials-carousel",
+      "blocks": {
+        "text-testimonials-carousel": {
+          "type": "_text-testimonial__carousel",
+          "static": true,
+          "settings": {
+            "metaobject": [],
+            "autoplay_timing": 0,
+            "wrap_around": false,
+            "prev_next_buttons": true,
+            "page_dots": true,
+            "width_mobile": 95,
+            "unit_mobile": "%",
+            "width_desktop": 100,
+            "unit_desktop": "%",
+            "aspect_ratio_mobile": "1/1",
+            "aspect_ratio_desktop": "1/1"
+          },
+          "blocks": {
+            "text_testimonial_slide_LYfNCF": {
+              "type": "_text-testimonial__slide",
+              "settings": {
+                "metaobject": [],
+                "icon": "shopify://shop_images/stars-dialog_1.png",
+                "description": "<p><strong>“This game made me laugh so hard I peed a little”</strong></p>",
+                "author": "",
+                "cta_text": "",
+                "cta_url": ""
+              },
+              "blocks": {}
+            },
+            "text_testimonial_slide_yNjzLn": {
+              "type": "_text-testimonial__slide",
+              "settings": {
+                "metaobject": [],
+                "icon": "shopify://shop_images/stars-dialog_1.png",
+                "description": "<p><strong>“Someone moo’d so hard they snorted”</strong></p>",
+                "author": "",
+                "cta_text": "",
+                "cta_url": ""
+              },
+              "blocks": {}
+            },
+            "text_testimonial_slide_wTndHG": {
+              "type": "_text-testimonial__slide",
+              "settings": {
+                "metaobject": [],
+                "icon": "shopify://shop_images/stars-dialog_1.png",
+                "description": "<p><strong>“We laughed until 3am!”</strong></p>",
+                "author": "",
+                "cta_text": "",
+                "cta_url": ""
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_testimonial_slide_LYfNCF",
+            "text_testimonial_slide_yNjzLn",
+            "text_testimonial_slide_wTndHG"
+          ]
+        },
+        "section-content": {
+          "type": "_section-content",
+          "static": true,
+          "settings": {
+            "mobile_alignment": "",
+            "desktop_alignment": "",
+            "text_alignment_desktop": "center",
+            "text_alignment_mobile": "center",
+            "max_width_mobile": 0,
+            "max_width_desktop": 0
+          },
+          "blocks": {}
+        },
+        "accent-graphics": {
+          "type": "_accent-graphics",
+          "static": true,
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "settings": {
+        "metaobject": "",
+        "vertical_alignment": "center",
+        "enable_sticky": false,
+        "mobile_alignment": "center",
+        "desktop_alignment": "center",
+        "container_width": "full",
+        "max_width": 0,
+        "grid_gutter": "",
+        "color_scheme": "",
+        "top_spacing_mobile": 60,
+        "bottom_spacing_mobile": 120,
+        "top_spacing_desktop": 60,
+        "bottom_spacing_desktop": 100,
+        "custom_bg_color": "",
+        "bg_color": "",
+        "section_divider_top": "divider_1",
+        "section_divider_bottom": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    },
+    "mfr_core_product_carousel_mCWgKf": {
+      "type": "mfr-core__product-carousel",
+      "blocks": {
+        "section-content": {
+          "type": "_section-content",
+          "static": true,
+          "settings": {
+            "mobile_alignment": "",
+            "desktop_alignment": "",
+            "text_alignment_desktop": "center",
+            "text_alignment_mobile": "center",
+            "max_width_mobile": 0,
+            "max_width_desktop": 0
+          },
+          "blocks": {
+            "section_content_title_cafEjt": {
+              "type": "_section-content__title",
+              "settings": {
+                "heading": "<strong>CRACKING COMBOS</strong>",
+                "disable_animation": false,
+                "header_style": "h1",
+                "header_tag": "h2",
+                "font_family": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "section_content_title_cafEjt"
+          ]
+        },
+        "product-carousel": {
+          "type": "_product-carousel",
+          "static": true,
+          "settings": {
+            "include_variants": true,
+            "product_list": [
+              "by-the-pool-bundle",
+              "hand-luggage-only-bundle",
+              "holiday-hijinks-bundle",
+              "junior-jet-setter-bundle",
+              "puzzle-party-bundle-night-at-the-movies-day-at-the-festival-and-mayhem-in-the-library"
+            ],
+            "collections": [
+              "bundles"
+            ],
+            "autoplay_timing": 0,
+            "wrap_around": false,
+            "prev_next_buttons": true,
+            "page_dots": true,
+            "width_mobile": 450,
+            "unit_mobile": "px",
+            "width_desktop": 750,
+            "unit_desktop": "px",
+            "aspect_ratio_mobile": "1/1",
+            "aspect_ratio_desktop": "1/1"
+          },
+          "blocks": {}
+        },
+        "accent-graphics": {
+          "type": "_accent-graphics",
+          "static": true,
+          "settings": {},
+          "blocks": {
+            "accent_graphic_PEkRip": {
+              "type": "_accent-graphic",
+              "name": "Accent Graphic",
+              "settings": {
+                "icon": "shopify://shop_images/Bitmap_2x_1.png",
+                "svg_code": "",
+                "visibility": "always",
+                "value_type": "%",
+                "x_setting": "right",
+                "y_setting": "top",
+                "width_large": 250,
+                "position_x_large": -40,
+                "position_y_large": -14,
+                "width_small": 220,
+                "position_x_small": -38,
+                "position_y_small": -12,
+                "animation": "none",
+                "rotate": 0,
+                "flip": false,
+                "custom_class": ""
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "accent_graphic_PEkRip"
+          ]
+        }
+      },
+      "settings": {
+        "metaobject": "",
+        "container_width": "full",
+        "max_width": 0,
+        "grid_gutter": "",
+        "mobile_alignment": "center",
+        "desktop_alignment": "center",
+        "color_scheme": "scheme-b8da0b5e-d4d6-4b9e-bc64-091b090bb8e2",
+        "top_spacing_mobile": 100,
+        "bottom_spacing_mobile": 100,
+        "top_spacing_desktop": 100,
+        "bottom_spacing_desktop": 100,
+        "custom_bg_color": "",
+        "bg_color": "",
+        "section_divider_top": "divider_1",
+        "section_divider_bottom": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    },
+    "mfr_collection_product_grid_Nz93wr": {
+      "type": "mfr-collection__product-grid",
+      "blocks": {
+        "product-filters": {
+          "type": "_product-filters",
+          "disabled": true,
+          "static": true,
+          "settings": {
+            "title": "",
+            "collections": [],
+            "bg_color": ""
+          },
+          "blocks": {}
+        },
+        "collection-title": {
+          "type": "_collection-title",
+          "static": true,
+          "settings": {
+            "disable_animation": false,
+            "header_style": "h1",
+            "header_tag": "h2",
+            "font_family": "",
+            "highlight_color": "",
+            "underline_color": "",
+            "max_width_mobile": 0,
+            "max_width_desktop": 0,
+            "graphics": ""
+          },
+          "blocks": {}
+        },
+        "section-content": {
+          "type": "_section-content",
+          "static": true,
+          "settings": {
+            "mobile_alignment": "",
+            "desktop_alignment": "",
+            "text_alignment_desktop": "center",
+            "text_alignment_mobile": "center",
+            "max_width_mobile": 0,
+            "max_width_desktop": 0
+          },
+          "blocks": {
+            "section_content_title_PQiLkN": {
+              "type": "_section-content__title",
+              "settings": {
+                "heading": "<strong>TRENDING</strong>",
+                "disable_animation": true,
+                "header_style": "h6",
+                "header_tag": "h2",
+                "font_family": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 0
+              },
+              "blocks": {}
+            },
+            "section_content_title_JgiTKq": {
+              "type": "_section-content__title",
+              "settings": {
+                "heading": "THE <strong>HOTTEST</strong> POTATOES",
+                "disable_animation": false,
+                "header_style": "h1",
+                "header_tag": "h2",
+                "font_family": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "section_content_title_PQiLkN",
+            "section_content_title_JgiTKq"
+          ]
+        },
+        "product-grid": {
+          "type": "_product-grid",
+          "static": true,
+          "settings": {
+            "card_layout": "large",
+            "include_variants": false,
+            "product_list": [
+              "chicken-vs-hotdog",
+              "herd-mentality",
+              "you-cant-say-umm"
+            ],
+            "collection": "",
+            "value_to_filter": "collections"
+          },
+          "blocks": {}
+        },
+        "accent-graphics": {
+          "type": "_accent-graphics",
+          "static": true,
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "settings": {
+        "unique_id": "",
+        "features": "",
+        "limit": "",
+        "grid_column": "3",
+        "grid_column_mobile": "1",
+        "button_type": "primary",
+        "container_width": "full",
+        "max_width": 100,
+        "grid_gutter": "",
+        "mobile_alignment": "center",
+        "desktop_alignment": "center",
+        "color_scheme": "scheme-e7a2b49c-36ae-4b1f-b31f-f3ec31db1021",
+        "top_spacing_mobile": 100,
+        "bottom_spacing_mobile": 40,
+        "top_spacing_desktop": 100,
+        "bottom_spacing_desktop": 60,
+        "bg_color": "",
+        "section_divider_top": "divider_1",
+        "section_divider_bottom": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    },
+    "mfr_bpg_card_links_CDtLXB": {
+      "type": "mfr-bpg__card-links",
+      "blocks": {
+        "section-content": {
+          "type": "_section-content",
+          "disabled": true,
+          "static": true,
+          "settings": {
+            "mobile_alignment": "",
+            "desktop_alignment": "",
+            "text_alignment_desktop": "center",
+            "text_alignment_mobile": "center",
+            "max_width_mobile": 0,
+            "max_width_desktop": 0
+          },
+          "blocks": {}
+        },
+        "card-container": {
+          "type": "_card-container",
+          "static": true,
+          "settings": {
+            "alignment": "center"
+          },
+          "blocks": {
+            "card_zEypY8": {
+              "type": "_card",
+              "settings": {
+                "layout": "layout-1",
+                "mobile_layout": "layout-2",
+                "x_alignment": "center",
+                "x_alignment_mobile": "center",
+                "y_alignment": "center",
+                "text_alignment_desktop": "center",
+                "text_alignment_mobile": "center",
+                "background_color": "#FFEA39",
+                "text_color": "#000000",
+                "box_shadow": true,
+                "max_width_mobile": 1000,
+                "width_mobile": 100,
+                "width_unit_mobile": "%",
+                "width_desktop": 712,
+                "width_unit": "px",
+                "aspect_ratio_mobile": "383/266",
+                "aspect_ratio": "712/204",
+                "padding_mobile": 5,
+                "padding_desktop": 5,
+                "border_radius_mobile": 20,
+                "border_radius_desktop": 20
+              },
+              "blocks": {
+                "card_title_ntT496": {
+                  "type": "_card-title",
+                  "settings": {
+                    "title": "<strong>WHICH GAME IS BEST FOR YOU?</strong>",
+                    "title_style": "h5",
+                    "max_width": 1000
+                  },
+                  "blocks": {}
+                },
+                "card_button_8TjmXp": {
+                  "type": "_card-button",
+                  "settings": {
+                    "button_label": "Take the quiz",
+                    "button_link": "shopify://pages/quiz",
+                    "color_theme": "secondary",
+                    "max_width": 256,
+                    "custom_code": "",
+                    "custom_class": "",
+                    "custom_id": ""
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "card_title_ntT496",
+                "card_button_8TjmXp"
+              ]
+            }
+          },
+          "block_order": [
+            "card_zEypY8"
+          ]
+        },
+        "accent-graphics": {
+          "type": "_accent-graphics",
+          "static": true,
+          "settings": {},
+          "blocks": {
+            "accent_graphic_j8prEH": {
+              "type": "_accent-graphic",
+              "name": "Accent Graphic",
+              "settings": {
+                "icon": "shopify://shop_images/Bitmap.png",
+                "svg_code": "",
+                "visibility": "always",
+                "value_type": "%",
+                "x_setting": "right",
+                "y_setting": "bottom",
+                "width_large": 140,
+                "position_x_large": 18,
+                "position_y_large": 10,
+                "width_small": 120,
+                "position_x_small": -22,
+                "position_y_small": 8,
+                "animation": "none",
+                "rotate": 0,
+                "flip": false,
+                "custom_class": ""
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "accent_graphic_j8prEH"
+          ]
+        }
+      },
+      "settings": {
+        "container_width": "full",
+        "max_width": 0,
+        "grid_gutter": "",
+        "mobile_alignment": "center",
+        "desktop_alignment": "center",
+        "color_scheme": "scheme-e7a2b49c-36ae-4b1f-b31f-f3ec31db1021",
+        "top_spacing_mobile": 30,
+        "bottom_spacing_mobile": 100,
+        "top_spacing_desktop": 60,
+        "bottom_spacing_desktop": 100,
+        "bg_color": "",
+        "section_divider_top": "",
+        "section_divider_bottom": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    },
+    "mfr_core_accordion_section_QgRj6B": {
+      "type": "mfr-core__accordion-section",
+      "blocks": {
+        "section-content": {
+          "type": "_section-content",
+          "static": true,
+          "settings": {
+            "mobile_alignment": "",
+            "desktop_alignment": "",
+            "text_alignment_desktop": "center",
+            "text_alignment_mobile": "center",
+            "max_width_mobile": 0,
+            "max_width_desktop": 0
+          },
+          "blocks": {
+            "section_content_title_K8f3Qz": {
+              "type": "_section-content__title",
+              "settings": {
+                "heading": "<strong>OUR THREE PILLARS</strong>",
+                "disable_animation": false,
+                "header_style": "h2",
+                "header_tag": "h2",
+                "font_family": "",
+                "highlight_color": "",
+                "underline_color": "",
+                "max_width_mobile": 0,
+                "max_width_desktop": 700,
+                "margin_bottom": -50
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "section_content_title_K8f3Qz"
+          ]
+        },
+        "accordions": {
+          "type": "_accordions",
+          "static": true,
+          "settings": {},
+          "blocks": {
+            "accordion_rMqFya": {
+              "type": "_accordion",
+              "settings": {
+                "icon": "shopify://shop_images/games_copy.png",
+                "title": "Our top board games",
+                "content": "<p>The best board games are super-simple, quick to play and don’t leave any of the players feeling left out or bored. Whenever we design a new game, we always stick to those three golden rules — because we’d never make a board game we wouldn’t want to play ourselves.</p>",
+                "initially_open": false,
+                "bg_color": "#009ddb"
+              },
+              "blocks": {}
+            },
+            "accordion_RXxt44": {
+              "type": "_accordion",
+              "settings": {
+                "icon": "shopify://shop_images/laugh_copy.png",
+                "title": "The Potato Way",
+                "content": "<p>Before we started, the most popular board games in our homes were ones that kept everyone around the table entertained, no matter who they were. So, when we started making our own, we weren’t just making games for board gamers. We were making them for everyone.</p><p>Whether you’re playing with friends, family or total strangers, we’re sure you’ll find the best board game for you somewhere in this list. If not, please get in touch and we’ll make some new ones right away.</p>",
+                "initially_open": false,
+                "bg_color": "#8ad8f1"
+              },
+              "blocks": {}
+            },
+            "accordion_UHEi9H": {
+              "type": "_accordion",
+              "settings": {
+                "icon": "shopify://shop_images/learnin3mins_copy.png",
+                "title": "Super-simple board games. Super-speedy delivery",
+                "content": "<p>Desperate for a new board game and not sure how long you can wait? Well, don’t worry, because whenever you spend £30 or more on our board games, we’ll deliver them within 48 hours — for free!</p><p>On orders less than £30, it’s only £1.99 extra for two day delivery. So, no matter what you’re ordering, you can sleep easy knowing a parcel-load of great board games are speeding their way to you as fast as they can.</p>",
+                "initially_open": false,
+                "bg_color": "#8ad8f1"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "accordion_rMqFya",
+            "accordion_RXxt44",
+            "accordion_UHEi9H"
+          ]
+        },
+        "accent-graphics": {
+          "type": "_accent-graphics",
+          "static": true,
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "settings": {
+        "container_width": "full",
+        "max_width": 0,
+        "grid_gutter": "",
+        "mobile_alignment": "center",
+        "desktop_alignment": "center",
+        "color_scheme": "",
+        "top_spacing_mobile": 100,
+        "bottom_spacing_mobile": 100,
+        "top_spacing_desktop": 100,
+        "bottom_spacing_desktop": 100,
+        "bg_color": "",
+        "bg_image_mobile": "shopify://shop_images/yellow-background.jpg",
+        "bg_image": "shopify://shop_images/yellow-background.jpg",
+        "section_divider_top": "",
+        "section_divider_bottom": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "mfr_core_text_section_thWnVV",
+    "mfr_collection_product_grid_U6RBib",
+    "mfr_core_text_testimonials_carousel_FK6dCk",
+    "mfr_core_product_carousel_mCWgKf",
+    "mfr_collection_product_grid_Nz93wr",
+    "mfr_bpg_card_links_CDtLXB",
+    "mfr_core_accordion_section_QgRj6B"
+  ]
+}

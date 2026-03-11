@@ -1,0 +1,27 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "parent": "footer-group.json",
+  "context": {
+    "market": "gb"
+  },
+  "sections": {
+    "footer_WFB43J": {
+      "settings": {},
+      "blocks": {
+        "embed_NdHiwG": {
+          "settings": {
+            "description": "<ul><li>A birthday present from us</li><li>15% off your first order</li><li>Free spare parts for life</li></ul><p></p>"
+          }
+        }
+      }
+    }
+  }
+}

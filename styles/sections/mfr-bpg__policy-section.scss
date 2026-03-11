@@ -1,0 +1,47 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+section.mfr-bpg__policy-section {
+    .section-content {
+        .section-text p {
+            margin-bottom: rem-calc(5px);
+        }
+
+        .section-text {
+          &.regular * {
+            font-size: rem-calc( 20px ) !important;
+            line-height: 1.4em !important;
+            font-weight: 500 !important;
+            text-indent: unset !important;
+            margin-left: unset !important;
+          }
+        }
+    }
+
+    .custom-font-name-1 * {
+        font-family: $custom-font-name-1 !important;
+    }
+
+    .custom-font-name-2 * {
+        font-family: $custom-font-name-2 !important;
+    }
+
+    .custom-font-name-3 * {
+        font-family: $custom-font-name-3 !important;
+    }
+
+    .custom-font-name-4 * {
+        font-family: $custom-font-name-4 !important;
+    }
+
+    .large * {
+        @include large;
+    }
+
+    h1,h2,h3,h4,h5,h6 {
+        margin: rem-calc(20px) 0;
+        font-size: rem-calc(26px) !important;
+        font-weight: 800;
+    }
+}

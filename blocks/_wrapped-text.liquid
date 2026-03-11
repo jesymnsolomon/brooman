@@ -1,0 +1,20 @@
+{{- block.settings.text -}}
+{% schema %}
+  {
+    "name": "Wrapped Text",
+    "class": "wrapped-text",
+    "settings": [
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Text",
+        "default": "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam error iure, hic expedita voluptates distinctio illum sapiente quo inventore consequuntur?</p>"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Wrapped Text"
+      }
+    ]
+  }
+{% endschema %}

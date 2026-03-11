@@ -1,0 +1,41 @@
+{%- assign block_id = block_id | replace: "-", " " | replace: "_", " " | camelcase -%}
+
+{%- if content != blank -%}
+  <div
+    class="mfr-accordion {{ class }}"
+    :class='isOpen ? "is-active" : ""'
+    x-data="{ isOpen: {%- if initially_open -%}true{%- else -%}false{%- endif -%} }"
+    {% if background != blank %}style="background: {{ background }}"{% endif %}>
+    <button
+      class="mfr-accordion__trigger {{ trigger_class }}"
+      @click="isOpen = !isOpen"
+      :aria-expanded="isOpen"
+    >
+      {% if icon != blank %}
+        {% assign alt = icon.alt |  default: "accent image" %}
+        <div class="mfr-accordion__trigger-icon">
+          {% render 'component__lazyload-image',
+            image: icon,
+            alt: alt,
+            width: icon_render_width %}
+        </div>
+      {% endif %}
+
+      <div class="mfr-accordion__trigger-label">
+        <span>{{ trigger_label }}</span>
+      </div>
+
+      <span class="mfr-accordion__indicator"></span>
+    </button>
+
+    <div
+      class="mfr-accordion__content {{ content_class }}"
+      x-show="isOpen"
+      x-collapse
+      x-cloak>
+      <div class="mfr-accordion__content-inner">
+        {{- content -}}
+      </div>
+    </div>
+  </div>
+{%- endif -%}

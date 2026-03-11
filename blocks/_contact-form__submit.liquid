@@ -1,0 +1,34 @@
+<button type="submit" class="button {{ block.settings.color_theme }}">{{ block.settings.label | escape }}</button>
+{% schema %}
+  {
+    "name": "Submit Button",
+    "class": "form-submit",
+    "settings": [
+      {
+        "type": "text",
+        "id": "label",
+        "label": "Label",
+        "default": "Submit"
+      },
+      {
+        "type": "select",
+        "id": "color_theme",
+        "label": "Color Theme",
+        "options": [
+          {
+            "value": "primary",
+            "label": "Primary"
+          },
+          {
+            "value": "secondary",
+            "label": "Secondary"
+          },
+          {
+            "value": "tertiary",
+            "label": "Tertiary"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

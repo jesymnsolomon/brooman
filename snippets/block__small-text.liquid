@@ -1,0 +1,46 @@
+{% comment %}
+    Attributes
+
+    - text
+    - text_style
+    - color
+{% endcomment %}
+
+
+{% if text != blank %}
+    
+
+    {% if color != "" and color != "rgba(0,0,0,0)" %}
+        {%- capture color_style -%}
+          --small-text-color: {{ color }};
+          --section-small-text: {{ color }}
+          --small-text-color-2: white;
+        {%- endcapture -%}
+    {% else %}
+        {% assign color_style = "" %}
+    {% endif %}
+
+    {% if hide_on_desktop %}
+        {% assign hide_on_desktop_class = "hide-for-large" %}
+    {% else %}
+        {% assign hide_on_desktop_class = "" %}
+    {% endif %}
+
+    {% if underline == true %}
+        {% assign underline = "underline" %}
+    {% else %}
+        {% assign underline = "" %}
+    {% endif %}
+
+
+    <div {% if block_id != blank %}id="block--{{ block_id }}"{% endif %} 
+        class="small-title color_theme_text {{ underline }} {{ text_style }} {{ hide_on_desktop_class }} {% if disable_inview %}disable-inview{% endif %}"
+        style="{{ color_style }}"
+        data-inview>
+        <span>{{ text
+          | replace: "[text-gradient]", "<span class='text-gradient'>"
+          | replace: "[/text-gradient]", "</span>" }}</span>
+    </div>
+
+
+{% endif %}

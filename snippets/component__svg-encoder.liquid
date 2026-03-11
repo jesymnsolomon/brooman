@@ -1,0 +1,19 @@
+{% comment %}
+    Attributes
+
+    - svg_code
+    - alt
+    - class
+{% endcomment %}
+
+{%- if svg_code != blank -%}
+    {%- assign encoded_svg = svg_code | replace: '<', '%3C' | replace: '>', '%3E' | replace: '#', '%23' | urlencode -%}
+    {%- assign encoded_svg = 'data:image/svg+xml,' | append: encoded_svg -%}
+    {%- if href_only -%}
+        {{- encoded_svg -}}
+    {%- elsif for_css -%}
+        url(&quot;{{- encoded_svg -}}&quot;)
+    {% else %}
+        <img src='{{ encoded_svg }}' alt="{{ alt }}" loading="lazy" class="{{ class }}" width="{{ width }}px" height="{{ height }}px">
+    {%- endif -%}
+{%- endif -%}

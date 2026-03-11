@@ -1,0 +1,30 @@
+{%- unless block.settings.article != blank -%}
+  <style>
+    #shopify-block-{{ block.id }} {
+      display: none;
+    }
+  </style>
+{%- endunless -%}
+
+{%- if block.settings.article != blank -%}
+  {% render 'partial__blog-card', featured_article: block.settings.article %}
+{%- endif -%}
+
+{%- schema -%}
+  {
+    "name": "Article",
+    "class": "related-articles__item mfr-carousel__item",
+    "settings": [
+      {
+        "type": "article",
+        "id": "article",
+        "label": "Article"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Article"
+      }
+    ]
+  }
+{%- endschema -%}

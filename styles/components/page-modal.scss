@@ -1,0 +1,287 @@
+/* PAGE MODAL */
+.page-modal {
+  text-align: center;
+  border: none;
+  background-color: transparent;
+
+  @include breakpoint( small down ) {
+    overflow: visible;
+
+    &[ aria-hidden="false" ] {
+      display: flex !important;
+    }
+  }
+}
+
+.page-modal__wrapper {
+  border-radius: .875rem; 
+  padding: rem-calc( 40px ) rem-calc( 30px );
+  width: 100%;
+  max-width: rem-calc( 700px );
+  position: relative;
+
+  @include breakpoint( medium up ) {
+    padding-top: rem-calc( 65px );
+    padding-bottom: rem-calc( 70px );
+  }
+
+  @include breakpoint( small down ) {
+    align-self: center;
+    max-height: 100%;
+    overflow-y: auto;
+  }
+}
+
+.page-modal__dialog {
+  max-width: rem-calc( 480px );
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.page-modal__title {
+  margin-top: 0;
+  margin-bottom: 0;  
+  padding-left: rem-calc( 25px );
+  padding-right: rem-calc( 25px );
+  
+  &.h4 {
+    line-height: 1;
+  }
+
+  & + .page-modal__body {
+    margin-top: rem-calc( 20px );
+
+    @include breakpoint( medium up ) {
+      margin-top: rem-calc( 37px );
+    }
+  }
+}
+
+.page-modal__body {
+  margin-top: 0;
+  margin-bottom: 0;   
+}
+
+.page-modal__close {
+  color: inherit;
+  top: rem-calc( 30px );
+  right: rem-calc( 30px );
+  width: rem-calc( 21px );
+  height: rem-calc( 21px );
+
+  svg {
+    display: block;
+  }
+
+  &.close-button {
+
+  }
+}
+
+// SETUP MODAL
+.setup-modal {
+  max-width: 100%;
+  width: 100%;
+  @include border-radius(0);
+  background-color: $white;
+  padding: rem-calc(60px) 0 rem-calc(70px);
+
+	@include breakpoint(large up) {
+		width: 95%;
+  	@include border-radius( rem-calc(30px)) ;
+		padding: rem-calc(94px) 0 rem-calc(70px);
+	}
+
+  .page-modal__wrapper {
+    max-width: 100%;
+		padding: 0;
+  }
+
+	.page-modal__dialog {
+		max-width: 100%;
+		width: 100%;
+	}
+
+	.page-modal__title {
+		@include breakpoint(small only) {
+			font-size: rem-calc(50px);
+		}
+	}
+
+	.page-modal__tabs {
+		margin-top: rem-calc(40px);
+
+		ul {
+			@include clear-list();
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			li {
+				padding: 0 rem-calc(5px);
+			}
+
+			.button {
+				color: $brand-color;
+				border-color: $brand-color;
+				min-width: rem-calc(150px);
+  			padding: rem-calc(12px) rem-calc(10px) rem-calc(10px);
+
+				@include hover() {
+					background-color: $brand-color;
+					color: $white;
+				}
+
+				&.is-active {
+					background-color: $brand-color;
+					color: $white;
+				}
+			}
+		}
+	}
+
+  .card-carousel {
+    width: 100%;
+    margin-top: rem-calc(25px);
+		display: none;
+
+    @include breakpoint( large up ) {
+      margin-top: rem-calc(55px);
+    }
+
+		&.is-active {
+			display: block;
+		}
+
+    &__wrapper {
+      padding: 0 !important;
+    }
+
+    &__carousel {
+			&:not(.flickity-enabled) {
+				display: flex;
+				align-items: stretch;
+				justify-content: center;
+				flex-wrap: nowrap;
+			}
+
+			.flickity-page-dots {
+				margin-top: rem-calc(20px);
+			}
+
+			.flickity-prev-next-button {
+				top: 50%;
+			}
+    }
+
+    &__card {
+			flex-shrink: 0;
+			max-width: 80%;
+			padding: 0 rem-calc( 7px );
+			text-align: left;
+
+			@include breakpoint( large up ) {
+				padding: 0 rem-calc( 14px );
+			}
+
+			&:first-child { 
+				padding-left: rem-calc( 20px );
+
+				@include breakpoint( large up ) {
+					padding-left: rem-calc( 80px );
+				}
+			}
+
+			&:last-child { 
+				padding-right: rem-calc( 20px );
+
+				@include breakpoint( large up ) {
+					padding-right: rem-calc( 80px );
+				}
+			}
+
+			&-inner {
+				@include opacity( 0.9999999 );
+				@include transition( $global-transition );
+				display: flex;
+				flex-flow: column;
+				align-items: flex-start;
+				justify-content: flex-start;
+				width: rem-calc( 300px );
+				max-width: 100%;
+		
+				@include breakpoint( large up ) {
+					width: rem-calc( 300px );
+				}
+
+				&:not( .is-inview ) {
+					@include opacity( 0 );
+					@include transform( translateY( 50px ) );
+				}
+			}
+
+			&-title {
+					display: flex;
+					flex-flow: row;
+					align-items: flex-start;
+					justify-content: flex-start;
+					margin: 0 0 rem-calc(20);
+
+					.h4 {
+						margin: 0;
+
+						@include breakpoint(small only) {
+							@include xlarge;
+						}
+					}
+
+					.number {
+							display: inline-block;
+							width: rem-calc(36px);
+							height: rem-calc(36px);
+							line-height: 30px; 
+							border-radius: 50%; 
+							background-color: $color-accent; 
+							color: #fff; 
+							text-align: center;
+							margin-right: rem-calc(15);
+							font-size: rem-calc(28);
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							flex-shrink: 0;
+						}
+			}
+
+			&-image {
+				@include border-radius( rem-calc($global-border-radius) );
+				flex-shrink: 0;
+				overflow: hidden;
+				width: 100%;
+				height: rem-calc( 350px );
+				background-color: #D8D8D8;
+				margin: 0 0 rem-calc(20px);
+
+				@include breakpoint(large up) {
+					height: rem-calc( 400px );
+				}
+
+				img {
+					display: block;
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+				}
+			}
+
+			&-text {
+				@include small;
+
+				p {
+					line-height: 1.2;
+					margin: 0 0 rem-calc( 16px );
+				}
+			}
+    }
+	}
+}

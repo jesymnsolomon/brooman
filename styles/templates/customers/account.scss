@@ -1,0 +1,244 @@
+.mfr-accounts__dashboard {
+  .section-content {
+    text-align: center;
+    margin: 0 0 rem-calc(25px);
+
+    @include breakpoint(large up) {
+      margin: 0 0 rem-calc(35px);
+    }
+
+    .accent-text {
+      font-family: $custom-font-name-3 !important;
+    }
+
+    .section-title {
+      margin: 0 0 rem-calc(25px);
+
+      @include breakpoint(medium down) {
+        font-size: rem-calc(44px);
+        line-height: rem-calc(44px);
+        margin: 0 0 rem-calc(15px);
+      }
+    }
+  }
+
+  .section-dashboard {
+    .dashboard-tablist {
+      @include clear-list;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      @include breakpoint(medium down) {
+        li {
+          width: 33%;
+        }
+      }
+    }
+
+    .dashboard-tab {
+      @include small;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-family: $custom-font-name-3;
+      padding: rem-calc(15px) rem-calc(5px) rem-calc(10px);
+
+      @include breakpoint(medium down) {
+        width: 100%;
+      }
+
+      @include breakpoint(large up) {
+        padding: rem-calc(15px) rem-calc(40px) rem-calc(10px);
+      }
+
+      &.is-selected {
+        position: relative;
+        border: rem-calc(2px) solid $black;
+        border-bottom: 0;
+        background-color: $white;
+        @include border-radius(rem-calc(13px) rem-calc(13px) 0 0);
+
+        &::after {
+          content: "";
+          display: block;
+          position: absolute;
+          left: 0;
+          bottom: rem-calc(-3px);
+          width: calc(100%);
+          height: rem-calc(6px);
+          background-color: $white;
+        }
+      }
+    }
+
+    .dashboard-tabpanels {
+      overflow: hidden;
+      margin-bottom: rem-calc(26px);
+      border: rem-calc(2px) solid $black;
+      @include border-radius(0 rem-calc(13px) rem-calc(13px) rem-calc(13px));
+
+      @include breakpoint(large up) {
+        margin-bottom: rem-calc(37px);
+      }
+    }
+
+    .dashboard-tabpanel {
+      padding: rem-calc(20px) rem-calc(40px);
+      background-color: $white;
+
+      @include breakpoint(large up) {
+        padding: rem-calc(30px);
+      }
+
+      &.dashboard-tabpanel-grid {
+        @include breakpoint(large up) {
+          display: grid;
+          gap: rem-calc(16px);
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      .dashboard-tabpanel-group {
+        margin-bottom: rem-calc(20px);
+        text-align: left;
+
+        .label {
+          text-transform: uppercase;
+        }
+      }
+
+      &-left {
+        @include breakpoint(medium down) {
+          margin-bottom: rem-calc(20px);
+          border-bottom: $global-border-width solid $black;
+        }
+      }
+
+      &-right {
+        text-align: left;
+
+        @include breakpoint(large up) {
+          padding-left: rem-calc(30px);
+        }
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        @include regular;
+        text-align: left;
+        line-height: 1.2 !important;
+        letter-spacing: normal;
+        margin: 0 0 rem-calc(15px);
+        text-transform: uppercase;
+        font-weight: 800;
+        font-family: $custom-font-name-2;
+      }
+
+      p {
+        margin: 0 0 rem-calc(5px);
+        @include regular;
+
+        &:not(:last-child) {
+          margin: 0;
+        }
+
+        &.label {
+          @include regular;
+          font-weight: 600;
+        }
+      }
+
+      a {
+
+        &.link {
+          @include xsmall;
+          font-weight: 700;
+          text-transform: uppercase;
+          display: inline-block;
+          border-bottom: $global-border-width solid currentColor;
+          margin-top: rem-calc(20px);
+
+          @include hover {
+            border-color: transparent;
+          }
+        }
+      }
+    }
+
+    .dashboard-submit {
+      text-align: left;
+
+      a {
+        font-size: rem-calc(22px);
+
+        span {
+          font-weight: 800;
+          padding-bottom: rem-calc(3px);
+        }
+      }
+    }
+
+    // TAB SPECIFIC: ORDER HISTORY
+    .dashboard-tabpanel--order-history {
+
+      .order-item {
+        &:not(:last-child) {
+          border-bottom: $global-border-width solid $black;
+          padding-bottom: rem-calc(20px);
+          margin-bottom: rem-calc(20px);
+        }
+      }
+
+      .order-number {
+        @include small;
+        text-transform: uppercase;
+        margin-bottom: rem-calc(20px);
+
+        button {
+          margin-left: rem-calc(10px);
+          @include transform(translateY(rem-calc(3px)));
+        }
+      }
+
+      .order-statuses {
+        @include xsmall;
+        font-weight: normal;
+        text-transform: initial;
+        padding: rem-calc(10px);
+        border: $global-border-width solid rgba(0,0,0,0.12);
+        background-color: $white;
+        box-shadow: 0 rem-calc(1px) rem-calc(4px) 0 rgba(0,0,0,.12);
+        @include border-radius(rem-calc(13px));
+      }
+
+      .order-product {
+
+        &:not(:last-child) {
+          margin-bottom: rem-calc(25px);
+        }
+
+        .order-inner {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+        }
+      }
+
+      .order-image {
+        width: rem-calc(100px);
+        height: rem-calc(100px);
+        overflow: hidden;
+        border: $global-border-width solid rgba(0, 0, 0, 0.30);
+        @include border-radius(rem-calc(13px));
+      }
+
+      .order-details {
+        width: calc(100% - 6.25rem);
+        padding-left: rem-calc(20px);
+      }
+
+      .order-title {
+        margin-bottom: rem-calc(5px) !important;
+      }
+    }
+  }
+}

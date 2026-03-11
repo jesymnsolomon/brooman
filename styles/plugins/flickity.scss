@@ -1,0 +1,353 @@
+/*! Flickity v2.3.0
+https://flickity.metafizzy.co
+---------------------------------------------- */
+
+.flickity-enabled {
+  position: relative;
+}
+
+.flickity-enabled:focus { outline: none !important; }
+
+.flickity-viewport {
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.flickity-slider {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/* draggable */
+
+.flickity-enabled.is-draggable {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.flickity-enabled.is-draggable .flickity-viewport {
+  cursor: move;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+.flickity-enabled.is-draggable .flickity-viewport.is-pointer-down {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+
+/* ---- flickity-button ---- */
+
+.flickity-button {
+  position: absolute;
+  background: hsla(0, 0%, 100%, 0.75);
+  border: none;
+  color: #333;
+}
+
+.flickity-button:hover {
+  cursor: pointer;
+}
+
+.flickity-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 5px #19F;
+}
+
+.flickity-button:active {
+  opacity: 0.6;
+}
+
+.flickity-button:disabled {
+  opacity: 0.3;
+  cursor: auto;
+  /* prevent disabled button from capturing pointer up event. #716 */
+  pointer-events: none;
+}
+
+.flickity-button-icon {
+  fill: currentColor;
+}
+
+/* ---- previous/next buttons ---- */
+
+.flickity-prev-next-button {
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  /* vertically center */
+  transform: translateY(-50%);
+}
+
+.flickity-prev-next-button.previous { left: 10px; }
+.flickity-prev-next-button.next { right: 10px; }
+/* right to left */
+.flickity-rtl .flickity-prev-next-button.previous {
+  left: auto;
+  right: 10px;
+}
+.flickity-rtl .flickity-prev-next-button.next {
+  right: auto;
+  left: 10px;
+}
+
+.flickity-prev-next-button .flickity-button-icon {
+  position: absolute;
+  left: 20%;
+  top: 20%;
+  width: 60%;
+  height: 60%;
+}
+
+/* ---- page dots ---- */
+
+.flickity-page-dots {
+  position: absolute;
+  width: 100%;
+  bottom: -25px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-align: center;
+  line-height: 1;
+}
+
+.flickity-rtl .flickity-page-dots { direction: rtl; }
+
+.flickity-page-dots .dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 8px;
+  background: #333;
+  border-radius: 50%;
+  opacity: 0.25;
+  cursor: pointer;
+}
+
+.flickity-page-dots .dot.is-selected {
+  opacity: 1;
+}
+
+/* Custom */
+
+.flickity-page-dots {
+  position: relative;
+  left: unset;
+  right: unset;
+  top: unset;
+  bottom: unset;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-align: center;
+  line-height: 1;
+  margin: rem-calc( 20px ) auto 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  display: flex;
+  z-index: 2;
+  max-width: unset;
+
+  @include breakpoint( large up ) {
+    margin: rem-calc( 36px ) auto 0;
+  }
+}
+
+.flickity-rtl .flickity-page-dots { direction: rtl; }
+
+.flickity-page-dots {
+  margin-top: rem-calc( 42px );
+
+  @include breakpoint( large up ) {
+    margin-top: rem-calc( 70px );
+  }
+
+  .dot {
+    @include border-radius( 50% );
+    position: relative;
+    display: inline-block;
+    width: rem-calc( 14px );
+    height: rem-calc( 14px );
+    margin: rem-calc( 4px );
+    border-radius: 50%;
+    cursor: pointer;
+    border: solid rem-calc( 1px ) currentColor;
+    background-color: transparent;
+
+    &.is-selected {
+      background: currentColor;
+      @include opacity( 1 );
+    }
+  }
+}
+
+.flickity-button {
+  width: rem-calc( 46px );
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $color-accent;
+  top: 50%;
+  padding: 0;
+
+  @include breakpoint( large up ) {
+    top: 50%;
+  }
+
+  @include hover {
+    background: $color-accent;
+    @include transform(translateY( -50% ) scale(0.97));
+  }
+
+  &:disabled {
+    @include transform( translateY( -50% ) scale( 0 ) );
+  }
+
+  &:before {
+    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='12' height='22'%3E%3Cpath fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' transform='translate(1.09757 1.09758)' d='M0 0L9.583333 9.583333L0 19.166666' fill-rule='evenodd'/%3E%3C/svg%3E");
+    width: rem-calc( 28px );
+    height: auto;
+    display: block;
+    display: block;
+    top: rem-calc( 1px );
+    left: rem-calc( 3px );
+    position: relative;
+  }
+
+  &.previous {
+    left: rem-calc( 42px );
+    &:before {
+      @include transform( scaleX( -1 ) );
+      left: unset;
+    }
+  }
+
+  &.next {
+    right: rem-calc( 42px );
+  }
+
+  svg {
+    display: none;
+  }
+}
+
+.flickity-page-dots {
+  width: 100%;
+  margin-top: rem-calc( 40px );
+
+  @include breakpoint( large up ) {
+    margin-top: rem-calc( 40px );
+  }
+
+  .dot {
+    max-width: rem-calc( 63px );
+    height: rem-calc( 4px );
+    background-color: currentColor;
+    flex-grow: 1;
+    min-width: 1%;
+    @include opacity( 0.25 );
+    @include border-radius( rem-calc( 2px ) );
+
+    &.is-selected {
+      @include opacity( 1 );
+    }
+  }
+}
+
+// Project Specific
+.flickity-button {
+  width: rem-calc( 46px );
+  height: rem-calc( 46px );
+  border-radius: rem-calc( 100px);
+  background: $black;
+  @include no-select;
+  @include transform( translateY( -50% ) );
+
+  @include breakpoint(large up) {
+    width: rem-calc( 52px );
+    height: rem-calc( 52px );
+  }
+
+  &[disabled] {
+    display: none;
+  }
+}
+
+.flickity-page-dots {
+  .dot {
+    width: rem-calc( 8px );
+    height: rem-calc( 8px );
+    max-width: rem-calc( 8px );
+    max-height: rem-calc( 8px );
+    min-width: rem-calc( 8px );
+    min-height: rem-calc( 8px );
+    border-radius: rem-calc( 30px );
+
+    &.is-next,
+    &.is-prev {
+      transform: scale(1.4);
+      transition: $global-transition;
+    }
+
+    &.is-selected {
+      transform: scale(1.7);
+      margin: rem-calc(4px) rem-calc(6px);
+      transition: $global-transition;
+    }
+  }
+}
+
+.mfr-custom-page-dots {
+  position: relative;
+  width: 100%;
+  max-width: rem-calc( 253px );
+  margin: rem-calc( 40px ) auto 0;
+  height: rem-calc( 4px );
+  background-color: rgba(#141723, 0.12);
+  overflow: hidden;
+  @include border-radius( rem-calc( 2px ) );
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: currentColor;
+    @include opacity( 0.12 );
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: currentColor;
+    @include transform( scaleX( var(--percentage) ) );
+    @include transform-origin( left );
+  }
+}
+
+// Project Specific
+.mfr-carousel {
+  .flickity-slider {
+    @include breakpoint(medium down) {
+      // transform: translateX(3%) !important;
+    }
+  }
+}

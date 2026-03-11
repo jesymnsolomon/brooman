@@ -1,0 +1,27 @@
+{%- if settings.custom_font_1_url != blank -%}
+  {% assign urls = settings.custom_font_1_url | strip | split: ',' %}
+  {% for url in urls %}
+    <link rel="preload" href="{{ url }}" as="font" type="font/{{ url | split: '.' | last | split: '?' | first }}" crossorigin>
+  {% endfor %}
+{%- endif -%}
+
+{%- if settings.custom_font_2_url != blank -%}
+  {% assign urls = settings.custom_font_2_url | strip | split: ',' %}
+  {% for url in urls %}
+    <link rel="preload" href="{{ url }}" as="font" type="font/{{ url | split: '.' | last | split: '?' | first }}" crossorigin>
+  {% endfor %}
+{%- endif -%}
+
+{%- if settings.custom_font_3_url != blank -%}
+  {% assign urls = settings.custom_font_3_url | strip | split: ',' %}
+  {% for url in urls %}
+    <link rel="preload" href="{{ url }}" as="font" type="font/{{ url | split: '.' | last | split: '?' | first }}" crossorigin>
+  {% endfor %}
+{%- endif -%}
+
+{%- if settings.custom_font_4_url != blank -%}
+  {% assign urls = settings.custom_font_4_url | strip | split: ',' %}
+  {% for url in urls %}
+    <link rel="preload" href="{{ url }}" as="font" type="font/{{ url | split: '.' | last | split: '?' | first }}" crossorigin>
+  {% endfor %}
+{%- endif -%}

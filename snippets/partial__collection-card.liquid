@@ -1,0 +1,57 @@
+
+{%- assign metafields = collection.metafields.mfr_fields -%}
+{%- assign title = metafields.nice_title | default: collection.title -%}
+{%- assign image = metafields.collection_card_image | default: collection.featured_image -%}
+{%- assign sub_title = metafields.collection_card_sub_title -%}
+{% assign color = metafields.collection_card_color %}
+{% assign tag_color = metafields.collection_card_tag_color %}
+{% assign tag_text = metafields.collection_card_tag_text %}
+
+<a href="{{ collection.url | default: '#' }}" 
+  class="collection-card"
+  title="{{ title }} {{ sub_title }}"
+  aria-label="{{ title }} {{ sub_title }}"
+  style="
+    --bg-color: {{ color | default: '#FFBC88' }};
+    --tag-color: {{ tag_color | default: "#FFBC88" }};
+  ">
+
+  {% if tag_text != blank %}
+    <span class="collection-card__tag">
+      {{ tag_text }}  
+    </span>  
+  {% endif %}
+
+  <p class="collection-card__title">
+    {{ title }}
+  </p>
+  {% if sub_title != blank %}
+    <p class="collection-card__sub-title">
+      {{ sub_title }}
+    </p>
+  {% endif %}
+  
+  <span class="indicator">
+    {%- capture chevron_svg -%}
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="8" height="14">
+        <path fill="none" stroke="{{ section.settings.color_scheme.settings.text | default: '#141723' }}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" transform="matrix(-4.37114e-08 1 -1 -4.37114e-08 6.82227 0.823242)" d="M0 6L6 0L12 6" fill-rule="evenodd"/>
+      </svg>
+    {%- endcapture -%}
+    {% render 'component__svg-encoder',
+      svg_code: chevron_svg,
+      width: 36,
+      height: 36,
+      alt: "chevron icon" %}
+  </span>
+
+  <div class="collection-card__media">
+    {%- capture sizes -%}
+      (max-width: 1023px) 360px,
+      420px
+    {%- endcapture -%}
+    {% render 'component__lazyload-image',
+      image: image,
+      width: 420,
+      widths: "360,420" %}
+  </div>
+</a>

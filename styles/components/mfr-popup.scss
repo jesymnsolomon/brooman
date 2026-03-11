@@ -1,0 +1,84 @@
+.mfr-popup {
+  position: relative;
+  z-index: 2;
+  background: $color-accent;
+  padding: rem-calc( 25px ) rem-calc( 13px ) 0;
+  width: calc( 100% - #{ rem-calc( 20px ) } );
+  max-width: rem-calc( 450px );
+  max-height: calc( 100% - #{ rem-calc( 30px ) } );
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  overflow: hidden;
+  @include transition( $global-transition );
+  @include border-radius( rem-calc( 30px ) );
+
+  @include breakpoint( large up ) {
+    max-width: rem-calc( 750px );
+  }
+
+  &__wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 998;
+    @include transition( $global-transition );
+    @include transform( translate( -50%, -50% ) );
+  }
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: $color-overlay;
+    @include opacity( 0.44 );
+    @include transition( $global-transition );
+  }
+
+  &__head {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: rem-calc( 25px );
+
+    button {
+      width: rem-calc( 24px );
+      aspect-ratio: 1;
+      @include transition( $global-transition );
+
+      @include breakpoint( large up ) {
+        width: rem-calc( 32px );
+      }
+
+      @include hover {
+        @include transform( scale( 0.95 ) );
+      }
+
+      svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  &__content {
+    flex-grow: 1;
+    overflow: auto;
+    padding: 0 rem-calc( 21px ) rem-calc( 30px );
+  }
+
+  &--hiding {
+    @include transform( translateY( rem-calc( 100px ) ) );
+    @include opacity( 0 );
+  }
+}

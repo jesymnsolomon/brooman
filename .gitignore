@@ -1,0 +1,4 @@
+# Workflow
+node_modules
+package-lock.json
+.shopify

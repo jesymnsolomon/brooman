@@ -1,0 +1,232 @@
+{% if block.settings.image %}
+   <style>
+    {% if block.settings.value_type == "px" %}
+      {% assign position_y_small = block.settings.position_y_small | times: 5 %}
+      {% assign position_y_large = block.settings.position_y_large | times: 5 %}
+    {% else %}
+      {% assign position_y_small = block.settings.position_y_small %}
+      {% assign position_y_large = block.settings.position_y_large %}
+    {% endif %}
+    #shopify-section-{{ section.id }} #{{- block.id }} {
+      {%- if block.settings.x_setting == 'center' -%}
+        left: calc(50% - {{ block.settings.width_small | divided_by: 2 }}px - {{ block.settings.position_x_small | times: 5 }}{{ block.settings.value_type }});
+        margin: auto;
+      {% else %}
+        {%- assign position_x_small = block.settings.position_x_small | times: 1.00 -%}
+        {%- if position_x_small >= 0 -%}
+          {{- block.settings.x_setting -}}: {{- position_x_small -}}{{- block.settings.value_type -}};
+          transform: translateX( 0 );
+        {%- else -%}
+          {{- block.settings.x_setting -}}: 0;
+          {%- if block.settings.x_setting == "left" -%}
+            transform: translateX( {{ position_x_small }}% );
+          {%- else -%}
+            transform: translateX( {{ position_x_small | abs }}% );
+          {%- endif -%}
+        {%- endif -%}
+      {%- endif -%}
+      {{ block.settings.y_setting }}: {{ position_y_small }}{{ block.settings.value_type }};
+      width: {{ block.settings.width_small }}px;
+    }
+    @media print, screen and (min-width: 64em) {
+      #shopify-section-{{ section.id }} #{{- block.id }} {
+        {%- if block.settings.x_setting == 'center' -%}
+          left: calc(50% - {{ block.settings.width_large | divided_by: 2 }}px - {{ block.settings.position_x_large | times: 5 }}{{ block.settings.value_type }});
+          margin: auto;
+        {% else %}
+          {%- assign position_x_large = block.settings.position_x_large | times: 1.00 -%}
+          {%- if position_x_large >= 0 -%}
+            {{- block.settings.x_setting -}}: {{- position_x_large -}}{{- block.settings.value_type -}};
+            transform: translateX( 0 );
+          {%- else -%}
+            {{- block.settings.x_setting -}}: 0;
+            {%- if block.settings.x_setting == "left" -%}
+              transform: translateX( {{ position_x_large }}% );
+            {%- else -%}
+              transform: translateX( {{ position_x_large | abs }}% );
+            {%- endif -%}
+          {%- endif -%}
+        {%- endif -%}
+        {{ block.settings.y_setting }}: {{ block.settings.position_y_large }}{{ block.settings.value_type }};
+        width: {{ block.settings.width_large }}px;
+        --base-width: {{ block.settings.width_large }};
+      }
+    }
+
+    #shopify-section-{{ section.id }} #{{- block.id }} .flip-rotation-helper {
+      -moz-transform: rotate( {{ block.settings.rotate }}deg );
+      -o-transform: rotate( {{ block.settings.rotate }}deg );
+      -ms-transform: rotate( {{ block.settings.rotate }}deg );
+      -webkit-transform: rotate( {{ block.settings.rotate }}deg );
+      transform: rotate( {{ block.settings.rotate }}deg );
+    }
+  </style>
+
+  <div id="{{ block.id }}" class="sticky-image__item-wrapper">
+    <div class="sticky-image__item-inner flip-rotation-helper" data-inview>
+      {% assign default_alt = "maybe an image about " | append: block.settings.image.alt %}
+      {% assign alt = default_alt  |  default: "placeholder image" %}
+
+       {{ block.settings.image
+        | image_url: width: 720
+        | image_tag: width: 720,
+          widths: "480,600,720,900,1080,1260,1440,1800,2160",
+          alt: alt,
+          loading: "lazy" }}
+    </div>
+  </div>
+{% endif %}
+
+{%- schema -%}
+  {
+    "name": "Sticky Image",
+    "class": "sticky-image__item",
+    "settings": [
+      {
+        "type":"header",
+        "content":"Image Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image",
+      },
+       {
+        "type": "number",
+        "id": "width_small",
+        "label": "Mobile: Image Width in Pixels",
+        "default": 250
+      },
+      {
+        "type": "text",
+        "id": "alt",
+        "label": "Alt attribute",
+        "info": "For web accessibility purposes"
+      },
+      {
+        "type": "number",
+        "id": "width_large",
+        "label": "Desktop: Image Width in Pixels",
+        "default": 250
+      },
+       {
+        "type":"header",
+        "content":"Visibility"
+      },
+      {
+        "type": "select",
+        "id": "visibility",
+        "options": [
+          { "value": "always", "label": "Always" },
+          { "value": "desktop_only", "label": "Desktop Only" },
+          { "value": "mobile_only", "label": "Mobile Only" }
+        ],
+        "label": "Show on..",
+        "default": "always"
+      },
+      {
+        "type":"header",
+        "content":"Value Type"
+      },
+      {
+        "type": "select",
+        "id": "value_type",
+        "options": [
+          { "value": "px", "label": "Pixels" },
+          { "value": "%", "label": "Percentage" }
+        ],
+        "label": "Position Value Type",
+        "default": "%",
+        "info": "Pixel values are multiplied by 5"
+      },
+      {
+        "type":"header",
+        "content":"Position"
+      },
+      {
+        "type": "select",
+        "id": "x_setting",
+        "options": [
+          { "value": "left", "label": "Left" },
+          { "value": "center", "label": "Center" },
+          { "value": "right", "label": "Right" }
+        ],
+        "label": "X Position",
+        "default": "left"
+      },
+      {
+        "type": "select",
+        "id": "y_setting",
+        "options": [
+          { "value": "top", "label": "Top" },
+          { "value": "bottom", "label": "Bottom" }
+        ],
+        "label": "Y Position",
+        "default": "top"
+      },
+      {
+        "type":"header",
+        "content":"Large Screen Settings"
+      },
+       {
+        "type": "range",
+        "id": "position_x_large",
+        "min": -100,
+        "max": 100,
+        "step": 2,
+        "label": "X Position",
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "position_y_large",
+        "min": -100,
+        "max": 100,
+        "step": 2,
+        "label": "Y Position",
+        "default": 10
+      },
+      {
+        "type":"header",
+        "content":"Small Screen Settings"
+      },
+       {
+        "type": "range",
+        "id": "position_x_small",
+        "min": -100,
+        "max": 100,
+        "step": 2,
+        "label": "X Position",
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "position_y_small",
+        "min": -100,
+        "max": 100,
+        "step": 2,
+        "label": "Y Position",
+        "default": 10
+      },
+      {
+        "type":"header",
+        "content":"Appearance Settings"
+      },
+      {
+        "type": "range",
+        "id": "rotate",
+        "min": -120,
+        "max": 120,
+        "step": 5,
+        "unit": "%",
+        "label": "Rotate",
+        "default": 0
+      }
+    ],
+    "presets": [
+      {
+        "name": "Sticky Image"
+      }
+    ]
+  }
+{%- endschema -%}

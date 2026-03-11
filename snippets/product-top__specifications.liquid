@@ -1,0 +1,23 @@
+{% assign target = product %}
+
+{% if product.selected_variant != blank %}
+  {% assign target = product.selected_variant %}
+{% endif %}
+
+{% assign metaobject = target.metafields.mfr_fields.specifications.value %}
+
+<div class="product-top__specification {{ block.settings.device_visibility }}">
+  {% for i in (1..3) %}
+    {% assign field1 = 'spec_' | append: i | append: '_label' %}
+    {% assign field2 = 'spec_' | append: i | append: '_value' %}
+    {% assign label = metaobject[field1] %}
+    {% assign value = metaobject[field2] %}
+
+    {% if label != blank and value != blank %}
+      <div class="product-top__specification-item">
+        <p class="value">{{ value }}</p>
+        <p class="label">{{ label }}</p>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>

@@ -1,0 +1,12 @@
+<div class="footer__embed embed-1">
+    {% if block.settings.desc != blank %}
+        <div class="footer__embed-desc" data-inview data-split-text="fadeUp">
+            {{ block.settings.desc }}
+        </div>
+    {% endif %}
+    {% if block.settings.embed_code != blank %}
+        <div class="footer__embed-code" data-inview>
+            {{ block.settings.embed_code }}
+        </div>
+    {% endif %}
+</div>

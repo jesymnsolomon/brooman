@@ -1,0 +1,92 @@
+<ul class="list-social list-unstyled" role="list" data-stagger-inview="li">
+
+  {%- if settings.social_tiktok_link != blank -%}
+    <li class="list-social__item">
+      <a href="{{ settings.social_tiktok_link }}" target="_blank" class="link link--text list-social__link" aria-describedby="a11y-external-message">
+        {%- render 'icon__social-media', icon_name: 'tiktok' -%}
+        <span id="a11y-external-message" class="visually-hidden">{{ 'general.social.links.tiktok' | t }}</span>
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if settings.social_instagram_link != blank -%}
+    <li class="list-social__item">
+      <a href="{{ settings.social_instagram_link }}" target="_blank" class="link link--text list-social__link" aria-describedby="a11y-external-message-1">
+        {%- render 'icon__social-media', icon_name: 'instagram' -%}
+        <span id="a11y-external-message-1" class="visually-hidden">{{ 'general.social.links.instagram' | t }}</span>
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if settings.social_facebook_link != blank -%}
+    <li class="list-social__item">
+      <a href="{{ settings.social_facebook_link }}" target="_blank" class="link link--text list-social__link" aria-describedby="a11y-external-message-2">
+        {%- render 'icon__social-media', icon_name: 'facebook' -%}
+        <span id="a11y-external-message-2" class="visually-hidden">{{ 'general.social.links.facebook' | t }}</span>
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if settings.social_threads_link != blank -%}
+    <li class="list-social__item">
+      <a href="{{ settings.social_threads_link }}" target="_blank" class="link link--text list-social__link" aria-describedby="a11y-external-message-3">
+        {%- render 'icon__social-media', icon_name: 'threads' -%}
+        <span id="a11y-external-message-3" class="visually-hidden">Threads</span>
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if settings.linked_in_link != blank -%}
+    <li class="list-social__item">
+      <a href="{{ settings.linked_in_link }}" target="_blank" class="link link--text list-social__link" aria-describedby="a11y-external-message-4">
+        {%- render 'icon__social-media', icon_name: 'linkedin' -%}
+        <span id="a11y-external-message-4" class="visually-hidden">Linkedin</span>
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if settings.social_pinterest_link != blank -%}
+    <li class="list-social__item">
+      <a href="{{ settings.social_pinterest_link }}" target="_blank" class="link link--text list-social__link" aria-describedby="a11y-external-message-5">
+        {%- render 'icon__social-media', icon_name: 'pinterest' -%}
+        <span id="a11y-external-message-5" class="visually-hidden">{{ 'general.social.links.pinterest' | t }}</span>
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if settings.social_snapchat_link != blank -%}
+    <li class="list-social__item">
+      <a href="{{ settings.social_snapchat_link }}" target="_blank" class="link link--text list-social__link" aria-describedby="a11y-external-message-6">
+        {%- render 'icon__social-media', icon_name: 'snapchat' -%}
+        <span id="a11y-external-message-6" class="visually-hidden">{{ 'general.social.links.snapchat' | t }}</span>
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if settings.social_twitter_link != blank -%}
+    <li class="list-social__item">
+      <a href="{{ settings.social_twitter_link }}" target="_blank" class="link link--text list-social__link" aria-describedby="a11y-external-message-7">
+        {%- render 'icon__social-media', icon_name: 'twitter' -%}
+        <span id="a11y-external-message-7" class="visually-hidden">{{ 'general.social.links.twitter' | t }}</span>
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if settings.social_youtube_link != blank -%}
+    <li class="list-social__item">
+      <a href="{{ settings.social_youtube_link }}" target="_blank" class="link link--text list-social__link" aria-describedby="a11y-external-message-8">
+        {%- render 'icon__social-media', icon_name: 'youtube' -%}
+        <span id="a11y-external-message-8" class="visually-hidden">{{ 'general.social.links.youtube' | t }}</span>
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if settings.social_vimeo_link != blank -%}
+    <li class="list-social__item">
+      <a href="{{ settings.social_vimeo_link }}" target="_blank" class="link link--text list-social__link" aria-describedby="a11y-external-message-9">
+        {%- render 'icon__social-media', icon_name: 'vimeo' -%}
+        <span id="a11y-external-message-9" class="visually-hidden">{{ 'general.social.links.vimeo' | t }}</span>
+      </a>
+    </li>
+  {%- endif -%}
+</ul>

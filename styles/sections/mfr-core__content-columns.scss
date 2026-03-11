@@ -1,0 +1,113 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+section.mfr-core__content-columns {
+  background-repeat: repeat;
+  background-size: 300px;
+  position: relative;
+  overflow-x: clip;
+
+  .section-content {
+    max-width: 60rem;
+    margin: 0 auto;
+  }
+
+  &.border-top {
+    border-top: 3px solid $color-accent;
+  }
+  &.border-bottom {
+    border-bottom: 3px solid $color-accent;
+  }
+  .content-column-wrapper {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    flex-flow: row;
+    @include breakpoint(medium up) {
+      flex-flow: row;
+    }
+  }
+  
+  .content-column {
+    @include border-radius($global-border-radius);
+    text-align: center;
+    width: calc(50% - 1.5rem);
+    max-width: 28rem;
+    height: auto;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 0 .5rem;
+    margin-bottom: 1rem;
+    margin-top: 3rem;
+    z-index: 1;
+    @include breakpoint(medium up) {
+      margin: 0 1rem;
+    }
+    @include breakpoint(large up) {
+      margin: 0 2rem;
+      margin-top: 12rem;
+      width: 100%;
+      max-width: 28rem;
+    }
+
+    .inner {
+      margin: 0 auto;
+      max-width: 40rem;
+      height: 100%;
+      padding: 0rem 1rem 2rem 1rem;
+      @include breakpoint(medium up) {
+        padding: 0rem 2rem 2rem 2rem;
+      }
+      .column-title {
+        margin: 0 0 2rem;
+      } 
+      .text {
+        p {
+          @include small-title;
+          color: $white;
+          //font-size: rem-calc(24);
+          line-height: 1.1rem;
+          @include breakpoint(medium down) {
+            line-height: 0.8rem;
+            font-size: 0.8rem;
+          }
+          strong {
+            //font-family: $font-heading-h1;
+            //font-size: rem-calc(35);
+          }
+        }
+      }
+    }
+    .image-wrapper {
+      max-width: 25rem;
+      width: 75%;
+      margin: -5rem auto 5rem;
+      position: relative;
+      @include breakpoint(large up) {
+        margin-top: -12rem;
+      }
+      .image {
+        position: relative;
+        z-index: 1;
+      }
+      .image__shadow {
+        @include opacity( 0.25 );
+        position: absolute;
+        width: 60%;
+        
+        height: rem-calc( 13px );
+        bottom: -7%;
+        left: 20%;
+        z-index: 0;
+        img {
+          @include border-radius(50%);
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }  
+}

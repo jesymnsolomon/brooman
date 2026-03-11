@@ -1,0 +1,312 @@
+.hide {
+  display: none !important;
+}
+
+.full-absolute {
+  position:absolute;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+}
+
+.flex-wrapper {
+  display:flex;
+  list-style:none;
+  flex-flow: row;
+  align-items: center;
+  justify-content: flex-start;
+  > div, > ul, > li, > a, >.button  {
+    margin-left: 1rem;
+  }
+  > div.product__quantity {
+    @include breakpoint(medium down) {
+      margin-left: 0;
+    }
+  }
+  div:first-child, ul:first-child, li:first-child {
+    margin-left: 0;
+  }
+  &.center {
+    align-items: center;
+    justify-content: center;
+  }
+  &.space {
+    justify-content: space-between;
+  }
+}
+
+ul.icon-set {
+  display:flex;
+  list-style:none;
+  align-items:center;
+  justify-content:center;
+  margin: 0;
+  padding: 0;
+  li {
+    //width:10rem;
+    margin:0 .5rem;
+    @include opacity(1);
+    svg {
+      //width:100%;
+    }
+  }
+  //&.large li { width:auto; }
+  &.small li {
+    max-width:4rem;
+  }
+  &.extra-space li { margin:0 2rem;
+      @include breakpoint(medium down) {
+          margin:0 1rem;
+      }
+  }
+  &.left {
+    justify-content:flex-start;
+  }
+}
+
+
+
+.cover {
+  background-size:cover;
+  background-position:center center;
+}
+
+
+
+.css-columns-1 { @include column-count(1); @include column-gap($global-margin*2); }
+.css-columns-2 { @include column-count(2); @include column-gap($global-margin*2); }
+.css-columns-3 { @include column-count(3); @include column-gap($global-margin*2); }
+
+
+
+
+/* Video Covers
+=============================
+=============================*/
+.responsive-embed {
+    .cover-image {
+      position:absolute;
+      width:100%;
+      height:100%;
+      left:0;
+      top:0;
+      background-size:cover;
+      z-index:8;
+      @include transition(.5s all cubic-bezier(.65,.49,.21,.98));
+      cursor:pointer;
+        &:hover {
+          @include transform(scale(1.05));
+        }
+    }
+    &:hover .i-play-button {
+      @include transform(scale(1.03));
+      background:$white;
+      cursor:pointer;
+        .play-button-play--component {
+          @include transform(scale(.9));
+            &.fill {
+              @include opacity(1);
+            }
+        }
+    }
+    .i-play-button {
+      z-index:11;
+    }
+}
+
+
+
+
+/* Transitions
+=============================
+=============================*/
+.transition-1-5 { @include transition(1.5s all cubic-bezier(0,.96,.4,.93)); }
+.transition-2 { @include transition(.2s all cubic-bezier(0,.96,.4,.93)); }
+.transition-4 { @include transition(.4s all cubic-bezier(0,.96,.4,.93)); }
+.transition-6 { @include transition(.6s all cubic-bezier(0,.96,.4,.93)); }
+
+[data-aos] {
+  body[data-aos-easing="custom-easeing"] &,
+  &[data-aos][data-aos-easing="custom-easeing"] { transition-timing-function: cubic-bezier(0,.96,.4,.93); }
+}
+
+
+/* Arrive Shadows
+=============================
+=============================*/
+.big_shadow {
+  @include shadow(3px 18px 33px 0 rgba(000,000,000,0.24));
+}
+
+
+
+/* Text Centering
+=============================
+=============================*/
+@include breakpoint(medium down) {
+    .small-text-center { text-align:center; }
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+.text-underline {
+  text-decoration: underline;
+}
+
+
+
+
+/* Other
+=============================
+=============================*/
+.clearfix {
+  @include clearfix;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.visually-hidden {
+  @include visually-hidden;
+}
+
+.js-focus-hidden:focus {
+  outline: none;
+}
+
+.label-hidden {
+  @include visually-hidden;
+
+  // No placeholders, so force show labels
+  .no-placeholder & {
+    @include visually-shown;
+  }
+}
+
+.visually-shown {
+  @include visually-shown;
+}
+
+// Only show when JS is not supported
+.no-js:not(html) {
+  display: none;
+
+  .no-js & {
+    display: block;
+  }
+}
+
+// Only show when JS is supported
+.js {
+  .no-js & {
+    display: none;
+  }
+}
+
+// Only show when browser cookies are not supported
+.supports-no-cookies:not(html) {
+  display: none;
+
+  html.supports-no-cookies & {
+    display: block;
+  }
+}
+
+// Only show when browser cookies are supported
+.supports-cookies {
+  html.supports-no-cookies & {
+    display: none;
+  }
+}
+
+// Skip to content button
+// Overrides .visually-hidden when focused
+.skip-link:focus {
+  @include visually-shown(absolute);
+  z-index: 10000;
+  padding: 2rem;
+  background-color: $color-body;
+  color: $font-body-color;
+  transition: none;
+}
+
+// FlexBox helpers
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-centered-all {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// WIDTHS
+
+.grid-max-width {
+  width: 100%;
+  max-width: $grid-max-width;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// BORDERS 
+
+.border-top-only {
+  border-top: $global-border;
+}
+
+.border-bottom-only {
+  border-bottom: $global-border;
+}
+
+.border-top-bottom {
+  border-top: $global-border;
+  border-bottom: $global-border;
+}
+
+.no-border {
+  border: 0;
+}
+
+// IMAGES
+
+.image-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.image-contain {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+// POSITIONS
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+

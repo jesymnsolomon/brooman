@@ -1,0 +1,227 @@
+@import '../core/typography';
+@import "./tools/mixins";
+
+button {
+  color: currentColor;
+}
+
+.button {
+  @include button;
+
+  &.primary {
+    // background: $primary-button-bg-gradient;
+    // background-color: $primary-button-bg-color;
+    // color: $primary-button-text-color;
+    // border-color: $primary-button-border-color;
+
+    @include hover {
+      // background: $primary-button-hover-bg-gradient;
+      // background-color: $primary-button-hover-bg-color;
+      // color: $primary-button-hover-text-color;
+      // border-color: $primary-button-border-color-hover;
+
+      span.arrow {
+        //background-color: $primary-button-hover-bg-color;
+      }
+    }
+  }
+
+  &.secondary {
+    // background-color: $secondary-button-bg-color;
+    // color: $secondary-button-text-color;
+    // border-color: $secondary-button-border-color;
+
+    @include hover {
+      // background-color: $secondary-button-hover-bg-color;
+      // color: $secondary-button-hover-text-color;
+      // border-color: $secondary-button-border-color-hover;
+    }
+  }
+
+  &.tertiary {
+    // background-color: $tertiary-button-bg-color;
+    // color: $tertiary-button-text-color;
+    // border-color: $tertiary-button-border-color;
+
+    @include hover {
+      // background-color: $tertiary-button-hover-bg-color;
+      // color: $tertiary-button-hover-text-color;
+      // border-color: $tertiary-button-border-color-hover;
+    }
+  }
+
+  &.scroll-to-section span.arrow {
+    @include transform( rotate( 90deg ) );
+  }
+
+  &.full-width {
+    width: 100%;
+  }
+
+  &.primary,
+  &.secondary,
+  &.tertiary {
+  &:not(.underline) {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+}
+
+  @keyframes waveAnimation {
+    from {
+      background-position-x: 0%;
+    }
+    to {
+      background-position-x: 200%;
+    }
+  }
+}
+
+/* BUTTON { link }*/
+.button.link {
+  @include large;
+  @include transform(none);
+  background: none !important;
+  border: none;
+  padding-left: 0;
+  padding-right: 0;
+  min-height: unset;
+  box-shadow: unset;
+  width: auto;
+  max-width: unset;
+  text-transform: unset;
+  padding: 0 0 rem-calc( 5px );
+  border-bottom: solid $global-border-width currentColor !important;
+  @include border-radius( 0 );
+
+  &:hover {
+    @include shadow(none);
+    @include transform(none);
+  }
+}
+
+.button.underline {
+  width: auto;
+  height: auto;
+  padding: 0;
+  min-height: unset;
+  background: transparent;
+  color: $black;
+  border: none;
+  box-shadow: none !important;
+  border-radius: unset;
+  line-height: rem-calc( 23px );
+
+  span {
+    padding: 0;
+    border-bottom: solid rem-calc( $global-border-width ) $black;
+  }
+}
+
+/* BUTTON [ Add to Cart ] */
+.button.add-to-cart {
+  min-height: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: rem-calc(13px) rem-calc(10px);
+
+  @include breakpoint( large up) {
+    padding: rem-calc(19px) rem-calc(10px) rem-calc(16px);
+  }
+
+  span.text {
+    padding: 0;
+    flex-grow: 0;
+  }
+
+  span.arrow {
+    display: none;
+  }
+
+  .price {
+    &.old {
+      margin-left: rem-calc(20px);
+      text-decoration: line-through;
+      @include opacity(0.3);
+    }
+  }
+
+  &.with-price {
+    justify-content: center;
+  }
+
+  .divider {
+    @include opacity(1);
+    height: $global-border-width;
+    width: 8px;
+    margin: 0 .6rem;
+    background: currentColor;
+
+    @include breakpoint( small only ) {
+      margin: 0 .3rem;
+    }
+  }
+}
+
+.add-to-cart {
+  &__wrapper {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: inherit;
+    align-items: inherit;
+
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+
+    &:empty { display: none; }
+  }
+}
+
+/* BUTTON [ Disabled ] */
+.button {
+  &.disabled, &[ disabled ] {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+    box-shadow: none;
+  }
+}
+
+/* BUTTON SET */
+.button-set {
+  display: flex;
+  z-index: 2;
+  position: relative;
+
+  .button {
+    & + .button { margin-top: 1rem; }
+  }
+
+  @include breakpoint( small down ) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @include breakpoint( medium up ) {
+    .button {
+      & + .button {
+        margin-left: rem-calc( 12px );
+        margin-top: 0;
+      }
+    }
+    form + .button {
+      margin-left: rem-calc( 12px );
+    }
+  }
+
+  &:not(.align-center) {
+    align-items: flex-start;
+  }
+  &.align-center {
+    align-items: center;
+  }
+}

@@ -1,0 +1,41 @@
+{%- assign light_color = light_color | default: "#DFFCA0" -%}
+{%- assign dark_color = dark_color | default: "#DFFCA0" -%}
+
+{%- capture first_tab -%}
+  {% render 'product-top__form', product: product, blocks: blocks %}
+{%- endcapture -%}
+
+{%- capture second_tab -%}
+  <div>Second Tab</div>
+{%- endcapture -%}
+
+<div class="product-top__tab product__form" data-inview>
+	<ul class="tabs" data-tabs id="product-top-tabs">
+		<li class="tabs-title is-active">
+			<a href="#product-tab-panel-1" aria-selected="true">
+				{{ first_tab_title }}
+			</a>
+		</li>
+		{% if second_tab_embed != blank %}
+			<li class="tabs-title">
+				<a href="#product-tab-panel-2">
+					{{ second_tab_title }}
+				</a>
+			</li>
+		{% endif %}
+	</ul>
+
+	<div class="tabs-content" data-tabs-content="product-top-tabs">
+		<div class="tabs-panel is-active" id="product-tab-panel-1">
+			{{ first_tab }}
+		</div>
+
+		{% if second_tab_embed != blank %}
+			<div class="tabs-panel" id="product-tab-panel-2">
+				<div class="tabs-panel__inner">
+					{{ second_tab }}
+				</div>
+			</div>
+		{% endif %}
+	</div>
+</div>

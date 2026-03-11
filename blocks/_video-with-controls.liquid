@@ -1,0 +1,161 @@
+{%- if block.settings.video_title != blank -%}
+  <p class="mfr-video-with-controls__title">
+    {{- block.settings.video_title -}}
+  </p>
+{%- endif -%}
+<div class="mfr-video-with-controls__inner">
+  {%- if block.settings.video != blank -%}
+    {%- render 'component__video-with-controls'
+      block_id: block.id,
+      video: block.settings.video,
+      poster_size: block.settings.width_desktop,
+      autoplay: block.settings.autoplay,
+      loop: block.settings.autoplay,
+      controls: block.settings.controls,
+      muted: block.settings.muted,
+      poster: block.settings.poster,
+      show_play_button: block.settings.show_play_button,
+      show_speaker_button: block.settings.show_speaker_button,
+      without_wrapper: true
+     -%}
+  {%- endif -%}
+</div>
+
+{%- schema -%}
+  {
+    "name": "Video with Controls",
+    "class": "mfr-video-with-controls",
+    "settings": [
+      {
+        "type": "text",
+        "id": "video_title",
+        "label": "Video Title"
+      },
+      {
+        "type": "video",
+        "id": "video",
+        "label": "Video File"
+      },
+      {
+        "type": "image_picker",
+        "id": "poster",
+        "label": "Poster Image",
+      },
+      {
+        "type": "header",
+        "content": "Desktop: Layout"
+      },
+      {
+        "type": "number",
+        "id": "width_desktop",
+        "label": "Max Width",
+        "default": 2560,
+        "info": "In pixels"
+      },
+      {
+        "type": "number",
+        "id": "width_actual_desktop",
+        "label": "Width",
+        "default": 100
+      },
+      {
+        "type": "select",
+        "id": "width_value_type",
+        "options": [
+          { "value": "px", "label": "Pixels" },
+          { "value": "%", "label": "Percentage" }
+        ],
+        "label": "Value Type",
+        "default": "px"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_desktop",
+        "label": "Aspect Ratio",
+        "default": "1320/696"
+      },
+      {
+        "type": "header",
+        "content": "Mobile: Layout"
+      },
+      {
+        "type": "number",
+        "id": "width_mobile",
+        "label": "Max Width",
+        "default": 450,
+        "info": "In pixels"
+      },
+      {
+        "type": "number",
+        "id": "width_actual_mobile",
+        "label": "Width",
+        "default": 100
+      },
+      {
+        "type": "select",
+        "id": "width_value_type_mobile",
+        "options": [
+          { "value": "px", "label": "Pixels" },
+          { "value": "%", "label": "Percentage" }
+        ],
+        "label": "Value Type",
+        "default": "px"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_mobile",
+        "label": "Aspect Ratio",
+        "default": "378/520"
+      },
+      {
+        "type": "header",
+        "content": "Video Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Autoplay?",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "loop",
+        "label": "Loop?",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "controls",
+        "label": "Show Controls?",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "muted",
+        "label": "Muted?",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Actions Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_play_button",
+        "label": "Show Play Button",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_speaker_button",
+        "label": "Show Speaker Button",
+        "default": true
+      },
+    ],
+    "presets": [
+      {
+        "name": "Video with Controls"
+      }
+    ]
+  }
+{%- endschema -%}

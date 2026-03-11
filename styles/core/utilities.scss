@@ -1,0 +1,318 @@
+@import "./variables";
+
+/* FLEX */
+.flex-align-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-align-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* DISPLAY */
+.hidden, .hide {
+	display: none !important;
+}
+
+.block {
+	display: block !important;
+}
+
+.inline {
+	display: inline !important;
+}
+
+.inline-block {
+	display: inline-block !important;
+}
+
+.flex {
+	display: flex !important;
+}
+
+.width-full {
+  width: 100% !important;
+}
+
+.height-full {
+  height: 100% !important;
+}
+
+.width-height-full {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ORDER */
+.order-first {
+	order: -9999 !important;
+}
+
+.order-last {
+	order: 9999;
+}
+
+/* FLOATS */
+.float-left {
+	float: left;
+}
+
+.float-right {
+	float: right;
+}
+
+.float-none {
+	float: none;
+}
+
+/* POSITION */
+.relative {
+	position: relative;
+}
+
+.absolute {
+	position: absolute;
+}
+
+.fixed {
+	position: fixed;
+}
+
+.static {
+	position: static;
+}
+
+.sticky {
+	position: sticky;
+}
+
+/* INSETS */
+.inset-0 {
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.inset-y-0 {
+	top: 0;
+	bottom: 0;
+}
+
+.inset-x-0 {
+	right: 0;
+	left: 0;
+}
+
+/* FULL POSITION */
+.full-absolute {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+/* VISIBILITY */
+.visible {
+	visibility: visible;
+}
+
+.invisible {
+	visibility: hidden;
+}
+
+/* PADDING */
+.padding-0 {
+	padding: 0 !important;
+}
+
+.padding-x-0 {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
+.padding-y-0 {
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+
+/* MARGIN */
+.margin-auto {
+	margin-left: auto !important; 
+	margin-right: auto !important;
+}
+
+.margin-0 {
+	margin: 0 !important;
+}
+
+/* TEXT TRANSFORM */
+.capitalize {
+	text-transform: capitalize;
+}
+
+.uppercase {
+	text-transform: uppercase;
+}
+
+.initial {
+	text-transform: initial;
+}
+
+/* BG & IMAGES */
+.image-cover {
+	object-fit: cover; 
+	object-position: center; 
+	width: 100%;
+	height: 100%;
+}
+
+.image-contain{
+	object-fit: contain; 
+	object-position: center; 
+	width: 100%;
+	height: 100%;
+}
+
+.background-cover {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.background-contain {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+/* BORDERS */
+.border-0 {
+  border: 0 !important;
+}
+
+.border-top-only {
+  border-top: $global-border;
+}
+
+.border-bottom-only {
+  border-bottom: $global-border;
+}
+
+.border-top-bottom {
+  border-top: $global-border;
+  border-bottom: $global-border;
+}
+
+/* BORDER RADIUS */
+.rounded-full {
+	@include border-radius( 9999px );
+}
+
+.round-none {
+	@include border-radius( 0 );
+}
+
+/* VIDEO COVERS */
+.responsive-embed {
+  .cover-image {
+    position:absolute;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    background-size:cover;
+    z-index:8;
+    @include transition(.5s all cubic-bezier(.65,.49,.21,.98));
+    cursor:pointer;
+
+    &:hover {
+      @include transform(scale(1.05));
+    }
+  }
+
+  &:hover .i-play-button {
+    @include transform(scale(1.03));
+    background:$white;
+    cursor:pointer;
+      .play-button-play--component {
+        @include transform( scale(.9) );
+          &.fill {
+            @include opacity(1);
+          }
+      }
+  }
+
+  .i-play-button {
+    z-index: 11;
+  }
+}
+
+/* TEXT POSITIONS */
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center-desktop { 
+  text-align: initial;
+
+  @include breakpoint( medium down ) {
+    text-align: center; 
+  }
+}
+
+.text-center-mobile { 
+  @include breakpoint( medium down ) {
+    text-align: center; 
+  }
+}
+
+/* ADA VISIBILITY */
+.clearfix {
+  @include clearfix;
+}
+
+.visually-hidden {
+  @include visually-hidden;
+}
+
+.js-focus-hidden:focus {
+  outline: none;
+}
+
+.label-hidden {
+  @include visually-hidden;
+
+  .no-placeholder & {
+    @include visually-shown;
+  }
+}
+
+.visually-shown {
+  @include visually-shown;
+}

@@ -1,0 +1,134 @@
+
+{%- comment -%}
+  Settings
+  --
+  accent_graphic
+  icon
+  svg_code
+
+  x_setting
+  y_setting
+
+  width_large
+  position_x_desktop
+  position_y_desktop
+
+  width_mobile
+  position_x_mobile
+  position_y_mobile
+
+  rotate
+  flip
+  layer
+{%- endcomment -%}
+
+{% assign accent_graphic = section.blocks | where: "type", "accent_graphic" %}
+{% if accent_graphic.size > 0 %}
+  <div class="accent-graphic-wrapper {% if section.id != 'footer' %}{{ section.id }}{% endif %}">
+    {%- for block in section.blocks -%}
+      {% if block.type == "accent_graphic" %}
+        {% assign alpine_attributes = "" %}
+
+        <div class="accent-graphic graphic-{{ forloop.index }} visible__{{ block.settings.visibility }}">
+          <div class="accent-graphic__inner" data-inview {{ scroll_speed }}>
+            <div class="parallax-helper">
+              <div class="{{ block.settings.animation }}">
+                <div class="flip-rotation-helper">
+                  <div class="alpine-helper" {{ alpine_attributes }}>
+                    {% assign accent_graphic_width = block.settings.width_large | times: 1.75 %}
+                    {% if block.settings.icon != blank %}
+                      {%- capture sizes -%}
+                        {{ block.settings.width_small }}px,
+                        (min-width: 1024px) {{ block.settings.width_large }}px
+                      {%- endcapture -%}
+                      {% assign alt = block.settings.icon.alt |  default: "decorative image" %}
+                      {% render 'component__lazyload-image',
+                        image: block.settings.icon,
+                        alt: alt,
+                        width: accent_graphic_width,
+                        sizes: sizes %}
+                    {% elsif block.settings.svg_code != blank %}
+                      {{ block.settings.svg_code }}
+                    {% else %}
+                      <div class="shopify-placeholder-image">
+                        {%- capture svg_code -%}{{- 'image' | placeholder_svg_tag -}}{%- endcapture -%}
+                        {% render 'component__svg-encoder', svg_code: svg_code, alt: "placeholder image" %}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {%- endfor -%}
+
+    <style>
+      {%- for block in section.blocks -%}
+        {%- if block.type == "accent_graphic" -%}
+          {% if block.settings.value_type == "px" %}
+            {% assign position_y_small = block.settings.position_y_small | times: 5 %}
+            {% assign position_y_large = block.settings.position_y_large | times: 5 %}
+          {% else %}
+            {% assign position_y_small = block.settings.position_y_small %}
+            {% assign position_y_large = block.settings.position_y_large %}
+          {% endif %}
+        #shopify-section-{{ section.id }} .accent-graphic.graphic-{{ forloop.index }} {
+          {%- if block.settings.x_setting == 'center' -%}
+            left: calc(50% - {{ block.settings.width_small | divided_by: 2 }}px - {{ block.settings.position_x_small | times: 5 }}{{ block.settings.value_type }});
+            margin: auto;
+          {% else %}
+            {%- assign position_x_small = block.settings.position_x_small | times: 1.00 -%}
+            {%- if position_x_small >= 0 -%}
+              {{- block.settings.x_setting -}}: {{- position_x_small -}}{{- block.settings.value_type -}};
+              transform: translateX( 0 );
+            {%- else -%}
+              {{- block.settings.x_setting -}}: 0;
+              {%- if block.settings.x_setting == "left" -%}
+                transform: translateX( {{ position_x_small }}% );
+              {%- else -%}
+                transform: translateX( {{ position_x_small | abs }}% );
+              {%- endif -%}
+            {%- endif -%}
+          {%- endif -%}
+          {{ block.settings.y_setting }}: {{ position_y_small }}{{ block.settings.value_type }};
+          width: {{ block.settings.width_small }}px;
+          {% if layer != blank %}z-index: {{ layer }};{% endif %}
+        }
+        @media print, screen and (min-width: 64em) {
+          #shopify-section-{{ section.id }} .accent-graphic.graphic-{{ forloop.index }} {
+            {%- if block.settings.x_setting == 'center' -%}
+              left: calc(50% - {{ block.settings.width_large | divided_by: 2 }}px - {{ block.settings.position_x_large | times: 5 }}{{ block.settings.value_type }});
+              margin: auto;
+            {% else %}
+              {%- assign position_x_large = block.settings.position_x_large | times: 1.00 -%}
+              {%- if position_x_large >= 0 -%}
+                {{- block.settings.x_setting -}}: {{- position_x_large -}}{{- block.settings.value_type -}};
+                transform: translateX( 0 );
+              {%- else -%}
+                {{- block.settings.x_setting -}}: 0;
+                {%- if block.settings.x_setting == "left" -%}
+                  transform: translateX( {{ position_x_large }}% );
+                {%- else -%}
+                  transform: translateX( {{ position_x_large | abs }}% );
+                {%- endif -%}
+              {%- endif -%}
+            {%- endif -%}
+            {{ block.settings.y_setting }}: {{ block.settings.position_y_large }}{{ block.settings.value_type }};
+            width: {{ block.settings.width_large }}px;
+          }
+        }
+
+        #shopify-section-{{ section.id }} .accent-graphic.graphic-{{ forloop.index }} .flip-rotation-helper {
+          -moz-transform: {% if block.settings.flip %}scaleX(-1){% endif %} rotate( {{ block.settings.rotate }}deg );
+          -o-transform: {% if block.settings.flip %}scaleX(-1){% endif %} rotate( {{ block.settings.rotate }}deg );
+          -ms-transform: {% if block.settings.flip %}scaleX(-1){% endif %} rotate( {{ block.settings.rotate }}deg );
+          -webkit-transform: {% if block.settings.flip %}scaleX(-1){% endif %} rotate( {{ block.settings.rotate }}deg );
+          transform: {% if block.settings.flip %}scaleX(-1){% endif %} rotate( {{ block.settings.rotate }}deg );
+        }
+        {%- endif -%}
+      {%- endfor -%}
+    </style>
+  </div>
+{% endif %}

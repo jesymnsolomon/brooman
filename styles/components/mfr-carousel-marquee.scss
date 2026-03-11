@@ -1,0 +1,15 @@
+.mfr-carousel-marquee {
+  &:not(.flickity-enabled) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  > * {
+    padding: 0 rem-calc( 15px );
+
+    @include breakpoint( large up ) {
+      padding: 0 rem-calc( 30px );
+    }
+  }
+}

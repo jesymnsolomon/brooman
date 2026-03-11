@@ -1,0 +1,122 @@
+<div class="offcanvas-menu__inner-menus"
+  x-show="innerMenuOpened"
+  x-transition:enter-start="opacity-0 translate-x-full"
+  x-transition:enter-end="opacity-100 translate-x-0"
+  x-transition:leave-start="opacity-100 translate-x-0"
+  x-transition:leave-end="opacity-0 translate-x-full"
+  x-cloak>
+  {% for inner_menu in inner_menus %}
+    {% assign assigned_inner_menu_product = inner_menu_products 
+      | map: "settings" 
+      | where: "inner_menu_handle", inner_menu.settings.handle  %}
+    {% assign assigned_inner_menu_menus = inner_menu_menus 
+      | map: "settings" 
+      | where: "inner_menu_handle", inner_menu.settings.handle  %}
+    {% assign assigned_inner_menu_ctas = inner_menu_ctas
+      | map: "settings" 
+      | where: "inner_menu_handle", inner_menu.settings.handle  %}
+    <div class="offcanvas-menu__inner-menu"
+      x-show="innerMenus['{{- inner_menu.settings.handle -}}']"
+      x-trap="innerMenus['{{- inner_menu.settings.handle -}}']"
+      x-cloak>
+      <button class="offcanvas-menu__inner-menu-back"
+        x-on:click="
+          innerMenuOpened = false;
+          setTimeout( () => {
+            mainMenuOpened = true;
+            innerMenus['{{- inner_menu.settings.handle -}}'] = false;
+          }, 400 );
+        ">
+        <span class="indicator">
+          {%- render 'icon__chevrons', position: 'right' -%}
+        </span>
+        <span class="label">Back</span>
+      </button>
+
+      {% if assigned_inner_menu_product != blank or assigned_inner_menu_menus %}
+        <ul class="accordion inner-menu__accordion" 
+          data-accordion
+          data-multi-expand="true"
+          data-allow-all-closed="true">
+          {% if assigned_inner_menu_product != blank %}
+            <li class="accordion-item inner-menu__products is-active" data-accordion-item>
+              <!-- Accordion tab title -->
+              <a href="#" class="accordion-title">
+                {{ inner_menu.settings.products_label }}
+                <span></span>
+              </a>
+          
+              <!-- Accordion tab content: it would start in the open state due to using the `is-active` state class. -->
+              <div class="accordion-content" data-tab-content>
+                <div class="inner-menu__products-inner">
+                  {% for assigned_product in assigned_inner_menu_product %}
+                    <a 
+                      href="{{ assigned_product.product.url }}" 
+                      class="inner-menu__product"
+                      title="{{ assigned_product.product_badge }} {{ assigned_product.product.title }}"
+                      aria-label="{{ assigned_product.product_badge }} {{ assigned_product.product.title }}">
+                      <div class="inner-menu__product-image">
+                        {% render 'component__lazyload-image',
+                          image: assigned_product.product.featured_image,
+                          width: 144 %}
+                      </div>
+                      <div class="inner-menu__product-info">
+                        {% if assigned_product.product_badge != blank %}
+                          <span class="inner-menu__product-badge">
+                            <span>{{ assigned_product.product_badge }}</span>
+                          </span>
+                        {% endif %}
+                        <span class="inner-menu__product-title">
+                          {{ assigned_product.product.metafields.mfr_fields.nice_title | default: assigned_product.product.title }}
+                        </span>
+                      </div>
+                    </a>
+                  {% endfor %}
+                </div>
+              </div>
+            </li>
+          {% endif %}
+
+          {%- for menu in assigned_inner_menu_menus -%}
+            <li class="accordion-item inner-menu__menu" data-accordion-item>
+              <!-- Accordion tab title -->
+              <a href="#" class="accordion-title">
+                {{ menu.label }}
+                <span></span>
+              </a>
+          
+              <!-- Accordion tab content: it would start in the open state due to using the `is-active` state class. -->
+              <div class="accordion-content inner-menu__menu-inner" data-tab-content>
+                <ul class="inner-menu__menu-list">
+                  {% for item in menu.menu.links %}
+                    <li>
+                      <a href="{{ item.url }}"
+                        title="{{ item.title }}"
+                        aria-label="{{ item.title }}">
+                        {{ item.title }}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </li>
+          {%- endfor -%}
+
+          {% if assigned_inner_menu_ctas != blank %}
+            <li class="accordion-item inner-menu__ctas">
+              {% for cta in assigned_inner_menu_ctas %}
+                  {% render 'component__button',
+                    label: cta.button_label,
+                    link: cta.button_link,
+                    icon: cta.icon,
+                    color_theme: cta.color_theme
+                  %}
+              {% endfor %}
+            </li>
+          {% endif %}
+          <!-- ... -->
+        </ul>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>

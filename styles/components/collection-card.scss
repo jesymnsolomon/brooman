@@ -1,0 +1,109 @@
+.collection-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 378/480;
+  background-color: var(--bg-color);
+  padding: rem-calc( 23px ) rem-calc( 25px );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+
+  @include breakpoint( large up ) {
+    padding: rem-calc( 30px );
+  }
+
+  @include hover {
+    .indicator {
+      background-color: $black;
+      border-color: transparent;
+
+      img {
+        @include filter( invert(1) );
+      }
+    }
+  }
+
+  &__tag {
+    position: absolute;
+    left: rem-calc( 13px );
+    top: 0;
+    padding: rem-calc( 4px ) rem-calc( 10px );
+    background-color: var(--tag-color);
+    color: $white;
+    font-size: rem-calc( 12px );
+    line-height: normal;
+    letter-spacing: rem-calc( -0.19px );
+    font-weight: 600;
+    @include border-radius( rem-calc( 4px ) );
+    @include transform( translateY( -50% ) );
+
+    @include breakpoint( large up ) {
+      font-size: rem-calc( 14px );
+      letter-spacing: rem-calc( -0.22px );
+      padding: rem-calc( 8px ) rem-calc( 20px );
+      left: rem-calc( 18px );
+    }
+  }
+
+  &__title {
+    @include h6;
+    margin: 0 0 rem-calc( 12px );
+    width: 60%;
+
+    @include breakpoint( large up ) {
+      margin-bottom: rem-calc( 16px );
+    }
+  }
+
+  &__sub-title {
+    @include opacity( 0.4 );
+  }
+
+  &__media {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 57%;
+    max-width: 76%;
+    width: auto;
+
+    img {
+      height: 100%;
+      width: auto;
+      display: block;
+      object-fit: cover;
+      object-position: top left;
+    }
+  }
+
+  .indicator {
+    position: absolute;
+    top: rem-calc( 25px );
+    right: rem-calc( 25px );
+    width: rem-calc( 36px );
+    height: rem-calc( 36px );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid rem-calc( 1.5px ) currentColor;
+    @include border-radius( 50% );
+    @include transition( $global-transition );
+
+    @include breakpoint( large up ) {
+      top: rem-calc( 30px );
+      right: rem-calc( 30px );
+      width: rem-calc( 42px );
+      height: rem-calc( 42px );
+    }
+
+    img {
+      width: rem-calc( 9px );
+      height: auto;
+      display: block;
+      margin-left: rem-calc( 2px );
+      @include transition( $global-transition );
+    }
+  }
+}

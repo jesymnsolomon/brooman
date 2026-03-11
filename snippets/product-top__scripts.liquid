@@ -1,0 +1,62 @@
+{% comment %}
+  Get product data anywhere in product template via $store.pdp.product/Alpine.store('pdp').product
+{% endcomment %}
+
+<script>
+  document.addEventListener('alpine:init', () => {
+    Alpine.store('pdp', {
+      product: {},
+      stickyATC: true,
+      runningTotal: 0,
+      currentPrice: 0,
+      addonCounter: 0,
+      addOnsArray: [],
+      addOnsTotalPrice: 0,
+      dataReset: false,
+
+      init() {
+        this.product = {{ product | json }}
+
+        this.currentPrice = this.product.variants[0].price
+        this.runningTotal = this.product.variants[0].price
+        this.handleStickyATC();
+      },
+
+      addToCartAddons(data) {
+        if (this.addOnsArray.length <= 0) return
+
+        Alpine.store('cart').addMultipleToCart([...this.addOnsArray])
+
+        // After adding add-ons to cart, clear the add-ons array, items counter,
+        // set running total to selected product price and reset data selection states
+        this.addOnsArray = []
+        this.addonCounter = 0
+        this.runningTotal = this.currentPrice
+        this.dataReset = true
+      },
+
+      handleStickyATC() {
+        if (!this.stickyATC) return;
+        const productTopAtcContainer = document.getElementsByClassName("product-top__actions")[0];
+        const stickyAtcContainer = document.getElementsByClassName("product-top__actions--sticky")[0];
+        const halfScreenHeight = (/Mobi|Android/i.test(navigator.userAgent)) ? window.innerHeight / 2 : window.innerHeight / 3;
+
+        if(!stickyAtcContainer || !productTopAtcContainer) return;
+
+        ScrollTrigger.create({
+          trigger: productTopAtcContainer,
+          start: () => `bottom top`, // Start when the scroll position passes atcScrollTop
+          end: `bottom+=${halfScreenHeight} bottom`, // You can customize this if needed
+          onEnter: () => {
+            stickyAtcContainer.classList.add("is-showing");
+          },
+          onLeaveBack: () => {
+            stickyAtcContainer.classList.remove("is-showing");
+          },
+          // Optional: markers for debugging
+          // markers: true
+        });
+      }
+    })
+  })
+</script>

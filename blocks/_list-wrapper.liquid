@@ -1,0 +1,22 @@
+{%- if block.blocks.size > 0 -%}
+  <ul>
+    {%- content_for "blocks" -%}
+  </ul>
+{%- endif -%}
+{%- schema -%}
+  {
+    "name": "List Wrapper",
+    "class": "mfr-list__wrapper",
+    "settings": [
+    
+    ],
+    "blocks": [
+      { "type": "_list-item" }
+    ],
+    "presets": [
+      {
+        "name": "List Wrapper"
+      }
+    ]
+  }
+{%- endschema -%}

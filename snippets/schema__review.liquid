@@ -1,0 +1,30 @@
+<script id="review-schema" type="application/ld+json">
+{
+	"@context": "https://schema.org/",
+	"@type": "Review",
+	"reviewRating": {
+		"@type": "Rating",
+		"ratingValue": "{{ rating }}",
+		"bestRating": "{{ max_rating }}",
+		"worstRating": "{{ min_rating }}"
+	},
+	"itemReviewed": {
+		"@type": "LocalBusiness",
+		"name": "{{ shop.name }}",
+		"telephone": "{{ shop.phone }}",
+		"address" : {
+			"@type": "PostalAddress",
+			"streetAddress": "{{ shop.address.street }}",
+			"addressLocality": "{{ shop.address.city }}",
+			"addressRegion": "{{ shop.address.province_code }}",
+			"postalCode": "{{ shop.address.zip }}",
+			"addressCountry": "{{ shop.address.country_code }}"
+		}
+	},
+	"name": "{{ shop.name }}",
+	"author": {
+		"@type": "Person",
+		"name": "{{ name }}"
+	}
+}
+</script>

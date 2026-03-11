@@ -1,0 +1,123 @@
+@import "../variables";
+@import "../tools/util/util";
+@import "../tools/mixins";
+
+.mfr-core__text-testimonials-carousel {
+  .grid-x {
+    @include breakpoint( large up ) {
+      align-items: var(--vertical-alignment);
+    }
+
+    .cell {
+      display: flex;
+    }
+  }
+
+  .section-content {
+    @include breakpoint( large up ) {
+      padding: 0 rem-calc( 30px );
+    }
+  }
+
+  .flickity-slider {
+    display: flex;
+    align-items: center;
+    justify-self: center;
+  }
+
+  .text-testimonial {
+    &__carousel {
+      width: var(--width-mobile);
+      max-width: var(--width-mobile);
+
+      @include breakpoint(large up) {
+        width: var(--width-desktop);
+        max-width: var(--width-desktop);
+      }
+
+      &:focus,
+      &:focus-within {
+        outline: 0;
+        border: 0;
+      }
+
+      .flickity-viewport {
+        overflow: visible;
+      }
+
+      .flickity-button {
+        @include breakpoint(medium down) {
+          display: none;
+        }
+
+        &.previous {
+          left: 10%;
+        }
+
+        &.next {
+          right: 10%;
+        }
+
+        &[disabled] {
+          @include opacity( 0.2 );
+          @include transform( translateY( -50% ) scale( 1 ) );
+
+          @include breakpoint( large up ) {
+            display: flex;
+          }
+        }
+      }
+    }
+
+    &__slide {
+      width: 100%;
+
+      &:focus,
+      &:focus-within {
+        outline: 0 !important;
+      }
+
+      &-item {
+        width: 100%;
+        padding: 5px 9%;
+        flex-shrink: 0;
+
+        @include breakpoint( large up ) {
+          padding: 5px 25%;
+        }
+      }
+
+      &-logo {
+        margin-top: rem-calc(30px);
+      }
+
+      &-icon {
+        margin-bottom: rem-calc( 30px )
+      }
+
+      &-text {
+        @include h4;
+        margin-top: rem-calc( 26px );
+      }
+
+      &-author {
+        font-family: $custom-font-name-3;
+        font-size: rem-calc( 24px );
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-top: rem-calc( 20px );
+      }
+
+      &-cta {
+        font-size: rem-calc( 20px );
+        font-weight: 900;
+        padding-bottom: rem-calc( 5px );
+        border-bottom: 2px solid $black;
+      }
+    }
+  }
+
+}
+
+
+html:not(.design-mode) .template-product .mfr-core__text-testimonials-carousel:not(:has(.text-testimonial__carousel > .text-testimonial__carousel-inner)) { display: none; }

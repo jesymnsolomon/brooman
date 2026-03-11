@@ -1,0 +1,10 @@
+{% render 'schema__store' %}
+{% render 'schema__breadcrumbs' %}
+
+{% if template.name == "product" %}
+  {% render 'schema__product', product: product %}
+{% endif %}
+
+{% if template.name == "article" %}
+  {% render 'schema__article', article: article %}
+{% endif %}

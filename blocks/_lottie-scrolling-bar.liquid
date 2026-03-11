@@ -1,0 +1,32 @@
+<div class="scrolling-bar">
+  <div class="scrolling-bar__desktop">
+      <lottie-player src="{{ 'scrolling-logos.json' | asset_url }}"
+          background="transparent"
+          speed="0.5"
+          loop
+          autoplay>
+      </lottie-player>
+  </div>
+  <div class="scrolling-bar__mobile">
+      <lottie-player src="{{ 'scrolling-logos-mobile.json' | asset_url }}"
+          background="transparent"
+          speed="0.5"
+          loop
+          autoplay>
+      </lottie-player>
+  </div>
+</div>
+
+{%- schema -%}
+  {
+    "name": "Lottie Scrolling Bar",
+    "class": "scrolling-bar",
+    "settings": [
+    ],
+    "presets": [
+      {
+        "name": "Lottie Scrolling Bar"
+      }
+    ]
+  }
+{%- endschema -%}

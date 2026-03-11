@@ -1,0 +1,124 @@
+{%- assign top_spacing = section.settings.section_spacing_top -%}
+{%- assign bottom_spacing = section.settings.section_spacing_bottom -%}
+
+{% if section.settings.section_bg_color %}
+  {%- assign section_specific_bg_color = section.settings.section_bg_color -%}
+{% endif %}
+
+<section class="content__style-guide" style="background-color:{{ section_specific_bg_color }};">
+  <div class="grid-container {{ top_spacing }} {{ bottom_spacing }}">
+    <div class="style-guide grid-x alignment-helper">
+      <div class="small-12 medium-8 cell">
+        <div class="inner">
+          <div class="section-content">
+            <h1 class="h1 content-margin">Header 1</h1>
+            <h1 class="h1 content-margin xl-title">Header 1 large</h1>
+            <h2 class="h2 content-margin">Header 2</h2>
+            <h3 class="h3 content-margin">Header 3</h3>
+            <h4 class="h4 content-margin">Header 4</h4>
+            <h5 class="h4 content-margin">Header 5</h5>
+            <h6 class="h4 content-margin">Header 6</h6>
+            <Br>
+            <div class="xsmall content-margin">
+              <p><strong>XSmall Paragraph</strong>: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+            <Br>
+            <div class="small content-margin">
+              <p><strong>Small Paragraph</strong>: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+            <Br>
+            <div class="regular content-margin">
+              <p><strong>Regular Paragraph</strong>: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+            <Br>
+            <div class="large content-margin">
+              <p><strong>Large Paragraph</strong>: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+            <Br>
+            <div class="xlarge content-margin">
+              <p><strong>XLarge Paragraph</strong>: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+            <Br>
+            <Br>
+            <div class="button-set">
+              <div style="margin:.5rem;" class="color-accent-1 button primary"><span class="text">Primary</span></div>
+              <div style="margin:.5rem;" class="color-accent-2 button secondary"><span class="text">Secondary</span></div>
+              <div style="margin:.5rem;" class="color-accent-3 button tertiary"><span class="text">Tertiary</span></div>
+              <div style="margin:.5rem;" class="color-accent-3 button underline"><span class="text">Underline</span></div>
+              <div style="margin:.5rem;" class="black button primary arrow"><span class="text">Arrow</span>
+                 <span>{% include 'icon__right-arrow' %}</span>
+                </div>
+              <div style="margin:.5rem;" class="button small">Small</div>
+            </div>
+            <Br>
+            <Br>
+            <Br>
+            <Br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{%- render 'component__section-dividers', is_video_background: true -%}
+
+
+{% schema %}
+  {
+    "name": "Style Guide",
+    "disabled_on": {
+       "groups": [
+        "header",
+        "footer",
+        "custom.offcanvas",
+        "custom.modals",
+        "custom.popups"
+      ]
+    },
+    "settings": [
+      {
+        "type": "header",
+        "content": "Style Guide"
+      },
+      {
+         "type": "select",
+         "id": "section_spacing_top",
+         "options": [
+            { "value": "section_spacing_none_top", "label": "None"},
+            { "value": "section_spacing_small_top", "label": "Small"},
+            { "value": "section_spacing_medium_top", "label": "Medium"},
+            { "value": "section_spacing_large_top", "label": "Large"},
+            { "value": "section_spacing_xlarge_top", "label": "X-Large"}
+         ],
+         "label": "Top spacing"
+      },
+      {
+         "type": "select",
+         "id": "section_spacing_bottom",
+         "options": [
+            { "value": "section_spacing_none_bottom", "label": "None"},
+            { "value": "section_spacing_small_bottom", "label": "Small"},
+            { "value": "section_spacing_medium_bottom", "label": "Medium"},
+            { "value": "section_spacing_large_bottom", "label": "Large"},
+            { "value": "section_spacing_xlarge_bottom", "label": "X-Large"}
+         ],
+         "label": "Bottom spacing"
+      },
+      {
+        "type": "header",
+        "content": "Background and dividers"
+      },
+      {
+        "type": "color",
+        "id": "section_bg_color",
+        "label": "Background color",
+        "info": "optional"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Style Guide"
+      }
+    ]
+  }
+{% endschema %}

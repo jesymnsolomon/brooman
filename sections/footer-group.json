@@ -1,0 +1,107 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer Sections",
+  "sections": {
+    "footer_WFB43J": {
+      "type": "footer",
+      "blocks": {
+        "embed_NdHiwG": {
+          "type": "embed",
+          "settings": {
+            "domain": "bigpotato.com",
+            "image": "shopify://shop_images/join-the-potato-club.png",
+            "heading": "",
+            "caption": "Get exclusive discounts, early game access, and the latest game night ideas straight to your inbox!",
+            "description": "<ul><li>A birthday present from us</li><li>10% off your first order</li><li>Free spare parts for life</li></ul><p></p>",
+            "embed_code": "<div class=\"klaviyo-form-SSWciL\"></div>"
+          }
+        },
+        "embed_CxU9yJ": {
+          "type": "embed",
+          "settings": {
+            "domain": "bigpotatogames.de",
+            "image": "shopify://shop_images/join-the-potato-club.png",
+            "heading": "",
+            "caption": "Get exclusive discounts, early game access, and the latest game night ideas straight to your inbox!",
+            "description": "<ul><li>A birthday present from us</li><li>10% off your first order</li><li>Free spare parts for life</li></ul><p></p>",
+            "embed_code": "<div class=\"klaviyo-form-Tqvuwc\"></div>"
+          }
+        },
+        "embed_MnLKr3": {
+          "type": "embed",
+          "settings": {
+            "domain": "bigpotato.co.uk",
+            "image": "shopify://shop_images/join-the-potato-club.png",
+            "heading": "",
+            "caption": "Get exclusive discounts, early game access, and the latest game night ideas straight to your inbox!",
+            "description": "<ul><li>A birthday present from us</li><li>10% off your first order</li><li>Free spare parts for life</li></ul><p></p>",
+            "embed_code": "<div class=\"klaviyo-form-Y4H9Pf\"></div>"
+          }
+        },
+        "menu_BepjGV": {
+          "type": "menu",
+          "settings": {
+            "heading": "Shop",
+            "menu": "mfr-footer",
+            "show_accessibe_trigger": false
+          }
+        },
+        "menu_xWnihg": {
+          "type": "menu",
+          "settings": {
+            "heading": "Learn",
+            "menu": "mfr-footer-learn",
+            "show_accessibe_trigger": false
+          }
+        },
+        "menu_fKwMKf": {
+          "type": "menu",
+          "settings": {
+            "heading": "Support",
+            "menu": "mfr-footer-support",
+            "show_accessibe_trigger": false
+          }
+        },
+        "socket_368wPa": {
+          "type": "socket",
+          "settings": {
+            "logo": "shopify://shop_images/logo_4x_02971df1-5532-4f0e-9db1-29a103377e61.png"
+          }
+        },
+        "social_links_Fm3eBX": {
+          "type": "social_links",
+          "settings": {
+            "caption": "Join the fun #bigpotato"
+          }
+        }
+      },
+      "block_order": [
+        "embed_NdHiwG",
+        "embed_CxU9yJ",
+        "embed_MnLKr3",
+        "menu_BepjGV",
+        "menu_xWnihg",
+        "menu_fKwMKf",
+        "socket_368wPa",
+        "social_links_Fm3eBX"
+      ],
+      "settings": {
+        "color_scheme": "scheme-54598a03-cc5b-4e48-ae4e-5fca626bc425",
+        "appear_on": "",
+        "section_divider_top": "divider_1"
+      }
+    }
+  },
+  "order": [
+    "footer_WFB43J"
+  ]
+}

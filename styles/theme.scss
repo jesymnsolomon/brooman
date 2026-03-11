@@ -1,0 +1,109 @@
+@charset 'UTF-8';
+
+/**
+ * Manufactur | Built by Manufactur
+ */
+
+@import './variables';
+@import './general';
+
+// Tools
+@import './tools/util/util';
+@import './tools/mixins';
+
+// Core
+@import './core/forms';
+@import './core/modals';
+@import './core/colors_backgrounds';
+@import './core/utilities';
+@import './core/helpers';
+@import './core/layout';
+@import './core/typography';
+@import './core/section-content';
+@import './core/animations';
+@import './core/transitions';
+@import './core/offcanvas-general';
+@import './core/offcanvas-cart';
+@import './core/section-spacer';
+@import './core/section-colors';
+@import './core/blocks';
+
+// Plugins
+@import './plugins/flickity';
+
+// Components
+@import './components/section-dividers';
+@import './components/buttons';
+@import './components/container';
+@import './components/price';
+@import './components/featured-product';
+@import './components/icons';
+@import './components/search';
+@import './components/accent-graphics';
+@import './components/product-card';
+@import './components/product-card-large';
+@import './components/product-badges';
+@import './components/tooltip';
+@import './components/quantity-picker';
+@import './components/accordion';
+@import './components/subscription';
+@import './components/background';
+@import './components/page-modal';
+@import './components/progress-bar';
+@import './components/quantity-selector';
+@import './components/social-links';
+@import './components/currency-selector';
+@import './components/blog-card';
+@import './components/video';
+@import './components/marquee-scroller';
+@import './components/bundler';
+@import './components/announcement-bar';
+@import './components/mega-menu';
+@import './components/dropdown-menu';
+@import './components/play-pause-button';
+@import './components/subscription-card';
+@import './components/variant-selector';
+@import './components/icon-text';
+@import './components/text-block';
+@import './components/product-image';
+@import './components/subscription-selector';
+@import './components/promotion-bar';
+@import './components/notifications';
+@import './components/product-sticky-bar';
+@import './components/review-card';
+@import './components/responsive-video';
+@import './components/predictive-search';
+@import './components/collection-card';
+@import './components/liquid-html-embed';
+@import './components/list';
+@import './components/card';
+
+// MFR Components
+@import './components/mfr-offcanvas';
+@import './components/mfr-accordion';
+@import './components/mfr-popup';
+@import './components/mfr-video-with-controls';
+@import './components/mfr-carousel';
+@import './components/mfr-carousel-marquee';
+
+// Pages
+@import './pages/page-404';
+@import './pages/challenge';
+@import './pages/search';
+@import './pages/password';
+
+// Templates
+@import './templates/pages';
+@import './templates/product';
+@import './templates/cart';
+@import './templates/article';
+@import './templates/policy-pages';
+@import './templates/customers/account';
+@import './templates/customers/login';
+@import './templates/customers/addresses';
+
+
+img.lozad:not([data-loaded="true"]) {
+  opacity: 0.8;
+  filter: blur(10px);
+}

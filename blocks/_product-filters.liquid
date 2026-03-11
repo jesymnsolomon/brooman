@@ -1,0 +1,77 @@
+{%- capture styling -%}
+  {% if block.settings.bg_color %}
+    style="background: {{ block.settings.bg_color }}";
+  {% endif %}
+{%- endcapture -%}
+
+{% if block.settings.collections != blank %}
+  <div class="product-grid__filters-wrapper" {{ styling }}>
+    {% if block.settings.title != blank %}
+      <div class="product-grid__filters-title">
+        <h3 class="h3">{{ block.settings.title }}</h3>
+      </div>
+    {% endif %}
+
+    <div class="product-grid__filters-wrapper-left">
+      <div class="product-grid__filters" {{ styling }}>
+        <button
+          class="button secondary product-grid__filters-item"
+          @click="filterByCollection('all')">All</button>
+
+        {% for collection in block.settings.collections %}
+          <button title="{{ collection.name }}" @click="filterByCollection('{{ collection.handle }}')" class="button secondary product-grid__filters-item">
+            <span>{{ collection.metafields.mfr_fields.nice_title | default: collection.title }}</span></button>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="product-grid__filters-wrapper-right">
+      <button class="button secondary" title="Filter and Sort" x-on:click='$store["offCanvasFilters"].openOffcanvas()'
+      :aria-expanded='$store["offCanvasFilters"].open'>
+        <span>Filter & Sort</span>
+        {% render 'icon__filter' %}
+      </button>
+    </div>
+
+    <div class="product-grid__filters-selected" x-show="$store.gridData.filtersData[0] !== 'all'">
+      <template x-for="filter in $store.gridData.filtersData" :key="filter">
+        <button @click="removeFilter(filter)" :title="filter.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())">
+          <span x-text="filter.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())"></span>
+          <span class="remove-filter">
+            {% render 'icon__close' %}
+          </span>
+        </button>
+      </template>
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Product Filters",
+    "class": "product-filters",
+    "settings": [
+      {
+        "type": "text",
+        "label": "Block Title",
+        "id": "title"
+      },
+      {
+        "type": "collection_list",
+        "id": "collections",
+        "label": "Categories",
+        "info": "Choose which collections to show as filter options."
+      },
+      {
+        "type": "color_background",
+        "id": "bg_color",
+        "label": "Background Color/Gradient"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product Filters"
+      }
+    ]
+  }
+{% endschema %}

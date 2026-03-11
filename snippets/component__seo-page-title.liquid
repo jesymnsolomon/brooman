@@ -1,0 +1,45 @@
+<h1 class="visually-hidden">
+  {% case template.name %}
+    {% when 'index' %}
+      {{ shop.name }}
+      
+    {% when 'product' %}
+      {{ product.title }}
+      
+    {% when 'collection' %}
+      {{ collection.title }}
+      
+    {% when 'blog' %}
+      {{ blog.title }}
+      
+    {% when 'article' %}
+      {{ article.title }}
+      
+    {% when 'page.faq' %}
+      {{ page.title }}
+      
+    {% when 'page.about' %}
+      {{ page.title }}
+      
+    {% when 'page.privacy' %}
+      {{ page.title }}
+      
+    {% when 'page.terms' %}
+      {{ page.title }}
+      
+    {% when 'account.login' %}
+      {{ 'Login Page' | escape }}
+      
+    {% when 'account.register' %}
+      {{ 'Register Page' | escape }}
+      
+    {% when 'account.dashboard' %}
+      {{ 'Dashboard' | escape }}
+      
+    {% when 'account.address' %}
+      {{ 'Address' | escape }}
+      
+    {% else %}
+      {{ page.title }}
+  {% endcase %}
+</h1>

@@ -1,0 +1,83 @@
+.featured-product {
+  &-card {
+    @include border-radius(rem-calc(15));
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--section-text);
+    background: #E9F4FC;
+    height: rem-calc( 130 );
+    max-height: rem-calc( 130 );
+    padding: rem-calc(8) rem-calc(16px) rem-calc(8) rem-calc(8);
+
+    &__left {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    &__right {
+      display: flex;
+
+    }
+
+    &__details {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding: rem-calc(10);
+    }
+
+    &__image {
+      @include border-radius(rem-calc(15));
+      margin-right: rem-calc(10);
+      overflow: hidden;
+      flex-shrink: 0;
+      width: rem-calc(112);
+      padding: rem-calc(5);
+      aspect-ratio: 1 / 1;
+      display: block;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &__badge {
+      padding: rem-calc(0) rem-calc(10);
+      background-color: var(--brand-color);
+      border-radius: rem-calc( 30 );
+      color: white;
+      margin-bottom: rem-calc(5);
+
+      span {
+        @include xsmall;
+        text-transform: uppercase;
+        margin: 0;
+        padding: 0;
+        line-height: 2;
+      }
+    }
+
+    &__title {
+      font-weight: 500;
+    }
+
+    &__button {
+      & > form button.primary {
+        opacity: 1 !important;
+        transform: none !important;
+        @include small;
+        @include transition($global-transition );
+        @include border-radius(rem-calc(100));
+        padding: rem-calc(7) rem-calc(20);
+        font-weight: 500;
+        text-align: center;
+        min-height: fit-content;
+      }
+    }
+  }
+}
