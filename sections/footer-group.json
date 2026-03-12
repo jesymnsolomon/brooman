@@ -18,7 +18,6 @@
           "type": "embed",
           "settings": {
             "domain": "bigpotato.com",
-            "image": "shopify://shop_images/join-the-potato-club.png",
             "heading": "",
             "caption": "Get exclusive discounts, early game access, and the latest game night ideas straight to your inbox!",
             "description": "<ul><li>A birthday present from us</li><li>10% off your first order</li><li>Free spare parts for life</li></ul><p></p>",
@@ -29,7 +28,6 @@
           "type": "embed",
           "settings": {
             "domain": "bigpotatogames.de",
-            "image": "shopify://shop_images/join-the-potato-club.png",
             "heading": "",
             "caption": "Get exclusive discounts, early game access, and the latest game night ideas straight to your inbox!",
             "description": "<ul><li>A birthday present from us</li><li>10% off your first order</li><li>Free spare parts for life</li></ul><p></p>",
@@ -40,7 +38,6 @@
           "type": "embed",
           "settings": {
             "domain": "bigpotato.co.uk",
-            "image": "shopify://shop_images/join-the-potato-club.png",
             "heading": "",
             "caption": "Get exclusive discounts, early game access, and the latest game night ideas straight to your inbox!",
             "description": "<ul><li>A birthday present from us</li><li>10% off your first order</li><li>Free spare parts for life</li></ul><p></p>",
@@ -51,7 +48,7 @@
           "type": "menu",
           "settings": {
             "heading": "Shop",
-            "menu": "mfr-footer",
+            "menu": "",
             "show_accessibe_trigger": false
           }
         },
@@ -59,7 +56,7 @@
           "type": "menu",
           "settings": {
             "heading": "Learn",
-            "menu": "mfr-footer-learn",
+            "menu": "",
             "show_accessibe_trigger": false
           }
         },
@@ -67,15 +64,13 @@
           "type": "menu",
           "settings": {
             "heading": "Support",
-            "menu": "mfr-footer-support",
+            "menu": "",
             "show_accessibe_trigger": false
           }
         },
         "socket_368wPa": {
           "type": "socket",
-          "settings": {
-            "logo": "shopify://shop_images/logo_4x_02971df1-5532-4f0e-9db1-29a103377e61.png"
-          }
+          "settings": {}
         },
         "social_links_Fm3eBX": {
           "type": "social_links",
@@ -94,6 +89,7 @@
         "socket_368wPa",
         "social_links_Fm3eBX"
       ],
+      "disabled": true,
       "settings": {
         "color_scheme": "scheme-54598a03-cc5b-4e48-ae4e-5fca626bc425",
         "appear_on": "",
