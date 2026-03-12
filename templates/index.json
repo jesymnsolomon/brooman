@@ -1,10 +1,126 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
-      "type": "main-page"
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "hide_page_title": false,
+        "text_alignment": "text-center",
+        "container_width": "full",
+        "max_width": 0,
+        "grid_gutter": "",
+        "color_scheme": "",
+        "top_spacing_mobile": 100,
+        "bottom_spacing_mobile": 100,
+        "top_spacing_desktop": 100,
+        "bottom_spacing_desktop": 100,
+        "bg_color": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
+    },
+    "mfr_core_image_video_banner_g8D47b": {
+      "type": "mfr-core__image-video-banner",
+      "blocks": {
+        "image-video-banner": {
+          "type": "_image-video-banner__carousel",
+          "static": true,
+          "settings": {
+            "autoplay_timing": 5
+          },
+          "blocks": {
+            "image_video_banner_image_slide_M4tUAj": {
+              "type": "_image-video-banner__image-slide",
+              "name": "Image Slide",
+              "settings": {
+                "mobile_image": "shopify://shop_images/banner-1-mobile.webp",
+                "desktop_image": "shopify://shop_images/banner-1.webp",
+                "lazyload": true,
+                "enable_overlay": false,
+                "overlay_mobile": "",
+                "overlay_desktop": ""
+              },
+              "blocks": {
+                "section-content": {
+                  "type": "_section-content",
+                  "static": true,
+                  "settings": {
+                    "mobile_alignment": "",
+                    "desktop_alignment": "",
+                    "text_alignment_desktop": "left",
+                    "text_alignment_mobile": "center",
+                    "max_width_mobile": 0,
+                    "max_width_desktop": 0
+                  },
+                  "blocks": {
+                    "section_content_title_jnjLGF": {
+                      "type": "_section-content__title",
+                      "settings": {
+                        "heading": "<strong>Every Pair Powers a Future</strong>",
+                        "disable_animation": false,
+                        "header_style": "h1",
+                        "header_tag": "h2",
+                        "font_family": "",
+                        "highlight_color": "",
+                        "underline_color": "",
+                        "max_width_mobile": 0,
+                        "max_width_desktop": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "section_content_title_jnjLGF"
+                  ]
+                }
+              },
+              "block_order": []
+            }
+          },
+          "block_order": [
+            "image_video_banner_image_slide_M4tUAj"
+          ]
+        },
+        "accent-graphics": {
+          "type": "_accent-graphics",
+          "static": true,
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "name": "Image/Video Banner",
+      "settings": {
+        "container_width": "full",
+        "max_width": 32,
+        "grid_gutter": "",
+        "horizontal_alignment_desktop": "flex-start",
+        "vertical_alignment_desktop": "center",
+        "horizontal_alignment_mobile": "center",
+        "vertical_alignment_mobile": "center",
+        "color_scheme": "",
+        "top_spacing_mobile": 100,
+        "bottom_spacing_mobile": 100,
+        "top_spacing_desktop": 100,
+        "bottom_spacing_desktop": 100,
+        "bg_color": "",
+        "section_divider_top": "",
+        "section_divider_bottom": "",
+        "custom_class": "",
+        "custom_id": ""
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "mfr_core_image_video_banner_g8D47b"
   ]
 }

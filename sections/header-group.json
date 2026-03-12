@@ -11,25 +11,6 @@
   "type": "header",
   "name": "Header Sections",
   "sections": {
-    "header_announcement_bar_XtRbkg": {
-      "type": "header__announcement-bar",
-      "blocks": {
-        "announcement_GUcm6e": {
-          "type": "announcement",
-          "settings": {
-            "announcement_bar_text": "Get 10% off by signing up to our newsletter",
-            "announcement_bar_link": "shopify://pages/join-the-potato-club"
-          }
-        }
-      },
-      "block_order": [
-        "announcement_GUcm6e"
-      ],
-      "settings": {
-        "announcement_bar_color_scheme": "scheme-b8da0b5e-d4d6-4b9e-bc64-091b090bb8e2",
-        "bg_color": ""
-      }
-    },
     "header": {
       "type": "header",
       "blocks": {
@@ -52,7 +33,6 @@
             "mega_menu_handle": "shop-mega-menu",
             "url": "shopify://collections/1000-piece-puzzles",
             "label": "Lorem ipsum",
-            "image": "shopify://shop_images/ATP_WebArtboard_1_2x_55b62fd1-dfd4-4fb9-b7ad-654340202f39.png",
             "bg_color": "#ffffff"
           }
         }
@@ -63,10 +43,10 @@
         "mega_menu_image_link_6Pt7VT"
       ],
       "settings": {
-        "logo": "shopify://shop_images/logo_538dd2fc-091e-47dd-a078-cc4a7ce23c62.png",
+        "logo": "shopify://shop_images/brooman-black.png",
         "logo_lottie_url": "",
-        "layout_mobile": "logo-center",
-        "layout_desktop": "logo-center",
+        "layout_mobile": "logo-left",
+        "layout_desktop": "logo-left-contained",
         "color_scheme": "scheme-3281f1a6-44f0-4c91-b920-9318c44d1969",
         "color_scheme_sticky": "scheme-3281f1a6-44f0-4c91-b920-9318c44d1969",
         "offset_mobile": 17,
@@ -83,10 +63,10 @@
         "sticky_border_radius_mobile": 20,
         "sticky_border_radius_desktop": 20,
         "menu_display": "standard",
-        "menu": "left-desktop-menu",
-        "menu_extended": "mfr-menu-left-menu-extended",
-        "menu_cta": "left-cta-buttons",
-        "right_menu": "mfr-menu-right-menu",
+        "menu": "",
+        "menu_extended": "",
+        "menu_cta": "",
+        "right_menu": "",
         "show_cart_cta": true,
         "show_cart_icon": true,
         "show_search_bar": true,
@@ -99,7 +79,6 @@
     }
   },
   "order": [
-    "header_announcement_bar_XtRbkg",
     "header"
   ]
 }
