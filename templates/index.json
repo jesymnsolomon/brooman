@@ -42,8 +42,8 @@
               "type": "_image-video-banner__image-slide",
               "name": "Image Slide",
               "settings": {
-                "mobile_image": "shopify://shop_images/soccer-mobile.webp",
-                "desktop_image": "shopify://shop_images/blue-banner.webp",
+                "mobile_image": "shopify://shop_images/soccer-mobile_9fb243d1-d9f1-476d-9291-fe37a48178e1.webp",
+                "desktop_image": "shopify://shop_images/blue-banner_352414bf-1c5a-46ce-9984-11cd8dc6686d.webp",
                 "lazyload": true,
                 "enable_overlay": false,
                 "overlay_mobile": "",
