@@ -27,8 +27,8 @@
   {{ overlay_style }}>
   {% if block.settings.mobile_image != blank or block.settings.desktop_image != blank %}
     {% render 'component__responsive-image-v2',
-      image_mobile: block.settings.image_mobile,
-      image_desktop: block.settings.image_desktop,
+      image_mobile: block.settings.mobile_image,
+      image_desktop: block.settings.desktop_image,
       lazyload: block.settings.lazyload %}
   {% else %}
     {%- capture svg_code -%}{{- 'lifestyle-2' | placeholder_svg_tag -}}{%- endcapture -%}
