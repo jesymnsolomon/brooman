@@ -122,8 +122,8 @@
               "type": "_image-video-banner__image-slide",
               "name": "Image Slide",
               "settings": {
-                "mobile_image": "shopify://shop_images/shoes-mobile.webp",
-                "desktop_image": "shopify://shop_images/shoes-desktop_7e43d6ba-f4bd-4517-b972-bdaf77ae59e1.webp",
+                "mobile_image": "shopify://shop_images/shoes.webp",
+                "desktop_image": "shopify://shop_images/shoes-desktop.webp",
                 "lazyload": true,
                 "enable_overlay": false,
                 "overlay_mobile": "",
