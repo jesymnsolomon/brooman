@@ -72,7 +72,7 @@
                         "header_style": "h1",
                         "header_tag": "h2",
                         "font_family": "",
-                        "color": "#fcfcfb",
+                        "color": "#ffffff",
                         "highlight_color": "",
                         "underline_color": "",
                         "max_width_mobile": 0,
@@ -134,37 +134,16 @@
               "blocks": {
                 "section-content": {
                   "type": "_section-content",
-                  "disabled": true,
                   "static": true,
                   "settings": {
-                    "mobile_alignment": "",
-                    "desktop_alignment": "",
-                    "text_alignment_desktop": "center",
-                    "text_alignment_mobile": "center",
+                    "mobile_alignment": "left",
+                    "desktop_alignment": "left",
+                    "text_alignment_desktop": "left",
+                    "text_alignment_mobile": "left",
                     "max_width_mobile": 0,
                     "max_width_desktop": 0
                   },
-                  "blocks": {
-                    "section_content_title_Rqty7i": {
-                      "type": "_section-content__title",
-                      "settings": {
-                        "heading": "Heading Text",
-                        "disable_animation": false,
-                        "header_style": "h1",
-                        "header_tag": "h2",
-                        "font_family": "",
-                        "color": "",
-                        "highlight_color": "",
-                        "underline_color": "",
-                        "max_width_mobile": 0,
-                        "max_width_desktop": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "section_content_title_Rqty7i"
-                  ]
+                  "blocks": {}
                 }
               },
               "block_order": []
@@ -174,7 +153,6 @@
               "name": "Image Slide",
               "disabled": true,
               "settings": {
-                "desktop_image": "shopify://shop_images/purple-banner.jpg",
                 "lazyload": true,
                 "enable_overlay": false,
                 "overlay_mobile": "",
