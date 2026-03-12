@@ -22,6 +22,8 @@
   {%- assign overlay_style = "" -%}
 {% endif %}
 
+{% render 'section__settings-styles' %}
+
 <div class="image-banner {{ has_overlay_class }}"
   data-image-parallax
   {{ overlay_style }}>
@@ -84,7 +86,51 @@
         "type": "color_background",
         "id": "overlay_desktop",
         "label": "Overlay - Desktop"
-      }
+      },
+       {
+      "type": "header",
+      "content": "Alignment Settings"
+    },
+    {
+      "type": "select",
+      "id": "mobile_alignment",
+      "label": "Content Alignment - Mobile",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "desktop_alignment",
+      "label": "Content Alignment - Desktop",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
     ],
     "presets": [
       {

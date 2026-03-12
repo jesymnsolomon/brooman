@@ -20,7 +20,7 @@
   - $header-text-color-sticky
 */
 
-$header-animation: .5s all $smooth_ease;
+$header-animation: 0.5s all $smooth_ease;
 $header-offset-mobile: var(--header-offset-mobile);
 $header-offset-mobile-top: var(--header-offset-mobile-top);
 $header-offset-desktop: var(--header-offset-desktop);
@@ -29,17 +29,19 @@ $header-offset-sticky-mobile: var(--header-offset-sticky-mobile);
 $header-offset-sticky-mobile-top: var(--header-offset-sticky-mobile-top);
 $header-offset-sticky-desktop: var(--header-offset-sticky-desktop);
 $header-offset-sticky-desktop-top: var(--header-offset-sticky-desktop-top);
-$header-border-color: #E6E8E8;
+$header-border-color: #e6e8e8;
 $header-border-radius-mobile: var(--header-border-radius-mobile);
 $header-border-radius-desktop: var(--header-border-radius-desktop);
 $header-border-radius-sticky-mobile: var(--header-border-radius-sticky-mobile);
-$header-border-radius-sticky-desktop: var(--header-border-radius-sticky-desktop);
-$header-text-bg-color-hover: #E9F5FB;
+$header-border-radius-sticky-desktop: var(
+  --header-border-radius-sticky-desktop
+);
+$header-text-bg-color-hover: #e9f5fb;
 $header-text-color-hover: $brand-color;
 
 @mixin nav-styling {
-  @include user-select( none );
-  @include transition( $global-transition );
+  @include user-select(none);
+  @include transition($global-transition);
   position: relative;
   display: flex;
   align-items: center;
@@ -51,32 +53,13 @@ $header-text-color-hover: $brand-color;
   letter-spacing: $header-letter-spacing-mobile;
   text-transform: $header-font-case;
   font-size: $header-font-size-mobile;
-  padding: rem-calc( 5px ) rem-calc( 5px );
-  margin: 0 rem-calc( 6px );
+  padding: rem-calc(5px) rem-calc(5px);
+  margin: 0 rem-calc(6px);
 
-  @include breakpoint( large up ) {
+  @include breakpoint(large up) {
     font-size: $header-font-size-desktop;
     line-height: $header-line-height-desktop;
     letter-spacing: $header-letter-spacing-desktop;
-  }
-
-  &::before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    transform: rotate(2deg);
-    @include transition( $global-transition );
-  }
-
-  @include hover {
-    &::before {
-      background-color: $brand-color;
-      @include transition( $global-transition );
-    }
   }
 
   span {
@@ -86,12 +69,12 @@ $header-text-color-hover: $brand-color;
     display: flex;
     justify-content: center;
     align-items: center;
-    @include user-select( none );
-    @include transition( $global-transition );
+    @include user-select(none);
+    @include transition($global-transition);
   }
 
   svg {
-    @include transition( $global-transition );
+    @include transition($global-transition);
   }
 }
 
@@ -99,21 +82,21 @@ $header-text-color-hover: $brand-color;
   position: relative;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
-    bottom: rem-calc( -5px );
+    bottom: rem-calc(-5px);
     left: 0;
     width: 100%;
     height: $global-border-width;
     background-color: currentColor;
-    @include transition( $global-transition );
-    @include transform( scaleX( 0 ) );
-    @include transform-origin( left );
+    @include transition($global-transition);
+    @include transform(scaleX(0));
+    @include transform-origin(left);
   }
 
   @include hover {
     &::after {
-      @include transform( scaleX( 1 ) );
+      @include transform(scaleX(1));
     }
   }
 }
@@ -169,9 +152,9 @@ $header-text-color-hover: $brand-color;
 
 // Header
 header.header {
-  position: fixed;
-  top: 0;
-  left: 0;
+  // position: fixed;
+  // top: 0;
+  // left: 0;
   width: 100%;
   z-index: 100;
   // @include transition( $global-transition-slow );
@@ -182,14 +165,14 @@ header.header {
 
   &--sticky {
     .header__inner {
-      @include shadow( 0 rem-calc( 1px ) rem-calc( 4px ) 0 rgba(0,0,0,0.2) );
+      @include shadow(0 rem-calc(1px) rem-calc(4px) 0 rgba(0, 0, 0, 0.2));
     }
   }
 
   .header {
     &__inner {
-      @include border-radius( rem-calc($header-border-radius-desktop) );
-      @include transition( $header-animation );
+      @include border-radius(rem-calc($header-border-radius-desktop));
+      @include transition($header-animation);
       width: 100%;
       position: relative;
     }
@@ -205,15 +188,15 @@ header.header {
       grid-area: left;
       justify-content: flex-start;
 
-      @include breakpoint( medium down ) {
-        width: rem-calc( 63px );
-        padding: 0 rem-calc( 17px );
+      @include breakpoint(medium down) {
+        width: rem-calc(63px);
+        padding: 0 rem-calc(17px);
         background-color: var(--header-links);
         border-top-left-radius: $header-border-radius-desktop;
         border-bottom-left-radius: $header-border-radius-desktop;
       }
 
-      @include breakpoint( large up ) {
+      @include breakpoint(large up) {
         padding: 0 0 0 0;
       }
     }
@@ -233,7 +216,7 @@ header.header {
       justify-content: flex-end;
       white-space: nowrap;
       margin-left: auto;
-      width: rem-calc( 63px );
+      width: rem-calc(63px);
 
       @include breakpoint(large up) {
         width: auto;
@@ -243,19 +226,19 @@ header.header {
         position: relative;
 
         .button {
-          min-height: rem-calc( 42px );
-          padding: rem-calc( 12px ) rem-calc( 14px ) rem-calc( 12px ) rem-calc( 19px );
+          min-height: rem-calc(42px);
+          padding: rem-calc(12px) rem-calc(14px) rem-calc(12px) rem-calc(19px);
 
-          @include breakpoint( medium down ) {
+          @include breakpoint(medium down) {
             @include small;
             line-height: 1em;
             font-weight: 400;
             min-width: unset;
           }
 
-          @include breakpoint( large up ) {
-            min-width: rem-calc( 94px );
-            padding: rem-calc( 10px ) rem-calc( 25px );
+          @include breakpoint(large up) {
+            min-width: rem-calc(94px);
+            padding: rem-calc(10px) rem-calc(25px);
           }
         }
 
@@ -269,14 +252,14 @@ header.header {
           display: flex;
           flex-direction: column;
           background: #212121;
-          gap: rem-calc( 12px );
-          border: solid $global-border-width rgba(#ffffff,0.09);
-          padding: rem-calc( 11 ) rem-calc( 7px );
+          gap: rem-calc(12px);
+          border: solid $global-border-width rgba(#ffffff, 0.09);
+          padding: rem-calc(11) rem-calc(7px);
           pointer-events: none;
           visibility: hidden;
-          @include opacity( 0 );
-          @include transition( $global-transition );
-          @include border-radius( rem-calc( 13px ) );
+          @include opacity(0);
+          @include transition($global-transition);
+          @include border-radius(rem-calc(13px));
 
           .button {
             width: 100%;
@@ -287,7 +270,7 @@ header.header {
           .header__right-cta-dropdown {
             pointer-events: unset;
             visibility: visible;
-            @include opacity( 1 );
+            @include opacity(1);
           }
         }
       }
@@ -304,9 +287,9 @@ header.header {
       align-items: center;
       flex-direction: column;
       padding: $header-offset-mobile-top $header-offset-mobile;
-      @include transition( $header-animation );
+      @include transition($header-animation);
 
-      @include breakpoint( large up ) {
+      @include breakpoint(large up) {
         font-size: calc($header-font-size-desktop + 3px);
         line-height: calc($header-line-height-desktop + 3px);
         letter-spacing: $header-letter-spacing-desktop;
@@ -317,19 +300,20 @@ header.header {
         padding: $header-offset-sticky-mobile-top $header-offset-sticky-mobile;
         transform: translateY(var(--header-sticky-vertical-position));
 
-        @include breakpoint( large up ) {
-          padding: $header-offset-sticky-desktop-top $header-offset-sticky-desktop;
+        @include breakpoint(large up) {
+          padding: $header-offset-sticky-desktop-top
+            $header-offset-sticky-desktop;
         }
 
         .header__wrapper-inner {
           background: $header-bg-color-sticky;
           color: $header-text-color-sticky;
           height: $header-height-mobile-sticky;
-          @include border-radius( var(--header-border-radius-sticky-mobile) );
+          @include border-radius(var(--header-border-radius-sticky-mobile));
 
-          @include breakpoint( large up ) {
+          @include breakpoint(large up) {
             height: $header-height-sticky;
-            @include border-radius( var(--header-border-radius-sticky-desktop) );
+            @include border-radius(var(--header-border-radius-sticky-desktop));
           }
         }
       }
@@ -342,7 +326,7 @@ header.header {
         @include sticky-state;
 
         .header__logo {
-          @include opacity( 0 );
+          @include opacity(0);
         }
       }
 
@@ -354,26 +338,26 @@ header.header {
         background: $header-bg-color;
         color: $header-text-color;
         height: $header-height-mobile;
-        padding: 0 rem-calc( 16px );
-        @include border-radius( var(--header-border-radius-mobile) );
-        @include transition( $header-animation );
+        padding: 0 rem-calc(16px);
+        @include border-radius(var(--header-border-radius-mobile));
+        @include transition($header-animation);
         @include drop-shadow(null, 4);
 
-        @include breakpoint( large up ) {
-          padding: 0 rem-calc( 25px );
+        @include breakpoint(large up) {
+          padding: 0 rem-calc(25px);
           height: $header-height;
-          gap: rem-calc( 18px );
-          @include border-radius( var(--header-border-radius-desktop) );
+          gap: rem-calc(18px);
+          @include border-radius(var(--header-border-radius-desktop));
         }
 
         &.logo-left {
           &--mobile {
-            @include breakpoint( medium down ) {
+            @include breakpoint(medium down) {
               @include logo-left;
             }
           }
           &--desktop {
-            @include breakpoint( large up ) {
+            @include breakpoint(large up) {
               @include logo-left;
             }
           }
@@ -381,43 +365,43 @@ header.header {
 
         &.logo-left-contained {
           &--mobile {
-            @include breakpoint( medium down ) {
+            @include breakpoint(medium down) {
               @include logo-left-contained;
             }
           }
           &--desktop {
-            @include breakpoint( large up ) {
+            @include breakpoint(large up) {
               @include logo-left-contained;
             }
           }
         }
         &.logo-left-contained-right {
           &--mobile {
-            @include breakpoint( medium down ) {
+            @include breakpoint(medium down) {
               @include logo-left-contained-right;
             }
           }
           &--desktop {
-            @include breakpoint( large up ) {
+            @include breakpoint(large up) {
               @include logo-left-contained-right;
             }
           }
         }
         &.logo-center {
           &--mobile {
-            @include breakpoint( medium down ) {
+            @include breakpoint(medium down) {
               @include logo-center;
             }
           }
           &--desktop {
-            @include breakpoint( large up ) {
+            @include breakpoint(large up) {
               @include logo-center;
             }
           }
 
           &-contained-left {
             &--mobile {
-              @include breakpoint( medium down ) {
+              @include breakpoint(medium down) {
                 @include logo-center-contained-left;
               }
             }
@@ -425,7 +409,7 @@ header.header {
 
           &-contained-right {
             &--mobile {
-              @include breakpoint( medium down ) {
+              @include breakpoint(medium down) {
                 @include logo-center-contained-right;
               }
             }
@@ -440,15 +424,15 @@ header.header {
       align-items: stretch;
       height: 100%;
       position: relative;
-      padding: rem-calc( 9px ) 0;
-      @include transition( $header-animation );
+      padding: rem-calc(9px) 0;
+      @include transition($header-animation);
 
       @include breakpoint(large up) {
-        padding: rem-calc( 9px ) 0;
+        padding: rem-calc(9px) 0;
       }
 
       img {
-        @include transition( $header-animation );
+        @include transition($header-animation);
         width: auto;
         height: 100%;
         display: block;
@@ -456,8 +440,8 @@ header.header {
       }
 
       &-icon {
-        max-width: rem-calc( 36px );
-        margin-right: rem-calc( 15px );
+        max-width: rem-calc(36px);
+        margin-right: rem-calc(15px);
       }
 
       lottie-player {
@@ -475,8 +459,8 @@ header.header {
     &__cta {
       line-height: 1;
       color: $header-text-color;
-      @include breakpoint( small only ) {
-        font-size: rem-calc( 12px );
+      @include breakpoint(small only) {
+        font-size: rem-calc(12px);
       }
     }
 
@@ -485,17 +469,17 @@ header.header {
       height: 100%;
       justify-content: center;
       align-items: center;
-      margin-left: rem-calc( 10px );
+      margin-left: rem-calc(10px);
       letter-spacing: inherit;
       font-family: inherit;
       line-height: inherit;
-      padding: rem-calc( 10px ) 0;
+      padding: rem-calc(10px) 0;
       // @include nav-styling;
       // min-width: unset;
       display: none;
-      width: rem-calc( 22px );
+      width: rem-calc(22px);
 
-      @include breakpoint( large up ) {
+      @include breakpoint(large up) {
         display: inline-flex;
         margin: 0;
       }
@@ -520,12 +504,11 @@ header.header {
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: $color-accent-4;
         border-top-right-radius: var(--header-border-radius-desktop);
         border-bottom-right-radius: var(--header-border-radius-desktop);
 
         @include breakpoint(large up) {
-          width: rem-calc( 72px );
+          width: rem-calc(72px);
         }
 
         .header__cart {
@@ -550,24 +533,24 @@ header.header {
 
             &__number {
               position: absolute;
-              margin-top: rem-calc( 5px );
+              margin-top: rem-calc(5px);
             }
 
             &__count {
-              width: rem-calc( 20px );
-              height: rem-calc( 20px );
+              width: rem-calc(20px);
+              height: rem-calc(20px);
               color: currentColor;
               display: flex;
               justify-content: center;
               align-items: center;
               z-index: 1;
               font-weight: 400;
-              font-size: rem-calc( 15px );
+              font-size: rem-calc(15px);
               line-height: 1.8em;
               font-weight: 700;
-              letter-spacing: rem-calc( 0.29px );
-              @include transition( $header-animation );
-              @include border-radius( 50% );
+              letter-spacing: rem-calc(0.29px);
+              @include transition($header-animation);
+              @include border-radius(50%);
 
               .header__wrapper--sticky & {
                 border-color: transparent;
@@ -581,55 +564,55 @@ header.header {
             width: unset;
             display: block;
             object-fit: contain;
-            height: rem-calc( 35px );
+            height: rem-calc(35px);
           }
         }
       }
-      &:not( .has-icon ) {
-        padding: rem-calc( 6px ) 0;
-        margin: 0 0 0 rem-calc( 10px );
+      &:not(.has-icon) {
+        padding: rem-calc(6px) 0;
+        margin: 0 0 0 rem-calc(10px);
         height: 100%;
-        min-width: rem-calc( 73px );
+        min-width: rem-calc(73px);
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: stretch;
 
-        @include breakpoint( large up ) {
-          min-width: rem-calc( 98px );
+        @include breakpoint(large up) {
+          min-width: rem-calc(98px);
         }
 
         .header__cart-inner {
-          @include border-radius( $button-border-radius );
+          @include border-radius($button-border-radius);
           @include transition($header-animation);
           display: flex;
           justify-content: center;
           align-items: center;
-          padding: rem-calc( 6px );
+          padding: rem-calc(6px);
           border: rem-calc(1.5px) solid transparent;
           color: inherit;
-          height: rem-calc( 36px );
+          height: rem-calc(36px);
           width: 100%;
         }
 
         .cart {
           &__number {
             font-size: $header-font-size-mobile;
-            line-height: rem-calc( 24px );
-            letter-spacing: rem-calc( -0.84px );
-            margin: 0 0 0 rem-calc( 6px );
+            line-height: rem-calc(24px);
+            letter-spacing: rem-calc(-0.84px);
+            margin: 0 0 0 rem-calc(6px);
 
-            @include breakpoint( large up ) {
+            @include breakpoint(large up) {
               font-size: $header-font-size-desktop;
-              line-height: rem-calc( 38px );
+              line-height: rem-calc(38px);
             }
           }
           &__icon {
             font-size: $header-font-size-mobile;
             text-transform: $header-font-case;
             line-height: normal;
-            letter-spacing: rem-calc( -0.36px );
-            @include breakpoint( large up ) {
+            letter-spacing: rem-calc(-0.36px);
+            @include breakpoint(large up) {
               font-size: $header-font-size-desktop;
               line-height: $header-line-height-desktop;
               letter-spacing: $header-letter-spacing-desktop;
@@ -658,13 +641,13 @@ header.header {
       svg,
       img {
         display: block;
-        @include transition( $global-transition );
+        @include transition($global-transition);
       }
 
       @include hover {
         svg,
         img {
-          @include transform( scale( 0.90 ) );
+          @include transform(scale(0.9));
         }
       }
     }
@@ -679,27 +662,25 @@ header.header {
   display: none;
 
   &.standard.left {
-    @include breakpoint( large up ) {
-        display: flex;
+    @include breakpoint(large up) {
+      display: flex;
     }
   }
   &.mobile.left {
-    @include breakpoint( large up ) {
-        display: flex;
+    @include breakpoint(large up) {
+      display: flex;
     }
   }
   &.both {
-
-    @include breakpoint( large up ) {
+    @include breakpoint(large up) {
       display: flex;
     }
   }
 
-
   &.right {
     display: none;
 
-    @include breakpoint( large up ) {
+    @include breakpoint(large up) {
       display: flex;
     }
   }
@@ -718,10 +699,10 @@ header.header {
       z-index: 2;
       display: inline-block;
       stroke: currentColor;
-      stroke-width: rem-calc( 3px );
-      margin-left: rem-calc( 6px );
-      width: rem-calc( 12px );
-      height: rem-calc( 10px );
+      stroke-width: rem-calc(3px);
+      margin-left: rem-calc(6px);
+      width: rem-calc(12px);
+      height: rem-calc(10px);
       transform-origin: center;
     }
 
@@ -736,26 +717,29 @@ header.header {
   }
 
   &__item {
+    cursor: pointer;
     position: relative;
     display: flex;
     justify-content: stretch;
     align-items: center;
-    padding-right: rem-calc( 10px );
-    cursor: pointer;
+    margin-right: rem-calc(10px);
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-bottom: 2px solid transparent;
+      @include transition($global-transition);
+    }
 
     @include hover {
-      .header-menu__submenu {
-        visibility: visible;
-        opacity: 1;
-        pointer-events: all;
-      }
-
-      > .header-menu__title::before {
-        background-color: var(--header-links);
-      }
-
-      .header-menu__title > svg {
-        @include transform( rotate( -180deg ) );
+      &::before {
+        border-bottom: 2px solid $black;
+        transition: 0.3s;
       }
     }
 
@@ -773,14 +757,18 @@ header.header {
       }
     }
 
-    &:first-child { margin-left: 0; }
-    &:last-child { margin-right: 0; }
+    &:first-child {
+      margin-left: 0;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
   }
 
   &__submenu {
     position: absolute;
     top: 120%;
-    left: rem-calc( -10px );
+    left: rem-calc(-10px);
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
@@ -791,15 +779,15 @@ header.header {
     transition: 0.2s;
 
     &::before {
-      content: '';
-      height: rem-calc( 20px );
-      top: rem-calc( -15px );
+      content: "";
+      height: rem-calc(20px);
+      top: rem-calc(-15px);
       position: absolute;
       width: 100%;
     }
 
     &::after {
-      content: '';
+      content: "";
       height: 100%;
       width: 100%;
       position: fixed;
@@ -814,7 +802,7 @@ header.header {
       width: 100%;
       display: flex;
       overflow: hidden;
-      border-radius: rem-calc( 15px );
+      border-radius: rem-calc(15px);
       background: $white;
       @include drop-shadow(rgba(0, 0, 0, 0.57), null);
     }
@@ -822,7 +810,7 @@ header.header {
     &-left {
       width: 100%;
       background-color: $color-accent-3;
-      padding: rem-calc( 34px );
+      padding: rem-calc(34px);
       display: flex;
       flex-direction: column;
     }
@@ -830,14 +818,13 @@ header.header {
     &-right {
       width: 80%;
       background-color: $color-accent-2;
-      padding: rem-calc( 34px ) rem-calc( 40px );
-      border-left: rem-calc( 2px ) solid $black;
+      padding: rem-calc(34px) rem-calc(40px);
+      border-left: rem-calc(2px) solid $black;
     }
 
     & ~ .header-menu__title {
-
       &::after {
-        content: '';
+        content: "";
       }
     }
   }
@@ -846,9 +833,9 @@ header.header {
     &__title {
       margin: 0;
       font-family: $font-heading-h1;
-      font-size: rem-calc( 36px );
-      line-height: rem-calc( 36px );
-      margin-bottom: rem-calc( 20px );
+      font-size: rem-calc(36px);
+      line-height: rem-calc(36px);
+      margin-bottom: rem-calc(20px);
       text-transform: $header-font-case;
     }
 
@@ -868,8 +855,8 @@ header.header {
       list-style: none;
 
       &-title {
-        font-size: rem-calc( 36px );
-        line-height: rem-calc( 27px );
+        font-size: rem-calc(36px);
+        line-height: rem-calc(27px);
         display: flex;
         align-items: center;
 
@@ -881,13 +868,13 @@ header.header {
 
         button {
           margin-left: auto;
-          padding: rem-calc( 10px ) rem-calc( 15px );
-          border-radius: rem-calc( 10px );
+          padding: rem-calc(10px) rem-calc(15px);
+          border-radius: rem-calc(10px);
           background-color: rgba(30, 30, 30, 1);
           color: $white;
           text-transform: uppercase;
-          font-size: rem-calc( 17px );
-          line-height: rem-calc( 17px );
+          font-size: rem-calc(17px);
+          line-height: rem-calc(17px);
           transition: 0.2s;
 
           @include hover {
@@ -899,17 +886,17 @@ header.header {
 
       &-list {
         display: flex;
-        gap: rem-calc( 20px );
+        gap: rem-calc(20px);
         flex-wrap: wrap;
         list-style: none;
-        margin: rem-calc( 20px ) rem-calc(-20px) 0 0;
+        margin: rem-calc(20px) rem-calc(-20px) 0 0;
       }
     }
 
     &__product {
       position: relative;
       background-color: $white;
-      border-radius: rem-calc( 15px );
+      border-radius: rem-calc(15px);
       width: calc(100% / 3 - 20px);
       min-width: calc(100% / 3 - 20px);
       max-width: calc(100% / 3 - 20px);
@@ -942,7 +929,7 @@ header.header {
         align-items: center;
         justify-content: center;
         text-align: center;
-        padding: rem-calc( 20px );
+        padding: rem-calc(20px);
 
         span {
           width: 80%;
@@ -950,7 +937,7 @@ header.header {
 
         img {
           width: 70%;
-          margin-bottom: rem-calc( 10px );
+          margin-bottom: rem-calc(10px);
           @include transition($global-transition);
         }
       }
@@ -964,13 +951,13 @@ header.header {
         width: 100%;
         max-width: 100%;
         min-width: unset;
-        margin-top: rem-calc( 10px );
+        margin-top: rem-calc(10px);
       }
     }
   }
 }
 
-@import './header__mobile-menu';
+@import "./header__mobile-menu";
 
 /* Header Search */
 .header__search {
@@ -978,28 +965,28 @@ header.header {
   display: none;
   align-items: stretch;
   justify-content: center;
-  margin-left: rem-calc( 23px );
+  margin-left: rem-calc(23px);
   text-transform: uppercase;
   color: var(--header-text);
 
-  @include breakpoint( large up ) {
+  @include breakpoint(large up) {
     display: flex;
     margin: 0;
-    padding: rem-calc( 6px ) 0;
+    padding: rem-calc(6px) 0;
   }
 
   &-inner {
-    @include breakpoint( large up ) {
+    @include breakpoint(large up) {
       display: flex;
       justify-content: center;
       align-items: center;
       aspect-ratio: 1/1;
-      @include border-radius( rem-calc( 8px ) );
+      @include border-radius(rem-calc(8px));
     }
   }
 
   predictive-search {
-    max-width: rem-calc( 750px );
+    max-width: rem-calc(750px);
   }
 
   details-modal {
@@ -1009,7 +996,7 @@ header.header {
       &[open] {
         > .search-modal {
           opacity: 1;
-          animation: animateMenuOpen .4s $smooth_ease;
+          animation: animateMenuOpen 0.4s $smooth_ease;
 
           @keyframes animateMenuOpen {
             0% {
@@ -1029,7 +1016,7 @@ header.header {
         }
         .modal-overlay::after {
           position: absolute;
-          content: '';
+          content: "";
           background-color: $color-overlay-alpha;
           top: 100%;
           left: 0;
@@ -1087,7 +1074,7 @@ header.header {
         form {
           border: 0;
 
-          > button[type=submit] {
+          > button[type="submit"] {
             border: 0;
           }
         }
@@ -1117,7 +1104,7 @@ header.header {
           justify-content: center;
           border: 0;
 
-          .predictive-search__item  {
+          .predictive-search__item {
             @include button;
             border: 0;
             background-color: $brand-color;
@@ -1147,16 +1134,16 @@ header.header {
       &-inner {
         padding: 0;
 
-        @include breakpoint( large up ) {
-          padding-left: rem-calc( 14px );
+        @include breakpoint(large up) {
+          padding-left: rem-calc(14px);
         }
       }
     }
     &__logo {
-      padding: rem-calc( 12px ) 0;
+      padding: rem-calc(12px) 0;
 
-      @include breakpoint( large up ) {
-        padding: rem-calc( 12.55px ) 0;
+      @include breakpoint(large up) {
+        padding: rem-calc(12.55px) 0;
       }
     }
   }

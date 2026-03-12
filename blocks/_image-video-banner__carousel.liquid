@@ -28,10 +28,12 @@
   contain: true,
   wrapAround: true,
   groupCells: false,
+  prevNextButtons: false,
   autoPlay: {{- block.settings.autoplay_timing | times: 1000 | default: 0 -}},
   mobileSettings: {
     cellAlign: "center",
-    wrapAround: true
+    wrapAround: true,
+    prevNextButtons: false
   }
 }
 {%- endcapture -%}

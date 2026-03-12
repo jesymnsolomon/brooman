@@ -9,44 +9,44 @@ button {
   @include button;
 
   &.primary {
-    // background: $primary-button-bg-gradient;
-    // background-color: $primary-button-bg-color;
-    // color: $primary-button-text-color;
-    // border-color: $primary-button-border-color;
+    background: $primary-button-bg-gradient;
+    background-color: $primary-button-bg-color;
+    color: $primary-button-text-color;
+    border-color: $primary-button-border-color;
 
     @include hover {
-      // background: $primary-button-hover-bg-gradient;
-      // background-color: $primary-button-hover-bg-color;
-      // color: $primary-button-hover-text-color;
-      // border-color: $primary-button-border-color-hover;
+      background: $primary-button-hover-bg-gradient;
+      background-color: $primary-button-hover-bg-color;
+      color: $primary-button-hover-text-color;
+      border-color: $primary-button-border-color-hover;
 
       span.arrow {
-        //background-color: $primary-button-hover-bg-color;
+        background-color: $primary-button-hover-bg-color;
       }
     }
   }
 
   &.secondary {
-    // background-color: $secondary-button-bg-color;
-    // color: $secondary-button-text-color;
-    // border-color: $secondary-button-border-color;
+    background-color: $secondary-button-bg-color;
+    color: $secondary-button-text-color;
+    border-color: $secondary-button-border-color;
 
     @include hover {
-      // background-color: $secondary-button-hover-bg-color;
-      // color: $secondary-button-hover-text-color;
-      // border-color: $secondary-button-border-color-hover;
+      background-color: $secondary-button-hover-bg-color;
+      color: $secondary-button-hover-text-color;
+      border-color: $secondary-button-border-color-hover;
     }
   }
 
   &.tertiary {
-    // background-color: $tertiary-button-bg-color;
-    // color: $tertiary-button-text-color;
-    // border-color: $tertiary-button-border-color;
+    background-color: $tertiary-button-bg-color;
+    color: $tertiary-button-text-color;
+    border-color: $tertiary-button-border-color;
 
     @include hover {
-      // background-color: $tertiary-button-hover-bg-color;
-      // color: $tertiary-button-hover-text-color;
-      // border-color: $tertiary-button-border-color-hover;
+      background-color: $tertiary-button-hover-bg-color;
+      color: $tertiary-button-hover-text-color;
+      border-color: $tertiary-button-border-color-hover;
     }
   }
 

@@ -13,6 +13,7 @@
 {% assign block_id = block.id %}
 {% assign text = block.settings.heading %}
 {% assign header_style = block.settings.header_style %}
+{% assign color = block.settings.color %}
 {% assign highlight_color = block.settings.highlight_color %}
 {% assign underline_color = block.settings.underline_color %}
 {% assign disable_animation = block.settings.disable_animation %}
@@ -21,6 +22,14 @@
 {% assign max_width_desktop = block.settings.max_width_desktop %}
 {% assign margin_top = block.settings.margin_top %}
 {% assign margin_bottom = block.settings.margin_bottom %}
+
+{% if color != "" and color != "rgba(0,0,0,0)" %}
+  {% assign has_custom_color = "has-custom-color" %}
+  {% assign color_style = "color: " | append: color | append: ";" %}
+{% else %}
+  {% assign has_custom_color = "" %}
+  {% assign color_style = "" %}
+{% endif %}
 
 {% if underline_color != "" and underline_color != "rgba(0,0,0,0)" %}
   {% assign has_underline_class = "has-underline" %}
@@ -51,10 +60,11 @@
 
 <{{ block.settings.header_tag }}
   id="block--{{ block_id }}"
-  class="section-title {% unless request.visual_preview_mode %}{{ header_style }}{% else %}h2{% endunless %} {{ has_underline_class }} {{ custom_font }}"
+  class="section-title {{ has_custom_color }} {% unless request.visual_preview_mode %}{{ header_style }}{% else %}h2{% endunless %} {{ has_underline_class }} {{ custom_font }}"
   data-inview>
   <span class="visually-hidden">{{ text }}</span>
   <div class="section-title__inner"
+    style="{{ color_style }}"
     {% unless disable_animation %}
       data-split-text="fadeUp"
     {% endunless %}>
@@ -140,6 +150,12 @@
       {
         "type": "header",
         "content": "Color Settings"
+      },
+      {
+        "type": "color",
+        "id": "color",
+        "label": "Text Color",
+        "info": "Leave it blank to use system settings."
       },
       {
         "type": "color",

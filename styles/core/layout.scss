@@ -453,7 +453,7 @@ picture.mfr-responsive-image {
     // @include animateFadeUpSharp;
     //@include transition-duration( .2s !important );
     // overflow: hidden; //disabled since it causes bottom spacing into the .section-title
-    padding-bottom: 0.16em;
+    padding-bottom: rem-calc(5px);
     overflow-y: clip;
     overflow-x: visible;
 

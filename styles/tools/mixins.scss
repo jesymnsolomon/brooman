@@ -477,6 +477,11 @@ Typography Mixins
     line-height: $font-heading-h1-line-height;
     letter-spacing: $font-heading-h1-spacing;
   }
+
+  @include breakpoint(xxlarge up) {
+    font-size: calc($font-heading-h1-size + 100px);
+    line-height: calc($font-heading-h1-line-height + 100px);
+  }
 }
 
 @mixin h2 {
@@ -491,6 +496,11 @@ Typography Mixins
     font-size: $font-heading-h2-size;
     line-height: $font-heading-h2-line-height;
     letter-spacing: $font-heading-h2-spacing;
+  }
+
+  @include breakpoint(xxlarge up) {
+    font-size: calc($font-heading-h2-size + 20px);
+    line-height: calc($font-heading-h2-line-height + 20px);
   }
 }
 
@@ -507,6 +517,11 @@ Typography Mixins
     line-height: $font-heading-h3-line-height;
     letter-spacing: $font-heading-h3-spacing;
   }
+
+  @include breakpoint(xxlarge up) {
+    font-size: calc($font-heading-h3-size + 20px);
+    line-height: calc($font-heading-h3-line-height + 20px);
+  }
 }
 
 @mixin h4 {
@@ -521,6 +536,11 @@ Typography Mixins
     font-size: $font-heading-h4-size;
     line-height: $font-heading-h4-line-height;
     letter-spacing: $font-heading-h4-spacing;
+  }
+
+  @include breakpoint(xxlarge up) {
+    font-size: calc($font-heading-h4-size + 20px);
+    line-height: calc($font-heading-h4-line-height + 20px);
   }
 }
 
@@ -665,14 +685,14 @@ Typography Mixins
   @include transition(all 0.3s $smooth_ease);
   @include border-radius(rem-calc(26px));
   @include border-radius($button-border-radius);
-  @include drop-shadow($black, 4);
   position: relative;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  min-height: rem-calc(70px);
+  min-height: rem-calc(60px);
   box-sizing: border-box;
-  padding: rem-calc( 20px );
+  padding: rem-calc( 10px );
+  min-width: calc(var(--max-width) - 50px);
 
   @include breakpoint(large up) {
     min-width: var(--max-width);
@@ -709,8 +729,6 @@ Typography Mixins
   }
 
   @include hover {
-    @include transform(translate(2px, -2px));
-    @include drop-shadow($black, 8);
     @include transition(all 0.4s $smooth_ease);
   }
 
