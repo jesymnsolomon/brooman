@@ -185,6 +185,7 @@ header.header {
     }
 
     &__left {
+      display: none !important;
       grid-area: left;
       justify-content: flex-start;
 
