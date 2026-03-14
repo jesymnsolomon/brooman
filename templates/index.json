@@ -118,6 +118,84 @@
               },
               "block_order": []
             },
+            "image_video_banner_image_slide_Dcd36V": {
+              "type": "_image-video-banner__image-slide",
+              "name": "Image Slide",
+              "settings": {
+                "desktop_image": "shopify://shop_images/brooman-2d.jpg",
+                "lazyload": true,
+                "enable_overlay": false,
+                "overlay_mobile": "",
+                "overlay_desktop": "",
+                "mobile_alignment": "center",
+                "desktop_alignment": "center"
+              },
+              "blocks": {
+                "section-content": {
+                  "type": "_section-content",
+                  "static": true,
+                  "settings": {
+                    "mobile_alignment": "left",
+                    "desktop_alignment": "left",
+                    "text_alignment_desktop": "left",
+                    "text_alignment_mobile": "center",
+                    "max_width_mobile": 0,
+                    "max_width_desktop": 0
+                  },
+                  "blocks": {
+                    "section_content_title_DhkLAa": {
+                      "type": "_section-content__title",
+                      "settings": {
+                        "heading": "<strong>Every Pair Powers a Future</strong>",
+                        "disable_animation": false,
+                        "header_style": "h1",
+                        "header_tag": "h2",
+                        "font_family": "",
+                        "color": "#0097f3",
+                        "highlight_color": "",
+                        "underline_color": "",
+                        "max_width_mobile": 0,
+                        "max_width_desktop": 600
+                      },
+                      "blocks": {}
+                    },
+                    "section_content_text_zwYXFA": {
+                      "type": "_section-content__text",
+                      "name": "Section Text",
+                      "settings": {
+                        "text": "<p><strong>Dismantling the barriers for the Unseen Talent</strong></p>",
+                        "visibility": "",
+                        "disable_animation": false,
+                        "text_style": "regular",
+                        "font_family": "",
+                        "color": "#0097f3",
+                        "highlight_color": "",
+                        "underline_color": "",
+                        "max_width_mobile": 0,
+                        "max_width_desktop": 0
+                      },
+                      "blocks": {}
+                    },
+                    "section_content_button_hfNz8X": {
+                      "type": "_section-content__button",
+                      "name": "Section Button",
+                      "settings": {
+                        "button_label": "Donate Now",
+                        "button_link": "",
+                        "color_theme": "secondary"
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "section_content_title_DhkLAa",
+                    "section_content_text_zwYXFA",
+                    "section_content_button_hfNz8X"
+                  ]
+                }
+              },
+              "block_order": []
+            },
             "image_video_banner_image_slide_8Wd7BR": {
               "type": "_image-video-banner__image-slide",
               "name": "Image Slide",
@@ -147,90 +225,12 @@
                 }
               },
               "block_order": []
-            },
-            "image_video_banner_image_slide_Dcd36V": {
-              "type": "_image-video-banner__image-slide",
-              "name": "Image Slide",
-              "disabled": true,
-              "settings": {
-                "lazyload": true,
-                "enable_overlay": false,
-                "overlay_mobile": "",
-                "overlay_desktop": "",
-                "mobile_alignment": "center",
-                "desktop_alignment": "center"
-              },
-              "blocks": {
-                "section-content": {
-                  "type": "_section-content",
-                  "static": true,
-                  "settings": {
-                    "mobile_alignment": "left",
-                    "desktop_alignment": "left",
-                    "text_alignment_desktop": "left",
-                    "text_alignment_mobile": "center",
-                    "max_width_mobile": 0,
-                    "max_width_desktop": 0
-                  },
-                  "blocks": {
-                    "section_content_title_DhkLAa": {
-                      "type": "_section-content__title",
-                      "settings": {
-                        "heading": "<strong>Every Pair Powers a Future</strong>",
-                        "disable_animation": false,
-                        "header_style": "h1",
-                        "header_tag": "h2",
-                        "font_family": "",
-                        "color": "#fcfcfb",
-                        "highlight_color": "",
-                        "underline_color": "",
-                        "max_width_mobile": 0,
-                        "max_width_desktop": 600
-                      },
-                      "blocks": {}
-                    },
-                    "section_content_text_zwYXFA": {
-                      "type": "_section-content__text",
-                      "name": "Section Text",
-                      "settings": {
-                        "text": "<p><strong>Dismantling the barriers for the Unseen Talent</strong></p>",
-                        "visibility": "",
-                        "disable_animation": false,
-                        "text_style": "regular",
-                        "font_family": "",
-                        "color": "#e9e9e9",
-                        "highlight_color": "",
-                        "underline_color": "",
-                        "max_width_mobile": 0,
-                        "max_width_desktop": 0
-                      },
-                      "blocks": {}
-                    },
-                    "section_content_button_hfNz8X": {
-                      "type": "_section-content__button",
-                      "name": "Section Button",
-                      "settings": {
-                        "button_label": "Donate Now",
-                        "button_link": "",
-                        "color_theme": "primary"
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "section_content_title_DhkLAa",
-                    "section_content_text_zwYXFA",
-                    "section_content_button_hfNz8X"
-                  ]
-                }
-              },
-              "block_order": []
             }
           },
           "block_order": [
             "image_video_banner_image_slide_qC87xk",
-            "image_video_banner_image_slide_8Wd7BR",
-            "image_video_banner_image_slide_Dcd36V"
+            "image_video_banner_image_slide_Dcd36V",
+            "image_video_banner_image_slide_8Wd7BR"
           ]
         },
         "accent-graphics": {
