@@ -122,7 +122,7 @@
               "type": "_image-video-banner__image-slide",
               "name": "Image Slide",
               "settings": {
-                "desktop_image": "shopify://shop_images/brooman-2d.jpg",
+                "desktop_image": "shopify://shop_images/brooman-2e.jpg",
                 "lazyload": true,
                 "enable_overlay": false,
                 "overlay_mobile": "",
