@@ -43,7 +43,7 @@
               "name": "Image Slide",
               "settings": {
                 "mobile_image": "shopify://shop_images/brooman-2-portrait.webp",
-                "desktop_image": "shopify://shop_images/brooman-2.webp",
+                "desktop_image": "shopify://shop_images/brooman-2b_1.webp",
                 "lazyload": true,
                 "enable_overlay": false,
                 "overlay_mobile": "",
